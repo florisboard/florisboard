@@ -22,8 +22,8 @@ import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
-import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.keyboard3.touch.CapitalizationBehavior
+import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement

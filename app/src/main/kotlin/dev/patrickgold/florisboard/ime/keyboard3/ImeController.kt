@@ -18,6 +18,7 @@ import dev.patrickgold.florisboard.ime.text.key.KeyCode
 package dev.patrickgold.florisboard.ime.keyboard3
 
 import android.icu.text.BreakIterator
+import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -27,12 +28,13 @@ import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
-import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.io.StorageController
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard3.extension.loadFoundationKeyboard
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.touch.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyArrangement
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelCache
@@ -54,7 +56,6 @@ import org.k3lp.lib.text.K3Descriptor
 import org.k3lp.lib.text.K3String
 import org.k3lp.lib.text.asK3String
 import org.k3lp.model.K3Model
-import org.k3lp.model.key.K3Key
 import org.k3lp.model.layer.K3LayerId
 import org.k3lp.runtime.K3Content
 import org.k3lp.runtime.K3InputMethod
@@ -177,16 +178,16 @@ class ImeController(
             ic: WeakReference<InputConnection>,
             info: FlorisEditorInfo,
         ) {
-            val touchLayerId: K3LayerId
+            val newTouchLayerId: K3LayerId
             val keyVariation: KeyVariation
             when (info.inputAttributes.type) {
                 InputAttributes.Type.NUMBER -> {
                     keyVariation = KeyVariation.NORMAL
-                    touchLayerId = ImeLayerIds.Numpad
+                    newTouchLayerId = ImeLayerIds.Numpad
                 }
                 InputAttributes.Type.PHONE -> {
                     keyVariation = KeyVariation.NORMAL
-                    touchLayerId = ImeLayerIds.Telpad
+                    newTouchLayerId = ImeLayerIds.Telpad
                 }
                 InputAttributes.Type.TEXT -> {
                     keyVariation = when (info.inputAttributes.variation) {
@@ -208,11 +209,11 @@ class ImeController(
                             KeyVariation.NORMAL
                         }
                     }
-                    touchLayerId = ImeLayerIds.Base
+                    newTouchLayerId = ImeLayerIds.Base
                 }
                 else -> {
                     keyVariation = KeyVariation.NORMAL
-                    touchLayerId = ImeLayerIds.Base
+                    newTouchLayerId = ImeLayerIds.Base
                 }
             }
             val initialSelection = info.initialSelection2
@@ -222,9 +223,15 @@ class ImeController(
                 textAfter = info.getInitialTextAfterCursor(20)?.toString() ?: "",
             )
 
+            val rememberCapsLockState = prefs.correction.rememberCapsLockState.get() &&
+                state.flags.inputShiftState == InputShiftState.CAPS_LOCK
+
             state = state.copy(
                 editor = ImeEditor(ic, info),
-                touchLayerId = touchLayerId,
+                touchLayerId = when {
+                    rememberCapsLockState && newTouchLayerId.isTextLayer() -> ImeLayerIds.Caps
+                    else -> newTouchLayerId
+                },
                 flags = state.flags
                     .withKeyVariation(keyVariation)
                     .withImeUiMode(
@@ -237,14 +244,13 @@ class ImeController(
                     .withActionsOverflowVisible(false)
                     .withActionsEditorVisible(false)
                     .withInputShiftState(
-                        if (prefs.correction.rememberCapsLockState.get()) {
-                            state.flags.inputShiftState
-                        } else {
-                            InputShiftState.UNSHIFTED
+                        when {
+                            rememberCapsLockState -> InputShiftState.CAPS_LOCK
+                            else -> InputShiftState.UNSHIFTED
                         }
                     )
                     .withComposingEnabled(
-                        when (touchLayerId) {
+                        when (newTouchLayerId) {
                             ImeLayerIds.Numpad, ImeLayerIds.Telpad -> false
                             else -> keyVariation != KeyVariation.PASSWORD &&
                                 // TODO review if this is the correct approach for composing region support detection
@@ -282,6 +288,7 @@ class ImeController(
         override fun emitText(value: K3String) {
             super.emitText(value)
             expectedContentQueue.push(state.content)
+            reevaluateInputShiftState()
         }
 
         override fun emitDescriptor(descriptor: K3Descriptor) {
@@ -348,6 +355,7 @@ class ImeController(
                 ImeActions.ExternalVoiceInput -> FlorisImeService.switchToVoiceInputMethod()
                 else -> super.emitDescriptor(descriptor)
             }
+            reevaluateInputShiftState()
         }
 
         override fun emitBackspace() {
@@ -410,6 +418,76 @@ class ImeController(
             }
         }
 
+        override fun switchTouchLayer(newTouchLayerId: K3LayerId) {
+            if (newTouchLayerId.isTextLayer()) {
+                super.switchTouchLayer(state.flags.inputShiftState.correspondingLayerId)
+            } else {
+                super.switchTouchLayer(newTouchLayerId)
+            }
+        }
+
+        fun cycleInputShiftState(isDoubleTap: Boolean) {
+            val capitalizationBehavior = prefs.keyboard.capitalizationBehavior.get()
+            val oldInputShiftState = state.flags.inputShiftState
+            val newInputShiftState = when (capitalizationBehavior) {
+                CapitalizationBehavior.CAPSLOCK_BY_DOUBLE_TAP -> when {
+                    isDoubleTap -> InputShiftState.CAPS_LOCK
+                    oldInputShiftState == InputShiftState.UNSHIFTED -> InputShiftState.SHIFTED_MANUAL
+                    else -> InputShiftState.UNSHIFTED
+                }
+                CapitalizationBehavior.CAPSLOCK_BY_CYCLE -> when (oldInputShiftState) {
+                    InputShiftState.UNSHIFTED -> InputShiftState.SHIFTED_MANUAL
+                    InputShiftState.SHIFTED_MANUAL -> InputShiftState.CAPS_LOCK
+                    InputShiftState.SHIFTED_AUTOMATIC -> InputShiftState.UNSHIFTED
+                    InputShiftState.CAPS_LOCK -> InputShiftState.UNSHIFTED
+                }
+            }
+            state = state.copy(
+                touchLayerId = newInputShiftState.correspondingLayerId,
+                flags = state.flags.withInputShiftState(newInputShiftState),
+            )
+        }
+
+        fun revertCycleInputShiftState(
+            newTouchLayerId: K3LayerId,
+            newInputShiftState: InputShiftState,
+        ) {
+            state = state.copy(
+                touchLayerId = newTouchLayerId,
+                flags = state.flags.withInputShiftState(newInputShiftState),
+            )
+        }
+
+        fun reevaluateInputShiftState() {
+            if (!prefs.correction.autoCapitalization.get()) return
+            if (state.flags.inputShiftState == InputShiftState.CAPS_LOCK) return
+            val capsMode = state.content.cursorCapsMode(state.editor.info.inputAttributes)
+            val shift = capsMode != InputAttributes.CapsMode.NONE
+                // && subtypeManager.activeSubtype.primaryLocale.supportsCapitalization
+            val inputShiftState = when {
+                shift -> InputShiftState.SHIFTED_AUTOMATIC
+                else -> InputShiftState.UNSHIFTED
+            }
+            val touchLayerId = when {
+                state.touchLayerId.isTextLayer() -> inputShiftState.correspondingLayerId
+                else -> state.touchLayerId
+            }
+            state = state.copy(
+                touchLayerId = touchLayerId,
+                flags = state.flags.withInputShiftState(inputShiftState),
+            )
+        }
+
+        override fun resetContent(newSelection: K3TextRange, newSurrounding: K3SurroundingText) {
+            super.resetContent(newSelection, newSurrounding)
+            reevaluateInputShiftState()
+        }
+
+        override fun resetContent() {
+            super.resetContent()
+            reevaluateInputShiftState()
+        }
+
         fun handleFinishInputView() {
             resetContent()
             state = state.copy(editor = ImeEditor.Disconnected)
@@ -445,15 +523,6 @@ class ImeController(
                 }
             }
         }
-
-        private fun K3Key.isShiftKey(): Boolean {
-            return when (state.touchLayerId) {
-                ImeLayerIds.Base -> layerId == ImeLayerIds.Shift || layerId == ImeLayerIds.Caps
-                ImeLayerIds.Shift -> layerId == ImeLayerIds.Base || layerId == ImeLayerIds.Caps
-                ImeLayerIds.Caps -> layerId == ImeLayerIds.Base || layerId == ImeLayerIds.Shift
-                else -> false
-            }
-        }
     }
 
     companion object {
@@ -480,4 +549,10 @@ private class ExpectedContentQueue {
     fun clear() {
         list.clear()
     }
+}
+
+fun K3Content.cursorCapsMode(inputAttributes: InputAttributes): InputAttributes.CapsMode {
+    return InputAttributes.CapsMode.fromFlags(
+        TextUtils.getCapsMode(surroundingText.textBefore, surroundingText.textBefore.length, inputAttributes.raw)
+    )
 }

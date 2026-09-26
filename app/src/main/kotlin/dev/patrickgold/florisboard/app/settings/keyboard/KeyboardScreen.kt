@@ -44,7 +44,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
+import dev.patrickgold.florisboard.ime.keyboard3.touch.CapitalizationBehavior
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement

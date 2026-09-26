@@ -69,6 +69,7 @@ private class AndroidInteractionController(
                 else -> multiTapTimeout.milliseconds
             },
             multiPressTimeout = system.multiPressTimeout,
+            doubleTapTimeout = system.doubleTapTimeout,
         )
     }.stateIn(scope, SharingStarted.Eagerly, InteractionTimingOptions.Default)
 
@@ -225,5 +226,6 @@ private fun androidTimingOptions(): InteractionTimingOptions {
             AndroidVersion.ATLEAST_API31_S -> ViewConfiguration.getMultiPressTimeout()
             else -> 300
         }.milliseconds,
+        doubleTapTimeout = ViewConfiguration.getDoubleTapTimeout().milliseconds,
     )
 }

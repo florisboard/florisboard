@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,36 +14,39 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.input
+package dev.patrickgold.florisboard.ime.keyboard3.touch
+
+import dev.patrickgold.florisboard.ime.keyboard3.ImeLayerIds
+import org.k3lp.model.layer.K3LayerId
 
 /**
  * Enum for the input shift states of a text keyboard.
  */
-enum class InputShiftState(val value: Int) {
+enum class InputShiftState(val correspondingLayerId: K3LayerId) {
     /**
      * The default input mode, no shift modifier is active.
      */
-    UNSHIFTED(0),
+    UNSHIFTED(ImeLayerIds.Base),
     /**
      * Shift is active, but resets to [UNSHIFTED] after a single input. Symbol rows are shifted.
      * Indicates that this shift was manually activated, e.g. by pressing the shift key.
      */
-    SHIFTED_MANUAL(1),
+    SHIFTED_MANUAL(ImeLayerIds.Shift),
     /**
      * Shift is active, but resets to [UNSHIFTED] after a single input. Symbol rows are not shifted.
      * Indicates that this shift was automatically activated through the auto-capitalization feature.
      */
-    SHIFTED_AUTOMATIC(2),
+    SHIFTED_AUTOMATIC(ImeLayerIds.Shift),
     /**
      * Caps lock is active and persists after input. Symbol rows are not shifted.
      */
-    CAPS_LOCK(3);
+    CAPS_LOCK(ImeLayerIds.Caps);
 
     companion object {
-        fun fromInt(int: Int) = entries.firstOrNull { it.value == int } ?: UNSHIFTED
+        fun fromInt(int: Int) = entries.firstOrNull { it.ordinal == int } ?: UNSHIFTED
     }
 
     override fun toString() = name.lowercase()
 
-    fun toInt() = value
+    fun toInt() = ordinal
 }

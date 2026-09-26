@@ -58,6 +58,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard3.ImeIcons
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import dev.patrickgold.florisboard.lib.compose.vectorResource
@@ -78,6 +79,7 @@ fun Icon3(
     val imeState by imeController.activeState.collectAsState()
     val imeOptions by remember { derivedStateOf { imeState.editor.info.imeOptions } }
     val inputAttributes by remember { derivedStateOf { imeState.editor.info.inputAttributes } }
+    val inputShiftState by remember { derivedStateOf { imeState.flags.inputShiftState } }
     val debugShowDragAndDropHelpers by remember {
         derivedStateOf { imeState.flags.debugShowDragAndDropHelpers }
     }
@@ -85,7 +87,7 @@ fun Icon3(
     val windowConfig by windowController.activeWindowConfig.collectAsState()
     val windowMode by remember { derivedStateOf { windowConfig.mode } }
 
-    val imageVector = remember(value, imeOptions, inputAttributes, windowMode) {
+    val imageVector = remember(value, imeOptions, inputAttributes, inputShiftState, windowMode) {
         when (value) {
             ImeIcons.DragMarker -> {
                 if (debugShowDragAndDropHelpers) Icons.Default.Close else null
@@ -106,11 +108,17 @@ fun Icon3(
                     }
                 }
             }
+            ImeIcons.Shift -> when (inputShiftState) {
+                InputShiftState.UNSHIFTED -> context.vectorResource(R.drawable.ic_shift_off)
+                InputShiftState.SHIFTED_MANUAL, InputShiftState.SHIFTED_AUTOMATIC -> {
+                    context.vectorResource(R.drawable.ic_shift_on)
+                }
+                InputShiftState.CAPS_LOCK -> context.vectorResource(R.drawable.ic_shift_lock)
+            }
             ImeIcons.ToggleFloatingWindow -> when (windowMode) {
                 ImeWindowMode.FIXED -> context.vectorResource(R.drawable.ic_floating_keyboard)
                 ImeWindowMode.FLOATING -> context.vectorResource(R.drawable.ic_floating_keyboard_disable)
             }
-            // TODO shift???
             // TODO incognito mode???
             // TODO char width/kata/hira icons???
             else -> staticIcon3(value, context)
@@ -148,6 +156,10 @@ fun staticIcon3(value: K3Descriptor, context: Context): ImageVector? {
         ImeIcons.TextPanel -> context.vectorResource(R.drawable.ic_abc)
         ImeIcons.Noop -> Icons.Default.Close
         ImeIcons.Redo -> Icons.AutoMirrored.Filled.Redo
+        ImeIcons.Shift -> context.vectorResource(R.drawable.ic_shift_off)
+        ImeIcons.ShiftLock -> context.vectorResource(R.drawable.ic_shift_lock)
+        ImeIcons.ShiftOff -> context.vectorResource(R.drawable.ic_shift_off)
+        ImeIcons.ShiftOn -> context.vectorResource(R.drawable.ic_shift_on)
         ImeIcons.ShowKeyboard -> Icons.Default.KeyboardDoubleArrowUp // TODO
         ImeIcons.SelectAll -> Icons.Default.SelectAll
         ImeIcons.Settings -> Icons.Default.Settings

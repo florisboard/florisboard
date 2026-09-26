@@ -68,7 +68,11 @@ class TouchKeyboard(
     val minDeviceWidthMm: Int,
 ) {
     fun findKey(layerId: K3LayerId, position: Offset): TouchKey? {
-        val layer = layers[layerId] ?: layers[ImeLayerIds.Base]
+        val layer = if (layerId == ImeLayerIds.Caps) {
+            layers[layerId] ?: layers[ImeLayerIds.Shift] ?: layers[ImeLayerIds.Base]
+        } else {
+            layers[layerId] ?: layers[ImeLayerIds.Base]
+        }
         if (layer == null || !NormalizedBounds.contains(position)) {
             return null
         }
@@ -108,6 +112,7 @@ class TouchKey(
     val display: K3StringOrDescriptor,
     val attrs: K3Key,
     val flick: K3Flick?,
+    val isShiftKey: Boolean,
     val isRepeatable: Boolean,
     val isSuitableForSpaceBarDisplayOverride: Boolean,
     val isSuitableForSimplePopup: Boolean,
@@ -341,6 +346,12 @@ private fun computeTouchKeyboard(
                         display = display,
                         attrs = attrs,
                         flick = flicks,
+                        isShiftKey = key.isPureLayerSwitchKey() && when (layer.id) {
+                            ImeLayerIds.Base -> key.layerId == ImeLayerIds.Shift || key.layerId == ImeLayerIds.Caps
+                            ImeLayerIds.Shift -> key.layerId == ImeLayerIds.Base || key.layerId == ImeLayerIds.Caps
+                            ImeLayerIds.Caps -> key.layerId == ImeLayerIds.Base || key.layerId == ImeLayerIds.Shift
+                            else -> false
+                        },
                         isRepeatable = attrs.output?.isRepeatable() ?: false,
                         isSuitableForSpaceBarDisplayOverride = attrs.isSuitableForSpaceBarDisplayOverride(display),
                         isSuitableForSimplePopup = attrs.isSuitableForSimplePopup(),
@@ -396,6 +407,11 @@ fun K3StringOrDescriptor.isRepeatable(): Boolean {
 }
 
 private val ASCII_SPACE = " ".asK3String()
+
+fun K3Key.isPureLayerSwitchKey(): Boolean {
+    return !gap && layerId != null && output == null && longPressKeyIds.isNullOrEmpty() &&
+        multiTapKeyIds.isNullOrEmpty() && flickId == null
+}
 
 fun K3Key.isSuitableForSpaceBarDisplayOverride(display: K3StringOrDescriptor): Boolean {
     return layerId == null && output is K3String && output == ASCII_SPACE && output == display

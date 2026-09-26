@@ -133,9 +133,15 @@ fun ImeKeyboardBox(
             }
         }
         val activeTouchLayer = remember(activeTouchKeyboard, touchLayerId) {
-            activeTouchKeyboard.layers[touchLayerId]
-                ?: activeTouchKeyboard.layers[ImeLayerIds.Base]
-                ?: TouchLayer.Empty
+            if (touchLayerId == ImeLayerIds.Caps) {
+                activeTouchKeyboard.layers[touchLayerId]
+                    ?: activeTouchKeyboard.layers[ImeLayerIds.Shift]
+                    ?: activeTouchKeyboard.layers[ImeLayerIds.Base]
+            } else {
+                activeTouchKeyboard.layers[touchLayerId]
+                    ?: activeTouchKeyboard.layers[ImeLayerIds.Base]
+
+            } ?: TouchLayer.Empty
         }
 
         val pointerTracker = rememberPointerTracker(activeTouchKeyboard)
@@ -183,7 +189,9 @@ fun ImeKeyboardBox(
                 val isPressed by remember {
                     derivedStateOf {
                         trackedOutputPointer?.downKey == touchKey ||
-                            trackedPeekPointer?.peekKey == touchKey
+                            trackedPeekPointer?.let {
+                                it.peekKey == touchKey || it.downKey.isShiftKey && touchKey.isShiftKey
+                            } == true
                     }
                 }
                 val longPress by remember {

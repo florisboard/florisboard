@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.keyboard3
 
 import androidx.compose.ui.unit.LayoutDirection
 import dev.patrickgold.florisboard.ime.ImeUiMode
-import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.sheet.isAnyBottomSheetVisible
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 

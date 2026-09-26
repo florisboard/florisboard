@@ -28,6 +28,7 @@ data class InteractionTimingOptions(
     val longPressTimeout: Duration,
     val multiTapTimeout: Duration,
     val multiPressTimeout: Duration,
+    val doubleTapTimeout: Duration,
 ) {
     fun getKeyRepeatTimeout(output: K3StringOrDescriptor? = null): Duration {
         return keyRepeatTimeout
@@ -59,6 +60,7 @@ data class InteractionTimingOptions(
             longPressTimeout = 300.milliseconds,
             multiTapTimeout = 800.milliseconds,
             multiPressTimeout = 300.milliseconds,
+            doubleTapTimeout = 300.milliseconds,
         )
 
         val ASCII_SPACE = " ".asK3String()

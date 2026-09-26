@@ -26,17 +26,13 @@ import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.clipboardManager
-import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
-import dev.patrickgold.florisboard.ime.input.InputShiftState
-import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.composing.Appender
 import dev.patrickgold.florisboard.ime.text.composing.Composer
-import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
