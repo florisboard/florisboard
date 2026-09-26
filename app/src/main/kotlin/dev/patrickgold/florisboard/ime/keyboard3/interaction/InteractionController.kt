@@ -16,11 +16,11 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.interaction
 
-import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.staticCompositionLocalOf
 import kotlinx.coroutines.flow.StateFlow
 import org.k3lp.lib.text.K3StringOrDescriptor
 
-val LocalInteractionController = compositionLocalOf<InteractionController> {
+val LocalInteractionController = staticCompositionLocalOf<InteractionController> {
     error("no touch feedback handler provided")
 }
 

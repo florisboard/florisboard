@@ -28,16 +28,16 @@ import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
-import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.io.StorageController
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard3.extension.loadFoundationKeyboard
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
-import dev.patrickgold.florisboard.ime.keyboard3.touch.ShiftKeyBehavior
-import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyArrangement
+import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
+import dev.patrickgold.florisboard.ime.keyboard3.touch.ShiftKeyBehavior
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelCache
+import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.BreakIterators
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
@@ -46,6 +46,7 @@ import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
@@ -104,6 +105,9 @@ class ImeController(
         )
     }.stateIn(scope, SharingStarted.Eagerly, TouchModelOptions.Default)
 
+    // TODO check if we can implement this differently
+    val activeSmartbarVisibleDynamicActionsCount = MutableStateFlow(0)
+
     init {
         combine(
             prefs.devtools.enabled.asFlow(),
@@ -130,8 +134,10 @@ class ImeController(
             return false
         }
         return when (keyCode) {
+            // TODO KeyEvent.KEYCODE_SPACE (auto-commit candidate)
             KeyEvent.KEYCODE_DEL -> true
             KeyEvent.KEYCODE_FORWARD_DEL -> true
+            // TODO KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT
             else -> false
         }
     }
@@ -153,6 +159,7 @@ class ImeController(
                 }
                 true
             }
+            // TODO KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT
             else -> false
         }
     }
@@ -459,7 +466,8 @@ class ImeController(
         }
 
         fun reevaluateInputShiftState() {
-            if (state.flags.inputShiftState == InputShiftState.CAPS_LOCK) return
+            val isPeekOngoing = false // TODO
+            if (state.flags.inputShiftState == InputShiftState.CAPS_LOCK || isPeekOngoing) return
             val capsMode = state.content.cursorCapsMode(state.editor.info.inputAttributes)
             val shift = prefs.typing.autoCapitalization.get()
                 && capsMode != InputAttributes.CapsMode.NONE

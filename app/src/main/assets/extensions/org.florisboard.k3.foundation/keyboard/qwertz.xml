@@ -2,8 +2,9 @@
     <info author="Lars Mühlbauer for k3lp" name="German (QWERTZ)" layout="QWERTZ" indicator="DE" />
 
     <displays>
-        <display keyId="base" display="@fl:icon/shift" />
-        <display keyId="shift" display="@fl:icon/shift" />
+        <display keyId="base" display="${base_display}" />
+        <display keyId="base-to-shift" display="@fl:icon/shift" />
+        <display keyId="shift-to-base" display="@fl:icon/shift" />
         <display keyId="symbol-1" display="${symbol_1_display}" />
         <display keyId="symbol-2" display="${symbol_2_display}" />
         <display keyId="numeric" display="${numeric_display}" />
@@ -16,11 +17,12 @@
         <import base="cldr" path="45/keys-Zyyy-punctuation.xml" />
         <import base="cldr" path="45/keys-Zyyy-currency.xml" />
 
-        <key id="shift" layerId="shift" width="1.5" />
+        <key id="base" layerId="base" width="1.5" />
+        <key id="base-to-shift" layerId="shift" width="1.5" />
+        <key id="shift-to-base" layerId="base" width="1.5" />
         <key id="numeric" layerId="numeric" />
         <key id="symbol-1" layerId="symbol-1" width="1.5" />
         <key id="symbol-2" layerId="symbol-2" width="1.5" />
-        <key id="base" layerId="base" width="1.5" />
 
         <key id="bksp" output="@k3:action/backspace" stretch="true" />
         <key id="enter" output="@k3:action/enter" width="1.6" />
@@ -272,14 +274,14 @@
         <layer id="base">
             <row keys="q w e r t z u i o p" />
             <row keys="a s d f g h j k l" />
-            <row keys="shift y x c v b n m bksp" />
+            <row keys="base-to-shift y x c v b n m bksp" />
             <row keys="symbol-1 comma fn-key space period enter" />
         </layer>
 
         <layer id="shift">
             <row keys="Q W E R T Z U I O P" />
             <row keys="A S D F G H J K L" />
-            <row keys="base Y X C V B N M bksp" />
+            <row keys="shift-to-base Y X C V B N M bksp" />
             <row keys="symbol-1 comma fn-key space period enter" />
         </layer>
 

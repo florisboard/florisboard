@@ -17,74 +17,27 @@
 package dev.patrickgold.florisboard.ime.keyboard
 
 import android.content.Context
-import android.view.KeyEvent
-import android.widget.Toast
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.setValue
 import dev.patrickgold.florisboard.FlorisImeService
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.editor.EditorContent
-import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.OperationUnit
-import dev.patrickgold.florisboard.ime.input.InputEventDispatcher
-import dev.patrickgold.florisboard.ime.input.InputKeyEventReceiver
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
-import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import org.florisboard.lib.android.showLongToastSync
-import java.lang.ref.WeakReference
 
 private val DoubleSpacePeriodMatcher = """([^.!?‽\s]\s)""".toRegex()
 
-class KeyboardManager(context: Context) : InputKeyEventReceiver {
-    private val prefs by FlorisPreferenceStore
-    private val appContext by context.appContext()
-    private val clipboardManager by context.clipboardManager()
+class KeyboardManager(context: Context) {
     private val editorInstance by context.editorInstance()
-    private val nlpManager by context.nlpManager()
     private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-
-    var smartbarVisibleDynamicActionsCount by mutableIntStateOf(0)
-    private var lastToastReference = WeakReference<Toast>(null)
-
-    val inputEventDispatcher = InputEventDispatcher.new(
-        repeatableKeyCodes = intArrayOf(
-            KeyCode.ARROW_DOWN,
-            KeyCode.ARROW_LEFT,
-            KeyCode.ARROW_RIGHT,
-            KeyCode.ARROW_UP,
-            KeyCode.DELETE,
-            KeyCode.FORWARD_DELETE,
-            KeyCode.UNDO,
-            KeyCode.REDO,
-        )
-    ).also { it.keyEventReceiver = this }
-
-    fun reevaluateInputShiftState() {
-//        if (activeState.inputShiftState != InputShiftState.CAPS_LOCK && !inputEventDispatcher.isPressed(KeyCode.SHIFT)) {
-//            val shift = prefs.correction.autoCapitalization.get()
-//                && subtypeManager.activeSubtype.primaryLocale.supportsCapitalization
-//                && editorInstance.activeCursorCapsMode != InputAttributes.CapsMode.NONE
-//            activeState.inputShiftState = when {
-//                shift -> InputShiftState.SHIFTED_AUTOMATIC
-//                else -> InputShiftState.UNSHIFTED
-//            }
-//        }
-    }
 
     fun resetSuggestions(content: EditorContent) {
 //        if (!(activeState.isComposingEnabled || nlpManager.isSuggestionOn())) {
@@ -92,13 +45,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
 //            return
 //        }
 //        nlpManager.suggest(subtypeManager.activeSubtype, content)
-    }
-
-    /**
-     * @return If the language switch should be shown.
-     */
-    fun shouldShowLanguageSwitch(): Boolean {
-        return subtypeManager.subtypes.size > 1
     }
 
     fun executeSwipeAction(swipeAction: SwipeAction) {
@@ -314,75 +260,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
     }
 
     /**
-     * Handles a [KeyCode.SHIFT] down event.
-     */
-    private fun handleShiftDown(data: KeyData) {
-        /*
-        val prefs = prefs.keyboard.capitalizationBehavior
-        when (prefs.get()) {
-            CapitalizationBehavior.CAPSLOCK_BY_DOUBLE_TAP -> {
-                if (inputEventDispatcher.isConsecutiveDown(data)) {
-                    activeState.inputShiftState = InputShiftState.CAPS_LOCK
-                } else {
-                    if (activeState.inputShiftState == InputShiftState.UNSHIFTED) {
-                        activeState.inputShiftState = InputShiftState.SHIFTED_MANUAL
-                    } else {
-                        activeState.inputShiftState = InputShiftState.UNSHIFTED
-                    }
-                }
-            }
-            CapitalizationBehavior.CAPSLOCK_BY_CYCLE -> {
-                activeState.inputShiftState = when (activeState.inputShiftState) {
-                    InputShiftState.UNSHIFTED -> InputShiftState.SHIFTED_MANUAL
-                    InputShiftState.SHIFTED_MANUAL -> InputShiftState.CAPS_LOCK
-                    InputShiftState.SHIFTED_AUTOMATIC -> InputShiftState.UNSHIFTED
-                    InputShiftState.CAPS_LOCK -> InputShiftState.UNSHIFTED
-                }
-            }
-        }
-         */
-    }
-
-    /**
-     * Handles a [KeyCode.SHIFT] up event.
-     */
-    private fun handleShiftUp(data: KeyData) {
-//        if (activeState.inputShiftState != InputShiftState.CAPS_LOCK && !inputEventDispatcher.isAnyPressed() &&
-//            !inputEventDispatcher.isUninterruptedEventSequence(data)) {
-//            activeState.inputShiftState = InputShiftState.UNSHIFTED
-//        }
-    }
-
-    /**
-     * Handles a [KeyCode.CAPS_LOCK] event.
-     */
-    private fun handleCapsLock() {
-        //activeState.inputShiftState = InputShiftState.CAPS_LOCK
-    }
-
-    /**
-     * Handles a [KeyCode.SHIFT] cancel event.
-     */
-    private fun handleShiftCancel() {
-        //activeState.inputShiftState = InputShiftState.UNSHIFTED
-    }
-
-    /**
-     * Handles a hardware [KeyEvent.KEYCODE_SPACE] event. Same as [handleSpace],
-     * but skips handling changing to characters keyboard and double space periods.
-     */
-    fun handleHardwareKeyboardSpace() {
-        val candidate = nlpManager.getAutoCommitCandidate()
-        candidate?.let { commitCandidate(it) }
-        // Skip handling changing to characters keyboard and double space periods
-        // TODO: this is whether we commit space after selecting candidate. Should be determined by SuggestionProvider
-        if (!subtypeManager.activeSubtype.primaryLocale.supportsAutoSpace &&
-                candidate != null) { /* Do nothing */ } else {
-            editorInstance.commitText(KeyCode.SPACE.toChar().toString())
-        }
-    }
-
-    /**
      * Handles a [KeyCode.SPACE] event. Also handles the auto-correction of two space taps if
      * enabled by the user.
      */
@@ -442,16 +319,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         )
 
          */
-    }
-
-    /**
-     * Handles a [KeyCode.TOGGLE_AUTOCORRECT] event.
-     */
-    private fun handleToggleAutocorrect() {
-        lastToastReference.get()?.cancel()
-        lastToastReference = WeakReference(
-            appContext.showLongToastSync("Autocorrect toggle is a placeholder and not yet implemented")
-        )
     }
 
     /**
@@ -515,7 +382,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         //activeState.isCharHalfWidth = true
     }
 
-    override fun onInputKeyDown(data: KeyData) {
+    fun onInputKeyDown(data: KeyData) {
         val windowController = FlorisImeService.windowControllerOrNull()
         windowController?.editor?.disableIfNoGestureInProgress()
         when (data.code) {
@@ -529,11 +396,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.MOVE_END_OF_LINE -> {
                 editorInstance.massSelection.begin()
             }
-            KeyCode.SHIFT -> handleShiftDown(data)
         }
     }
 
-    override fun onInputKeyUp(data: KeyData) {} /*= activeState.batchEdit {
+    fun onInputKeyUp(data: KeyData) {} /*= activeState.batchEdit {
         val windowController = FlorisImeService.windowControllerOrNull() ?: return@batchEdit
         when (data.code) {
             KeyCode.ARROW_DOWN,
@@ -661,7 +527,7 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
         }
     }*/
 
-    override fun onInputKeyCancel(data: KeyData) {
+    fun onInputKeyCancel(data: KeyData) {
         when (data.code) {
             KeyCode.ARROW_DOWN,
             KeyCode.ARROW_LEFT,
@@ -673,11 +539,10 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.MOVE_END_OF_LINE -> {
                 editorInstance.massSelection.end()
             }
-            KeyCode.SHIFT -> handleShiftCancel()
         }
     }
 
-    override fun onInputKeyRepeat(data: KeyData) {
+    fun onInputKeyRepeat(data: KeyData) {
         //FlorisImeService.inputFeedbackController()?.keyRepeatedAction(data)
         when (data.code) {
             KeyCode.ARROW_DOWN,
@@ -689,33 +554,6 @@ class KeyboardManager(context: Context) : InputKeyEventReceiver {
             KeyCode.MOVE_START_OF_LINE,
             KeyCode.MOVE_END_OF_LINE -> handleArrow(data.code)
             else -> onInputKeyUp(data)
-        }
-    }
-
-    fun onHardwareKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        when (keyCode) {
-            KeyEvent.KEYCODE_SPACE -> {
-                handleHardwareKeyboardSpace()
-                return true
-            }
-            KeyEvent.KEYCODE_ENTER -> {
-                return true
-            }
-            KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT -> {
-                inputEventDispatcher.sendDown(TextKeyData.SHIFT)
-                return true
-            }
-            else -> return false
-        }
-    }
-
-    fun onHardwareKeyUp(keyCode: Int, event: KeyEvent?): Boolean {
-        when (keyCode) {
-            KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT -> {
-                inputEventDispatcher.sendUp(TextKeyData.SHIFT)
-                return true
-            }
-            else -> return false
         }
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,10 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -35,7 +35,6 @@ import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggBox
@@ -45,17 +44,16 @@ import org.florisboard.lib.snygg.ui.SnyggText
 @Composable
 fun QuickActionsOverflowPanel() {
     val prefs by FlorisPreferenceStore
-    val context = LocalContext.current
     val imeController = LocalImeController.current
-    val keyboardManager by context.keyboardManager()
 
     val actionArrangement by prefs.smartbar.actionArrangement.collectAsState()
 
     val dynamicActions = actionArrangement.dynamicActions
+    val smartbarVisibleDynamicActionsCount by imeController.activeSmartbarVisibleDynamicActionsCount.collectAsState()
     val dynamicActionsCountToShow = when {
         dynamicActions.isEmpty() -> 0
         else -> {
-            (dynamicActions.size - keyboardManager.smartbarVisibleDynamicActionsCount).coerceIn(dynamicActions.indices)
+            (dynamicActions.size - smartbarVisibleDynamicActionsCount).coerceIn(dynamicActions.indices)
         }
     }
     val visibleActions = remember(actionArrangement, dynamicActionsCountToShow) {

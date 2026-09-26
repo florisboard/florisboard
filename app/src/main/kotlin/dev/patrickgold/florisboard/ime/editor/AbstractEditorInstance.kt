@@ -121,7 +121,7 @@ abstract class AbstractEditorInstance(context: Context) {
         if (ic == null || selection.isNotValid || editorInfo.isRawInputEditor) {
             activeCursorCapsMode = InputAttributes.CapsMode.NONE
             activeContent = EditorContent.Unspecified
-            keyboardManager.reevaluateInputShiftState()
+            //keyboardManager.reevaluateInputShiftState()
             return
         }
 
@@ -149,7 +149,7 @@ abstract class AbstractEditorInstance(context: Context) {
             )
             activeCursorCapsMode = content.cursorCapsMode()
             activeContent = content
-            keyboardManager.reevaluateInputShiftState()
+            // keyboardManager.reevaluateInputShiftState()
             ic.setComposingRegion(content.composing)
         }
     }
@@ -169,7 +169,7 @@ abstract class AbstractEditorInstance(context: Context) {
         if (ic == null || newSelection.isNotValid || editorInfo.isRawInputEditor) {
             activeCursorCapsMode = InputAttributes.CapsMode.NONE
             activeContent = EditorContent.Unspecified
-            keyboardManager.reevaluateInputShiftState()
+            // keyboardManager.reevaluateInputShiftState()
             return
         }
 
@@ -183,7 +183,7 @@ abstract class AbstractEditorInstance(context: Context) {
         if (expected != null) {
             activeCursorCapsMode = expected.cursorCapsMode()
             activeContent = expected
-            keyboardManager.reevaluateInputShiftState()
+            // keyboardManager.reevaluateInputShiftState()
             return
         }
 
@@ -203,7 +203,7 @@ abstract class AbstractEditorInstance(context: Context) {
             )
             activeCursorCapsMode = content.cursorCapsMode()
             activeContent = content
-            keyboardManager.reevaluateInputShiftState()
+            // keyboardManager.reevaluateInputShiftState()
             if (content.composing != composing) {
                 ic.setComposingRegion(content.composing)
             }
