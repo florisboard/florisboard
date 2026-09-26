@@ -17,7 +17,7 @@
 package org.florisboard.lib.snygg.value
 
 import androidx.compose.ui.graphics.Color
-import org.florisboard.lib.color.ColorPalette
+import org.florisboard.lib.snygg.color.ColorPalette
 import kotlin.math.roundToInt
 
 sealed interface SnyggAppearanceValue : SnyggValue

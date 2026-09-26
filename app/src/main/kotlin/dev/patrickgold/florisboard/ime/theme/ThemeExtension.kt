@@ -28,7 +28,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
-import org.florisboard.lib.color.MaterialYouFlags
+import org.florisboard.lib.snygg.color.MaterialYouFlags
 
 class ThemeExtension(
     override val manifest: Manifest,

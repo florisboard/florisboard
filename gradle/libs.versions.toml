@@ -14,6 +14,9 @@ androidx-profileinstaller = "1.4.1"
 androidx-room = "2.8.4"
 androidx-window = "1.5.1"
 cache4k = "0.14.0"
+compose-multiplatform = "1.12.1"
+compose-multiplatform-material3 = "1.9.0"
+compose-multiplatform-material-icons-extended = "1.7.3"
 coil = "3.4.0"
 k3lp = "0.0.2-a3-SNAPSHOT"
 kotlin = "2.4.20"
@@ -62,12 +65,16 @@ androidx-window-core = { module = "androidx.window:window-core", version.ref = "
 cache4k = { module = "io.github.reactivecircus.cache4k:cache4k", version.ref = "cache4k" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-gif = { module = "io.coil-kt.coil3:coil-gif", version.ref = "coil" }
+compose-multiplatform-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose-multiplatform" }
+compose-multiplatform-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose-multiplatform" }
+compose-multiplatform-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "compose-multiplatform-material-icons-extended" }
+compose-multiplatform-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-multiplatform-material3" }
 k3lp-core = { module = "org.k3lp:k3lp-core", version.ref = "k3lp" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-io = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinx-io" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
-material-kolor = { module = "com.materialkolor:material-kolor-android", version.ref = "material-kolor" }
+material-kolor = { module = "com.materialkolor:material-kolor", version.ref = "material-kolor" }
 mikepenz-aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "mikepenz-aboutlibraries" }
 mikepenz-aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "mikepenz-aboutlibraries" }
 patrickgold-compose-tooltip = { module = "dev.patrickgold.compose.tooltip:tooltip", version.ref = "patrickgold-compose-tooltip" }
@@ -93,8 +100,11 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 # Main
 agp-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 agp-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+agp-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-gradle-plugin" }
 agp-test = { id = "com.android.test", version.ref = "android-gradle-plugin" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

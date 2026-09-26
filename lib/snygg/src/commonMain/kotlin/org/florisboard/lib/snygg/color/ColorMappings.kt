@@ -14,22 +14,16 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.color
+package org.florisboard.lib.snygg.color
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.isUnspecified
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalResources
 import com.materialkolor.Contrast
 import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamicColorScheme
 import com.materialkolor.dynamiccolor.ColorSpec
 import com.materialkolor.scheme.DynamicScheme
-import org.florisboard.lib.android.AndroidVersion
 
 val DEFAULT_GREEN = Color(0xFF4CAF50)
 
@@ -58,29 +52,10 @@ object ColorMappings {
     ).toTypedArray()
 }
 
-@Composable
-@RequiresApi(Build.VERSION_CODES.S)
-fun getSystemAccent(): Color {
-    val context = LocalContext.current
-    val resources = LocalResources.current
 
-    return Color(resources.getColor(android.R.color.system_accent1_500, context.theme))
-}
 
 @Composable
-fun systemAccentOrDefault(default: Color): Color {
-    return when {
-        default.isUnspecified && AndroidVersion.ATLEAST_API31_S -> {
-            getSystemAccent()
-        }
-        default.isUnspecified -> {
-            DEFAULT_GREEN
-        }
-        else -> {
-            default
-        }
-    }
-}
+expect fun systemAccentOrDefault(default: Color): Color
 
 
 /**

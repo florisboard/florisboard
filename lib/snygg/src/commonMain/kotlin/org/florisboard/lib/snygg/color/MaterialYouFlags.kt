@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.color
+package org.florisboard.lib.snygg.color
 
 import androidx.compose.runtime.saveable.Saver
 import com.materialkolor.Contrast

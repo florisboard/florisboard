@@ -46,8 +46,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.takeOrElse
 import com.materialkolor.dynamicColorScheme
 import kotlinx.coroutines.runBlocking
-import org.florisboard.lib.color.MaterialYouFlags
-import org.florisboard.lib.color.systemAccentOrDefault
 import org.florisboard.lib.snygg.CompiledFontFamilyData
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggRule
@@ -56,6 +54,8 @@ import org.florisboard.lib.snygg.SnyggSinglePropertySet
 import org.florisboard.lib.snygg.SnyggSinglePropertySetEditor
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggTheme
+import org.florisboard.lib.snygg.color.MaterialYouFlags
+import org.florisboard.lib.snygg.color.systemAccentOrDefault
 import org.florisboard.lib.snygg.value.SnyggAssetResolver
 import org.florisboard.lib.snygg.value.SnyggDefaultAssetResolver
 import org.florisboard.lib.snygg.value.SnyggDpSizeValue

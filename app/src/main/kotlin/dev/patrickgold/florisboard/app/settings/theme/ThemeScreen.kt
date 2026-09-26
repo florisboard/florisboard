@@ -45,7 +45,7 @@ import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.LocalTimePickerPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
-import org.florisboard.lib.color.ColorMappings
+import org.florisboard.lib.snygg.color.ColorMappings
 import org.florisboard.lib.compose.stringRes
 
 @Composable

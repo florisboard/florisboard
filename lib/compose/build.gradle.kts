@@ -69,7 +69,6 @@ configure<LibraryExtension> {
 
 dependencies {
     implementation(projects.lib.android)
-    implementation(projects.lib.color)
     implementation(projects.lib.kotlin)
 
     val composeBom = platform(libs.androidx.compose.bom)

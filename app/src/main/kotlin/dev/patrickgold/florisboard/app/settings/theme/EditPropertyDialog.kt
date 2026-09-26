@@ -87,7 +87,7 @@ import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import dev.patrickgold.jetpref.material.ui.rememberJetPrefColorPickerState
 import java.io.File
-import org.florisboard.lib.color.ColorPalette
+import org.florisboard.lib.snygg.color.ColorPalette
 import org.florisboard.lib.compose.DpSizeSaver
 import org.florisboard.lib.compose.FlorisChip
 import org.florisboard.lib.compose.FlorisIconButton

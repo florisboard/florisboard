@@ -22,13 +22,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.request.ImageRequest
-import coil3.request.allowHardware
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
@@ -71,7 +69,6 @@ fun SnyggBox(
 ) {
     ProvideSnyggStyle(elementName, attributes, selector) { style ->
         val assetResolver = LocalSnyggAssetResolver.current
-        val context = LocalContext.current
         val imagePath = when {
             supportsBackgroundImage -> {
                 style.backgroundImage.uriOrNull()?.let { imageUri ->
@@ -97,10 +94,7 @@ fun SnyggBox(
                         .matchParentSize()
                         .clip(style.shape()),
                     // https://github.com/coil-kt/coil/issues/159
-                    model = ImageRequest.Builder(context)
-                        .data(imagePath)
-                        .allowHardware(false) // slower, but hey at least it doesn't crash out of the blue
-                        .build(),
+                    model = rememberImageRequest(imagePath),
                     contentScale = style.contentScale(),
                     contentDescription = backgroundImageDescription,
                 )
@@ -109,6 +103,9 @@ fun SnyggBox(
         }
     }
 }
+
+@Composable
+expect fun rememberImageRequest(imagePath: String): ImageRequest
 
 @Preview
 @Composable
