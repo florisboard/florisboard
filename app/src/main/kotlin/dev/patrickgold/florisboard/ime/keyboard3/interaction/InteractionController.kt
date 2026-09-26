@@ -17,7 +17,10 @@
 package dev.patrickgold.florisboard.ime.keyboard3.interaction
 
 import androidx.compose.runtime.staticCompositionLocalOf
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionController.ToastHandle
 import kotlinx.coroutines.flow.StateFlow
+import org.florisboard.lib.kotlin.CurlyArg
+import org.florisboard.lib.kotlin.curlyFormat
 import org.k3lp.lib.text.K3StringOrDescriptor
 
 val LocalInteractionController = staticCompositionLocalOf<InteractionController> {
@@ -53,4 +56,33 @@ interface InteractionController {
         kind: InteractionKind,
         output: K3StringOrDescriptor? = null,
     )
+
+    suspend fun showToast(text: String, type: ToastType): ToastHandle
+
+    enum class ToastType {
+        SHORT,
+        LONG;
+    }
+
+    interface ToastHandle {
+        suspend fun hide()
+    }
+}
+
+suspend fun InteractionController.showShortToast(text: String): ToastHandle {
+    return showToast(text, InteractionController.ToastType.SHORT)
+}
+
+suspend fun InteractionController.showShortToast(format: String, vararg args: CurlyArg): ToastHandle {
+    val text = format.curlyFormat(*args)
+    return showToast(text, InteractionController.ToastType.SHORT)
+}
+
+suspend fun InteractionController.showLongToast(text: String): ToastHandle {
+    return showToast(text, InteractionController.ToastType.LONG)
+}
+
+suspend fun InteractionController.showLongToast(format: String, vararg args: CurlyArg): ToastHandle {
+    val text = format.curlyFormat(*args)
+    return showToast(text, InteractionController.ToastType.LONG)
 }

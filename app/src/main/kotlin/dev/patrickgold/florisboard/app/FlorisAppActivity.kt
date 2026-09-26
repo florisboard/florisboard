@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,6 +54,7 @@ import dev.patrickgold.florisboard.ime.io.readFromUri
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.rememberAndroidInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.inferFlorisApplication
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -67,7 +68,6 @@ import java.util.concurrent.atomic.AtomicBoolean
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.hideAppIcon
 import org.florisboard.lib.android.showAppIcon
-import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.compose.ProvideLocalizedResources
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.stringRes
@@ -235,7 +235,7 @@ class FlorisAppActivity : ComponentActivity() {
                         storage.readFromUri(uri, workspaceRef)
                         navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, workspaceRef.pathName))
                     } catch (e: Throwable) {
-                        appContext.showLongToast("Failed to read uri from intent: ${e.message}")
+                        interactionController.showLongToast("Failed to read uri from intent: ${e.message}")
                     }
                 }
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -84,17 +84,15 @@ import androidx.emoji2.text.EmojiCompat
 import androidx.emoji2.widget.EmojiTextView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionKind
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showShortToast
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidKeyguardManager
-import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.compose.florisScrollbar
 import org.florisboard.lib.compose.header
@@ -530,7 +528,6 @@ private fun EmojiVariationsPopup(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun EmojiHistoryPopup(
     emoji: Emoji,
@@ -542,7 +539,7 @@ private fun EmojiHistoryPopup(
     val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
     val emojiKeyHeight = FlorisImeSizing.smartbarHeight
-    val context = LocalContext.current
+    val interactionController = LocalInteractionController.current
     val pinnedUS by prefs.emoji.historyPinnedUpdateStrategy.collectAsState()
     val recentUS by prefs.emoji.historyRecentUpdateStrategy.collectAsState()
     val showMoveLeft = isCurrentlyPinned && !pinnedUS.isAutomatic || !recentUS.isAutomatic
@@ -617,12 +614,13 @@ private fun EmojiHistoryPopup(
                         },
                     )
                 }
+                val actionMsg = stringRes(R.string.emoji__history__removal_success_message)
                 Action(
                     icon = Icons.Outlined.Delete,
                     action = {
                         EmojiHistoryHelper.removeEmoji(prefs, emoji)
-                        context.showShortToast(
-                            R.string.emoji__history__removal_success_message,
+                        interactionController.showShortToast(
+                            actionMsg,
                             "emoji" to emoji.value,
                         )
                     },

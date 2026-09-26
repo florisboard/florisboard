@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.app.settings.theme
 
 import android.icu.lang.UCharacter
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.RepeatMode
@@ -44,7 +43,6 @@ import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Pageview
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -57,6 +55,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -70,6 +69,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showShortToast
 import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
@@ -82,7 +84,7 @@ import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import dev.patrickgold.jetpref.material.ui.JetPrefTextFieldDefaults
-import org.florisboard.lib.android.showShortToastSync
+import kotlinx.coroutines.launch
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.compose.FlorisChip
 import org.florisboard.lib.compose.FlorisIconButton
@@ -103,7 +105,6 @@ private val TransparentTextSelectionColors = TextSelectionColors(
 )
 internal val SnyggEmptyRuleForAdding = SnyggElementRule(elementName = "--select--")
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun EditRuleDialog(
     initRule: SnyggRule,
@@ -357,7 +358,6 @@ internal fun EditRuleDialog(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun EditCodeValueDialog(
     codeValue: String,
@@ -367,6 +367,8 @@ private fun EditCodeValueDialog(
     onDismiss: () -> Unit,
 ) {
     val context = LocalContext.current
+    val interactionController = LocalInteractionController.current
+    val scope = rememberCoroutineScope()
 
     var inputCodeString by rememberSaveable(codeValue) {
         val str = if (codeValue == KeyCode.UNSPECIFIED.toString()) "" else codeValue
@@ -386,7 +388,7 @@ private fun EditCodeValueDialog(
     val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
 
     var isRecordingKey by remember { mutableStateOf(false) }
-    var lastRecordingToast by remember { mutableStateOf<Toast?>(null) }
+    var lastRecordingToast by remember { mutableStateOf<InteractionController.ToastHandle?>(null) }
     val recordingKeyColor = if (isRecordingKey) {
         rememberInfiniteTransition().animateColor(
             initialValue = LocalContentColor.current,
@@ -400,17 +402,20 @@ private fun EditCodeValueDialog(
         LocalContentColor.current
     }
 
+    val startRecordingMsg = stringRes(R.string.settings__theme_editor__code_recording_requires_default_ime_floris)
     fun requestStartRecording() {
         if (isRecordingKey) {
             isRecordingKey = false
             return
         }
         if (!isFlorisBoardEnabled || !isFlorisBoardSelected) {
-            lastRecordingToast?.cancel()
-            lastRecordingToast = context.showShortToastSync(
-                R.string.settings__theme_editor__code_recording_requires_default_ime_floris,
-                "app_name" to context.stringRes(R.string.floris_app_name),
-            )
+            scope.launch {
+                lastRecordingToast?.hide()
+                lastRecordingToast = interactionController.showShortToast(
+                    startRecordingMsg,
+                    "app_name" to context.stringRes(R.string.floris_app_name),
+                )
+            }
             InputMethodUtils.showImePicker(context)
             return
         }

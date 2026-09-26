@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,10 +39,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
@@ -53,11 +53,13 @@ import dev.patrickgold.florisboard.ime.extension.ExtensionMaintainer
 import dev.patrickgold.florisboard.ime.extension.ExtensionMeta
 import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
 import dev.patrickgold.florisboard.ime.io.FlorisRef
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import org.florisboard.lib.android.showLongToastSync
+import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.FlorisOutlinedButton
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
 import org.florisboard.lib.compose.stringRes
@@ -80,7 +82,9 @@ private fun ViewScreen(extension: Extension<*>) = FlorisScreen {
     title = extension.manifest.meta.title
 
     val extensionController = LocalExtensionController.current
+    val interactionController = LocalInteractionController.current
     val navController = LocalNavController.current
+    val scope = rememberCoroutineScope()
 
     val meta = extension.manifest.meta
     var extToDelete by remember { mutableStateOf<Extension<*>?>(null) }
@@ -196,20 +200,22 @@ private fun ViewScreen(extension: Extension<*>) = FlorisScreen {
         }
 
         if (extToDelete != null) {
-            val context = LocalContext.current
+            val snackbarMsg = stringRes(R.string.error__snackbar_message)
             FlorisConfirmDeleteDialog(
                 onConfirm = {
-                    runCatching {
-                        extensionController.delete(extToDelete!!)
-                    }.onSuccess {
-                        navController.popBackStack()
-                    }.onFailure { error ->
-                        context.showLongToastSync(
-                            R.string.error__snackbar_message,
-                            "error_message" to error.localizedMessage,
-                        )
+                    scope.launch {
+                        runCatching {
+                            extensionController.delete(extToDelete!!)
+                        }.onSuccess {
+                            navController.popBackStack()
+                        }.onFailure { error ->
+                            interactionController.showLongToast(
+                                snackbarMsg,
+                                "error_message" to error.localizedMessage,
+                            )
+                        }
+                        extToDelete = null
                     }
-                    extToDelete = null
                 },
                 onDismiss = { extToDelete = null },
                 what = extToDelete!!.manifest.meta.title,

@@ -16,10 +16,12 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.interaction
 
+import android.content.Context
 import android.media.AudioManager
 import android.view.HapticFeedbackConstants
 import android.view.View
 import android.view.ViewConfiguration
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,13 +30,16 @@ import androidx.compose.ui.platform.LocalView
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionController.ToastHandle
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.withContext
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.systemServiceOrNull
 import org.k3lp.lib.text.K3StringOrDescriptor
@@ -42,6 +47,7 @@ import java.lang.ref.WeakReference
 import kotlin.time.Duration.Companion.milliseconds
 
 private class AndroidInteractionController(
+    val context: WeakReference<Context>,
     val composeView: WeakReference<View>,
     val audioManager: WeakReference<AudioManager>,
     scope: CoroutineScope,
@@ -168,6 +174,19 @@ private class AndroidInteractionController(
         composeView.performHapticFeedback(hfc)
     }
 
+    override suspend fun showToast(text: String, type: InteractionController.ToastType): ToastHandle {
+        val context = context.get() ?: return ToastHandleImpl.NoToast
+        val duration = when (type) {
+            InteractionController.ToastType.SHORT -> Toast.LENGTH_SHORT
+            InteractionController.ToastType.LONG -> Toast.LENGTH_LONG
+        }
+        return withContext(Dispatchers.Main.immediate) {
+            val toast = Toast.makeText(context, text, duration)
+            toast.show()
+            ToastHandleImpl(toast)
+        }
+    }
+
     companion object {
         private val HFC_KEYBOARD_PRESS: Int = when {
             AndroidVersion.ATLEAST_API27_O_MR1 -> HapticFeedbackConstants.KEYBOARD_PRESS
@@ -185,6 +204,16 @@ private class AndroidInteractionController(
         private val HFC_TEXT_HANDLE_MOVE: Int = when {
             AndroidVersion.ATLEAST_API27_O_MR1 -> HapticFeedbackConstants.TEXT_HANDLE_MOVE
             else -> HapticFeedbackConstants.KEYBOARD_TAP
+        }
+    }
+
+    private class ToastHandleImpl(val toast: Toast?) : ToastHandle {
+        override suspend fun hide() {
+            toast?.cancel()
+        }
+
+        companion object {
+            val NoToast = ToastHandleImpl(null)
         }
     }
 }
@@ -206,6 +235,7 @@ fun rememberAndroidInteractionController(
 
     return remember {
         AndroidInteractionController(
+            WeakReference(context),
             WeakReference(composeView),
             WeakReference(audioManager),
             scope,
