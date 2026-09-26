@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,9 +27,15 @@ import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLU
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
+import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
+import dev.patrickgold.florisboard.ime.keyboard3.touch.ShiftKeyBehavior
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
+import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionTimingOptions
+import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyAction
+import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyArrangement
+import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
@@ -43,13 +49,9 @@ import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionJsonConfig
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.KeyHintConfiguration
-import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
-import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
-import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
 import dev.patrickgold.florisboard.ime.theme.extCoreTheme
 import dev.patrickgold.florisboard.ime.window.ImeWindowConfig
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.annotations.Preferences
 import dev.patrickgold.jetpref.datastore.jetprefDataStoreOf
@@ -153,10 +155,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
 
     val correction = Correction()
     inner class Correction {
-        val autoCapitalization = boolean(
-            key = "correction__auto_capitalization",
-            default = true,
-        )
         val autoSpacePunctuation = boolean(
             key = "correction__auto_space_punctuation",
             default = false,
@@ -164,10 +162,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val doubleSpacePeriod = boolean(
             key = "correction__double_space_period",
             default = true,
-        )
-        val rememberCapsLockState = boolean(
-            key = "correction__remember_caps_lock_state",
-            default = false,
         )
     }
 
@@ -461,37 +455,9 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "keyboard__number_row",
             default = false,
         )
-        val hintedNumberRowEnabled = boolean(
-            key = "keyboard__hinted_number_row_enabled",
-            default = true,
-        )
-        val hintedNumberRowMode = enum(
-            key = "keyboard__hinted_number_row_mode",
-            default = KeyHintMode.SMART_PRIORITY,
-        )
-        val hintedSymbolsEnabled = boolean(
-            key = "keyboard__hinted_symbols_enabled",
-            default = true,
-        )
-        val hintedSymbolsMode = enum(
-            key = "keyboard__hinted_symbols_mode",
-            default = KeyHintMode.SMART_PRIORITY,
-        )
-        val utilityKeyEnabled = boolean(
-            key = "keyboard__utility_key_enabled",
-            default = true,
-        )
-        val utilityKeyAction = enum(
-            key = "keyboard__utility_key_action",
-            default = UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
-        )
         val spaceBarMode = enum(
             key = "keyboard__space_bar_display_mode",
             default = SpaceBarMode.CURRENT_LANGUAGE,
-        )
-        val capitalizationBehavior = enum(
-            key = "keyboard__capitalization_behavior",
-            default = CapitalizationBehavior.CAPSLOCK_BY_DOUBLE_TAP,
         )
         val fontSizeMultiplierPortrait = int(
             key = "keyboard__font_size_multiplier_portrait",
@@ -517,14 +483,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "keyboard__popup_enabled",
             default = true,
         )
-        val mergeHintPopupsEnabled = boolean(
-            key = "keyboard__merge_hint_popups_enabled",
-            default = false,
-        )
-        val longPressDelay = int(
-            key = "keyboard__long_press_delay",
-            default = 300,
-        )
         val spaceBarSwitchesToCharacters = boolean(
             key = "keyboard__space_bar_switches_to_characters",
             default = true,
@@ -534,19 +492,54 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             default = IncognitoDisplayMode.DISPLAY_BEHIND_KEYBOARD,
         )
 
-        fun keyHintConfiguration(): KeyHintConfiguration {
-            return KeyHintConfiguration(
-                numberHintMode = when {
-                    hintedNumberRowEnabled.get() -> hintedNumberRowMode.get()
-                    else -> KeyHintMode.DISABLED
-                },
-                symbolHintMode = when {
-                    hintedSymbolsEnabled.get() -> hintedSymbolsMode.get()
-                    else -> KeyHintMode.DISABLED
-                },
-                mergeHintPopups = mergeHintPopupsEnabled.get(),
-            )
-        }
+        val fnKeyEnabled = boolean(
+            key = "keyboard__fn_key_enabled",
+            default = TouchModelOptions.Default.fnKeyEnabled,
+        )
+        val fnKeyArrangement = custom(
+            key = "keyboard__fn_key_arrangement",
+            default = TouchModelOptions.Default.fnKeyArrangement,
+            serializer = FnKeyArrangement.Serializer,
+        )
+
+        val longPressTimeoutUseSystem = boolean(
+            key = "keyboard__long_press_timeout_use_system",
+            default = true,
+        )
+        val longPressTimeout = int(
+            key = "keyboard__long_press_timeout",
+            default = InteractionTimingOptions.Default.longPressTimeout.inWholeMilliseconds.toInt(),
+        )
+        val longPressKeyHintEnabled = boolean(
+            key = "keyboard__long_press_key_hint_enabled",
+            default = TouchModelOptions.Default.longPressKeyHintEnabled,
+        )
+        val longPressKeyHintPlacement = enum(
+            key = "keyboard__long_press_key_hint_placement",
+            default = TouchModelOptions.Default.longPressKeyHintPlacement,
+        )
+
+        val multiTapTimeoutUseSystem = boolean(
+            key = "keyboard__multi_tap_timeout_use_system",
+            default = true,
+        )
+        val multiTapTimeout = int(
+            key = "keyboard__multi_tap_timeout",
+            default = InteractionTimingOptions.Default.multiTapTimeout.inWholeMilliseconds.toInt(),
+        )
+        val multiTapHighlightEnabled = boolean(
+            key = "keyboard__multi_tap_highlight_enabled",
+            default = TouchModelOptions.Default.multiTapHighlightEnabled,
+        )
+
+        val flickKeyHintEnabled = boolean(
+            key = "keyboard__flick_key_hint_enabled",
+            default = TouchModelOptions.Default.flickKeyHintEnabled,
+        )
+        val flickKeyHintPlacement = enum(
+            key = "keyboard__flick_key_hint_placement",
+            default = TouchModelOptions.Default.flickKeyHintPlacement,
+        )
     }
 
     val localization = Localization()
@@ -689,7 +682,7 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
     inner class Theme {
         val mode = enum(
             key = "theme__mode",
-            default = ThemeMode.FOLLOW_SYSTEM,
+            default = PreferredThemeMode.FOLLOW_SYSTEM,
         )
         val dayThemeId = custom(
             key = "theme__day_theme_id",
@@ -725,6 +718,22 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val editorLevel = enum(
             key = "theme__editor_level",
             default = SnyggLevel.ADVANCED,
+        )
+    }
+
+    val typing = Typing()
+    inner class Typing {
+        val autoCapitalization = boolean(
+            key = "typing__auto_capitalization",
+            default = true,
+        )
+        val rememberCapsLockState = boolean(
+            key = "typing__remember_caps_lock_state",
+            default = false,
+        )
+        val shiftKeyBehavior = enum(
+            key = "typing__shift_key_behavior",
+            default = ShiftKeyBehavior.CAPSLOCK_BY_DOUBLE_TAP,
         )
     }
 
@@ -867,6 +876,46 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                 } else {
                     entry.keepAsIs()
                 }
+            }
+
+            // Migrate utility key -> fn key
+            // Keep migration rules until: 0.8 dev cycle
+            "keyboard__utility_key_enabled" -> {
+                entry.transform(key = "keyboard__fn_key_enabled")
+            }
+            "keyboard__utility_key_action" -> {
+                entry.transform(
+                    key = "keyboard__fn_key_arrangement",
+                    rawValue = let {
+                        val fnKey = FnKeyArrangement(
+                            simpleAction = FnKeyAction(when (entry.rawValue) {
+                                "SWITCH_TO_EMOJIS" -> ImeActions.ShowMediaPanel
+                                "SWITCH_KEYBOARD_APP" -> ImeActions.SwitchToNextInputMethod
+                                else -> ImeActions.SwitchToNextSubtype
+                            }),
+                            longPressActions = FnKeyArrangement.Default.longPressActions,
+                        )
+                        Json.encodeToString(fnKey)
+                    },
+                )
+            }
+
+            // Migrate long press delay name
+            // Keep migration rules until: 0.8 dev cycle
+            "keyboard__long_press_delay" -> {
+                entry.transform(key = "keyboard__long_press_timeout")
+            }
+
+            // Migrate shift/caps-related prefs to typing
+            // Keep migration rules until: 0.8 dev cycle
+            "correction__auto_capitalization" -> {
+                entry.transform(key = "typing__auto_capitalization")
+            }
+            "correction__remember_caps_lock_state" -> {
+                entry.transform(key = "typing__remember_caps_lock_state")
+            }
+            "keyboard__capitalization_behavior" -> {
+                entry.transform(key = "typing__shift_key_behavior")
             }
 
             // Default: keep entry

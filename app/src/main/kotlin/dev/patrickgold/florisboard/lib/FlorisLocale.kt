@@ -16,9 +16,6 @@
 
 package dev.patrickgold.florisboard.lib
 
-import android.content.Context
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.lib.FlorisLocale.Companion.default
 import java.util.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -132,25 +129,9 @@ class FlorisLocale private constructor(val base: Locale) {
          * Returns a list of all installed locales and custom locales.
          *
          */
-        fun extendedAvailableLocales(context: Context): List<FlorisLocale> {
+        fun extendedAvailableLocales(): List<FlorisLocale> {
             val systemLocales = installedSystemLocales()
-            val extensionManager by context.extensionManager()
-            val systemLocalesSet = buildSet {
-                for (locale in systemLocales) {
-                    add(locale.localeTag())
-                }
-            }.toSet()
-            val extraLocales = buildList {
-                for (languagePackExtension in extensionManager.languagePacks.value) {
-                    for (languagePackItem in languagePackExtension.items) {
-                        val locale = languagePackItem.locale
-                        if (from(locale.language, locale.country).localeTag() in systemLocalesSet) {
-                            add(locale.localeTag())
-                        }
-                    }
-                }
-            }.toSet()
-            return systemLocales + extraLocales.map { fromTag(it) }
+            return systemLocales
         }
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,14 +32,11 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.theme.ThemeExtensionComponent
+import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
+import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
-import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import kotlinx.coroutines.launch
@@ -63,73 +60,57 @@ fun ThemeManagerScreen(action: ThemeManagerScreenAction?) = FlorisScreen {
     previewFieldVisible = true
 
     val prefs by FlorisPreferenceStore
-    val context = LocalContext.current
-    val extensionManager by context.extensionManager()
-    val themeManager by context.themeManager()
+    val themeController = LocalThemeController.current
     val scope = rememberCoroutineScope()
 
-    val indexedThemeExtensions by extensionManager.themes.collectAsState()
-    val extGroupedThemes = remember(indexedThemeExtensions) {
-        buildMap<String, List<ThemeExtensionComponent>> {
-            for (ext in indexedThemeExtensions) {
-                put(ext.meta.id, ext.themes)
-            }
-        }.mapValues { (_, configs) -> configs.sortedBy { it.label } }
+    val themeIndex by themeController.effectiveThemeIndex.collectAsState()
+    val themeIdPref = remember(action) {
+        when (action) {
+            ThemeManagerScreenAction.SELECT_DAY -> prefs.theme.dayThemeId
+            ThemeManagerScreenAction.SELECT_NIGHT -> prefs.theme.nightThemeId
+        }
     }
-
-    fun getThemeIdPref() = when (action) {
-        ThemeManagerScreenAction.SELECT_DAY -> prefs.theme.dayThemeId
-        ThemeManagerScreenAction.SELECT_NIGHT -> prefs.theme.nightThemeId
-    }
+    val activeThemeId by themeIdPref.collectAsState()
 
     fun setTheme(extId: String, componentId: String) {
         val extComponentName = ExtensionComponentName(extId, componentId)
-        when (action) {
-            ThemeManagerScreenAction.SELECT_DAY,
-            ThemeManagerScreenAction.SELECT_NIGHT -> scope.launch {
-                getThemeIdPref().set(extComponentName)
-            }
+        scope.launch {
+            themeIdPref.set(extComponentName)
         }
-    }
-
-    val activeThemeId by when (action) {
-        ThemeManagerScreenAction.SELECT_DAY,
-        ThemeManagerScreenAction.SELECT_NIGHT
-            -> getThemeIdPref().collectAsState()
     }
 
     content {
         DisposableEffect(activeThemeId) {
-            themeManager.previewThemeId.value = activeThemeId
+            themeController.activePreviewThemeId.value = activeThemeId
             onDispose {
-                themeManager.previewThemeId.value = null
+                themeController.activePreviewThemeId.value = null
             }
         }
         val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
-        for ((extensionId, configs) in extGroupedThemes) key(extensionId) {
-            val ext = extensionManager.getExtensionById(extensionId)!!
-            FlorisOutlinedBox(
+        for ((extensionId, extension) in themeIndex.extensions) key(extensionId) {
+            val components = extension.manifest.themes.sortedBy { it.name }
+                FlorisOutlinedBox(
                 modifier = Modifier.defaultFlorisOutlinedBox(),
-                title = ext.meta.title,
+                title = extension.manifest.meta.title,
                 subtitle = extensionId,
             ) {
-                for (config in configs) key(extensionId, config.id) {
+                for (component in components) key(extensionId, component.id) {
                     JetPrefListItem(
                         modifier = Modifier.rippleClickable {
-                            setTheme(extensionId, config.id)
+                            setTheme(extensionId, component.id)
                         },
                         icon = {
                             RadioButton(
                                 selected = activeThemeId.extensionId == extensionId &&
-                                    activeThemeId.componentId == config.id,
+                                    activeThemeId.componentId == component.id,
                                 onClick = null,
                             )
                         },
-                        text = config.label,
+                        text = component.name,
                         trailing = {
                             Icon(
                                 modifier = Modifier.size(ButtonDefaults.IconSize),
-                                imageVector = if (config.isNightTheme) {
+                                imageVector = if (component.isNightTheme) {
                                     Icons.Default.DarkMode
                                 } else {
                                     Icons.Default.LightMode

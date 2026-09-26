@@ -200,6 +200,7 @@ dependencies {
     implementation(libs.k3lp.core)
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlinx.coroutines)
+    implementation(libs.kotlinx.io)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.mikepenz.aboutlibraries.core)
     implementation(libs.mikepenz.aboutlibraries.compose)
@@ -210,7 +211,6 @@ dependencies {
     implementation(libs.patrickgold.jetpref.material.ui)
 
     implementation(projects.lib.android)
-    implementation(projects.lib.color)
     implementation(projects.lib.compose)
     implementation(projects.lib.kotlin)
     implementation(projects.lib.native)

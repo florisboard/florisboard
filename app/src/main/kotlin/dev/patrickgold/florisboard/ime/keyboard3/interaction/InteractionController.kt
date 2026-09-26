@@ -16,31 +16,29 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.interaction
 
-import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.staticCompositionLocalOf
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionController.ToastHandle
+import kotlinx.coroutines.flow.StateFlow
+import org.florisboard.lib.kotlin.CurlyArg
+import org.florisboard.lib.kotlin.curlyFormat
 import org.k3lp.lib.text.K3StringOrDescriptor
-import kotlin.time.Duration
 
-val LocalInteractionController = compositionLocalOf<InteractionController> {
+val LocalInteractionController = staticCompositionLocalOf<InteractionController> {
     error("no touch feedback handler provided")
 }
 
 interface InteractionController {
-    val timingOptions: InteractionTimingOptions
+    val activeSystemTimingOptions: StateFlow<InteractionTimingOptions>
 
-    val feedbackOptions: InteractionFeedbackOptions
+    val activeTimingOptions: StateFlow<InteractionTimingOptions>
 
-    fun getKeyRepeatTimeout(output: K3StringOrDescriptor? = null): Duration
-
-    fun getKeyRepeatDelay(output: K3StringOrDescriptor? = null): Duration
-
-    fun getLongPressTimeout(output: K3StringOrDescriptor? = null): Duration
-
-    fun getMultiPressTimeout(output: K3StringOrDescriptor? = null): Duration
+    val activeFeedbackOptions: StateFlow<InteractionFeedbackOptions>
 
     fun performFeedback(
         kind: InteractionKind,
         output: K3StringOrDescriptor? = null,
     ) {
+        val feedbackOptions = activeFeedbackOptions.value
         if (feedbackOptions.isAudioFeedbackEnabled(kind)) {
             performAudioFeedback(kind, output)
         }
@@ -58,4 +56,33 @@ interface InteractionController {
         kind: InteractionKind,
         output: K3StringOrDescriptor? = null,
     )
+
+    suspend fun showToast(text: String, type: ToastType): ToastHandle
+
+    enum class ToastType {
+        SHORT,
+        LONG;
+    }
+
+    interface ToastHandle {
+        suspend fun hide()
+    }
+}
+
+suspend fun InteractionController.showShortToast(text: String): ToastHandle {
+    return showToast(text, InteractionController.ToastType.SHORT)
+}
+
+suspend fun InteractionController.showShortToast(format: String, vararg args: CurlyArg): ToastHandle {
+    val text = format.curlyFormat(*args)
+    return showToast(text, InteractionController.ToastType.SHORT)
+}
+
+suspend fun InteractionController.showLongToast(text: String): ToastHandle {
+    return showToast(text, InteractionController.ToastType.LONG)
+}
+
+suspend fun InteractionController.showLongToast(format: String, vararg args: CurlyArg): ToastHandle {
+    val text = format.curlyFormat(*args)
+    return showToast(text, InteractionController.ToastType.LONG)
 }

@@ -55,10 +55,16 @@ object ImeActions {
     val Undo = flAction("undo")
     val Redo = flAction("redo")
 
-    val LanguageSwitch = flAction("language_switch")
-    // TODO subtype rework?
-
     val Settings = flAction("settings")
+
+    val ShowSubtypePicker = flAction("show_subtype_picker")
+    val SwitchToPrevSubtype = flAction("switch_to_prev_subtype")
+    val SwitchToNextSubtype = flAction("switch_to_next_subtype")
+
+    val ShowInputMethodPicker = flAction("show_input_method_picker")
+    val SwitchToPrevInputMethod = flAction("switch_to_prev_input_method")
+    val SwitchToNextInputMethod = flAction("switch_to_next_input_method")
+
     val ToggleActionsEditor = flAction("toggle_actions_editor")
     val ToggleActionsOverflow = flAction("toggle_actions_overflow")
     val ToggleAutocorrect = flAction("toggle_autocorrect")
@@ -68,6 +74,42 @@ object ImeActions {
 
     val NoopDragMarker = flAction("noop_drag_marker")
     val NoopSpacer = flAction("noop_spacer")
+
+    /**
+     * All actions that are capable to be shown on the fn-key and/or its secondary actions.
+     *
+     * The order of actions matches the order of the actions shown during configuration of the fn-key.
+     */
+    val FnKeyCapable = listOf(
+        SwitchToNextSubtype,
+        SwitchToPrevSubtype,
+        ShowSubtypePicker,
+        SwitchToNextInputMethod,
+        SwitchToPrevInputMethod,
+        ShowInputMethodPicker,
+        ShowMediaPanel,
+        ShowClipboardPanel,
+        Settings,
+        Undo,
+        Redo,
+        ArrowDown,
+        ArrowLeft,
+        ArrowRight,
+        ArrowUp,
+        ClipboardCopy,
+        ClipboardCut,
+        ClipboardPaste,
+        ClipboardClearHistory,
+        ClipboardClearFullHistory,
+        ClipboardClearPrimaryClip,
+        SelectAll,
+        ToggleFloatingWindow,
+        ToggleCompactLayout,
+        CompactLayoutToLeft,
+        CompactLayoutToRight,
+        ToggleResizeMode,
+        ExternalVoiceInput,
+    )
 
     val Repeatable = listOf(
         ArrowDown,

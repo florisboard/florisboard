@@ -16,31 +16,32 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.extension
 
-import android.content.Context
+import android.net.Uri
+import dev.patrickgold.florisboard.ime.io.FlorisRef
+import dev.patrickgold.florisboard.ime.io.Storage
+import dev.patrickgold.florisboard.ime.io.readText
 import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.florisboard.lib.android.readText
 import org.k3lp.K3ImportResolver
 import org.k3lp.K3lp
 import org.k3lp.K3lpResult
-import org.k3lp.lib.meta.report.toPrettyString
 import org.k3lp.lib.meta.source.SourceFileRef
 import org.k3lp.lib.meta.source.TextSourceFile
 import org.k3lp.lib.text.K3Descriptor
 import org.k3lp.lib.text.WillRequireMigrationToRichErrors
-import org.k3lp.model.K3ImpliedImport
 import org.k3lp.model.K3ImpliedImports
 
 private val SCOPE_FOUNDATION = K3Descriptor("fl", "ext", "org.florisboard.k3.foundation")
 
 // TODO this is just a placeholder testing code, must be replaced by proper logic & extension-aware logic
 @OptIn(WillRequireMigrationToRichErrors::class)
-suspend fun loadFoundationKeyboard(context: Context, imeController: ImeController) {
+suspend fun loadFoundationKeyboard(imeController: ImeController, storage: Storage) {
     suspend fun loadAssetFile(path: String): TextSourceFile {
         val xml = withContext(Dispatchers.IO) {
-            context.assets.readText("ime/keyboard3/org.florisboard.k3.foundation/$path")
+            val ref = FlorisRef.assets("extensions/org.florisboard.k3.foundation/$path")
+            storage.readText(ref)
         }
         val sourceFile = TextSourceFile(object : SourceFileRef {
             override fun toString(): String {
@@ -49,16 +50,13 @@ suspend fun loadFoundationKeyboard(context: Context, imeController: ImeControlle
         }, xml)
         return sourceFile
     }
-    val importResolver = K3ImportResolver { path, _, _ ->
-        loadAssetFile("import/$path")
+    val importResolver = K3ImportResolver { path, _ ->
+        val relPath = "import/" + runCatching { Uri.parse(path).path?.removePrefix("/") ?: "" }.getOrDefault(path)
+        loadAssetFile(relPath)
     }
     val impliedImports = K3ImpliedImports(
-        displays = listOf(
-            K3ImpliedImport("displays-implied.xml", SCOPE_FOUNDATION)
-        ),
-        keys = listOf(
-            K3ImpliedImport("keys-implied.xml", SCOPE_FOUNDATION)
-        ),
+        displays = listOf("flex://org.florisboard.k3.foundation/displays-implied.xml"),
+        keys = listOf("flex://org.florisboard.k3.foundation/keys-implied.xml"),
     )
     val result = K3lp.compile(loadAssetFile("keyboard/qwertz.xml"), importResolver, impliedImports)
     for (report in result.reports) {

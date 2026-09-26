@@ -43,6 +43,7 @@ import androidx.compose.ui.text.input.getTextBeforeSelection
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
+import dev.patrickgold.florisboard.ime.io.LocalStorageController
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.ime.keyboard3.ImeEditor
@@ -70,6 +71,7 @@ fun EmojiSearchLayout(
 ) {
     val context = LocalContext.current
     val imeController = LocalImeController.current
+    val storageController = LocalStorageController.current
     val imeState by imeController.activeState.collectAsState()
 
     val prefs by FlorisPreferenceStore
@@ -104,7 +106,7 @@ fun EmojiSearchLayout(
         }
     }
     val inputMethod = remember {
-        ImeController(initialState = ImeState(editor = editor), imeController.touchModelCache)
+        ImeController(storageController, ImeState(editor = editor), imeController.touchModelCache)
     }
 
     LaunchedEffect(imeState.model) {

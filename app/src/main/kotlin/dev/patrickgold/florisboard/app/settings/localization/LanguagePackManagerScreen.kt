@@ -46,15 +46,11 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
-import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.ext.Extension
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponentName
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefListItem
-import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.FlorisTextButton
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
@@ -68,7 +64,7 @@ enum class LanguagePackManagerScreenAction(val id: String) {
 // TODO: this file is based on ThemeManagerScreen.kt and can arguably be merged.
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
-fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = FlorisScreen {
+fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) {} /*= FlorisScreen {
     title = stringRes(when (action) {
         LanguagePackManagerScreenAction.MANAGE -> R.string.settings__localization__language_pack_title
         else -> error("LanguagePack manager screen action must not be null")
@@ -211,3 +207,4 @@ fun LanguagePackManagerScreen(action: LanguagePackManagerScreenAction?) = Floris
         }
     }
 }
+*/

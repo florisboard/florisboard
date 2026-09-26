@@ -42,7 +42,6 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.keyboard.LayoutType
 import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.subtypeManager
@@ -121,6 +120,7 @@ fun LocalizationScreen() = FlorisScreen {
                     text = stringRes(R.string.settings__localization__subtype_no_subtypes_configured_warning),
                 )
             } else {
+                /*
                 val currencySets by keyboardManager.resources.currencySets.collectAsState()
                 val layouts by keyboardManager.resources.layouts.collectAsState()
                 val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
@@ -152,6 +152,7 @@ fun LocalizationScreen() = FlorisScreen {
                         )
                     )
                 }
+                 */
             }
         }
     }

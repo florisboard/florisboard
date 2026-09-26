@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3
 
-import dev.patrickgold.florisboard.ime.keyboard.ImeStateFlags
 import org.k3lp.model.K3Model
 import org.k3lp.model.layer.K3LayerId
 import org.k3lp.runtime.K3Content

@@ -31,3 +31,7 @@ object ImeLayerIds {
 
     val Numrow = K3LayerId("numrow")
 }
+
+fun K3LayerId.isTextLayer(): Boolean {
+    return this == ImeLayerIds.Base || this == ImeLayerIds.Shift || this == ImeLayerIds.Caps
+}

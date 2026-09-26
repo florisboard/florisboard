@@ -42,7 +42,6 @@ import org.florisboard.lib.android.AndroidClipboardManager
 import org.florisboard.lib.android.AndroidClipboardManager_OnPrimaryClipChangedListener
 import org.florisboard.lib.android.clearPrimaryClipAnyApi
 import org.florisboard.lib.android.setOrClearPrimaryClip
-import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.tryOrNull
 
@@ -379,7 +378,8 @@ class ClipboardManager(
         val editorInstance by appContext.editorInstance()
         editorInstance.commitClipboardItem(item).also { result ->
             if (!result) {
-                appContext.showShortToastSync("Failed to paste item.")
+                // TODO we have no access to interactionController here
+                //appContext.showShortToastSync("Failed to paste item.")
             }
         }
     }

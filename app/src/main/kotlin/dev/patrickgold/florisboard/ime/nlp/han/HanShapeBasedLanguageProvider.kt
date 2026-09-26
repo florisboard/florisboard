@@ -20,13 +20,10 @@ import android.content.Context
 import android.database.sqlite.SQLiteException
 import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
-import dev.patrickgold.florisboard.ime.nlp.LanguagePackComponent
-import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
@@ -41,6 +38,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/*
 class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
         // Default user ID used for all subtypes, unless otherwise specified.
@@ -304,3 +302,4 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
     override val forcesSuggestionOn
         get() = true
 }
+ */

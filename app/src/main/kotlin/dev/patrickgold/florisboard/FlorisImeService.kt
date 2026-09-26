@@ -46,13 +46,13 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
-import dev.patrickgold.florisboard.ime.keyboard.isFullscreenInputRequired
+import dev.patrickgold.florisboard.ime.keyboard3.isFullscreenInputRequired
 import dev.patrickgold.florisboard.ime.keyboard3.ImeEditor
-import dev.patrickgold.florisboard.ime.keyboard3.extension.loadFoundationKeyboard
 import dev.patrickgold.florisboard.ime.landscapeinput.ExtractedInputRootView
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.lifecycle.LifecycleInputMethodService
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
+import dev.patrickgold.florisboard.ime.smartbar.createInlineSuggestionUiStyleBundle
 import dev.patrickgold.florisboard.ime.theme.WallpaperChangeReceiver
 import dev.patrickgold.florisboard.ime.window.ImeRootView
 import dev.patrickgold.florisboard.ime.window.ImeWindowController
@@ -64,14 +64,10 @@ import dev.patrickgold.florisboard.lib.devtools.flogWarning
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemServiceOrNull
 import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
@@ -252,16 +248,20 @@ class FlorisImeService : LifecycleInputMethodService() {
                 }
             }
         }
-        showShortToastSync("Failed to find voice IME, do you have one installed?")
+        // TODO we have no access to interactionController here
+        // showShortToastSync("Failed to find voice IME, do you have one installed?")
         return false
     }
 
     private val prefs by FlorisPreferenceStore
+    private val appContext = inferFlorisApplication()
+    val storageController = appContext.storageController
+    val imeController = appContext.imeController
+    val themeController = appContext.themeController
+
     val editorInstance by editorInstance()
-    val imeController by imeController()
     private val nlpManager by nlpManager()
     private val subtypeManager by subtypeManager()
-    private val themeManager by themeManager()
 
     val windowController = ImeWindowController(prefs, lifecycleScope)
 
@@ -308,10 +308,6 @@ class FlorisImeService : LifecycleInputMethodService() {
             updateInputViewShown()
         }
 
-        lifecycleScope.launch(Dispatchers.Default) {
-            loadFoundationKeyboard(this@FlorisImeService, imeController)
-        }
-
         @Suppress("DEPRECATION") // We do not retrieve the wallpaper but only listen to changes
         registerReceiver(wallpaperChangeReceiver, IntentFilter(Intent.ACTION_WALLPAPER_CHANGED))
     }
@@ -351,7 +347,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         super.onConfigurationChanged(newConfig)
         systemLocalesFlow.value = newConfig.locales
         windowController.onConfigurationChanged(newConfig)
-        themeManager.configurationChangeCounter.update { it + 1 }
     }
 
     override fun onDestroy() {
@@ -473,7 +468,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
 
         flogInfo(LogTopic.IMS_EVENTS) { "Creating inline suggestions request" }
-        val stylesBundle = themeManager.createInlineSuggestionUiStyleBundle(this)
+        val stylesBundle = createInlineSuggestionUiStyleBundle(this)
         if (stylesBundle == null) {
             flogWarning(LogTopic.IMS_EVENTS) { "Failed to retrieve inline suggestions style bundle" }
             return null
