@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,9 +95,11 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showShortToast
+import dev.patrickgold.florisboard.ime.keyboard3.ui.ImeKeyButton
 import dev.patrickgold.florisboard.ime.smartbar.AnimationDuration
 import dev.patrickgold.florisboard.ime.smartbar.VerticalEnterTransition
 import dev.patrickgold.florisboard.ime.smartbar.VerticalExitTransition
@@ -194,8 +196,7 @@ fun ClipboardInputLayout(
                 onClick = {
                     imeController.updateStateBlocking {
                         state = state.copy(
-                            flags = state.flags
-                                .withImeUiMode(ImeUiMode.TEXT),
+                            flags = state.flags.withImeUiMode(ImeUiMode.TEXT),
                         )
                     }
                 },
@@ -248,16 +249,11 @@ fun ClipboardInputLayout(
                     },
                 )
             }
-            /*
-            KeyboardLikeButton(
-                modifier = sizeModifier,
-                inputEventDispatcher = keyboardManager.inputEventDispatcher,
-                keyData = TextKeyData.DELETE,
+            ImeKeyButton(
                 elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
-            ) {
-                SnyggIcon(imageVector = Icons.AutoMirrored.Outlined.Backspace)
-            }
-             */
+                output = ImeActions.Backspace,
+                modifier = sizeModifier,
+            )
         }
     }
 

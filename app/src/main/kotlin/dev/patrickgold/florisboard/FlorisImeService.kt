@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -259,7 +259,6 @@ class FlorisImeService : LifecycleInputMethodService() {
     val imeController = appContext.imeController
     val themeController = appContext.themeController
 
-    val editorInstance by editorInstance()
     private val nlpManager by nlpManager()
     private val subtypeManager by subtypeManager()
 
@@ -449,7 +448,11 @@ class FlorisImeService : LifecycleInputMethodService() {
 
     override fun onUpdateExtractingVisibility(info: EditorInfo?) {
         if (info != null) {
-            editorInstance.handleStartInputView(FlorisEditorInfo.wrap(info), isRestart = true)
+            val ic = WeakReference(currentInputConnection)
+            val editorInfo = FlorisEditorInfo.wrap(info)
+            imeController.updateStateBlocking {
+                handleStartInputView(ic, editorInfo)
+            }
         }
         when (prefs.keyboard.landscapeInputUiMode.get()) {
             LandscapeInputUiMode.DYNAMICALLY_SHOW -> super.onUpdateExtractingVisibility(info)

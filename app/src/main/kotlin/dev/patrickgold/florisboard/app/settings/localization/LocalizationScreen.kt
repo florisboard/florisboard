@@ -42,7 +42,6 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
@@ -64,7 +63,6 @@ internal val SubtypeSaver = Saver<MutableState<Subtype?>, String>(
     },
 )
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LocalizationScreen() = FlorisScreen {
     title = stringRes(R.string.settings__localization__title)
@@ -73,7 +71,6 @@ fun LocalizationScreen() = FlorisScreen {
 
     val navController = LocalNavController.current
     val context = LocalContext.current
-    val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
     var chosenSubtypeToDelete: Subtype? by rememberSaveable(saver = SubtypeSaver) { mutableStateOf(null) }
 

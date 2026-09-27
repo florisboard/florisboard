@@ -39,6 +39,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
@@ -62,6 +63,7 @@ val CandidatesRowScrollbarHeight = 2.dp
 @Composable
 fun CandidatesRow(modifier: Modifier = Modifier) {
     val prefs by FlorisPreferenceStore
+    val imeController = LocalImeController.current
     val interactionController = LocalInteractionController.current
     val context = LocalContext.current
     val nlpManager by context.nlpManager()
@@ -118,8 +120,10 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                     candidate = candidate,
                     displayMode = displayMode,
                     onClick = {
-                        // Can't use candidate directly
-                        // TODO keyboardManager.commitCandidate(candidates[n])
+                        imeController.updateStateBlocking {
+                            // Can't use candidate directly
+                            emitCandidate(candidates[n])
+                        }
                     },
                     onLongPress = {
                         // Can't use candidate directly

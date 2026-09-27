@@ -19,12 +19,12 @@ package dev.patrickgold.florisboard.ime.media.emoji
 import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.nlp.EmojiSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import io.github.reactivecircus.cache4k.Cache
+import org.k3lp.runtime.K3Content
 
 /**
  * Provides emoji suggestions within a text input context.
@@ -56,14 +56,14 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
 
     override suspend fun suggest(
         subtype: Subtype,
-        content: EditorContent,
+        content: K3Content,
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean
     ): List<SuggestionCandidate> {
         val preferredSkinTone = prefs.emoji.preferredSkinTone.get()
         val showName = prefs.emoji.suggestionCandidateShowName.get()
-        val query = validateInputQuery(content.composingText) ?: return emptyList()
+        val query = content.compositionText?.let { validateInputQuery(it) } ?: return emptyList()
         val emojis = cachedEmojiMappings.get(subtype.primaryLocale)?.get(preferredSkinTone) ?: emptyList()
         return emojis.searchByInput(
             query = query,

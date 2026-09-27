@@ -69,7 +69,6 @@ import dev.patrickgold.florisboard.ime.core.SubtypeJsonConfig
 import dev.patrickgold.florisboard.ime.core.SubtypeNlpProviderMap
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
-import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.subtypeManager

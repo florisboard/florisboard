@@ -33,7 +33,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.subtypeManager
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggBox
@@ -45,7 +44,6 @@ import org.florisboard.lib.snygg.ui.SnyggText
 @Composable
 fun SelectSubtypePanel(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    val keyboardManager by context.keyboardManager()
     val subtypeManager by context.subtypeManager()
 
     val listState = rememberLazyListState()

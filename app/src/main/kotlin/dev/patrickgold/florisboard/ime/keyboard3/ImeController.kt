@@ -25,6 +25,9 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.ImeUiMode
+import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
+import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
@@ -40,6 +43,8 @@ import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelCache
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.nlp.BreakIterators
+import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
@@ -73,6 +78,7 @@ val LocalImeController = staticCompositionLocalOf<ImeController> {
 
 class ImeController(
     storageController: StorageController,
+    val clipboardManager: ClipboardManager, // TODO ClipboardController
     initialState: ImeState = ImeState(),
     val touchModelCache: TouchModelCache = TouchModelCache(),
 ) : K3InputMethod<ImeState, ImeEditor, ImeController.UpdateImeStateScope>(
@@ -223,7 +229,7 @@ class ImeController(
                     newTouchLayerId = ImeLayerIds.Base
                 }
             }
-            val initialSelection = info.initialSelection2
+            val initialSelection = info.initialSelection
             val initialSurrounding = K3SurroundingText(
                 textBefore = info.getInitialTextBeforeCursor(20)?.toString() ?: "",
                 textSelected = info.getInitialSelectedText()?.toString() ?: "",
@@ -308,33 +314,65 @@ class ImeController(
                 ImeActions.ArrowLeft -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT)
                 ImeActions.ArrowRight -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
                 ImeActions.ArrowUp -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP)
-                ImeActions.ClipboardCopy -> {} // TODO
-                ImeActions.ClipboardCut -> {} // TODO
-                ImeActions.ClipboardPaste -> {} // TODO
-                ImeActions.ClipboardClearHistory -> {} // TODO
-                ImeActions.ClipboardClearFullHistory -> {} // TODO
-                ImeActions.ClipboardClearPrimaryClip -> {} // TODO
-                ImeActions.SelectAll -> {} // TODO
+                // TODO clipboard manager needs a rewrite to match the new state paradigm
+                ImeActions.ClipboardCopy -> {
+                    if (state.editor.info.isRichInputEditor) {
+                        val text = state.content.surroundingText.textSelected
+                        if (text.isNotEmpty()) {
+                            clipboardManager.addNewPlaintext(text)
+                        }
+                    } else {
+                        state.editor.performClipboardCopy()
+                    }
+                }
+                ImeActions.ClipboardCut -> {
+                    if (state.editor.info.isRichInputEditor) {
+                        val text = state.content.surroundingText.textSelected
+                        if (text.isNotEmpty()) {
+                            clipboardManager.addNewPlaintext(text)
+                            emitBackspace()
+                        }
+                    } else {
+                        state.editor.performClipboardCut()
+                    }
+                }
+                ImeActions.ClipboardPaste -> {
+                    if (state.editor.info.isRichInputEditor) {
+                        emitClipboardItem(clipboardManager.primaryClip)
+                    } else {
+                        state.editor.performClipboardPaste()
+                    }
+                }
+                ImeActions.ClipboardClearHistory -> clipboardManager.clearHistory()
+                ImeActions.ClipboardClearFullHistory -> clipboardManager.clearFullHistory()
+                ImeActions.ClipboardClearPrimaryClip -> {
+                    if (prefs.clipboard.clearPrimaryClipAffectsHistoryIfUnpinned.get()) {
+                        clipboardManager.primaryClip?.let { clipboardManager.deleteClip(it, onlyIfUnpinned = true) }
+                    }
+                    clipboardManager.updatePrimaryClip(null)
+                    // TODO we have no ref here:
+                    //  appContext.showShortToastSync(R.string.clipboard__cleared_primary_clip)
+                }
+                ImeActions.SelectAll -> state.editor.performSelectAll()
                 ImeActions.ShowImeWindow -> FlorisImeService.showUi()
                 ImeActions.HideImeWindow -> FlorisImeService.hideUi()
                 ImeActions.ShowTextPanel -> {
                     state = state.copy(
-                        flags = state.flags
-                            .withImeUiMode(ImeUiMode.TEXT),
+                        flags = state.flags.withImeUiMode(ImeUiMode.TEXT),
                     )
                 }
                 ImeActions.ShowMediaPanel -> {
                     state = state.copy(
-                        flags = state.flags
-                            .withImeUiMode(ImeUiMode.MEDIA),
+                        flags = state.flags.withImeUiMode(ImeUiMode.MEDIA),
                     )
                 }
                 ImeActions.ShowClipboardPanel -> {
                     state = state.copy(
-                        flags = state.flags
-                            .withImeUiMode(ImeUiMode.CLIPBOARD),
+                        flags = state.flags.withImeUiMode(ImeUiMode.CLIPBOARD),
                     )
                 }
+                ImeActions.Undo -> state.editor.performUndo()
+                ImeActions.Redo -> state.editor.performRedo()
                 ImeActions.Settings -> FlorisImeService.launchSettings()
                 ImeActions.ShowInputMethodPicker -> FlorisImeService.showImePicker()
                 ImeActions.SwitchToPrevInputMethod -> FlorisImeService.switchToPrevInputMethod()
@@ -423,6 +461,61 @@ class ImeController(
                     charsAfter = 1, // TODO
                 )
             }
+        }
+
+        fun emitCandidate(candidate: SuggestionCandidate) {
+//            scope.launch {
+//                candidate.sourceProvider?.notifySuggestionAccepted(subtypeManager.activeSubtype, candidate)
+//            }
+            when (candidate) {
+                is ClipboardSuggestionCandidate -> emitClipboardItem(candidate.clipboardItem)
+                else -> emitCompletion(candidate)
+            }
+        }
+
+        fun emitClipboardItem(item: ClipboardItem?): Boolean {
+            return item != null && when (item.type) {
+                ItemType.TEXT -> {
+                    val text = item.text?.asK3String()
+                    if (text != null) {
+                        emitText(text)
+                        true
+                    } else {
+                        false
+                    }
+                }
+                ItemType.IMAGE, ItemType.VIDEO -> {
+                    state.editor.performClipboardPasteMedia(item)
+                }
+            }.also {
+                if (prefs.clipboard.historyHideOnPaste.get()) {
+                    state = state.copy(
+                        flags = state.flags.withImeUiMode(ImeUiMode.TEXT)
+                    )
+                }
+            }
+        }
+
+        fun emitCompletion(candidate: SuggestionCandidate): Boolean {
+            val text = candidate.text.toString()
+            if (text.isEmpty() || state.editor.info.isRawInputEditor) return false
+//            val content = activeContent
+//            return if (content.composing.isValid) {
+//                phantomSpace.setActive(showComposingRegion = false, candidate = candidate)
+//                super.finalizeComposingText(text)
+//            } else {
+//                val isPhantomSpaceActive = phantomSpace.determine(text)
+//                phantomSpace.setActive(showComposingRegion = false, candidate = candidate)
+//                return if (isPhantomSpaceActive) {
+//                    super.commitText("$SPACE$text")
+//                } else {
+//                    super.commitText(text)
+//                }.also {
+//                    // handled in finalizeComposingText if content.composing.isValid
+//                    updateLastCommitPosition()
+//                }
+//            }
+            return false
         }
 
         override fun switchTouchLayer(newTouchLayerId: K3LayerId) {
@@ -536,6 +629,16 @@ class ImeController(
     companion object {
         private val NEWLINE_SEQ = "\n".asK3String()
     }
+}
+
+enum class OperationUnit {
+    CHARACTERS,
+    WORDS;
+}
+
+enum class OperationScope {
+    BEFORE_CURSOR,
+    AFTER_CURSOR;
 }
 
 private class ExpectedContentQueue {

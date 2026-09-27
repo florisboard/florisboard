@@ -31,10 +31,8 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
-import dev.patrickgold.florisboard.ime.editor.EditorInstance
 import dev.patrickgold.florisboard.ime.extension.ExtensionController
 import dev.patrickgold.florisboard.ime.io.AndroidStorageController
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardManager
 import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.ime.media.emoji.FlorisEmojiCompat
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
@@ -72,6 +70,8 @@ class FlorisApplication : Application() {
             } catch (_: Exception) {
             }
         }
+
+        fun getHack(): FlorisApplication = FlorisApplicationReference.get()!!
     }
 
     private val mainHandler by lazy { Handler(mainLooper) }
@@ -84,9 +84,7 @@ class FlorisApplication : Application() {
     lateinit var themeController: ThemeController
 
     val clipboardManager = lazy { ClipboardManager(this) }
-    val editorInstance = lazy { EditorInstance(this) }
     val glideTypingManager = lazy { GlideTypingManager(this) }
-    val keyboardManager = lazy { KeyboardManager(this) }
     val nlpManager = lazy { NlpManager(this) }
     val subtypeManager = lazy { SubtypeManager(this) }
 
@@ -106,7 +104,7 @@ class FlorisApplication : Application() {
 
             storageController = AndroidStorageController(this)
             extensionController = ExtensionController(storageController)
-            imeController = ImeController(storageController)
+            imeController = ImeController(storageController, clipboardManager.value)
             themeController = ThemeController(
                 storageController,
                 extensionController,
@@ -189,11 +187,7 @@ fun Context.appContext() = lazyOf(this.inferFlorisApplication())
 
 fun Context.clipboardManager() = this.inferFlorisApplication().clipboardManager
 
-fun Context.editorInstance() = this.inferFlorisApplication().editorInstance
-
 fun Context.glideTypingManager() = this.inferFlorisApplication().glideTypingManager
-
-fun Context.keyboardManager() = this.inferFlorisApplication().keyboardManager
 
 fun Context.nlpManager() = this.inferFlorisApplication().nlpManager
 
