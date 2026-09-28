@@ -350,6 +350,7 @@ private fun computeTouchKeyboard(
                             ImeLayerIds.Base -> key.layerId == ImeLayerIds.Shift || key.layerId == ImeLayerIds.Caps
                             ImeLayerIds.Shift -> key.layerId == ImeLayerIds.Base || key.layerId == ImeLayerIds.Caps
                             ImeLayerIds.Caps -> key.layerId == ImeLayerIds.Base || key.layerId == ImeLayerIds.Shift
+                            ImeLayerIds.Alpha -> key.layerId == ImeLayerIds.Shift || key.layerId == ImeLayerIds.Caps
                             else -> false
                         },
                         isRepeatable = attrs.output?.isRepeatable() ?: false,

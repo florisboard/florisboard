@@ -34,5 +34,5 @@ object ImeLayerIds {
 }
 
 fun K3LayerId.isTextLayer(): Boolean {
-    return this == ImeLayerIds.Base || this == ImeLayerIds.Shift || this == ImeLayerIds.Caps
+    return this == ImeLayerIds.Base || this == ImeLayerIds.Shift || this == ImeLayerIds.Caps || this == ImeLayerIds.Alpha
 }

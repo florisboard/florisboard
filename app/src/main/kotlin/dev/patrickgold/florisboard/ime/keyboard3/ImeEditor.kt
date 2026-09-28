@@ -109,6 +109,17 @@ open class ImeEditor(
         updateMozcCandidateList()
     }
 
+    fun commitMozcCandidate(range: IntRange, text: String, newSelection: K3TextRange) {
+        val ic = ic.get() ?: return
+        ic.beginBatchEdit()
+        ic.setComposingRegion(range.first, range.last + 1)
+        ic.commitText(text, 1)
+        ic.setSelection(newSelection.start, newSelection.end)
+        ic.finishComposingText()
+        ic.endBatchEdit()
+        updateMozcCandidateList()
+    }
+
     fun finishComposingMozc() {
         val ic = ic.get() ?: return
         ic.finishComposingText()

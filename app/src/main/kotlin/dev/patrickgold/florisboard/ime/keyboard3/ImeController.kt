@@ -45,6 +45,7 @@ import dev.patrickgold.florisboard.ime.mozc.MozcEngine
 import dev.patrickgold.florisboard.ime.mozc.MozcKeyboardSpec
 import dev.patrickgold.florisboard.ime.nlp.BreakIterators
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.JapaneseWordSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -464,23 +465,6 @@ class ImeController(
             }
         }
 
-        // override this to intercept the swap mode and 'base' buttons
-        override fun switchTouchLayer(newTouchLayerId: K3LayerId) {
-            super.switchTouchLayer(newTouchLayerId)
-            if (state.model.info.indicator?.contains("mozcJa") ?: false) { // assume false if null
-                updateConfig()
-                if (MozcEngine.instance.preedit.value.isNotEmpty()) {
-                    MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.ENTER)
-                    state = state.copy(
-                        content = state.content.copy(
-                            composition = null,
-                        ),
-                    )
-                    state.editor.finishComposingMozc()
-                }
-            }
-        }
-
         override fun emitDescriptor(descriptor: K3Descriptor) {
             val windowController = FlorisImeService.windowControllerOrNull()
             when (descriptor) {
@@ -705,8 +689,33 @@ class ImeController(
 //            }
             when (candidate) {
                 is ClipboardSuggestionCandidate -> emitClipboardItem(candidate.clipboardItem)
+                is JapaneseWordSuggestionCandidate -> commitMozcCandidate(candidate)
                 else -> emitCompletion(candidate)
             }
+        }
+
+        private fun commitMozcCandidate(candidate: JapaneseWordSuggestionCandidate) {
+            val oldComposition = state.content.composition ?: return
+            val localStart = oldComposition.start - state.content.offset
+            val localEnd = oldComposition.end - state.content.offset
+            val selection = K3TextRange(localStart, localEnd)
+            val range = selection.asRange()
+            val text = candidate.text.asK3String().normalize(NormalizationForm.NFC).toText()
+            val textBefore = state.content.surroundingText.textBefore
+            val newSurroundingText = state.content.surroundingText.copy(
+                textBefore = textBefore.substring(0, localStart) + candidate.text + textBefore.substring(localEnd),
+                textSelected = "",
+            )
+            val newSelection = K3TextRange(state.content.offset + newSurroundingText.textBefore.length)
+            state = state.copy(
+                content = state.content.copy(
+                    selection = newSelection,
+                    composition = null,
+                    surroundingText = newSurroundingText,
+                    inputContext = (state.content.inputContext.toText().substring(0, localStart) + candidate.text + state.content.inputContext.toText().substring(localEnd)).asK3String(),
+                ),
+            )
+            state.editor.commitMozcCandidate(range, text, newSelection)
         }
 
         fun emitClipboardItem(item: ClipboardItem?): Boolean {
@@ -755,10 +764,24 @@ class ImeController(
         }
 
         override fun switchTouchLayer(newTouchLayerId: K3LayerId) {
-            if (newTouchLayerId.isTextLayer()) {
-                super.switchTouchLayer(state.flags.inputShiftState.correspondingLayerId)
-            } else {
+            if (state.model.info.indicator?.contains("mozcJa") ?: false) { // assume false if null
                 super.switchTouchLayer(newTouchLayerId)
+                updateConfig()
+                if (MozcEngine.instance.preedit.value.isNotEmpty()) {
+                    MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.ENTER)
+                    state = state.copy(
+                        content = state.content.copy(
+                            composition = null,
+                        ),
+                    )
+                    state.editor.finishComposingMozc()
+                }
+            } else {
+                if (newTouchLayerId.isTextLayer()) {
+                    super.switchTouchLayer(state.flags.inputShiftState.correspondingLayerId)
+                } else {
+                    super.switchTouchLayer(newTouchLayerId)
+                }
             }
         }
 
