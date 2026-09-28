@@ -173,21 +173,28 @@ class MozcEngine {
     }
 
     fun selectCandidate(candidate: JapaneseWordSuggestionCandidate) {
-        val submitRequest: ProtoCommands.Input = ProtoCommands.Input.newBuilder()
-            .setType(ProtoCommands.Input.CommandType.SEND_COMMAND)
-            .setCommand(
-                SessionCommand.newBuilder()
-                    .setType(SessionCommand.CommandType.SUBMIT_CANDIDATE)
-                    .setId(candidate.candidateId)
+        val submitRequest: ProtoCommands.Command = ProtoCommands.Command.newBuilder()
+            .setInput(
+                ProtoCommands.Input.newBuilder()
+                    .setType(ProtoCommands.Input.CommandType.SEND_COMMAND)
+                    .setId(sessionId)
+                    .setCommand(
+                        SessionCommand.newBuilder()
+                            .setType(SessionCommand.CommandType.SUBMIT_CANDIDATE)
+                            .setId(candidate.candidateId)
+                    )
             )
             .build()
         MozcJni.evalCommand(submitRequest.toByteArray())
     }
 
     fun applyConfig(conf: ProtoConfig.Config) {
-        val configRequest: ProtoCommands.Input = ProtoCommands.Input.newBuilder()
-            .setType(ProtoCommands.Input.CommandType.SET_CONFIG)
-            .setConfig(conf)
+        val configRequest: ProtoCommands.Command = ProtoCommands.Command.newBuilder()
+            .setInput(
+                ProtoCommands.Input.newBuilder()
+                    .setType(ProtoCommands.Input.CommandType.SET_CONFIG)
+                    .setConfig(conf)
+            )
             .build()
         MozcJni.evalCommand(configRequest.toByteArray())
     }
