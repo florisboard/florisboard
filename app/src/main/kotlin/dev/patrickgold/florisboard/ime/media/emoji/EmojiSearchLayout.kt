@@ -87,7 +87,7 @@ fun EmojiSearchLayout(
 
     val scope = rememberCoroutineScope()
     val editor = remember {
-        object : ImeEditor(WeakReference(null), FlorisEditorInfo.Unspecified, context) {
+        object : ImeEditor(WeakReference(null), FlorisEditorInfo.Unspecified) {
             var value by mutableStateOf(TextFieldValue())
 
             override fun replaceText(range: IntRange, text: String, newSelection: K3TextRange, newComposition: K3TextRange?) {

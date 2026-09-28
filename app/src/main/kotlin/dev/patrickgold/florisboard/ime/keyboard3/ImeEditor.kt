@@ -46,9 +46,7 @@ import kotlin.contracts.contract
 open class ImeEditor(
     val ic: WeakReference<InputConnection>,
     val info: FlorisEditorInfo,
-    ctx: Context?,
 ) : K3Editor {
-    val nlpManager by ctx?.nlpManager() ?: lazy { null }
     fun getSurroundingText(charsBefore: Int, charsAfter: Int): K3SurroundingText {
         val ic = ic.get() ?: return K3SurroundingText.Empty
         // TODO maybe use eet for getSurroundingText??
@@ -129,7 +127,9 @@ open class ImeEditor(
     fun updateMozcCandidateList() {
         // TODO: adapt this code when k3lp has proper subtype support
         // TODO: do this properly
-        nlpManager?.suggest(Subtype(0, FlorisLocale.fromTag("ja-JP"), emptyList(), SubtypeNlpProviderMap(
+        val appContext = FlorisApplication.getHack() // TODO this is a hack
+        val nlpManager by appContext.nlpManager()
+        nlpManager.suggest(Subtype(0, FlorisLocale.fromTag("ja-JP"), emptyList(), SubtypeNlpProviderMap(
             "",
             MozcCandidateProvider.ProviderId
         ),), K3Content.Empty) // TODO: Link to actual content
@@ -283,7 +283,6 @@ open class ImeEditor(
         val Disconnected = ImeEditor(
             ic = WeakReference(null),
             info = FlorisEditorInfo.Unspecified,
-            ctx = null,
         )
     }
 }

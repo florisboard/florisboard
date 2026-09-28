@@ -370,7 +370,7 @@ class FlorisImeService : LifecycleInputMethodService() {
         val ic = WeakReference(currentInputConnection)
         val editorInfo = FlorisEditorInfo.wrap(info)
         imeController.updateStateBlocking {
-            handleStartInputView(ic, editorInfo, this@FlorisImeService)
+            handleStartInputView(ic, editorInfo)
         }
     }
 
@@ -458,7 +458,7 @@ class FlorisImeService : LifecycleInputMethodService() {
             val ic = WeakReference(currentInputConnection)
             val editorInfo = FlorisEditorInfo.wrap(info)
             imeController.updateStateBlocking {
-                handleStartInputView(ic, editorInfo, this@FlorisImeService)
+                handleStartInputView(ic, editorInfo)
             }
         }
         when (prefs.keyboard.landscapeInputUiMode.get()) {
