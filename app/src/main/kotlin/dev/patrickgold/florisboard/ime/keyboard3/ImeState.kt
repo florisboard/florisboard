@@ -22,7 +22,7 @@ import org.k3lp.runtime.K3Content
 import org.k3lp.runtime.K3InputMethodState
 
 class ImeState(
-    model: K3Model = FlorisEmptyK3Model,
+    model: K3Model = K3Model.Empty,
     editor: ImeEditor = ImeEditor.Disconnected,
     content: K3Content = K3Content.Empty,
     touchLayerId: K3LayerId = ImeLayerIds.Base,
