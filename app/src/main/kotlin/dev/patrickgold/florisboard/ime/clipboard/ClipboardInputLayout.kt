@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,7 +95,11 @@ import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showShortToast
+import dev.patrickgold.florisboard.ime.keyboard3.ui.ImeKeyButton
 import dev.patrickgold.florisboard.ime.smartbar.AnimationDuration
 import dev.patrickgold.florisboard.ime.smartbar.VerticalEnterTransition
 import dev.patrickgold.florisboard.ime.smartbar.VerticalExitTransition
@@ -103,12 +107,10 @@ import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.jetpref.datastore.model.collectAsState
-import java.time.Instant
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.compose.LocalLocalizedDateTimeFormatter
 import org.florisboard.lib.compose.autoMirrorForRtl
@@ -125,6 +127,7 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggIconButton
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
+import java.time.Instant
 
 private val ItemWidth = 200.dp
 private val DialogWidth = 240.dp
@@ -140,6 +143,7 @@ fun ClipboardInputLayout(
     val context = LocalContext.current
     val clipboardManager by context.clipboardManager()
     val imeController = LocalImeController.current
+    val interactionController = LocalInteractionController.current
     val androidKeyguardManager = remember { context.systemService(AndroidKeyguardManager::class) }
 
     val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
@@ -192,8 +196,7 @@ fun ClipboardInputLayout(
                 onClick = {
                     imeController.updateStateBlocking {
                         state = state.copy(
-                            flags = state.flags
-                                .withImeUiMode(ImeUiMode.TEXT),
+                            flags = state.flags.withImeUiMode(ImeUiMode.TEXT),
                         )
                     }
                 },
@@ -246,16 +249,11 @@ fun ClipboardInputLayout(
                     },
                 )
             }
-            /*
-            KeyboardLikeButton(
-                modifier = sizeModifier,
-                inputEventDispatcher = keyboardManager.inputEventDispatcher,
-                keyData = TextKeyData.DELETE,
+            ImeKeyButton(
                 elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
-            ) {
-                SnyggIcon(imageVector = Icons.AutoMirrored.Outlined.Backspace)
-            }
-             */
+                output = ImeActions.Backspace,
+                modifier = sizeModifier,
+            )
         }
     }
 
@@ -595,12 +593,15 @@ fun ClipboardInputLayout(
                                     text = stringRes(R.string.action__no),
                                 )
                             }
+                            val clearedHistoryMsg = stringRes(R.string.clipboard__cleared_history)
                             SnyggButton(
                                 elementName = FlorisImeUi.ClipboardClearAllDialogButton.elementName,
                                 attributes = mapOf("action" to "yes"),
                                 onClick = {
-                                    clipboardManager.clearExactHistory(filteredHistory.unpinned)
-                                    context.showShortToastSync(R.string.clipboard__cleared_history)
+                                    scope.launch {
+                                        clipboardManager.clearExactHistory(filteredHistory.unpinned)
+                                        interactionController.showShortToast(clearedHistoryMsg)
+                                    }
                                     showClearAllHistory = false
                                 },
                             ) {

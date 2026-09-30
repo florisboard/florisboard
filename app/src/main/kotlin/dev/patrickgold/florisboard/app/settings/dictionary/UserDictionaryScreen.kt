@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,6 +54,8 @@ import dev.patrickgold.florisboard.ime.dictionary.FREQUENCY_MIN
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryDao
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryEntry
 import dev.patrickgold.florisboard.ime.dictionary.UserDictionaryValidation
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.florisboard.lib.compose.Validation
@@ -64,8 +66,6 @@ import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.florisboard.lib.android.showLongToast
-import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.rippleClickable
@@ -92,6 +92,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
     val navController = LocalNavController.current
     val context = LocalContext.current
     val dictionaryManager = DictionaryManager.default()
+    val interactionController = LocalInteractionController.current
     val scope = rememberCoroutineScope()
 
     var currentLocale by remember { mutableStateOf<FlorisLocale?>(null) }
@@ -133,6 +134,7 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
         }
     }
 
+    val importSuccessMsg = stringRes(R.string.settings__udm__dictionary_import_success)
     val importDictionary = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
@@ -144,20 +146,27 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
                 UserDictionaryType.SYSTEM -> dictionaryManager.systemUserDictionaryDatabase()
             }
             if (db == null) {
-                context.showLongToastSync("Database handle is null, failed to import")
+                scope.launch {
+                    interactionController.showLongToast("Database handle is null, failed to import")
+                }
                 return@rememberLauncherForActivityResult
             }
             runCatching {
                 db.importCombinedList(context, uri)
             }.onSuccess {
                 buildUi()
-                context.showLongToastSync(R.string.settings__udm__dictionary_import_success)
+                scope.launch {
+                    interactionController.showLongToast(importSuccessMsg)
+                }
             }.onFailure { error ->
-                context.showLongToastSync("Error: ${error.localizedMessage}")
+                scope.launch {
+                    interactionController.showLongToast("Error: ${error.localizedMessage}")
+                }
             }
         },
     )
 
+    val exportSuccessMsg = stringRes(R.string.settings__udm__dictionary_export_success)
     val exportDictionary = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument(),
         onResult = { uri ->
@@ -169,15 +178,21 @@ fun UserDictionaryScreen(type: UserDictionaryType) = FlorisScreen {
                 UserDictionaryType.SYSTEM -> dictionaryManager.systemUserDictionaryDatabase()
             }
             if (db == null) {
-                context.showLongToastSync("Database handle is null, failed to export")
+                scope.launch {
+                    interactionController.showLongToast("Database handle is null, failed to export")
+                }
                 return@rememberLauncherForActivityResult
             }
             runCatching {
                 db.exportCombinedList(context, uri)
             }.onSuccess {
-                context.showLongToastSync(R.string.settings__udm__dictionary_export_success)
+                scope.launch {
+                    interactionController.showLongToast(exportSuccessMsg)
+                }
             }.onFailure { error ->
-                context.showLongToastSync("Error: ${error.localizedMessage}")
+                scope.launch {
+                    interactionController.showLongToast("Error: ${error.localizedMessage}")
+                }
             }
         },
     )

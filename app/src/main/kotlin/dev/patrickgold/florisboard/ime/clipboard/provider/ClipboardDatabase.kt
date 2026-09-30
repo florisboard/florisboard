@@ -49,7 +49,6 @@ import androidx.room.migration.AutoMigrationSpec
 import dev.patrickgold.florisboard.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.serialization.EncodeDefault
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.UriSerializer
@@ -80,7 +79,7 @@ enum class ItemType(val value: Int) {
  */
 @Serializable
 @Entity(tableName = CLIPBOARD_HISTORY_TABLE)
-data class ClipboardItem @OptIn(ExperimentalSerializationApi::class) constructor(
+data class ClipboardItem(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = BaseColumns._ID, index = true)
     var id: Long = 0,

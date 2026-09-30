@@ -23,11 +23,10 @@ import androidx.compose.material.icons.filled.Palette
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.extensionManager
+import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import org.florisboard.lib.compose.stringRes
@@ -37,15 +36,14 @@ fun ExtensionHomeScreen() = FlorisScreen {
     title = stringRes(R.string.ext__home__title)
     previewFieldVisible = false
 
-    val context = LocalContext.current
     val navController = LocalNavController.current
-    val extensionManager by context.extensionManager()
-    val extensionIndex by extensionManager.extensions.collectAsState()
+    val extensionController = LocalExtensionController.current
+    val extensionIndex by extensionController.activeIndex.collectAsState()
 
     content {
         ImportExtensionBox(navController)
 
-        UpdateBox(extensionIndex = extensionIndex)
+        UpdateBox(extensionIndex)
 
         Preference(
             icon = Icons.Default.Palette,
@@ -58,7 +56,7 @@ fun ExtensionHomeScreen() = FlorisScreen {
             icon = Icons.Default.Keyboard,
             title = stringRes(R.string.ext__list__ext_keyboard),
             onClick = {
-                navController.navigate(Routes.Ext.List(ExtensionListScreenType.EXT_KEYBOARD, false))
+                navController.navigate(Routes.Ext.List(ExtensionListScreenType.EXT_KEYBOARD3, false))
             },
         )
         Preference(

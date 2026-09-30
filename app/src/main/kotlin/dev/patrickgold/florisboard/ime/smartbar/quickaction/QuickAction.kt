@@ -64,7 +64,7 @@ sealed class QuickAction {
                 KeyCode.CLIPBOARD_CUT -> InsertK3Descriptor(ImeActions.ClipboardCut)
                 KeyCode.CLIPBOARD_PASTE -> InsertK3Descriptor(ImeActions.ClipboardPaste)
                 KeyCode.CLIPBOARD_SELECT_ALL -> InsertK3Descriptor(ImeActions.SelectAll)
-                KeyCode.LANGUAGE_SWITCH -> InsertK3Descriptor(ImeActions.LanguageSwitch)
+                KeyCode.LANGUAGE_SWITCH -> InsertK3Descriptor(ImeActions.SwitchToNextSubtype)
                 KeyCode.FORWARD_DELETE -> InsertK3Descriptor(ImeActions.Delete)
                 KeyCode.IME_HIDE_UI -> InsertK3Descriptor(ImeActions.HideImeWindow)
                 else -> null
@@ -100,7 +100,7 @@ fun QuickAction.computeDisplayName(imeState: ImeState): String {
             ImeActions.ShowMediaPanel -> R.string.quick_action__ime_ui_mode_media
             ImeActions.ShowClipboardPanel -> R.string.quick_action__ime_ui_mode_clipboard
             ImeActions.HideImeWindow -> R.string.quick_action__ime_hide_ui
-            ImeActions.LanguageSwitch -> R.string.quick_action__language_switch
+            ImeActions.SwitchToNextSubtype -> R.string.quick_action__language_switch
             ImeActions.ToggleActionsOverflow -> R.string.quick_action__toggle_actions_overflow
             ImeActions.ToggleAutocorrect -> R.string.quick_action__toggle_autocorrect
             // TODO: In the future this will be merged into the resize keyboard panel, for now it is a separate action
@@ -140,7 +140,7 @@ fun QuickAction.computeTooltip(imeState: ImeState): String {
             ImeActions.ShowMediaPanel -> R.string.quick_action__ime_ui_mode_media__tooltip
             ImeActions.ShowClipboardPanel -> R.string.quick_action__ime_ui_mode_clipboard__tooltip
             ImeActions.HideImeWindow -> R.string.quick_action__ime_hide_ui__tooltip
-            ImeActions.LanguageSwitch -> R.string.quick_action__language_switch__tooltip
+            ImeActions.SwitchToNextSubtype -> R.string.quick_action__language_switch__tooltip
             ImeActions.ToggleActionsOverflow -> R.string.quick_action__toggle_actions_overflow__tooltip
             ImeActions.ToggleAutocorrect -> R.string.quick_action__toggle_autocorrect__tooltip
             // TODO: In the future this will be merged into the resize keyboard panel, for now it is a separate action

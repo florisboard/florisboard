@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.text.keyboard
 import android.icu.lang.UCharacter
 import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -48,7 +47,6 @@ data class TextKeyData(
     override val code: Int = KeyCode.UNSPECIFIED,
     override val label: String = "",
     override val groupId: Int = KeyData.GROUP_DEFAULT,
-    override val popup: PopupSet<AbstractKeyData>? = null
 ) : KeyData {
     override fun asString(isForDisplay: Boolean): String {
         return asString(this, isForDisplay)
@@ -530,7 +528,6 @@ class AutoTextKeyData(
     override val code: Int = KeyCode.UNSPECIFIED,
     override val label: String = "",
     override val groupId: Int = KeyData.GROUP_DEFAULT,
-    override val popup: PopupSet<AbstractKeyData>? = null
 ) : KeyData {
     @Transient private val state = AutoLetterState()
 
@@ -557,14 +554,12 @@ class AutoTextKeyData(
                 UCharacter.toString(code).lowercase(locale).codePointAt(0),
                 label.lowercase(locale),
                 groupId,
-                popup,
             )
             upper = TextKeyData(
                 type,
                 UCharacter.toString(code).uppercase(locale).codePointAt(0),
                 label.uppercase(locale),
                 groupId,
-                popup,
             )
         }
     }
@@ -577,7 +572,6 @@ class MultiTextKeyData(
     val codePoints: IntArray = intArrayOf(),
     override val label: String = "",
     override val groupId: Int = KeyData.GROUP_DEFAULT,
-    override val popup: PopupSet<AbstractKeyData>? = null
 ) : KeyData {
     @Transient override val code: Int = KeyCode.MULTIPLE_CODE_POINTS
 

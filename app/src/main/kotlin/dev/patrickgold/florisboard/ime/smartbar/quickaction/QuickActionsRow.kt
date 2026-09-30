@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,12 +26,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
-import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.snygg.ui.SnyggRow
 
@@ -44,8 +43,7 @@ fun QuickActionsRow(
     modifier: Modifier = Modifier,
 ) = with(LocalDensity.current) {
     val prefs by FlorisPreferenceStore
-    val context = LocalContext.current
-    val keyboardManager by context.keyboardManager()
+    val imeController = LocalImeController.current
 
     val flipToggles by prefs.smartbar.flipToggles.collectAsState()
     val smartbarLayout by prefs.smartbar.layout.collectAsState()
@@ -73,7 +71,7 @@ fun QuickActionsRow(
             .subList(0, numActionsToShow.coerceAtMost(dynamicActions.size))
 
         SideEffect {
-            keyboardManager.smartbarVisibleDynamicActionsCount =
+            imeController.activeSmartbarVisibleDynamicActionsCount.value =
                 if (smartbarLayout == SmartbarLayout.ACTIONS_ONLY && actionArrangement.stickyAction != null) {
                     numActionsToShow - 1
                 } else {

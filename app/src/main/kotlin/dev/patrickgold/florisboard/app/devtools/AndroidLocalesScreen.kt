@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,19 +27,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showShortToast
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.model.collectAsState
-import java.util.*
-import org.florisboard.lib.android.showLongToastSync
+import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.io.subFile
+import java.util.*
 
 @Composable
 fun AndroidLocalesScreen() = FlorisScreen {
@@ -47,31 +51,36 @@ fun AndroidLocalesScreen() = FlorisScreen {
     scrollable = false
 
     val context = LocalContext.current
+    val interactionController = LocalInteractionController.current
+    val scope = rememberCoroutineScope()
     val availableLocales = remember { Locale.getAvailableLocales().sortedBy { it.toLanguageTag() } }
 
     actions {
+        val snackbarMsg = stringRes(R.string.error__snackbar_message_template)
         FlorisIconButton(
             onClick = {
-                try {
-                    val devtoolsDir = context.noBackupFilesDir.subDir("devtools")
-                    devtoolsDir.mkdirs()
-                    val txtFile = devtoolsDir.subFile("system_locales.tsv")
-                    txtFile.bufferedWriter().use { out ->
-                        for (locale in availableLocales) {
-                            out.append(locale.toLanguageTag())
-                            out.append('\t')
-                            out.append(locale.getDisplayName(Locale.ENGLISH))
-                            out.append('\t')
-                            out.append(locale.getDisplayName(locale))
-                            out.appendLine()
+                scope.launch {
+                    try {
+                        val devtoolsDir = context.noBackupFilesDir.subDir("devtools")
+                        devtoolsDir.mkdirs()
+                        val txtFile = devtoolsDir.subFile("system_locales.tsv")
+                        txtFile.bufferedWriter().use { out ->
+                            for (locale in availableLocales) {
+                                out.append(locale.toLanguageTag())
+                                out.append('\t')
+                                out.append(locale.getDisplayName(Locale.ENGLISH))
+                                out.append('\t')
+                                out.append(locale.getDisplayName(locale))
+                                out.appendLine()
+                            }
                         }
+                        interactionController.showShortToast("Exported available system locales to \"${txtFile.path}\"")
+                    } catch (e: Exception) {
+                        interactionController.showLongToast(
+                            snackbarMsg,
+                            "error_message" to e.message.toString(),
+                        )
                     }
-                    context.showLongToastSync("Exported available system locales to \"${txtFile.path}\"")
-                } catch (e: Exception) {
-                    context.showLongToastSync(
-                        R.string.error__snackbar_message_template,
-                        "error_message" to e.message.toString(),
-                    )
                 }
             },
             icon = Icons.Default.Save,

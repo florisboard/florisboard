@@ -20,7 +20,6 @@ import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
-import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
@@ -40,7 +39,6 @@ class GlideTypingManager(context: Context) : GlideTypingGesture.Listener {
     }
 
     private val prefs by FlorisPreferenceStore
-    private val keyboardManager by context.keyboardManager()
     private val nlpManager by context.nlpManager()
     private val subtypeManager by context.subtypeManager()
 

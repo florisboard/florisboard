@@ -16,14 +16,13 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3
 
-import dev.patrickgold.florisboard.ime.keyboard.ImeStateFlags
 import org.k3lp.model.K3Model
 import org.k3lp.model.layer.K3LayerId
 import org.k3lp.runtime.K3Content
 import org.k3lp.runtime.K3InputMethodState
 
 class ImeState(
-    model: K3Model = FlorisEmptyK3Model,
+    model: K3Model = K3Model.Empty,
     editor: ImeEditor = ImeEditor.Disconnected,
     content: K3Content = K3Content.Empty,
     touchLayerId: K3LayerId = ImeLayerIds.Base,

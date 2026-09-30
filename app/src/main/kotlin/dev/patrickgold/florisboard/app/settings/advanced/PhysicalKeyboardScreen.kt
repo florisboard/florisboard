@@ -25,7 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalConfiguration
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.Preference
@@ -36,9 +36,9 @@ import org.florisboard.lib.compose.stringRes
 fun PhysicalKeyboardScreen() = FlorisScreen {
     title = stringRes(R.string.physical_keyboard__title)
 
-    val context = LocalContext.current
-    val physicalKeyboardAttached by remember {
-        mutableStateOf(context.resources.configuration.keyboard != Configuration.KEYBOARD_NOKEYS)
+    val configuration = LocalConfiguration.current
+    val physicalKeyboardAttached by remember(configuration) {
+        mutableStateOf(configuration.keyboard != Configuration.KEYBOARD_NOKEYS)
     }
 
     val activityForResult = rememberLauncherForActivityResult(

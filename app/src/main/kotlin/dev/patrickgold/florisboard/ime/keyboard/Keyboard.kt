@@ -25,7 +25,7 @@ abstract class Keyboard {
      * The mode of this keyboard, used to let computers and the layout process behave differently based on different
      * modes.
      */
-    abstract val mode: KeyboardMode
+    //abstract val mode: KeyboardMode
 
     /**
      * Returns the key for given [pointerX] and [pointerY] coords or null if no key touch hit box is defined at the

@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.ui
 
+import android.content.Context
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowRightAlt
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -51,11 +52,13 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard3.ImeIcons
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import dev.patrickgold.florisboard.lib.compose.vectorResource
@@ -76,6 +79,7 @@ fun Icon3(
     val imeState by imeController.activeState.collectAsState()
     val imeOptions by remember { derivedStateOf { imeState.editor.info.imeOptions } }
     val inputAttributes by remember { derivedStateOf { imeState.editor.info.inputAttributes } }
+    val inputShiftState by remember { derivedStateOf { imeState.flags.inputShiftState } }
     val debugShowDragAndDropHelpers by remember {
         derivedStateOf { imeState.flags.debugShowDragAndDropHelpers }
     }
@@ -83,19 +87,8 @@ fun Icon3(
     val windowConfig by windowController.activeWindowConfig.collectAsState()
     val windowMode by remember { derivedStateOf { windowConfig.mode } }
 
-    val imageVector = remember(value, imeOptions, inputAttributes, windowMode) {
+    val imageVector = remember(value, imeOptions, inputAttributes, inputShiftState, windowMode) {
         when (value) {
-            ImeIcons.ArrowDown -> Icons.Default.KeyboardArrowDown
-            ImeIcons.ArrowLeft -> Icons.AutoMirrored.Filled.KeyboardArrowLeft
-            ImeIcons.ArrowRight -> Icons.AutoMirrored.Filled.KeyboardArrowRight
-            ImeIcons.ArrowUp -> Icons.Default.KeyboardArrowUp
-            ImeIcons.Backspace -> Icons.AutoMirrored.Outlined.Backspace
-            ImeIcons.ClipboardClearPrimaryClip -> Icons.Default.DeleteSweep
-            ImeIcons.ClipboardCopy -> Icons.Default.ContentCopy
-            ImeIcons.ClipboardCut -> Icons.Default.ContentCut
-            ImeIcons.ClipboardPaste -> Icons.Default.ContentPasteGo
-            ImeIcons.Close -> Icons.Default.Close
-            ImeIcons.Delete -> Icons.AutoMirrored.Default.ForwardDelete
             ImeIcons.DragMarker -> {
                 if (debugShowDragAndDropHelpers) Icons.Default.Close else null
             }
@@ -115,31 +108,20 @@ fun Icon3(
                     }
                 }
             }
-            ImeIcons.HideKeyboard -> Icons.Default.KeyboardHide
-            ImeIcons.LanguageSwitch -> Icons.Default.Language
-            ImeIcons.ClipboardPanel -> Icons.AutoMirrored.Outlined.Assignment
-            ImeIcons.MediaPanel -> Icons.Default.SentimentSatisfiedAlt
-            ImeIcons.TextPanel -> context.vectorResource(R.drawable.ic_abc)
-            ImeIcons.Noop -> Icons.Default.Close
-            ImeIcons.Redo -> Icons.AutoMirrored.Filled.Redo
-            ImeIcons.ShowKeyboard -> Icons.Default.KeyboardDoubleArrowUp // TODO
-            ImeIcons.SelectAll -> Icons.Default.SelectAll
-            ImeIcons.Settings -> Icons.Default.Settings
-            ImeIcons.SpaceBar -> Icons.Default.SpaceBar
-            ImeIcons.ToggleActionsOverflow -> Icons.Default.MoreHoriz
-            ImeIcons.ToggleAutocorrect -> Icons.Default.FontDownload
-            ImeIcons.ToggleCompactLayout -> context.vectorResource(R.drawable.ic_accessibility_one_handed)
+            ImeIcons.Shift -> when (inputShiftState) {
+                InputShiftState.UNSHIFTED -> context.vectorResource(R.drawable.ic_shift_off)
+                InputShiftState.SHIFTED_MANUAL, InputShiftState.SHIFTED_AUTOMATIC -> {
+                    context.vectorResource(R.drawable.ic_shift_on)
+                }
+                InputShiftState.CAPS_LOCK -> context.vectorResource(R.drawable.ic_shift_lock)
+            }
             ImeIcons.ToggleFloatingWindow -> when (windowMode) {
                 ImeWindowMode.FIXED -> context.vectorResource(R.drawable.ic_floating_keyboard)
                 ImeWindowMode.FLOATING -> context.vectorResource(R.drawable.ic_floating_keyboard_disable)
             }
-            ImeIcons.ToggleResizeMode -> context.vectorResource(R.drawable.ic_resize)
-            ImeIcons.Undo -> Icons.AutoMirrored.Filled.Undo
-            ImeIcons.Voice -> Icons.Default.KeyboardVoice
-            // TODO shift???
             // TODO incognito mode???
             // TODO char width/kata/hira icons???
-            else -> null
+            else -> staticIcon3(value, context)
         }
     }
 
@@ -149,5 +131,46 @@ fun Icon3(
             modifier = modifier,
             elementName = elementName,
         )
+    }
+}
+
+fun staticIcon3(value: K3Descriptor, context: Context): ImageVector? {
+    return when (value) {
+        ImeIcons.ArrowDown -> Icons.Default.KeyboardArrowDown
+        ImeIcons.ArrowLeft -> Icons.AutoMirrored.Filled.KeyboardArrowLeft
+        ImeIcons.ArrowRight -> Icons.AutoMirrored.Filled.KeyboardArrowRight
+        ImeIcons.ArrowUp -> Icons.Default.KeyboardArrowUp
+        ImeIcons.Backspace -> Icons.AutoMirrored.Outlined.Backspace
+        ImeIcons.ClipboardClearPrimaryClip -> Icons.Default.DeleteSweep
+        ImeIcons.ClipboardCopy -> Icons.Default.ContentCopy
+        ImeIcons.ClipboardCut -> Icons.Default.ContentCut
+        ImeIcons.ClipboardPaste -> Icons.Default.ContentPasteGo
+        ImeIcons.Close -> Icons.Default.Close
+        ImeIcons.Delete -> Icons.AutoMirrored.Default.ForwardDelete
+        ImeIcons.DragMarker -> Icons.Default.Close
+        ImeIcons.Enter -> Icons.AutoMirrored.Filled.KeyboardReturn
+        ImeIcons.HideKeyboard -> Icons.Default.KeyboardHide
+        ImeIcons.LanguageSwitch -> Icons.Default.Language
+        ImeIcons.ClipboardPanel -> Icons.AutoMirrored.Outlined.Assignment
+        ImeIcons.MediaPanel -> Icons.Default.SentimentSatisfiedAlt
+        ImeIcons.TextPanel -> context.vectorResource(R.drawable.ic_abc)
+        ImeIcons.Noop -> Icons.Default.Close
+        ImeIcons.Redo -> Icons.AutoMirrored.Filled.Redo
+        ImeIcons.Shift -> context.vectorResource(R.drawable.ic_shift_off)
+        ImeIcons.ShiftLock -> context.vectorResource(R.drawable.ic_shift_lock)
+        ImeIcons.ShiftOff -> context.vectorResource(R.drawable.ic_shift_off)
+        ImeIcons.ShiftOn -> context.vectorResource(R.drawable.ic_shift_on)
+        ImeIcons.ShowKeyboard -> Icons.Default.KeyboardDoubleArrowUp // TODO
+        ImeIcons.SelectAll -> Icons.Default.SelectAll
+        ImeIcons.Settings -> Icons.Default.Settings
+        ImeIcons.SpaceBar -> Icons.Default.SpaceBar
+        ImeIcons.ToggleActionsOverflow -> Icons.Default.MoreHoriz
+        ImeIcons.ToggleAutocorrect -> Icons.Default.FontDownload
+        ImeIcons.ToggleCompactLayout -> context.vectorResource(R.drawable.ic_accessibility_one_handed)
+        ImeIcons.ToggleFloatingWindow -> context.vectorResource(R.drawable.ic_floating_keyboard)
+        ImeIcons.ToggleResizeMode -> context.vectorResource(R.drawable.ic_resize)
+        ImeIcons.Undo -> Icons.AutoMirrored.Filled.Undo
+        ImeIcons.Voice -> Icons.Default.KeyboardVoice
+        else -> null
     }
 }

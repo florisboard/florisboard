@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,14 +35,7 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
     val packageName: String?
         get() = base.packageName
 
-    val initialSelection: EditorRange
-        get() = if (base.initialSelStart >= 0 && base.initialSelEnd >= 0) {
-            EditorRange.normalized(base.initialSelStart, base.initialSelEnd)
-        } else {
-            EditorRange.Unspecified
-        }
-
-    val initialSelection2: K3TextRange
+    val initialSelection: K3TextRange
         get() = if (base.initialSelStart >= 0 && base.initialSelEnd >= 0) {
             K3TextRange(base.initialSelStart, base.initialSelEnd)
         } else {
@@ -86,10 +79,10 @@ class FlorisEditorInfo private constructor(val base: EditorInfo) {
     override fun hashCode(): Int {
         var result = inputAttributes.raw.hashCode()
         result = 31 * result + imeOptions.raw.hashCode()
-        result = 31 * result + (packageName?.hashCode() ?: 0)
+        result = 31 * result + packageName.hashCode()
         result = 31 * result + initialSelection.hashCode()
         result = 31 * result + initialCapsMode.hashCode()
-        result = 31 * result + (extractedActionLabel?.hashCode() ?: 0)
+        result = 31 * result + extractedActionLabel.hashCode()
         result = 31 * result + extractedActionId
         return result
     }

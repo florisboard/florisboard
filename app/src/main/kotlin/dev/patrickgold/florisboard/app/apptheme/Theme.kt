@@ -29,8 +29,8 @@ import androidx.core.view.WindowCompat
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.jetpref.datastore.model.collectAsState
-import org.florisboard.lib.color.neutralDynamicColorScheme
-import org.florisboard.lib.color.systemAccentOrDefault
+import org.florisboard.lib.snygg.color.neutralDynamicColorScheme
+import org.florisboard.lib.snygg.color.systemAccentOrDefault
 
 
 @Composable

@@ -17,9 +17,12 @@
 plugins {
     alias(libs.plugins.agp.application) apply false
     alias(libs.plugins.agp.library) apply false
+    alias(libs.plugins.agp.multiplatform.library) apply false
     alias(libs.plugins.agp.test) apply false
+    alias(libs.plugins.compose.multiplatform) apply false
     alias(libs.plugins.kotest) apply false
     alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.plugin.compose) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.kotlinx.kover) apply false

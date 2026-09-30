@@ -21,20 +21,20 @@ import kotlinx.coroutines.CoroutineScope
 import org.k3lp.model.K3Model
 
 class TouchModelCache {
-    private val byK3Model = Cache.Builder<Pair<K3Model, Boolean>, TouchModel>().build()
+    private val byK3Model = Cache.Builder<Pair<K3Model, TouchModelOptions>, TouchModel>().build()
 
     fun getFor(
         model: K3Model,
-        showNumberRow: Boolean,
+        options: TouchModelOptions,
     ): TouchModel? {
-        return byK3Model.get(model to showNumberRow)
+        return byK3Model.get(model to options)
     }
 
     context(scope: CoroutineScope)
     suspend fun getOrComputeFor(
         model: K3Model,
-        showNumberRow: Boolean,
+        options: TouchModelOptions,
     ): TouchModel {
-        return byK3Model.get(model to showNumberRow) { computeTouchModel(model, showNumberRow) }
+        return byK3Model.get(model to options) { computeTouchModel(model, options) }
     }
 }

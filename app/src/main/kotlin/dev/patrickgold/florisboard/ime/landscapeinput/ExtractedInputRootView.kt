@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,10 +44,13 @@ import androidx.compose.ui.viewinterop.AndroidView
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.ime.io.LocalStorageController
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.rememberAndroidInteractionController
 import dev.patrickgold.florisboard.ime.theme.FlorisImeTheme
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import org.florisboard.lib.compose.ProvideLocalizedResources
@@ -85,7 +88,10 @@ class ExtractedInputRootView(val ims: FlorisImeService, eet: ExtractEditText?) :
         val interactionController = rememberAndroidInteractionController(prefs)
 
         CompositionLocalProvider(
+            LocalImeController provides ims.imeController,
             LocalInteractionController provides interactionController,
+            LocalStorageController provides ims.storageController,
+            LocalThemeController provides ims.themeController,
             LocalWindowController provides ims.windowController,
         ) {
             ProvideLocalizedResources(
@@ -94,7 +100,8 @@ class ExtractedInputRootView(val ims: FlorisImeService, eet: ExtractEditText?) :
                 forceLayoutDirection = LayoutDirection.Ltr,
             ) {
                 FlorisImeTheme {
-                    val activeEditorInfo by ims.editorInstance.activeInfoFlow.collectAsState()
+                    val imeState by ims.imeController.activeState.collectAsState()
+                    val editorInfo by remember { derivedStateOf { imeState.editor.info } }
                     val rootInsets by ims.windowController.activeRootInsets.collectAsState()
                     val windowInsets by ims.windowController.activeWindowInsets.collectAsState()
                     val height by remember {
@@ -138,17 +145,19 @@ class ExtractedInputRootView(val ims: FlorisImeService, eet: ExtractEditText?) :
                             SnyggButton(
                                 FlorisImeUi.ExtractedLandscapeInputAction.elementName,
                                 onClick = {
-                                    if (activeEditorInfo.extractedActionId != 0) {
-                                        ims.currentInputConnection?.performEditorAction(activeEditorInfo.extractedActionId)
-                                    } else {
-                                        ims.editorInstance.performEnterAction(activeEditorInfo.imeOptions.action)
+                                    ims.imeController.updateStateBlocking {
+                                        if (editorInfo.extractedActionId != 0) {
+                                            state.editor.ic.get()?.performEditorAction(editorInfo.extractedActionId)
+                                        } else {
+                                            state.editor.performEditorAction(editorInfo.imeOptions.action)
+                                        }
                                     }
                                 },
                                 modifier = Modifier.padding(horizontal = 8.dp),
                             ) {
                                 SnyggText(
-                                    text = activeEditorInfo.extractedActionLabel
-                                        ?: ims.getTextForImeAction(activeEditorInfo.imeOptions.action.toInt())
+                                    text = editorInfo.extractedActionLabel
+                                        ?: ims.getTextForImeAction(editorInfo.imeOptions.action.toInt())
                                         ?: "ACTION",
                                 )
                             }

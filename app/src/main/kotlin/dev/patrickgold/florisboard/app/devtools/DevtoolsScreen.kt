@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,13 +21,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
@@ -38,7 +38,6 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidSettings
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.android.showLongToast
 import org.florisboard.lib.compose.stringRes
 
 class DebugOnPurposeCrashException : Exception(
@@ -50,9 +49,8 @@ fun DevtoolsScreen() = FlorisScreen {
     title = stringRes(R.string.devtools__title)
     previewFieldVisible = true
 
-    val context = LocalContext.current
+    val interactionController = LocalInteractionController.current
     val navController = LocalNavController.current
-    val extensionManager by context.extensionManager()
     val scope = rememberCoroutineScope()
 
     val (showDialog, setShowDialog) = remember { mutableStateOf(false) }
@@ -108,13 +106,14 @@ fun DevtoolsScreen() = FlorisScreen {
                 onClick = { setShowDialog(true) },
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
+            val successMsg = stringRes(R.string.devtools__reset_quick_actions_to_default__toast_success)
             Preference(
                 title = stringRes(R.string.devtools__reset_quick_actions_to_default__label),
                 summary = stringRes(R.string.devtools__reset_quick_actions_to_default__summary),
                 onClick = {
                     scope.launch {
                         prefs.smartbar.actionArrangement.set(QuickActionArrangement.Default)
-                        context.showLongToast(R.string.devtools__reset_quick_actions_to_default__toast_success)
+                        interactionController.showLongToast(successMsg)
                     }
                 },
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
@@ -159,6 +158,8 @@ fun DevtoolsScreen() = FlorisScreen {
                 summary = stringRes(R.string.devtools__show_window_resize_handle_boundaries__summary),
                 enabledIf = { prefs.devtools.enabled isEqualTo true },
             )
+            val successMsg = stringRes(R.string.devtools__reset_window_config__toast_success)
+            val failureMsg = stringRes(R.string.devtools__reset_window_config__toast_failure)
             Preference(
                 title = stringRes(R.string.devtools__reset_window_config__label),
                 summary = stringRes(R.string.devtools__reset_window_config__summary),
@@ -166,11 +167,11 @@ fun DevtoolsScreen() = FlorisScreen {
                     scope.launch {
                         prefs.keyboard.windowConfig.reset().fold(
                             onSuccess = {
-                                context.showLongToast(R.string.devtools__reset_window_config__toast_success)
+                                interactionController.showLongToast(successMsg)
                             },
                             onFailure = { error ->
-                                context.showLongToast(
-                                    R.string.devtools__reset_window_config__toast_failure,
+                                interactionController.showLongToast(
+                                    failureMsg,
                                     "message" to "${error.localizedMessage}",
                                 )
                             },
@@ -231,27 +232,6 @@ fun DevtoolsScreen() = FlorisScreen {
             Preference(
                 title = "prefs.internal.versionLastChangelog",
                 summary = versionLastChangelog,
-            )
-        }
-
-        PreferenceGroup(title = "ExtensionManager index paths") {
-            Preference(
-                title = "keyboardExtensions",
-                summary = extensionManager.keyboardExtensions.internalModuleDir.absolutePath,
-                onClick = {
-                    scope.launch {
-                        context.showLongToast(extensionManager.keyboardExtensions.internalModuleDir.absolutePath)
-                    }
-                },
-            )
-            Preference(
-                title = "themes",
-                summary = extensionManager.themes.internalModuleDir.absolutePath,
-                onClick = {
-                    scope.launch {
-                        context.showLongToast(extensionManager.themes.internalModuleDir.absolutePath)
-                    }
-                },
             )
         }
 

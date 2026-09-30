@@ -24,33 +24,29 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
-import dev.patrickgold.florisboard.themeManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.snygg.ui.ProvideSnyggTheme
 import org.florisboard.lib.snygg.ui.rememberSnyggTheme
 
 @Composable
 fun FlorisImeTheme(content: @Composable () -> Unit) {
-    val context = LocalContext.current
     val imeController = LocalImeController.current
+    val themeController = LocalThemeController.current
     val windowController = LocalWindowController.current
-
-    val themeManager by context.themeManager()
 
     val prefs by FlorisPreferenceStore
     val accentColor by prefs.theme.accentColor.collectAsState()
 
-    val activeThemeInfo by themeManager.activeThemeInfo.collectAsState()
+    val activeTheme by themeController.effectiveTheme.collectAsState()
 
-    val assetResolver = remember(activeThemeInfo) {
-        FlorisAssetResolver(context, activeThemeInfo)
+    val assetResolver = remember(activeTheme) {
+        FlorisAssetResolver(activeTheme)
     }
-    val snyggTheme = rememberSnyggTheme(activeThemeInfo.stylesheet, assetResolver)
+    val snyggTheme = rememberSnyggTheme(activeTheme.stylesheet, assetResolver)
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val fontScale by remember { derivedStateOf { windowSpec.fontScale } }
 
@@ -71,7 +67,7 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
                 assetResolver = assetResolver,
                 rootAttributes = emptyMap(),
                 content = content,
-                materialYouFlags = activeThemeInfo.config.materialYouFlags
+                materialYouFlags = activeTheme.config.materialYouFlags
             )
         }
     }

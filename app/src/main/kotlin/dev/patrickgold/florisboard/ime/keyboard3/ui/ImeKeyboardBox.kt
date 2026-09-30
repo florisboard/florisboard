@@ -16,9 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -88,13 +89,13 @@ fun ImeKeyboardBox(
         derivedStateOf { with(density) { windowSpec.keyMarginV.toPx() } }
     }
 
-    val showNumberRow by prefs.keyboard.numberRow.collectAsState()
+    val touchModelOptions by imeController.activeTouchModelOptions.collectAsState()
     var activeTouchModel by remember {
-        mutableStateOf(imeController.touchModelCache.getFor(model, showNumberRow) ?: TouchModel.Empty)
+        mutableStateOf(imeController.touchModelCache.getFor(model, touchModelOptions) ?: TouchModel.Empty)
     }
-    LaunchedEffect(model, showNumberRow) {
+    LaunchedEffect(model, touchModelOptions) {
         activeTouchModel = withContext(Dispatchers.Default) {
-            imeController.touchModelCache.getOrComputeFor(model, showNumberRow)
+            imeController.touchModelCache.getOrComputeFor(model, touchModelOptions)
         }
     }
 
@@ -132,14 +133,21 @@ fun ImeKeyboardBox(
             }
         }
         val activeTouchLayer = remember(activeTouchKeyboard, touchLayerId) {
-            activeTouchKeyboard.layers[touchLayerId]
-                ?: activeTouchKeyboard.layers[ImeLayerIds.Base]
-                ?: TouchLayer.Empty
+            if (touchLayerId == ImeLayerIds.Caps) {
+                activeTouchKeyboard.layers[touchLayerId]
+                    ?: activeTouchKeyboard.layers[ImeLayerIds.Shift]
+                    ?: activeTouchKeyboard.layers[ImeLayerIds.Base]
+            } else {
+                activeTouchKeyboard.layers[touchLayerId]
+                    ?: activeTouchKeyboard.layers[ImeLayerIds.Base]
+
+            } ?: TouchLayer.Empty
         }
 
         val pointerTracker = rememberPointerTracker(activeTouchKeyboard)
         val trackedOutputPointer by pointerTracker.trackedOutputPointer.collectAsState()
         val trackedPeekPointer by pointerTracker.trackedPeekPointer.collectAsState()
+        val trackedMultiTapSeq by pointerTracker.trackedMultiTapSeq.collectAsState()
 
         val keyboardRowHeightDp = FlorisImeSizing.keyboardRowBaseHeight
         val peekLineWidthPx = with(density) { 8.dp.toPx() }
@@ -181,12 +189,19 @@ fun ImeKeyboardBox(
                 val isPressed by remember {
                     derivedStateOf {
                         trackedOutputPointer?.downKey == touchKey ||
-                            trackedPeekPointer?.peekKey == touchKey
+                            trackedPeekPointer?.let {
+                                it.peekKey == touchKey || it.downKey.isShiftKey && touchKey.isShiftKey
+                            } == true
                     }
                 }
                 val longPress by remember {
                     derivedStateOf {
                         trackedOutputPointer?.takeIf { it.downKey == touchKey }?.longPress ?: LongPress.None
+                    }
+                }
+                val multiTapIndex by remember {
+                    derivedStateOf {
+                        trackedMultiTapSeq?.takeIf { it.touchKey == touchKey }?.multiTapIndex ?: -1
                     }
                 }
                 ImeKeyboardKeyBox(
@@ -197,6 +212,7 @@ fun ImeKeyboardBox(
                     },
                     isPressed = isPressed,
                     longPress = longPress,
+                    multiTapIndex = multiTapIndex,
                     modifier = Modifier
                         .layout { measurable, constraints ->
                             val effConstraints = Constraints.fixed(
@@ -235,9 +251,10 @@ private fun ImeKeyboardKeyBox(
     displayOverride: K3StringOrDescriptor?,
     isPressed: Boolean,
     longPress: LongPress,
+    multiTapIndex: Int,
     modifier: Modifier = Modifier,
 ) {
-    val display = displayOverride ?: touchKey.label
+    val display = displayOverride ?: touchKey.display
     val output = touchKey.attrs.output
     val attributes: SnyggQueryAttributes = remember(output) {
         buildMap {
@@ -248,6 +265,7 @@ private fun ImeKeyboardKeyBox(
     }
     // TODO some keys an be disabled (copy cut etc)
     val selector = if (isPressed) SnyggSelector.PRESSED else SnyggSelector.NONE
+    val multiTapKeys = touchKey.multiTapKeys
 
     SnyggBox(
         FlorisImeUi.Key.elementName,
@@ -255,12 +273,38 @@ private fun ImeKeyboardKeyBox(
         selector = selector,
         modifier = modifier,
     ) {
-        Display3(
+        Row(
             modifier = Modifier
-                .wrapContentSize()
-                .align(Alignment.Center),
-            display = display,
-        )
+                .align(Alignment.Center)
+                .scaleToFitHorizontally(),
+        ) {
+            if (touchKey.shouldOverrideDisplayWithMultiTapKeys) {
+                for ((index, multiTapKey) in multiTapKeys.withIndex()) {
+                    Display3(
+                        modifier = if (touchKey.shouldHighlightPendingMultiTapKey && index == multiTapIndex) {
+                            Modifier.background(Color.Red) // TODO customizable
+                        } else Modifier,
+                        display = multiTapKey.display,
+                    )
+                }
+            } else {
+                Display3(display)
+            }
+        }
+        if (touchKey.longPressKeyHint != null) {
+            Display3(
+                elementName = FlorisImeUi.KeyHint.elementName,
+                modifier = Modifier
+                    .align(touchKey.longPressKeyHintPlacement.alignment)
+                    .scaleToFitHorizontally(),
+                display = touchKey.longPressKeyHint,
+            )
+        }
+        // TODO flick hints
     }
-    LongPressBox(longPress, attributes = attributes)
+    LongPressBox(
+        longPress = longPress,
+        longPressSimpleDisplayOverride = multiTapKeys.getOrNull(multiTapIndex)?.display,
+        attributes = attributes,
+    )
 }

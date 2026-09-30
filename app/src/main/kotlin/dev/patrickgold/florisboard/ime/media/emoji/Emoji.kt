@@ -16,9 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
-import dev.patrickgold.florisboard.ime.keyboard.AbstractKeyData
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
-import dev.patrickgold.florisboard.ime.popup.PopupSet
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.ime.text.key.KeyType
 import kotlinx.serialization.KSerializer
@@ -51,7 +49,6 @@ class Emoji(val value: String, val name: String, val keywords: List<String>) : K
     override val code = KeyCode.UNSPECIFIED
     override val label = value
     override val groupId = 0
-    override val popup: PopupSet<AbstractKeyData>? = null
 
     val skinTone: EmojiSkinTone
 

@@ -21,16 +21,13 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.flogError
-import dev.patrickgold.florisboard.lib.ext.Extension
-import dev.patrickgold.florisboard.lib.ext.ExtensionComponent
-import dev.patrickgold.florisboard.lib.ext.ExtensionEditor
-import dev.patrickgold.florisboard.lib.ext.ExtensionMeta
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import org.florisboard.lib.kotlin.io.FsDir
 import org.florisboard.lib.kotlin.io.subFile
 
+/*
 @Serializable
 class LanguagePackComponent(
     override val id: String,
@@ -91,4 +88,4 @@ class LanguagePackExtension( // FIXME: how to make this support multiple types o
         super.onBeforeUnload(context, cacheDir)
         hanShapeBasedSQLiteDatabase.takeIf { it.isOpen }?.close()
     }
-}
+}*/

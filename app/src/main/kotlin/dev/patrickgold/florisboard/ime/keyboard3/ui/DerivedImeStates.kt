@@ -76,7 +76,7 @@ fun rememberDerivedEnabledState(
                     ImeActions.SelectAll.name -> {
                         isRichInputEditor
                     }
-                    ImeActions.LanguageSwitch.name -> {
+                    ImeActions.SwitchToNextSubtype.name -> {
                         isMultiLingual
                     }
                     else -> true

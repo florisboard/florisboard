@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,12 @@ import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.ime.input.CapitalizationBehavior
-import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.keyboard3.touch.ShiftKeyBehavior
+import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
+import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
+import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHistory
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSkinTone
@@ -37,9 +38,7 @@ import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
-import dev.patrickgold.florisboard.ime.text.key.KeyHintMode
-import dev.patrickgold.florisboard.ime.text.key.UtilityKeyAction
-import dev.patrickgold.florisboard.ime.theme.ThemeMode
+import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.jetpref.datastore.ui.ListPreferenceEntry
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
@@ -91,14 +90,14 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
-    CapitalizationBehavior::class to DEFAULT to {
+    ShiftKeyBehavior::class to DEFAULT to {
         listPrefEntries {
             entry(
-                key = CapitalizationBehavior.CAPSLOCK_BY_DOUBLE_TAP,
+                key = ShiftKeyBehavior.CAPSLOCK_BY_DOUBLE_TAP,
                 label = stringRes(R.string.enum__capitalization_behavior__capslock_by_double_tap),
             )
             entry(
-                key = CapitalizationBehavior.CAPSLOCK_BY_CYCLE,
+                key = ShiftKeyBehavior.CAPSLOCK_BY_CYCLE,
                 label = stringRes(R.string.enum__capitalization_behavior__capslock_by_cycle),
             )
         }
@@ -293,25 +292,19 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
-    KeyHintMode::class to DEFAULT to {
+    FlickKeyHintPlacement::class to DEFAULT to {
         listPrefEntries {
             entry(
-                key = KeyHintMode.ACCENT_PRIORITY,
-                label = stringRes(R.string.enum__key_hint_mode__accent_priority),
-                description = stringRes(R.string.enum__key_hint_mode__accent_priority__description),
-                showDescriptionOnlyIfSelected = true,
+                key = FlickKeyHintPlacement.CARDINAL,
+                label = "CARDINAL",
             )
             entry(
-                key = KeyHintMode.HINT_PRIORITY,
-                label = stringRes(R.string.enum__key_hint_mode__hint_priority),
-                description = stringRes(R.string.enum__key_hint_mode__hint_priority__description),
-                showDescriptionOnlyIfSelected = true,
+                key = FlickKeyHintPlacement.INTERCARDINAL,
+                label = "INTERCARDINAL",
             )
             entry(
-                key = KeyHintMode.SMART_PRIORITY,
-                label = stringRes(R.string.enum__key_hint_mode__smart_priority),
-                description = stringRes(R.string.enum__key_hint_mode__smart_priority__description),
-                showDescriptionOnlyIfSelected = true,
+                key = FlickKeyHintPlacement.CARDINAL_AND_INTERCARDINAL,
+                label = "CARDINAL_AND_INTERCARDINAL",
             )
         }
     },
@@ -381,38 +374,6 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
-    KeyboardMode::class to DEFAULT to {
-        listPrefEntries {
-            entry(
-                key = KeyboardMode.CHARACTERS,
-                label = stringRes(R.string.enum__keyboard_mode__characters),
-            )
-            entry(
-                key = KeyboardMode.SYMBOLS,
-                label = stringRes(R.string.enum__keyboard_mode__symbols),
-            )
-            entry(
-                key = KeyboardMode.SYMBOLS2,
-                label = stringRes(R.string.enum__keyboard_mode__symbols2),
-            )
-            entry(
-                key = KeyboardMode.NUMERIC,
-                label = stringRes(R.string.enum__keyboard_mode__numeric),
-            )
-            entry(
-                key = KeyboardMode.NUMERIC_ADVANCED,
-                label = stringRes(R.string.enum__keyboard_mode__numeric_advanced),
-            )
-            entry(
-                key = KeyboardMode.PHONE,
-                label = stringRes(R.string.enum__keyboard_mode__phone),
-            )
-            entry(
-                key = KeyboardMode.PHONE2,
-                label = stringRes(R.string.enum__keyboard_mode__phone2),
-            )
-        }
-    },
     LandscapeInputUiMode::class to DEFAULT to {
         listPrefEntries {
             entry(
@@ -426,6 +387,34 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             entry(
                 key = LandscapeInputUiMode.DYNAMICALLY_SHOW,
                 label = stringRes(R.string.enum__landscape_input_ui_mode__dynamically_show),
+            )
+        }
+    },
+    LongPressKeyHintPlacement::class to DEFAULT to {
+        listPrefEntries {
+            entry(
+                key = LongPressKeyHintPlacement.TOP_START,
+                label = stringRes(R.string.enum__long_press_key_hint_placement__top_start),
+            )
+            entry(
+                key = LongPressKeyHintPlacement.TOP_CENTER,
+                label = stringRes(R.string.enum__long_press_key_hint_placement__top_center),
+            )
+            entry(
+                key = LongPressKeyHintPlacement.TOP_END,
+                label = stringRes(R.string.enum__long_press_key_hint_placement__top_end),
+            )
+            entry(
+                key = LongPressKeyHintPlacement.BOTTOM_START,
+                label = stringRes(R.string.enum__long_press_key_hint_placement__bottom_start),
+            )
+            entry(
+                key = LongPressKeyHintPlacement.BOTTOM_CENTER,
+                label = stringRes(R.string.enum__long_press_key_hint_placement__bottom_center),
+            )
+            entry(
+                key = LongPressKeyHintPlacement.BOTTOM_END,
+                label = stringRes(R.string.enum__long_press_key_hint_placement__bottom_end),
             )
         }
     },
@@ -651,43 +640,23 @@ private val ENUM_DISPLAY_ENTRIES = mapOf<Pair<KClass<*>, String>, @Composable ()
             )
         }
     },
-    ThemeMode::class to DEFAULT to {
+    PreferredThemeMode::class to DEFAULT to {
         listPrefEntries {
             entry(
-                key = ThemeMode.ALWAYS_DAY,
+                key = PreferredThemeMode.ALWAYS_DAY,
                 label = stringRes(R.string.enum__theme_mode__always_day),
             )
             entry(
-                key = ThemeMode.ALWAYS_NIGHT,
+                key = PreferredThemeMode.ALWAYS_NIGHT,
                 label = stringRes(R.string.enum__theme_mode__always_night),
             )
             entry(
-                key = ThemeMode.FOLLOW_SYSTEM,
+                key = PreferredThemeMode.FOLLOW_SYSTEM,
                 label = stringRes(R.string.enum__theme_mode__follow_system),
             )
             entry(
-                key = ThemeMode.FOLLOW_TIME,
+                key = PreferredThemeMode.FOLLOW_TIME,
                 label = stringRes(R.string.enum__theme_mode__follow_time),
-            )
-        }
-    },
-    UtilityKeyAction::class to DEFAULT to {
-        listPrefEntries {
-            entry(
-                key = UtilityKeyAction.SWITCH_TO_EMOJIS,
-                label = stringRes(R.string.enum__utility_key_action__switch_to_emojis),
-            )
-            entry(
-                key = UtilityKeyAction.SWITCH_LANGUAGE,
-                label = stringRes(R.string.enum__utility_key_action__switch_language),
-            )
-            entry(
-                key = UtilityKeyAction.SWITCH_KEYBOARD_APP,
-                label = stringRes(R.string.enum__utility_key_action__switch_keyboard_app),
-            )
-            entry(
-                key = UtilityKeyAction.DYNAMIC_SWITCH_LANGUAGE_EMOJIS,
-                label = stringRes(R.string.enum__utility_key_action__dynamic_switch_language_emojis),
             )
         }
     },

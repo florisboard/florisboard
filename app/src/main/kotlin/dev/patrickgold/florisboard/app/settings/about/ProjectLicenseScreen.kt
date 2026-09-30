@@ -21,16 +21,18 @@ import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.io.FlorisRef
+import dev.patrickgold.florisboard.ime.io.LocalStorageController
+import dev.patrickgold.florisboard.ime.io.readText
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.io.FlorisRef
-import dev.patrickgold.florisboard.lib.io.loadTextAsset
 import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.compose.florisVerticalScroll
 import org.florisboard.lib.compose.stringRes
@@ -40,7 +42,8 @@ fun ProjectLicenseScreen() = FlorisScreen {
     title = stringRes(R.string.about__project_license__title)
     scrollable = false
 
-    val context = LocalContext.current
+    val storageController = LocalStorageController.current
+    val storage by storageController.activeStorage.collectAsState()
 
     content {
         // Forcing LTR because the Apache 2.0 License shipped and displayed
@@ -53,9 +56,9 @@ fun ProjectLicenseScreen() = FlorisScreen {
                     .florisVerticalScroll()
                     .florisHorizontalScroll(),
             ) {
-                val licenseText = FlorisRef.assets("license/project_license.txt").loadTextAsset(
-                    context
-                ).getOrElse {
+                val licenseText = runCatching {
+                    storage.readText(FlorisRef.assets("license/project_license.txt"))
+                }.getOrElse {
                     stringRes(R.string.about__project_license__error_license_text_failed, "error_message" to (it.message ?: ""))
                 }
                 Text(

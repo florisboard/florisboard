@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.ime.nlp.latin
 import android.content.Context
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
@@ -32,6 +31,7 @@ import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.json.Json
 import org.florisboard.lib.android.readText
 import org.florisboard.lib.kotlin.guardedByLock
+import org.k3lp.runtime.K3Content
 
 class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
@@ -100,7 +100,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     override suspend fun suggest(
         subtype: Subtype,
-        content: EditorContent,
+        content: K3Content,
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,

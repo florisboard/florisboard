@@ -16,10 +16,17 @@
 
 package dev.patrickgold.florisboard.ime.keyboard3
 
+import android.content.ClipDescription
+import android.content.ContentUris
 import android.os.SystemClock
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
+import androidx.core.view.inputmethod.InputConnectionCompat
+import androidx.core.view.inputmethod.InputContentInfoCompat
+import dev.patrickgold.florisboard.FlorisApplication
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardFileStorage
+import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import org.k3lp.runtime.K3Editor
@@ -81,37 +88,107 @@ open class ImeEditor(
         ic.deleteSurroundingText(charsBefore, charsAfter)
     }
 
+    fun performClipboardCopy(): Boolean {
+        val ic = ic.get() ?: return false
+        return ic.performContextMenuAction(android.R.id.copy)
+    }
+
+    fun performClipboardCut(): Boolean {
+        val ic = ic.get() ?: return false
+        return ic.performContextMenuAction(android.R.id.cut)
+    }
+
+    fun performClipboardPaste(): Boolean {
+        val ic = ic.get() ?: return false
+        return ic.performContextMenuAction(android.R.id.paste)
+    }
+
+    fun performClipboardPasteMedia(item: ClipboardItem): Boolean {
+        val ic = ic.get() ?: return false
+        val uri = item.uri ?: return false
+        val mimeTypes = item.mimeTypes
+        val id = ContentUris.parseId(uri)
+        val appContext = FlorisApplication.getHack() // TODO this is a hack
+        val file = ClipboardFileStorage.getFileForId(appContext, id)
+        if (!file.exists()) return false
+        val inputContentInfo = InputContentInfoCompat(
+            uri,
+            ClipDescription("clipboard media file", mimeTypes.toTypedArray()),
+            null,
+        )
+        ic.finishComposingText()
+        val flags = InputConnectionCompat.INPUT_CONTENT_GRANT_READ_URI_PERMISSION
+        return InputConnectionCompat.commitContent(ic, info.base, inputContentInfo, flags, null)
+    }
+
+    fun performSelectAll(): Boolean {
+        val ic = ic.get() ?: return false
+        ic.finishComposingText()
+        return if (info.isRawInputEditor) {
+            sendDownUpKeyEvent(KeyEvent.KEYCODE_A, meta(ctrl = true))
+        } else {
+            ic.performContextMenuAction(android.R.id.selectAll)
+        }
+    }
+
+    fun performUndo(): Boolean {
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true))
+    }
+
+    fun performRedo(): Boolean {
+        return sendDownUpKeyEvent(KeyEvent.KEYCODE_Z, meta(ctrl = true, shift = true))
+    }
+
     fun performEditorAction(action: ImeOptions.Action) {
         val ic = ic.get() ?: return
         ic.performEditorAction(action.toInt())
     }
 
-    private fun InputConnection.sendDownKeyEvent(keyCode: Int, downTime: Long) {
+    private fun meta(
+        ctrl: Boolean = false,
+        alt: Boolean = false,
+        shift: Boolean = false,
+    ): Int {
+        var metaState = 0
+        if (ctrl) {
+            metaState = KeyEvent.META_CTRL_ON or KeyEvent.META_CTRL_LEFT_ON
+        }
+        if (alt) {
+            metaState = metaState or KeyEvent.META_ALT_ON or KeyEvent.META_ALT_LEFT_ON
+        }
+        if (shift) {
+            metaState = metaState or KeyEvent.META_SHIFT_ON or KeyEvent.META_SHIFT_LEFT_ON
+        }
+        return metaState
+    }
+
+    private fun InputConnection.sendDownKeyEvent(keyCode: Int, metaState: Int, downTime: Long) {
         sendKeyEvent(
             KeyEvent(
                 downTime, downTime,
-                KeyEvent.ACTION_DOWN, keyCode, 0, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
+                KeyEvent.ACTION_DOWN, keyCode, 0, metaState, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
                 KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE
             )
         )
     }
 
-    private fun InputConnection.sendUpKeyEvent(keyCode: Int, downTime: Long, upTime: Long) {
+    private fun InputConnection.sendUpKeyEvent(keyCode: Int, metaState: Int, downTime: Long, upTime: Long) {
         sendKeyEvent(
             KeyEvent(
                 downTime, upTime,
-                KeyEvent.ACTION_UP, keyCode, 0, 0, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
+                KeyEvent.ACTION_UP, keyCode, 0, metaState, KeyCharacterMap.VIRTUAL_KEYBOARD, 0,
                 KeyEvent.FLAG_SOFT_KEYBOARD or KeyEvent.FLAG_KEEP_TOUCH_MODE
             )
         )
     }
 
-    fun sendDownUpKeyEvent(keyCode: Int) {
-        val ic = ic.get() ?: return
+    fun sendDownUpKeyEvent(keyCode: Int, metaState: Int = 0): Boolean {
+        val ic = ic.get() ?: return false
         val downTime = SystemClock.uptimeMillis()
-        ic.sendDownKeyEvent(keyCode, downTime)
+        ic.sendDownKeyEvent(keyCode, metaState, downTime)
         val upTime = SystemClock.uptimeMillis()
-        ic.sendUpKeyEvent(keyCode, downTime, upTime)
+        ic.sendUpKeyEvent(keyCode, metaState, downTime, upTime)
+        return true
     }
 
     override fun setComposition(newComposition: K3TextRange?) {

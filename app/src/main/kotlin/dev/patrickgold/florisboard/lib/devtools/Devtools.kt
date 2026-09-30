@@ -23,7 +23,6 @@ import android.os.Debug
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
-import dev.patrickgold.florisboard.extensionManager
 import dev.patrickgold.florisboard.lib.titlecase
 import dev.patrickgold.florisboard.lib.util.TimeUtils
 import dev.patrickgold.florisboard.lib.util.UnitUtils
@@ -128,9 +127,9 @@ object Devtools {
         return buildString {
             if (withTitle) appendLine("======= EXTENSION CONFIG =======")
             appendLine("Theme extensions    : ")
-            context.extensionManager().value.themes.value.forEach { append("    ").appendLine(it.meta.id) }
-            appendLine("Language Packs      : ")
-            context.extensionManager().value.languagePacks.value.forEach { append("    ").appendLine(it.meta.id) }
+//            context.extensionManager().value.themes.value.forEach { append("    ").appendLine(it.meta.id) }
+//            appendLine("Language Packs      : ")
+//            context.extensionManager().value.languagePacks.value.forEach { append("    ").appendLine(it.meta.id) }
         }
     }
 
