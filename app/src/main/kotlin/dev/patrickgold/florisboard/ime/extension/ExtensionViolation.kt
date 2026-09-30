@@ -68,7 +68,7 @@ sealed interface ExtensionIndexViolation : ExtensionViolation {
     }
 }
 
-private val NoSourcePosition = SourcePosition(-1, -1, -1)
+private val NoSourcePosition = SourcePosition(-1, -1)
 
 fun FlorisRef.asSourceRange(): SourceRange {
     return SourceRange(this, NoSourcePosition)

@@ -24,14 +24,14 @@ import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.k3lp.K3ImportResolver
-import org.k3lp.K3lp
-import org.k3lp.K3lpResult
 import org.k3lp.lib.meta.source.SourceFileRef
 import org.k3lp.lib.meta.source.TextSourceFile
 import org.k3lp.lib.text.K3Descriptor
 import org.k3lp.lib.text.WillRequireMigrationToRichErrors
+import org.k3lp.model.K3CompileResult
 import org.k3lp.model.K3ImpliedImports
+import org.k3lp.model.K3ImportResolver
+import org.k3lp.model.compileToModel
 
 private val SCOPE_FOUNDATION = K3Descriptor("fl", "ext", "org.florisboard.k3.foundation")
 
@@ -58,13 +58,14 @@ suspend fun loadFoundationKeyboard(imeController: ImeController, storage: Storag
         displays = listOf("flex://org.florisboard.k3.foundation/displays-implied.xml"),
         keys = listOf("flex://org.florisboard.k3.foundation/keys-implied.xml"),
     )
-    val result = K3lp.compile(loadAssetFile("keyboard/qwertz.xml"), importResolver, impliedImports)
+    val file = loadAssetFile("keyboard/qwertz.xml")
+    val result = file.compileToModel(importResolver, impliedImports)
     for (report in result.reports) {
         flogError { report.cause?.stackTraceToString() ?: "" }
     }
-    if (result is K3lpResult.Success) {
+    if (result is K3CompileResult.Success) {
         imeController.updateState {
-            switchModel(result.data)
+            switchModel(result.model)
         }
     }
 }

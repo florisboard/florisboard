@@ -91,7 +91,7 @@ class ExtensionController(
             return ExtensionIndex(
                 storage = storage,
                 extensions = extensions.toMap(),
-                reports = reports.finalize(),
+                reports = reports.toReportList(),
             )
         }
 
