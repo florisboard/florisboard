@@ -20,9 +20,9 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 
-// TODO: Hardware keyboard, both qwerty and 109-key JIS
+// TODO: Hardware keyboard, mozc only supports qwerty it looks like
 // TODO: Flick
-// dot166: I didn't do any of the above as I don't really use hardware keyboard and flick requires a finished k3lp
+// dot166: I didn't do any of the above as I don't really use hardware keyboard and flick requires support in the ime that i cannot provide
 // someone else can pick up where I left off...
 class MozcEngine {
     private var sessionId: Long = 0L
