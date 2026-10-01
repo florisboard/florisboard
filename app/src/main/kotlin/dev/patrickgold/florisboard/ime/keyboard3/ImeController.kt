@@ -27,8 +27,6 @@ import dev.patrickgold.florisboard.ime.ImeUiMode
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
-import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.core.SubtypeNlpProviderMap
 import dev.patrickgold.florisboard.ime.editor.FlorisEditorInfo
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.editor.InputAttributes
@@ -49,7 +47,6 @@ import dev.patrickgold.florisboard.ime.nlp.BreakIterators
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.JapaneseWordSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
-import dev.patrickgold.florisboard.ime.nlp.mozc.MozcCandidateProvider
 import dev.patrickgold.florisboard.ime.text.key.KeyVariation
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
@@ -686,16 +683,9 @@ class ImeController(
         }
 
         fun emitCandidate(candidate: SuggestionCandidate) {
-            scope.launch {
-                candidate.sourceProvider?.notifySuggestionAccepted(Subtype(0, FlorisLocale.fromTag("ja-JP"), emptyList(), SubtypeNlpProviderMap(
-                    "",
-                    MozcCandidateProvider.ProviderId
-                ),), candidate)//subtypeManager.activeSubtype, candidate)
-                if (candidate is JapaneseWordSuggestionCandidate) {
-                    // temp solution to get mozc candidate updates to work, hopefully a more global solution is implemented soon...
-                    state.editor.updateMozcCandidateList()
-                }
-            }
+//            scope.launch {
+//                candidate.sourceProvider?.notifySuggestionAccepted(subtypeManager.activeSubtype, candidate)
+//            }
             when (candidate) {
                 is ClipboardSuggestionCandidate -> emitClipboardItem(candidate.clipboardItem)
                 is JapaneseWordSuggestionCandidate -> commitMozcCandidate(candidate)
@@ -705,6 +695,7 @@ class ImeController(
 
         private fun commitMozcCandidate(candidate: JapaneseWordSuggestionCandidate) {
             val oldComposition = state.content.composition ?: return
+            MozcEngine.instance.selectCandidate(candidate)
             val localStart = oldComposition.start - state.content.offset
             val localEnd = oldComposition.end - state.content.offset
             val selection = K3TextRange(localStart, localEnd)

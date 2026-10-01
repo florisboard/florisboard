@@ -54,14 +54,8 @@ class MozcCandidateProvider : SuggestionProvider {
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
-        if (candidate is JapaneseWordSuggestionCandidate) {
-            // correct provider
-            MozcEngine.instance.selectCandidate(candidate)
-        } else {
-            flogError {
-                "how did a non mozc candidate, end up in the mozc candidade provider???"
-            }
-        }
+        // Do nothing
+        // logic for telling mozc is in the same function that tells the input connection
     }
 
     override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {

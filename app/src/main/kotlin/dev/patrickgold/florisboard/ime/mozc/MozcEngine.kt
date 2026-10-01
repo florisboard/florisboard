@@ -70,7 +70,7 @@ class MozcEngine {
 
         val createResponse: ProtoCommands.Command =
             ProtoCommands.Command.parseFrom(
-                MozcJni.evalCommand(createCommand.toByteArray())
+                execute(createCommand)
             )
 
         sessionId = createResponse.output.id
@@ -99,7 +99,7 @@ class MozcEngine {
                 )
                 .build()
 
-            MozcJni.evalCommand(modeRequest.toByteArray())
+            execute(modeRequest)
             _keyboardSpec = value
         }
 
@@ -151,7 +151,7 @@ class MozcEngine {
                 )
                 .build()
 
-        MozcJni.evalCommand(deleteRequest.toByteArray())
+        execute(deleteRequest)
 
         sessionId = 0L
         _preedit.value = ""
@@ -185,7 +185,7 @@ class MozcEngine {
                     )
             )
             .build()
-        MozcJni.evalCommand(submitRequest.toByteArray())
+        executeAndUpdate(submitRequest)
     }
 
     fun applyConfig(conf: ProtoConfig.Config) {
@@ -196,7 +196,7 @@ class MozcEngine {
                     .setConfig(conf)
             )
             .build()
-        MozcJni.evalCommand(configRequest.toByteArray())
+        execute(configRequest)
     }
 
     @Throws(IOException::class)
@@ -212,7 +212,7 @@ class MozcEngine {
 
         val createResponse: ProtoCommands.Command =
             ProtoCommands.Command.parseFrom(
-                MozcJni.evalCommand(createCommand.toByteArray())
+                execute(createCommand)
             )
 
         sessionId = createResponse.output.id
@@ -229,7 +229,7 @@ class MozcEngine {
         val inCommand: ProtoCommands.Command = ProtoCommands.Command.newBuilder()
             .setInput(input)
             .build()
-        MozcJni.evalCommand(inCommand.toByteArray())
+        execute(inCommand)
     }
 
     private fun sendKeyRequest(keyEvent: ProtoCommands.KeyEvent) {
@@ -242,7 +242,15 @@ class MozcEngine {
             )
             .build()
 
-        val bytes = MozcJni.evalCommand(keyRequest.toByteArray())
+        executeAndUpdate(keyRequest)
+    }
+
+    private fun execute(request: ProtoCommands.Command): ByteArray? {
+        return MozcJni.evalCommand(request.toByteArray())
+    }
+
+    private fun executeAndUpdate(request: ProtoCommands.Command) {
+        val bytes = execute(request)
         if (bytes == null || bytes.isEmpty()) {
             Log.e(TAG, "returned empty response")
             return
