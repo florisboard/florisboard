@@ -381,7 +381,7 @@ class ImeController(
         }
 
         override fun emitText(value: K3String) {
-            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Alpha || state.touchLayerId == ImeLayerIds.Base) && state.flags.keyVariation != KeyVariation.PASSWORD) { // assume false if null
+            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Alpha || state.touchLayerId == ImeLayerIds.Base) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) { // assume false if null
                 for (key in value.toText()) {
                     if (key == ' ') {
                         // for some reason, k3lp hardcodes space to output a space, so we replace it with the space keycode and send it to mozc
@@ -602,7 +602,7 @@ class ImeController(
         }
 
         override fun emitBackspace() {
-            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Alpha || state.touchLayerId == ImeLayerIds.Base) && state.flags.keyVariation != KeyVariation.PASSWORD) {
+            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Alpha || state.touchLayerId == ImeLayerIds.Base) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
                 if (MozcEngine.instance.preedit.value.isNotEmpty()) {
                     MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.BACKSPACE)
                     sendPreedit(MozcEngine.instance.preedit.value)
@@ -616,7 +616,7 @@ class ImeController(
         }
 
         override fun emitEnter() {
-            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Alpha || state.touchLayerId == ImeLayerIds.Base) && state.flags.keyVariation != KeyVariation.PASSWORD) {
+            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Alpha || state.touchLayerId == ImeLayerIds.Base) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
                 if (MozcEngine.instance.preedit.value.isNotEmpty()) {
                     MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.ENTER)
                     state = state.copy(
