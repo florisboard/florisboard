@@ -64,6 +64,7 @@ sealed class QuickAction {
                 KeyCode.CLIPBOARD_CUT -> InsertK3Descriptor(ImeActions.ClipboardCut)
                 KeyCode.CLIPBOARD_PASTE -> InsertK3Descriptor(ImeActions.ClipboardPaste)
                 KeyCode.CLIPBOARD_SELECT_ALL -> InsertK3Descriptor(ImeActions.SelectAll)
+                KeyCode.SHARE_SELECTED_TEXT -> InsertK3Descriptor(ImeActions.ShareSelectedText)
                 KeyCode.LANGUAGE_SWITCH -> InsertK3Descriptor(ImeActions.SwitchToNextSubtype)
                 KeyCode.FORWARD_DELETE -> InsertK3Descriptor(ImeActions.Delete)
                 KeyCode.IME_HIDE_UI -> InsertK3Descriptor(ImeActions.HideImeWindow)
@@ -96,6 +97,7 @@ fun QuickAction.computeDisplayName(imeState: ImeState): String {
             ImeActions.ClipboardCut -> R.string.quick_action__clipboard_cut
             ImeActions.ClipboardPaste -> R.string.quick_action__clipboard_paste
             ImeActions.SelectAll -> R.string.quick_action__clipboard_select_all
+            ImeActions.ShareSelectedText -> R.string.quick_action__share_selected_text
             ImeActions.Settings -> R.string.quick_action__settings
             ImeActions.ShowMediaPanel -> R.string.quick_action__ime_ui_mode_media
             ImeActions.ShowClipboardPanel -> R.string.quick_action__ime_ui_mode_clipboard
@@ -136,6 +138,7 @@ fun QuickAction.computeTooltip(imeState: ImeState): String {
             ImeActions.ClipboardCut -> R.string.quick_action__clipboard_cut__tooltip
             ImeActions.ClipboardPaste -> R.string.quick_action__clipboard_paste__tooltip
             ImeActions.SelectAll -> R.string.quick_action__clipboard_select_all__tooltip
+            ImeActions.ShareSelectedText -> R.string.quick_action__share_selected_text__tooltip
             ImeActions.Settings -> R.string.quick_action__settings__tooltip
             ImeActions.ShowMediaPanel -> R.string.quick_action__ime_ui_mode_media__tooltip
             ImeActions.ShowClipboardPanel -> R.string.quick_action__ime_ui_mode_clipboard__tooltip

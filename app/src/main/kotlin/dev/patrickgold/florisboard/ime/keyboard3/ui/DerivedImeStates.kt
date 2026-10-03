@@ -64,7 +64,7 @@ fun rememberDerivedEnabledState(
             val isDeviceLocked = isDeviceLocked
             when (output) {
                 is K3Descriptor -> when (output.name) {
-                    ImeActions.ClipboardCopy.name, ImeActions.ClipboardCut.name -> {
+                    ImeActions.ClipboardCopy.name, ImeActions.ClipboardCut.name, ImeActions.ShareSelectedText.name -> {
                         !isSelectionCollapsed
                     }
                     ImeActions.ClipboardPaste.name -> {

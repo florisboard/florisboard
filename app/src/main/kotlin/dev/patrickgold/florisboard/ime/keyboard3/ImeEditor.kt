@@ -18,6 +18,7 @@ package dev.patrickgold.florisboard.ime.keyboard3
 
 import android.content.ClipDescription
 import android.content.ContentUris
+import android.content.Intent
 import android.os.SystemClock
 import android.view.KeyCharacterMap
 import android.view.KeyEvent
@@ -128,6 +129,32 @@ open class ImeEditor(
             sendDownUpKeyEvent(KeyEvent.KEYCODE_A, meta(ctrl = true))
         } else {
             ic.performContextMenuAction(android.R.id.selectAll)
+        }
+    }
+
+    fun performTextShare(): Boolean {
+        val ic = ic.get() ?: return false
+
+        val selectedText = ic.getSelectedText(0)?.toString()?: return false
+
+        if (selectedText.isEmpty()) return false
+
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, selectedText)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        val chooser = Intent.createChooser(intent, null).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        return try {
+            val appContext = FlorisApplication.getHack()  // TODO this is a hack
+            appContext.startActivity(chooser)
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 

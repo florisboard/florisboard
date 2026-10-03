@@ -105,6 +105,7 @@ data class TextKeyData(
                 CLIPBOARD_PASTE,
                 CLIPBOARD_SELECT,
                 CLIPBOARD_SELECT_ALL,
+                SHARE_SELECTED_TEXT,
                 CLIPBOARD_CLEAR_HISTORY,
                 CLIPBOARD_CLEAR_FULL_HISTORY,
                 CLIPBOARD_CLEAR_PRIMARY_CLIP,
@@ -304,6 +305,12 @@ data class TextKeyData(
             type = KeyType.SYSTEM_GUI,
             code = KeyCode.CLIPBOARD_SELECT_ALL,
             label = "clipboard_select_all",
+        )
+        /** Predefined key data for [KeyCode.SHARE_SELECTED_TEXT] */
+        val SHARE_SELECTED_TEXT = TextKeyData(
+            type = KeyType.SYSTEM_GUI,
+            code = KeyCode.SHARE_SELECTED_TEXT,
+            label = "share_selected_text",
         )
         /** Predefined key data for [KeyCode.CLIPBOARD_CLEAR_HISTORY] */
         val CLIPBOARD_CLEAR_HISTORY = TextKeyData(
