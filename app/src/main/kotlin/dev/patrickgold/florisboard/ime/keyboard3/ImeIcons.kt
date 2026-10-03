@@ -40,6 +40,7 @@ object ImeIcons {
     val Noop = flIcon("noop")
     val Redo = flIcon("redo")
     val SelectAll = flIcon("select_all")
+    val ShareSelectedText = flIcon("share_selected_text")
     val Settings = flIcon("settings")
     val Shift = flIcon("shift")
     val ShiftLock = flIcon("shift_lock")

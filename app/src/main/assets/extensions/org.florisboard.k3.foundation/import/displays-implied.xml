@@ -39,6 +39,7 @@ the mapping to a different display value.
     <display output="@fl:action/clipboard_clear_full_history" display="TODO" />
     <display output="@fl:action/clipboard_clear_primary_clip" display="@fl:icon/clipboard_clear_primary_clip" />
     <display output="@fl:action/select_all" display="@fl:icon/select_all" />
+    <display output="@fl:action/share_selected_text" display="@fl:icon/share_selected_text" />
 
     <display output="@fl:action/show_ime_window" display="@fl:icon/show_keyboard" />
     <display output="@fl:action/hide_ime_window" display="@fl:icon/hide_keyboard" />

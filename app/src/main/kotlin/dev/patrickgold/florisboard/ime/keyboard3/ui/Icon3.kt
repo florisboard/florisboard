@@ -45,6 +45,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -162,6 +163,7 @@ fun staticIcon3(value: K3Descriptor, context: Context): ImageVector? {
         ImeIcons.ShiftOn -> context.vectorResource(R.drawable.ic_shift_on)
         ImeIcons.ShowKeyboard -> Icons.Default.KeyboardDoubleArrowUp // TODO
         ImeIcons.SelectAll -> Icons.Default.SelectAll
+        ImeIcons.ShareSelectedText -> Icons.Default.Share
         ImeIcons.Settings -> Icons.Default.Settings
         ImeIcons.SpaceBar -> Icons.Default.SpaceBar
         ImeIcons.ToggleActionsOverflow -> Icons.Default.MoreHoriz

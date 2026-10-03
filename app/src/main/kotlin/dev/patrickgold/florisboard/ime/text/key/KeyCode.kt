@@ -67,6 +67,7 @@ object KeyCode {
     const val CLIPBOARD_CLEAR_HISTORY =      -36
     const val CLIPBOARD_CLEAR_FULL_HISTORY = -37
     const val CLIPBOARD_CLEAR_PRIMARY_CLIP = -38
+    const val SHARE_SELECTED_TEXT =              -39
 
     const val TOGGLE_FLOATING_WINDOW =      -109
     const val TOGGLE_COMPACT_LAYOUT =       -110
