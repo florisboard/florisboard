@@ -197,7 +197,7 @@ object ExtensionValidation {
     }
 }
 
-fun ExtensionMeta.validate(): Boolean {
+fun ExtensionMeta.isValid(): Boolean {
     return with(ExtensionValidation) {
         validate(MetaId, id).isValid() &&
             validate(MetaVersion, version).isValid() &&

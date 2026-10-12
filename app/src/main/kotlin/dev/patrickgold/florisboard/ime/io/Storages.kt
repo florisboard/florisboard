@@ -16,19 +16,21 @@
 
 package dev.patrickgold.florisboard.ime.io
 
-import kotlinx.io.buffered
-import kotlinx.io.readString
-import kotlinx.io.writeString
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.StringFormat
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import okio.IOException
+import okio.Path.Companion.toPath
+import okio.buffer
+import okio.openZip
+import kotlin.uuid.Uuid
 
 fun Storage.readText(
     ref: FlorisRef,
 ): String {
-    return source(ref).buffered().use { it.readString() }
+    return source(ref).buffer().use { it.readString(Charsets.UTF_8) }
 }
 
 fun <T> Storage.readJson(
@@ -52,7 +54,7 @@ fun Storage.writeText(
     ref: FlorisRef,
     text: String,
 ) {
-    sink(ref).buffered().use { it.writeString(text) }
+    sink(ref).buffer().use { it.writeString(text, Charsets.UTF_8) }
 }
 
 fun <T> Storage.writeJson(
@@ -74,19 +76,36 @@ inline fun <reified T> Storage.writeJson(
     writeText(ref, jsonStr)
 }
 
-fun Storage.copy(srcRef: FlorisRef, dstRef: FlorisRef) {
-    Storage.copy(this, srcRef, this, dstRef)
+private val WORKSPACES_BASE_REF = FlorisRef.cache("workspaces")
+
+fun Storage.createWorkspace(): FlorisRef {
+    val id = Uuid.random().toHexDashString()
+    val ref = WORKSPACES_BASE_REF.subRef(id)
+    mkdirs(ref)
+    return ref
 }
 
-fun Storage.Companion.copy(
-    srcStorage: Storage,
-    srcRef: FlorisRef,
-    dstStorage: Storage,
-    dstRef: FlorisRef,
-) {
-    srcStorage.source(srcRef).buffered().use { source ->
-        dstStorage.sink(dstRef).buffered().use { sink ->
-            sink.transferFrom(source)
+fun Storage.deleteAllWorkspaces() {
+    deleteContents(WORKSPACES_BASE_REF)
+}
+
+fun Storage.unzip(srcRef: FlorisRef, dstRef: FlorisRef) {
+    val (srcFs, srcPath) = resolve(srcRef)
+    val (dstFs, dstPath) = resolve(dstRef)
+    val zipFs = srcFs.openZip(srcPath)
+    for (entry in zipFs.listRecursively(".".toPath())) {
+        val entryRel = entry.toString().removePrefix("/").toPath()
+        val meta = zipFs.metadata(entry)
+        if (meta.isDirectory) {
+            dstFs.createDirectories(dstPath / entryRel)
+        } else if (meta.isRegularFile) {
+            zipFs.source(entry).use { source ->
+                dstFs.sink(dstPath / entryRel).buffer().use { sink ->
+                    sink.writeAll(source)
+                }
+            }
+        } else {
+            throw IOException("invalid entry: '$entry'")
         }
     }
 }

@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.ime.io.AndroidStorage
 import dev.patrickgold.florisboard.lib.devtools.flogError
-import kotlinx.io.files.SystemFileSystem
 import org.florisboard.lib.snygg.value.SnyggAssetResolver
 import java.net.URI
 
@@ -32,13 +31,12 @@ class FlorisAssetResolver(val theme: ThemeController.Theme) : SnyggAssetResolver
         check(extensionRef.isCache || extensionRef.isInternal)
         val storage = checkNotNull(theme.storage) { "Storage was null" }
         check(storage is AndroidStorage)
-        val effStorage = if (extensionRef.isCache) storage.cacheStorage else storage.internalStorage
         // resolve implies within storage bounds & exists
-        val canonicalPath = effStorage.resolveCanonicalPath(extensionRef)
-        check(SystemFileSystem.metadataOrNull(canonicalPath)?.isRegularFile == true) {
-            "Calculated path '$canonicalPath' is not a file"
+        val (fs, path) = storage.resolve(extensionRef)
+        check(fs.metadataOrNull(path)?.isRegularFile == true) {
+            "Calculated path '$path' is not a file"
         }
-        canonicalPath.toString()
+        path.toString()
     }.onFailure { exception ->
         flogError { "FlorisAssetResolver failed to resolve URI '$uri'\n  error: ${exception.message}\n  with:  $theme" }
     }
