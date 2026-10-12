@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.IntOffset
+import androidx.core.net.toUri
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -242,7 +243,7 @@ object Routes {
 
         @Serializable
         @Deeplink("ext/import")
-        data class Import(val type: ExtensionImportScreenType, val uuid: String? = null)
+        data class Import(val type: ExtensionImportScreenType, val givenUriStr: String? = null)
 
         @Serializable
         @Deeplink("ext/check-updates")
@@ -354,8 +355,10 @@ object Routes {
             }
             composableWithDeepLink(Ext.Import::class) { navBackStack ->
                 val payload = navBackStack.toRoute<Ext.Import>()
-                val uuid = payload.uuid
-                ExtensionImportScreen(payload.type, uuid)
+                val givenUriList = if (payload.givenUriStr != null) {
+                    listOf(payload.givenUriStr.toUri())
+                } else null
+                ExtensionImportScreen(payload.type, givenUriList)
             }
             composableWithDeepLink(Ext.CheckUpdates::class) {
                 CheckUpdatesScreen()

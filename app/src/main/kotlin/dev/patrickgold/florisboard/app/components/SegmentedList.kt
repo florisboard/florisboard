@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -55,5 +56,14 @@ fun SegmentedListColumn(
             .padding(vertical = SegmentedListColumnVerticalPadding),
         verticalArrangement = Arrangement.spacedBy(ListItemDefaults.SegmentedGap),
         content = content,
+    )
+}
+
+@Composable
+fun ListItemDefaults.segmentedErrorColors(): ListItemColors {
+    return ListItemDefaults.segmentedColors(
+        leadingContentColor = MaterialTheme.colorScheme.error,
+        contentColor = MaterialTheme.colorScheme.error,
+        supportingContentColor = MaterialTheme.colorScheme.error,
     )
 }

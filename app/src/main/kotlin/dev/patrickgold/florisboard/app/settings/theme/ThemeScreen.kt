@@ -50,6 +50,7 @@ import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
+import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.ext.ExtensionInfoBottomSheet
 import dev.patrickgold.florisboard.ime.extension.Extension
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
@@ -168,7 +169,7 @@ fun ThemeScreen() {
                     supportingContent = { Text("Visit the FlorisBoard Addons Store, an official place for the community to share themes.") },
                 )
                 SegmentedListItem(
-                    onClick = { },
+                    onClick = { navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_THEME)) },
                     shapes = ListItemDefaults.segmentedShapes(1, count),
                     verticalAlignment = Alignment.CenterVertically,
                     leadingContent = { Icon(Icons.AutoMirrored.Filled.Input, null) },
