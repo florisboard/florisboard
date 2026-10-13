@@ -20,7 +20,9 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.ime.io.Storage
 import dev.patrickgold.florisboard.ime.io.StorageController
+import dev.patrickgold.florisboard.ime.io.createWorkspace
 import dev.patrickgold.florisboard.ime.io.readJson
+import dev.patrickgold.florisboard.ime.io.zip
 import dev.patrickgold.florisboard.ime.keyboard3.extension.Keyboard3Extension
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import kotlinx.coroutines.CompletableDeferred
@@ -74,8 +76,10 @@ class ExtensionController(
         return event.response.await()
     }
 
-    fun export(extension: Extension<*>, ref: FlorisRef) {
-        TODO()
+    suspend fun export(extensionId: String, zipUriRef: FlorisRef) {
+        val event = Event.Export(extensionId, zipUriRef)
+        eventChannel.send(event)
+        return event.response.await()
     }
 
     fun delete(extension: Extension<*>): Boolean {
@@ -89,6 +93,12 @@ class ExtensionController(
 
         data class Import(
             val tmpExtRef: FlorisRef,
+            val response: CompletableDeferred<Unit> = CompletableDeferred(),
+        ) : Event
+
+        data class Export(
+            val extensionId: String,
+            val zipUriRef: FlorisRef,
             val response: CompletableDeferred<Unit> = CompletableDeferred(),
         ) : Event
     }
@@ -135,6 +145,14 @@ class ExtensionController(
                         event.response.completeExceptionally(e)
                     }
                 }
+                is Event.Export -> {
+                    try {
+                        handleExport(event)
+                        event.response.complete(Unit)
+                    } catch (e: Throwable) {
+                        event.response.completeExceptionally(e)
+                    }
+                }
             }
         }
 
@@ -165,6 +183,19 @@ class ExtensionController(
                 storage.atomicMove(event.tmpExtRef, extRef)
             }
             indexExtensions(userSource)
+        }
+
+        private suspend fun handleExport(event: Event.Export) {
+            val extension = getExtensionById(event.extensionId)
+            requireNotNull(extension) { "No such extension: ${event.extensionId}" }
+            val workspaceRef = storage.createWorkspace()
+            try {
+                val intermediateRef = workspaceRef.subRef("${event.extensionId}.flex")
+                storage.zip(extension.sourceRef, intermediateRef)
+                storage.copy(intermediateRef, event.zipUriRef)
+            } finally {
+                storage.deleteRecursively(workspaceRef)
+            }
         }
 
         private fun indexExtensions(source: MutableSource) {

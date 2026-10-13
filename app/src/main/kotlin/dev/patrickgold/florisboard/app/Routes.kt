@@ -360,7 +360,7 @@ object Routes {
             composableWithDeepLink(Ext.Export::class) { navBackStack ->
                 val payload = navBackStack.toRoute<Ext.Export>()
                 val extensionId = payload.id
-                ExtensionExportScreen(id = extensionId)
+                ExtensionExportScreen(extensionId)
             }
             composableWithDeepLink(Ext.Import::class) { navBackStack ->
                 val payload = navBackStack.toRoute<Ext.Import>()

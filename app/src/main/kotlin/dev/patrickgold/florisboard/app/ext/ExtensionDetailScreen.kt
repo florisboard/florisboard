@@ -31,18 +31,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.ListItemDefaults
-import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -71,15 +68,6 @@ import dev.patrickgold.florisboard.lib.util.launchUrl
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.stringRes
 
-private sealed interface ExtensionDetail {
-    data object Loading : ExtensionDetail
-
-    data class Found(val extension: Extension<*>) : ExtensionDetail
-
-    data object NotFound : ExtensionDetail
-}
-
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun ExtensionDetailScreen(
     extensionId: String,
@@ -90,44 +78,27 @@ fun ExtensionDetailScreen(
 
     val scope = rememberCoroutineScope()
     val extensionIndex by extensionController.activeIndex.collectAsState()
-    var extensionDetailState by remember { mutableStateOf<ExtensionDetail>(ExtensionDetail.Loading) }
-    val extensionDetail = extensionDetailState
+    val extension = remember(extensionId, extensionIndex) { extensionIndex.extensions[extensionId] }
     var extToDelete by remember { mutableStateOf<Extension<*>?>(null) }
 
-    LaunchedEffect(extensionId, extensionIndex) {
-        val extension = extensionIndex.extensions[extensionId]
-        extensionDetailState = if (extension != null) {
-            ExtensionDetail.Found(extension)
-        } else {
-            ExtensionDetail.NotFound
-        }
-    }
-
     FlorisScreenNg(
-        title = when (extensionDetail) {
-            is ExtensionDetail.Found -> extensionDetail.extension.manifest.meta.title
+        title = when {
+            extension != null -> extension.manifest.meta.title
             else -> extensionId
         },
         previewFieldVisible = false,
     ) { contentPadding ->
         ScrollableScreenColumn(contentPadding) {
-            when (extensionDetail) {
-                is ExtensionDetail.Loading -> {
-                    LoadingIndicator(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                    )
-                }
-                is ExtensionDetail.Found -> {
+            when {
+                extension != null -> {
                     ExtensionDetails(
-                        extension = extensionDetail.extension,
+                        extension = extension,
                         onDelete = { extToDelete = it },
                         onExport = { navController.navigate(Routes.Ext.Export(it.manifest.meta.id)) },
                         onEdit = { },
                     )
                 }
-                is ExtensionDetail.NotFound -> {
-                    ExtensionNotFoundCard(extensionId)
-                }
+                else -> ExtensionNotFoundCard(extensionId)
             }
         }
 

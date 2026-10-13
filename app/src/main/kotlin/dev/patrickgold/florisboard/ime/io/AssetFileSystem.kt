@@ -19,6 +19,7 @@ package dev.patrickgold.florisboard.ime.io
 import android.content.Context
 import okio.FileHandle
 import okio.FileMetadata
+import okio.FileNotFoundException
 import okio.FileSystem
 import okio.IOException
 import okio.Path
@@ -35,7 +36,23 @@ class AssetFileSystem(
     }
 
     override fun metadataOrNull(path: Path): FileMetadata? {
-        TODO("Not yet implemented")
+        try {
+            context.assets.open(path.toString()).close()
+            return FileMetadata(isRegularFile = true)
+        } catch (_: FileNotFoundException) {
+            return try {
+                val list = context.assets.list(path.toString())
+                if (list.isNullOrEmpty()) {
+                    null
+                } else {
+                    FileMetadata(isDirectory = true)
+                }
+            } catch (_: IOException) {
+                null
+            }
+        } catch (_: IOException) {
+            return null
+        }
     }
 
     override fun list(dir: Path): List<Path> {

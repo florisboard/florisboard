@@ -29,6 +29,7 @@ class AndroidStorage(
     val isUserUnlocked: Boolean,
 ) : Storage() {
     private val assetFs = AssetFileSystem(context)
+    private val contentResolverFs = ContentResolverFileSystem(context)
     private val systemFs = FileSystem.SYSTEM
 
     override fun canAccessStorage(ref: FlorisRef): Boolean {
@@ -55,6 +56,12 @@ class AndroidStorage(
                 val path = (base / ref.relativePath).normalized()
                 // TODO startsWith check
                 systemFs to path
+            }
+            ref.scheme == "content" -> {
+                // is this a hack? yes
+                // does it work? also yes :)
+                val path = ref.encodeBase64Path()
+                contentResolverFs to path
             }
             else -> throw IOException("unknown ref scheme ${ref.scheme}")
         }

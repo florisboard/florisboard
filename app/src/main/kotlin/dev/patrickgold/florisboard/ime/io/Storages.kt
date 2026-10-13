@@ -25,6 +25,9 @@ import okio.IOException
 import okio.Path.Companion.toPath
 import okio.buffer
 import okio.openZip
+import okio.sink
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 import kotlin.uuid.Uuid
 
 fun Storage.readText(
@@ -106,6 +109,23 @@ fun Storage.unzip(srcRef: FlorisRef, dstRef: FlorisRef) {
             }
         } else {
             throw IOException("invalid entry: '$entry'")
+        }
+    }
+}
+
+fun Storage.zip(srcRef: FlorisRef, dstRef: FlorisRef) {
+    val (srcFs, srcPath) = resolve(srcRef)
+    val (dstFs, dstPath) = resolve(dstRef)
+    ZipOutputStream(dstFs.sink(dstPath).buffer().outputStream()).use { zip ->
+        for (path in srcFs.listRecursively(srcPath)) {
+            val name = path.relativeTo(srcPath).segments.joinToString("/")
+            if (srcFs.metadata(path).isDirectory) {
+                zip.putNextEntry(ZipEntry("$name/"))
+            } else {
+                zip.putNextEntry(ZipEntry(name))
+                srcFs.source(path).buffer().use { it.readAll(zip.sink()) }
+            }
+            zip.closeEntry()
         }
     }
 }
