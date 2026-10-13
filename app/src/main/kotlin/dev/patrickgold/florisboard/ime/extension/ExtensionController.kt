@@ -82,8 +82,10 @@ class ExtensionController(
         return event.response.await()
     }
 
-    fun delete(extension: Extension<*>): Boolean {
-        TODO()
+    suspend fun delete(extensionId: String) {
+        val event = Event.Delete(extensionId)
+        eventChannel.send(event)
+        return event.response.await()
     }
 
     private sealed interface Event {
@@ -99,6 +101,11 @@ class ExtensionController(
         data class Export(
             val extensionId: String,
             val zipUriRef: FlorisRef,
+            val response: CompletableDeferred<Unit> = CompletableDeferred(),
+        ) : Event
+
+        data class Delete(
+            val extensionId: String,
             val response: CompletableDeferred<Unit> = CompletableDeferred(),
         ) : Event
     }
@@ -153,6 +160,14 @@ class ExtensionController(
                         event.response.completeExceptionally(e)
                     }
                 }
+                is Event.Delete -> {
+                    try {
+                        handleDelete(event)
+                        event.response.complete(Unit)
+                    } catch (e: Throwable) {
+                        event.response.completeExceptionally(e)
+                    }
+                }
             }
         }
 
@@ -196,6 +211,14 @@ class ExtensionController(
             } finally {
                 storage.deleteRecursively(workspaceRef)
             }
+        }
+
+        private suspend fun handleDelete(event: Event.Delete) {
+            val extension = getExtensionById(event.extensionId)
+            requireNotNull(extension) { "No such extension: ${event.extensionId}" }
+            require(extension.canDelete()) { "Delete not allowed" }
+            storage.deleteRecursively(extension.sourceRef)
+            indexExtensions(userSource)
         }
 
         private fun indexExtensions(source: MutableSource) {

@@ -102,19 +102,19 @@ fun ExtensionDetailScreen(
             }
         }
 
-        if (extToDelete != null) {
+        val extIdToDelete = extToDelete?.manifest?.meta?.id
+        if (extIdToDelete != null) {
             val snackbarMsg = stringRes(R.string.error__snackbar_message)
             FlorisConfirmDeleteDialog(
                 onConfirm = {
                     scope.launch {
-                        runCatching {
-                            extensionController.delete(extToDelete!!)
-                        }.onSuccess {
+                        try {
+                            extensionController.delete(extIdToDelete)
                             navController.popBackStack()
-                        }.onFailure { error ->
+                        } catch (e: Throwable) {
                             interactionController.showLongToast(
                                 snackbarMsg,
-                                "error_message" to error.localizedMessage,
+                                "error_message" to e.localizedMessage,
                             )
                         }
                         extToDelete = null
