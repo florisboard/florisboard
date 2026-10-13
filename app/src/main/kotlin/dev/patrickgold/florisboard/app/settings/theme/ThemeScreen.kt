@@ -35,9 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -51,8 +49,6 @@ import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
-import dev.patrickgold.florisboard.app.ext.ExtensionInfoBottomSheet
-import dev.patrickgold.florisboard.ime.extension.Extension
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
 import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
@@ -78,7 +74,6 @@ fun ThemeScreen() {
     val mode by prefs.theme.mode.collectAsState()
     val dayThemeId by prefs.theme.dayThemeId.collectAsState()
     val nightThemeId by prefs.theme.nightThemeId.collectAsState()
-    var focusedExtension by remember { mutableStateOf<Extension<*>?>(null) }
 
     @Composable
     fun rememberThemeName(themeId: ExtensionComponentName): String {
@@ -190,22 +185,18 @@ fun ThemeScreen() {
                 val extensions = themeIndex.extensions.values.toList()
                 for ((index, extension) in extensions.withIndex()) key(extension.manifest.meta.id) {
                     SegmentedListItem(
-                        onClick = { focusedExtension = extension },
+                        onClick = { navController.navigate(Routes.Ext.Detail(extension.manifest.meta.id)) },
                         shapes = ListItemDefaults.segmentedShapes(index, extensions.size),
                         verticalAlignment = Alignment.CenterVertically,
                         leadingContent = { Icon(Icons.Default.Extension, null) },
                         overlineContent = { Text(extension.manifest.meta.id) },
                         content = { Text(extension.manifest.meta.title) },
                         supportingContent = extension.manifest.meta.description?.let { description ->
-                            { Text(description, overflow = TextOverflow.Ellipsis, maxLines = 3) }
+                            { Text(description, maxLines = 2, overflow = TextOverflow.Ellipsis) }
                         },
                     )
                 }
             }
-        }
-
-        focusedExtension?.let { extension ->
-            ExtensionInfoBottomSheet(extension, onDismissRequest = { focusedExtension = null })
         }
     }
 }

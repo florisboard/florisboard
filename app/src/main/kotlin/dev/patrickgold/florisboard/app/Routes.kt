@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.app.devtools.AndroidSettingsScreen
 import dev.patrickgold.florisboard.app.devtools.DevtoolsScreen
 import dev.patrickgold.florisboard.app.devtools.ExportDebugLogScreen
 import dev.patrickgold.florisboard.app.ext.CheckUpdatesScreen
+import dev.patrickgold.florisboard.app.ext.ExtensionDetailScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionEditScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionExportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionHomeScreen
@@ -72,9 +73,9 @@ import dev.patrickgold.florisboard.app.settings.localization.SelectLocaleScreen
 import dev.patrickgold.florisboard.app.settings.localization.SubtypeEditorScreen
 import dev.patrickgold.florisboard.app.settings.media.MediaScreen
 import dev.patrickgold.florisboard.app.settings.smartbar.SmartbarScreen
+import dev.patrickgold.florisboard.app.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.settings.theme.ThemeSelectionScreen
 import dev.patrickgold.florisboard.app.settings.theme.ThemeSelectionScreenAction
-import dev.patrickgold.florisboard.app.settings.theme.ThemeScreen
 import dev.patrickgold.florisboard.app.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.setup.SetupScreen
 import kotlinx.serialization.SerialName
@@ -230,6 +231,10 @@ object Routes {
         object Home
 
         @Serializable
+        @Deeplink("ext/detail")
+        data class Detail(val id: String)
+
+        @Serializable
         @Deeplink("ext/list")
         data class List(val type: ExtensionListScreenType, val showUpdate: Boolean? = null)
 
@@ -334,6 +339,10 @@ object Routes {
             composableWithDeepLink(Devtools.ExportDebugLog::class) { ExportDebugLogScreen() }
 
             composableWithDeepLink(Ext.Home::class) { ExtensionHomeScreen() }
+            composableWithDeepLink(Ext.Detail::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Ext.Detail>()
+                ExtensionDetailScreen(payload.id)
+            }
             composableWithDeepLink(Ext.List::class) { navBackStack ->
                 val payload = navBackStack.toRoute<Ext.List>()
                 val showUpdate = payload.showUpdate != null && payload.showUpdate

@@ -393,8 +393,8 @@ fun ExtensionImportScreen(
                                     @Composable {
                                         Text(
                                             text = description.trim(),
+                                            maxLines = 2,
                                             overflow = TextOverflow.Ellipsis,
-                                            maxLines = 3,
                                         )
                                     }
                                 },

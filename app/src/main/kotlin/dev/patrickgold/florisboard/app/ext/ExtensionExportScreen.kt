@@ -43,7 +43,7 @@ fun ExtensionExportScreen(id: String) {
     if (extension != null) {
         ExportScreen(extension)
     } else {
-        ExtensionNotFoundScreen(id)
+        //ExtensionNotFoundScreen(id)
     }
 }
 
