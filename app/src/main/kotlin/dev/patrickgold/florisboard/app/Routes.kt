@@ -44,11 +44,8 @@ import dev.patrickgold.florisboard.app.devtools.ExportDebugLogScreen
 import dev.patrickgold.florisboard.app.ext.CheckUpdatesScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionDetailScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionEditScreen
-import dev.patrickgold.florisboard.app.ext.ExtensionHomeScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
-import dev.patrickgold.florisboard.app.ext.ExtensionListScreen
-import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
 import dev.patrickgold.florisboard.app.settings.HomeScreen
 import dev.patrickgold.florisboard.app.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.settings.about.ProjectLicenseScreen
@@ -226,16 +223,8 @@ object Routes {
 
     object Ext {
         @Serializable
-        @Deeplink("ext")
-        object Home
-
-        @Serializable
         @Deeplink("ext/detail")
         data class Detail(val id: String)
-
-        @Serializable
-        @Deeplink("ext/list")
-        data class List(val type: ExtensionListScreenType, val showUpdate: Boolean? = null)
 
         @Serializable
         @Deeplink("ext/edit")
@@ -333,15 +322,9 @@ object Routes {
             }
             composableWithDeepLink(Devtools.ExportDebugLog::class) { ExportDebugLogScreen() }
 
-            composableWithDeepLink(Ext.Home::class) { ExtensionHomeScreen() }
             composableWithDeepLink(Ext.Detail::class) { navBackStack ->
                 val payload = navBackStack.toRoute<Ext.Detail>()
                 ExtensionDetailScreen(payload.id)
-            }
-            composableWithDeepLink(Ext.List::class) { navBackStack ->
-                val payload = navBackStack.toRoute<Ext.List>()
-                val showUpdate = payload.showUpdate != null && payload.showUpdate
-                ExtensionListScreen(payload.type, showUpdate)
             }
             composableWithDeepLink(Ext.Edit::class) { navBackStack ->
                 val payload = navBackStack.toRoute<Ext.Edit>()

@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.app.settings
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Assignment
-import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.filled.Gesture
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
@@ -97,30 +96,30 @@ fun HomeScreen() {
                     title = stringRes(R.string.settings__smartbar__title),
                     onClick = { navController.navigate(Routes.Settings.Smartbar) },
                 )
+            }
+
+            SegmentedListColumn {
+                val count = 4
                 Preference(
-                    shapes = ListItemDefaults.segmentedShapes(4, count),
+                    shapes = ListItemDefaults.segmentedShapes(0, count),
                     icon = Icons.Default.Spellcheck,
                     title = stringRes(R.string.settings__typing__title),
                     onClick = { navController.navigate(Routes.Settings.Typing) },
                 )
-            }
-
-            SegmentedListColumn {
-                val count = 3
                 Preference(
-                    shapes = ListItemDefaults.segmentedShapes(0, count),
+                    shapes = ListItemDefaults.segmentedShapes(1, count),
                     icon = Icons.Default.Gesture,
                     title = stringRes(R.string.settings__gestures__title),
                     onClick = { navController.navigate(Routes.Settings.Gestures) },
                 )
                 Preference(
-                    shapes = ListItemDefaults.segmentedShapes(1, count),
+                    shapes = ListItemDefaults.segmentedShapes(2, count),
                     icon = Icons.AutoMirrored.Outlined.Assignment,
                     title = stringRes(R.string.settings__clipboard__title),
                     onClick = { navController.navigate(Routes.Settings.Clipboard) },
                 )
                 Preference(
-                    shapes = ListItemDefaults.segmentedShapes(2, count),
+                    shapes = ListItemDefaults.segmentedShapes(3, count),
                     icon = Icons.Default.SentimentSatisfiedAlt,
                     title = stringRes(R.string.settings__media__title),
                     onClick = { navController.navigate(Routes.Settings.Media) },
@@ -128,21 +127,15 @@ fun HomeScreen() {
             }
 
             SegmentedListColumn {
-                val count = 3
+                val count = 2
                 Preference(
                     shapes = ListItemDefaults.segmentedShapes(0, count),
-                    icon = Icons.Default.Extension,
-                    title = stringRes(R.string.ext__home__title),
-                    onClick = { navController.navigate(Routes.Ext.Home) },
-                )
-                Preference(
-                    shapes = ListItemDefaults.segmentedShapes(1, count),
                     icon = Icons.Outlined.Build,
                     title = stringRes(R.string.settings__other__title),
                     onClick = { navController.navigate(Routes.Settings.Other) },
                 )
                 Preference(
-                    shapes = ListItemDefaults.segmentedShapes(2, count),
+                    shapes = ListItemDefaults.segmentedShapes(1, count),
                     icon = Icons.Outlined.Info,
                     title = stringRes(R.string.about__title),
                     onClick = { navController.navigate(Routes.Settings.About) },
