@@ -44,7 +44,6 @@ import dev.patrickgold.florisboard.app.devtools.ExportDebugLogScreen
 import dev.patrickgold.florisboard.app.ext.CheckUpdatesScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionDetailScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionEditScreen
-import dev.patrickgold.florisboard.app.ext.ExtensionExportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionHomeScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
@@ -243,10 +242,6 @@ object Routes {
         data class Edit(val id: String, @SerialName("create") val serialType: String? = null)
 
         @Serializable
-        @Deeplink("ext/export")
-        data class Export(val id: String)
-
-        @Serializable
         @Deeplink("ext/import")
         data class Import(val type: ExtensionImportScreenType, val givenUriStr: String? = null)
 
@@ -356,11 +351,6 @@ object Routes {
                     id = extensionId,
                     createSerialType = serialType.takeIf { !it.isNullOrBlank() },
                 )
-            }
-            composableWithDeepLink(Ext.Export::class) { navBackStack ->
-                val payload = navBackStack.toRoute<Ext.Export>()
-                val extensionId = payload.id
-                ExtensionExportScreen(extensionId)
             }
             composableWithDeepLink(Ext.Import::class) { navBackStack ->
                 val payload = navBackStack.toRoute<Ext.Import>()

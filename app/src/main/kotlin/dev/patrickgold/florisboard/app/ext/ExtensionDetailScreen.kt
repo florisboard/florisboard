@@ -16,6 +16,8 @@
 
 package dev.patrickgold.florisboard.app.ext
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -54,11 +56,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.ime.extension.Extension
+import dev.patrickgold.florisboard.ime.extension.ExtensionDefaults
 import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
+import dev.patrickgold.florisboard.ime.io.FileRegistry
+import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
@@ -81,6 +85,29 @@ fun ExtensionDetailScreen(
     val extension = remember(extensionId, extensionIndex) { extensionIndex.extensions[extensionId] }
     var extToDelete by remember { mutableStateOf<Extension<*>?>(null) }
 
+    val successMsg = stringRes(R.string.ext__export__success)
+    val failureMsg = stringRes(R.string.ext__export__failure)
+    val exportLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.CreateDocument(FileRegistry.FlexExtension.mediaType),
+        onResult = { uri ->
+            // If uri is null it indicates that the selection activity
+            //  was cancelled (mostly by pressing the back button), so
+            //  we don't display an error message here.
+            if (uri == null) {
+                return@rememberLauncherForActivityResult
+            }
+            val zipUriRef = FlorisRef.from(uri)
+            scope.launch {
+                try {
+                    extensionController.export(extensionId, zipUriRef)
+                    interactionController.showLongToast(successMsg)
+                } catch (e: Throwable) {
+                    interactionController.showLongToast(failureMsg, "error_message" to e.localizedMessage)
+                }
+            }
+        },
+    )
+
     FlorisScreenNg(
         title = when {
             extension != null -> extension.manifest.meta.title
@@ -93,8 +120,8 @@ fun ExtensionDetailScreen(
                 extension != null -> {
                     ExtensionDetails(
                         extension = extension,
-                        onDelete = { extToDelete = it },
-                        onExport = { navController.navigate(Routes.Ext.Export(it.manifest.meta.id)) },
+                        onDelete = { extToDelete = extension },
+                        onExport = { exportLauncher.launch(ExtensionDefaults.createFlexName(extensionId)) },
                         onEdit = { },
                     )
                 }
@@ -130,9 +157,9 @@ fun ExtensionDetailScreen(
 @Composable
 private fun ExtensionDetails(
     extension: Extension<*>,
-    onDelete: (Extension<*>) -> Unit,
-    onExport: (Extension<*>) -> Unit,
-    onEdit: (Extension<*>) -> Unit,
+    onDelete: () -> Unit,
+    onExport: () -> Unit,
+    onEdit: () -> Unit,
 ) {
     val context = LocalContext.current
     val meta = extension.manifest.meta
@@ -143,7 +170,7 @@ private fun ExtensionDetails(
             horizontalArrangement = Arrangement.SpaceEvenly,
         ) {
             ExtensionActionButton(
-                onClick = { onDelete(extension) },
+                onClick = onDelete,
                 label = stringRes(R.string.action__delete),
                 colors = IconButtonDefaults.filledTonalIconButtonColors(
                     containerColor = MaterialTheme.colorScheme.errorContainer,
@@ -153,13 +180,13 @@ private fun ExtensionDetails(
                 content = { Icon(Icons.Default.Delete, null) },
             )
             ExtensionActionButton(
-                onClick = { onExport(extension) },
+                onClick = onExport,
                 colors = IconButtonDefaults.filledTonalIconButtonColors(),
                 label = stringRes(R.string.action__export),
                 content = { Icon(Icons.Default.Share, null) },
             )
             ExtensionActionButton(
-                onClick = { onEdit(extension) },
+                onClick = onEdit,
                 colors = IconButtonDefaults.filledIconButtonColors(),
                 label = stringRes(R.string.action__edit),
                 content = { Icon(Icons.Default.Edit, null) },
