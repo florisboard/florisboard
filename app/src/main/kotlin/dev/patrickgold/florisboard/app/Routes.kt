@@ -74,7 +74,7 @@ import dev.patrickgold.florisboard.app.settings.theme.ThemeSelectionScreen
 import dev.patrickgold.florisboard.app.settings.theme.ThemeSelectionScreenAction
 import dev.patrickgold.florisboard.app.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.setup.SetupScreen
-import kotlinx.serialization.SerialName
+import dev.patrickgold.florisboard.ime.extension.ExtensionType
 import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
 
@@ -228,7 +228,7 @@ object Routes {
 
         @Serializable
         @Deeplink("ext/edit")
-        data class Edit(val id: String, @SerialName("create") val serialType: String? = null)
+        data class Edit(val id: String?, val type: ExtensionType)
 
         @Serializable
         @Deeplink("ext/import")
@@ -329,11 +329,8 @@ object Routes {
             composableWithDeepLink(Ext.Edit::class) { navBackStack ->
                 val payload = navBackStack.toRoute<Ext.Edit>()
                 val extensionId = payload.id
-                val serialType = payload.serialType
-                ExtensionEditScreen(
-                    id = extensionId,
-                    createSerialType = serialType.takeIf { !it.isNullOrBlank() },
-                )
+                val type = payload.type
+                ExtensionEditScreen(extensionId, type)
             }
             composableWithDeepLink(Ext.Import::class) { navBackStack ->
                 val payload = navBackStack.toRoute<Ext.Import>()

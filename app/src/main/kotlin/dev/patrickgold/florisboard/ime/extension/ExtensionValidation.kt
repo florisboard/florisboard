@@ -18,7 +18,6 @@ package dev.patrickgold.florisboard.ime.extension
 
 import androidx.core.text.trimmedLength
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.ValidationRule
 import org.florisboard.lib.snygg.SnyggStylesheet
 import dev.patrickgold.florisboard.lib.validate

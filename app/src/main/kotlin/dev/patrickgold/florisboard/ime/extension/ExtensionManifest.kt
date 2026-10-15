@@ -16,10 +16,15 @@
 
 package dev.patrickgold.florisboard.ime.extension
 
-interface ExtensionManifest {
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed interface ExtensionManifest {
     val meta: ExtensionMeta
 
     val dependencies: ExtensionDependencyDecl
+
+    fun components(): Sequence<ExtensionComponent>
 }
 
 typealias ExtensionDependencyDecl = Map<String, String>

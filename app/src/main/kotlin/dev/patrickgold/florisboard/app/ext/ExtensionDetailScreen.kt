@@ -56,16 +56,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.ime.extension.Extension
 import dev.patrickgold.florisboard.ime.extension.ExtensionDefaults
 import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
+import dev.patrickgold.florisboard.ime.extension.ThemeExtension
 import dev.patrickgold.florisboard.ime.io.FileRegistry
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.compose.FlorisConfirmDeleteDialog
 import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
 import dev.patrickgold.florisboard.lib.util.launchUrl
@@ -122,7 +123,7 @@ fun ExtensionDetailScreen(
                         extension = extension,
                         onDelete = { extToDelete = extension },
                         onExport = { exportLauncher.launch(ExtensionDefaults.createFlexName(extensionId)) },
-                        onEdit = { },
+                        onEdit = { navController.navigate(Routes.Ext.Edit(extensionId, extension.type)) },
                     )
                 }
                 else -> ExtensionNotFoundCard(extensionId)

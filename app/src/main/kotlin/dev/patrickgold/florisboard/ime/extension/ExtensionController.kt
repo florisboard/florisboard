@@ -23,8 +23,6 @@ import dev.patrickgold.florisboard.ime.io.StorageController
 import dev.patrickgold.florisboard.ime.io.createWorkspace
 import dev.patrickgold.florisboard.ime.io.readJson
 import dev.patrickgold.florisboard.ime.io.zip
-import dev.patrickgold.florisboard.ime.keyboard3.extension.Keyboard3Extension
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

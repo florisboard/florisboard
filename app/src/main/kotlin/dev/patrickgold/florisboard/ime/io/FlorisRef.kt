@@ -24,6 +24,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import okio.Path.Companion.toPath
 import org.k3lp.lib.meta.source.SourceFileRef
 
 /**
@@ -246,6 +247,16 @@ value class FlorisRef private constructor(val uri: Uri) : SourceFileRef {
             val relPath = uri.path ?: return ""
             val slashIndex = relPath.lastIndexOf('/')
             return relPath.substring(slashIndex + 1)
+        }
+
+    val parentRef: FlorisRef?
+        get() {
+            val originalPathStr = uri.path ?: return null
+            val parent = originalPathStr.toPath(normalize = true).parent ?: return null
+            return from(uri.buildUpon().run {
+                encodedPath(parent.toString())
+                build()
+            })
         }
 
     /**

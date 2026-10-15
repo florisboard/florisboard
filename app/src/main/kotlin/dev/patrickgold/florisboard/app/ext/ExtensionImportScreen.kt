@@ -57,7 +57,9 @@ import dev.patrickgold.florisboard.app.components.segmentedErrorColors
 import dev.patrickgold.florisboard.ime.extension.ExtensionController
 import dev.patrickgold.florisboard.ime.extension.ExtensionDefaults
 import dev.patrickgold.florisboard.ime.extension.ExtensionManifest
+import dev.patrickgold.florisboard.ime.extension.Keyboard3Extension
 import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
+import dev.patrickgold.florisboard.ime.extension.ThemeExtension
 import dev.patrickgold.florisboard.ime.io.AndroidStorage
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.ime.io.LocalStorageController
@@ -66,10 +68,8 @@ import dev.patrickgold.florisboard.ime.io.queryFileName
 import dev.patrickgold.florisboard.ime.io.readFromUri
 import dev.patrickgold.florisboard.ime.io.readJson
 import dev.patrickgold.florisboard.ime.io.unzip
-import dev.patrickgold.florisboard.ime.keyboard3.extension.Keyboard3Extension
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -428,6 +428,9 @@ fun ExtensionImportScreen(
                                             Text("${manifest.themes.size} stylesheets")
                                         },
                                     )
+                                }
+                                is Keyboard3Extension.Manifest -> {
+                                    // TODO
                                 }
                             }
                         }

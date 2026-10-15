@@ -428,24 +428,4 @@ internal fun TriStateCheckboxListItem(
         text = text,
     )
 }
-
-@Composable
-internal fun RadioListItem(
-    onClick: () -> Unit,
-    selected: Boolean,
-    text: String,
-    secondaryText: String? = null,
-) {
-    JetPrefListItem(
-        modifier = Modifier.rippleClickable(onClick = onClick),
-        icon = {
-            RadioButton(
-                selected = selected,
-                onClick = null,
-            )
-        },
-        text = text,
-        secondaryText = secondaryText,
-    )
-}
 */

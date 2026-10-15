@@ -65,6 +65,7 @@ fun FlorisScreenNg(
     bottomBar: FlorisScreenBottomBar = {},
     fab: FlorisScreenFab = {},
     navigationIcon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
+    navigationIconOnClick: (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val navController = LocalNavController.current
@@ -82,7 +83,7 @@ fun FlorisScreenNg(
                 title,
                 (@Composable {
                     FilledTonalIconButton(
-                        onClick = { navController.popBackStack() },
+                        onClick = navigationIconOnClick ?: { navController.popBackStack(); Unit },
                         modifier = Modifier.padding(start = 8.dp, end = 4.dp),
                         colors = IconButtonDefaults.filledTonalIconButtonColors(
                             containerColor = MaterialTheme.colorScheme.surfaceContainer,

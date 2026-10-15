@@ -39,8 +39,8 @@ fun FlorisButtonBar(
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.surfaceContainer,
-        tonalElevation = 8.dp,
+        color = MaterialTheme.colorScheme.surface,
+        shadowElevation = 32.dp,
     ) {
         Row(
             modifier = Modifier

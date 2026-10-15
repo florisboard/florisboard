@@ -22,7 +22,10 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.ListItemShapes
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -61,9 +64,31 @@ fun SegmentedListColumn(
 
 @Composable
 fun ListItemDefaults.segmentedErrorColors(): ListItemColors {
-    return ListItemDefaults.segmentedColors(
+    return segmentedColors(
         leadingContentColor = MaterialTheme.colorScheme.error,
         contentColor = MaterialTheme.colorScheme.error,
         supportingContentColor = MaterialTheme.colorScheme.error,
+    )
+}
+
+@Composable
+fun SegmentedRadioListItem(
+    onClick: () -> Unit,
+    shapes: ListItemShapes,
+    selected: Boolean,
+    content: @Composable () -> Unit,
+    supportingContent: @Composable (() -> Unit)? = null,
+) {
+    SegmentedListItem(
+        onClick = onClick,
+        shapes = shapes,
+        leadingContent = {
+            RadioButton(
+                selected = selected,
+                onClick = null,
+            )
+        },
+        content = content,
+        supportingContent = supportingContent,
     )
 }

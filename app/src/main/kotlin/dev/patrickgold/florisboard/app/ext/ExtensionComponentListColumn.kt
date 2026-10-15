@@ -16,14 +16,22 @@
 
 package dev.patrickgold.florisboard.app.ext
 
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Create
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponent
+import org.florisboard.lib.compose.FlorisButton
 import org.florisboard.lib.compose.stringRes
 
 @Composable
@@ -31,15 +39,40 @@ fun ExtensionComponentListColumn(
     title: String,
     components: List<ExtensionComponent>,
     modifier: Modifier = Modifier,
-    onDeleteComponent: ((ExtensionComponent) -> Unit)? = null,
+    onCreateComponent: (() -> Unit)? = null,
     onEditComponent: ((ExtensionComponent) -> Unit)? = null,
+    onDeleteComponent: ((ExtensionComponent) -> Unit)? = null,
 ) {
     SegmentedListColumn(modifier, title) {
+        val offset = if (onCreateComponent != null) 1 else 0
+        val count: Int = if (components.isNotEmpty()) {
+            components.size + offset
+        } else {
+            1 + offset
+        }
+        if (onCreateComponent != null) {
+            SegmentedListItem(
+                onClick = onCreateComponent,
+                shapes = ListItemDefaults.segmentedShapes(0, count),
+                verticalAlignment = Alignment.CenterVertically,
+                content = {
+                    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        Text(stringRes(R.string.ext__editor__create_component__title))
+                        Spacer(Modifier.weight(1f))
+                        FlorisButton(
+                            onClick = onCreateComponent,
+                            icon = Icons.Default.Create,
+                            text = stringRes(R.string.action__create),
+                            colors = ButtonDefaults.filledTonalButtonColors(),
+                        )
+                    }
+                },
+            )
+        }
         if (components.isNotEmpty()) {
-            val count = components.size
             for ((index, component) in components.withIndex()) {
                 ExtensionComponentListItem(
-                    shapes = ListItemDefaults.segmentedShapes(index, count),
+                    shapes = ListItemDefaults.segmentedShapes(offset + index, count),
                     component = component,
                     onDelete = onDeleteComponent?.let { { it(component) } },
                     onEdit = onEditComponent?.let { { it(component) } },
@@ -47,7 +80,7 @@ fun ExtensionComponentListColumn(
             }
         } else {
             SegmentedListItem(
-                shapes = ListItemDefaults.segmentedShapes(0, 1),
+                shapes = ListItemDefaults.segmentedShapes(offset, count),
                 content = { Text(stringRes(R.string.ext__meta__components_none_found)) },
             )
         }

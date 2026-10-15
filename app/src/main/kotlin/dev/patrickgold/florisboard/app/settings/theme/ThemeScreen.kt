@@ -50,9 +50,9 @@ import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
+import dev.patrickgold.florisboard.ime.extension.ExtensionType
 import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
 import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.datastore.model.collectAsState
@@ -173,7 +173,7 @@ fun ThemeScreen() {
                     supportingContent = { Text("Click here to import it.") },
                 )
                 SegmentedListItem(
-                    onClick = { navController.navigate(Routes.Ext.Edit("null", ThemeExtension.SERIAL_TYPE)) },
+                    onClick = { navController.navigate(Routes.Ext.Edit(null, ExtensionType.THEME)) },
                     shapes = ListItemDefaults.segmentedShapes(2, count),
                     verticalAlignment = Alignment.CenterVertically,
                     leadingContent = { Icon(Icons.Filled.Add, null) },

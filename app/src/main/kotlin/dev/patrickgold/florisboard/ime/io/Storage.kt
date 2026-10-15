@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.io
 
+import okio.FileMetadata
 import okio.FileSystem
 import okio.IOException
 import okio.Path
@@ -62,6 +63,16 @@ abstract class Storage {
         return fs.list(path).map { ref.subRef(it.name) }
     }
 
+    fun listOrNull(ref: FlorisRef): List<FlorisRef>? {
+        val (fs, path) = resolve(ref)
+        return fs.listOrNull(path)?.map { ref.subRef(it.name) }
+    }
+
+    fun metadataOrNull(ref: FlorisRef): FileMetadata? {
+        val (fs, path) = resolve(ref)
+        return fs.metadataOrNull(path)
+    }
+
     fun mkdirs(ref: FlorisRef) {
         val (fs, path) = resolve(ref)
         fs.createDirectories(path)
@@ -80,6 +91,15 @@ abstract class Storage {
     fun copy(srcRef: FlorisRef, dstRef: FlorisRef) {
         val (srcFs, srcPath) = resolve(srcRef)
         val (dstFs, dstPath) = resolve(dstRef)
+        copyFile(srcFs, srcPath, dstFs, dstPath)
+    }
+
+    private fun copyFile(
+        srcFs: FileSystem,
+        srcPath: Path,
+        dstFs: FileSystem,
+        dstPath: Path,
+    ) {
         if (srcFs === dstFs) {
             srcFs.copy(srcPath, dstPath)
         } else {
@@ -88,6 +108,49 @@ abstract class Storage {
                     sink.writeAll(source)
                 }
             }
+        }
+    }
+
+    fun copyRecursively(srcRef: FlorisRef, dstRef: FlorisRef) {
+        val (srcFs, srcPath) = resolve(srcRef)
+        val (dstFs, dstPath) = resolve(dstRef)
+        val srcMetadata = srcFs.metadataOrNull(srcPath)
+        val dstMetadata = dstFs.metadataOrNull(dstPath)
+        if (srcMetadata == null) {
+            throw IOException("srcRef must exist and either be a directory or a file")
+        }
+        if (srcMetadata.isRegularFile) {
+            if (dstMetadata != null && dstMetadata.isDirectory) {
+                throw IOException("srcRef is a file, but dstRef a directory")
+            }
+            copyFile(srcFs, srcPath, dstFs, dstPath)
+            return
+        } else if (srcMetadata.isDirectory) {
+            dstFs.metadataOrNull(dstPath)?.let { dstMetadata ->
+                if (!dstMetadata.isDirectory) {
+                    throw IOException("dstRef exists, but is not a directory")
+                }
+                if (dstFs.list(dstPath).isNotEmpty()) {
+                    throw IOException("dstRef exists, but is a non-empty directory")
+                }
+            }
+            dstFs.createDirectories(dstPath)
+            val srcPath = srcFs.canonicalize(srcPath)
+            val dstPath = dstFs.canonicalize(dstPath)
+            if (srcPath == dstPath) {
+                throw IOException("srcRef and dstRef point to same dir")
+            }
+            for (entrySrcPath in srcFs.listRecursively(srcPath)) {
+                val entryDstPath = dstPath / entrySrcPath.relativeTo(srcPath)
+                if (srcFs.metadata(entrySrcPath).isDirectory) {
+                    dstFs.createDirectories(entryDstPath)
+                } else {
+                    copyFile(srcFs, entrySrcPath, dstFs, entryDstPath)
+                }
+            }
+
+        } else {
+            throw IOException("srcRef must exist and either be a directory or a file")
         }
     }
 
