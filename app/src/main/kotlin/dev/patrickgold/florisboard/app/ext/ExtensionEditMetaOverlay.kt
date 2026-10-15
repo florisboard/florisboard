@@ -40,6 +40,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
+import dev.patrickgold.florisboard.app.components.florisColors
 import dev.patrickgold.florisboard.ime.extension.ExtensionMaintainer
 import dev.patrickgold.florisboard.ime.extension.ExtensionMeta
 import dev.patrickgold.florisboard.ime.extension.ExtensionValidation
@@ -247,13 +248,6 @@ private fun EditorSheetTextField(
         } else {
             null
         },
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.surface,
-            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-            disabledContainerColor = MaterialTheme.colorScheme.surface,
-            errorContainerColor = MaterialTheme.colorScheme.surface,
-            unfocusedIndicatorColor = MaterialTheme.colorScheme.outlineVariant,
-            disabledIndicatorColor = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.38f),
-        ),
+        colors = TextFieldDefaults.florisColors(),
     )
 }

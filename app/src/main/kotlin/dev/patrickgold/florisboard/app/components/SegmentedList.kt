@@ -28,6 +28,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.patrickgold.florisboard.app.apptheme.SegmentedListColumnVerticalPadding
 
@@ -82,6 +83,7 @@ fun SegmentedRadioListItem(
     SegmentedListItem(
         onClick = onClick,
         shapes = shapes,
+        verticalAlignment = Alignment.CenterVertically,
         leadingContent = {
             RadioButton(
                 selected = selected,

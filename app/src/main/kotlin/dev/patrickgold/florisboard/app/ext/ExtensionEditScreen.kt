@@ -49,9 +49,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
-import dev.patrickgold.florisboard.ime.extension.Extension
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponent
-import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
 import dev.patrickgold.florisboard.ime.extension.ExtensionController
 import dev.patrickgold.florisboard.ime.extension.ExtensionDefaults
 import dev.patrickgold.florisboard.ime.extension.ExtensionDependencyDecl
@@ -251,78 +249,6 @@ fun ExtensionEditScreen(extensionId: String?, type: ExtensionType) {
         }
     }
 
-    fun handleCreateComponent(createFrom: CreateFrom, componentName: ExtensionComponentName?) {
-        /*
-        when (val editor = workspace.editor) {
-            is ThemeExtensionEditor -> {
-                when (createFrom) {
-                    CreateFrom.EMPTY -> {
-                        if (editor.themes.any { it.id == newId.trim() }) {
-                            context.showLongToastSync("A theme with this ID already exists!")
-                        } else {
-                            val componentEditor = ThemeExtensionComponentEditor(
-                                id = newId.trim(),
-                                label = newLabel.trim(),
-                                authors = newAuthors.lines().map { it.trim() }.filter { it.isNotBlank() },
-                            )
-                            editor.themes.add(componentEditor)
-                            workspace.currentAction = null
-                        }
-                    }
-                    CreateFrom.EXISTING -> {
-                        val componentName = selectedComponentName ?: return
-                        val componentId = if (editor.themes.any { it.id == componentName.componentId }) {
-                            var suffix = 1
-                            var tempId: String
-                            do {
-                                tempId = "${componentName.componentId}_${suffix++}"
-                            } while (editor.themes.any { it.id == tempId })
-                            tempId
-                        } else {
-                            componentName.componentId
-                        }
-                        if (componentName.extensionId == extId) {
-                            val component = editor.themes.find { it.id == componentName.componentId } ?: return
-                            val componentEditor = component.let { c ->
-                                ThemeExtensionComponentEditor(
-                                    componentId, c.label, c.authors, c.isNightTheme, stylesheetPath = "",
-                                ).also { it.stylesheetEditor = c.stylesheetEditor }
-                            }
-                            if (componentEditor.stylesheetEditor != null) {
-                                val stylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
-                                stylesheetFile.parentFile?.mkdirs()
-                                val stylesheet = componentEditor.stylesheetEditor!!.build().toJson(PrettyPrintConfig).getOrThrow()
-                                stylesheetFile.writeText(stylesheet)
-                                componentEditor.stylesheetEditor = null
-                            } else {
-                                val srcStylesheetFile = workspace.extDir.subFile(component.stylesheetPath())
-                                val dstStylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
-                                dstStylesheetFile.parentFile?.mkdirs()
-                                srcStylesheetFile.copyTo(dstStylesheetFile, overwrite = true)
-                            }
-                            editor.themes.add(componentEditor)
-                        } else {
-                            val component = themeManager.indexedThemeConfigs.value.first.get(componentName) ?: return
-                            val componentEditor = (component as? ThemeExtensionComponentImpl)?.edit() ?: return
-                            componentEditor.id = componentId
-                            componentEditor.stylesheetPath = ""
-                            val externalExt = extensionManager.getExtensionById(componentName.extensionId) ?: return
-                            val stylesheetJson = ZipUtils.readFileFromArchive(
-                                context, externalExt.sourceRef!!, component.stylesheetPath()
-                            ).getOrNull() ?: return
-                            val dstStylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
-                            dstStylesheetFile.parentFile?.mkdirs()
-                            dstStylesheetFile.writeText(stylesheetJson)
-                            editor.themes.add(componentEditor)
-                        }
-                        workspace.currentAction = null
-                    }
-                }
-            }
-        }
-         */
-    }
-
     fun handleBackPress() {
         showUnsavedChangesDialog = true
     }
@@ -467,15 +393,44 @@ fun ExtensionEditScreen(extensionId: String?, type: ExtensionType) {
                     }
                     is EditorAction.CreateComponent -> {
                         ExtensionCreateComponentOverlay(
+                            storage = storage,
+                            workspaceRef = state.workspaceRef,
                             extensionId = extensionId,
                             extensionIndex = extensionIndex,
                             components = action.components,
                             componentKlass = action.componentKlass,
-                            onCreate = { createFrom, componentName ->
-                                handleCreateComponent(
-                                    createFrom,
-                                    componentName
-                                )
+                            onCreate = { newComponent ->
+                                editorState = when (newComponent) {
+                                    is ThemeExtension.ThemeComponent -> {
+                                        state.copy(
+                                            components = state.components.copy(
+                                                themeStylesheets = state.components.themeStylesheets.plus(newComponent),
+                                            ),
+                                        )
+                                    }
+                                    is Keyboard3Extension.ImportComponent -> {
+                                        state.copy(
+                                            components = state.components.copy(
+                                                k3Imports = state.components.k3Imports.plus(newComponent),
+                                            ),
+                                        )
+                                    }
+                                    is Keyboard3Extension.KeyboardComponent -> {
+                                        state.copy(
+                                            components = state.components.copy(
+                                                k3Keyboards = state.components.k3Keyboards.plus(newComponent),
+                                            ),
+                                        )
+                                    }
+                                    is Keyboard3Extension.TestComponent -> {
+                                        state.copy(
+                                            components = state.components.copy(
+                                                k3Tests = state.components.k3Tests.plus(newComponent),
+                                            ),
+                                        )
+                                    }
+                                }
+                                editorAction = EditorAction.None
                             },
                             onDismiss = {
                                 editorAction = EditorAction.None

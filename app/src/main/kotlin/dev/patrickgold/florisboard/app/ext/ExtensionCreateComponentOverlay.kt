@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -42,10 +43,16 @@ import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
 import dev.patrickgold.florisboard.ime.extension.ExtensionIndex
 import dev.patrickgold.florisboard.ime.extension.ExtensionValidation
 import dev.patrickgold.florisboard.ime.extension.ThemeExtension
+import dev.patrickgold.florisboard.ime.io.FlorisRef
+import dev.patrickgold.florisboard.ime.io.Storage
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
 import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import kotlinx.coroutines.launch
+import okio.IOException
 import org.florisboard.lib.compose.ButtonBarButton
 import org.florisboard.lib.compose.ButtonBarTextButton
 import org.florisboard.lib.compose.FlorisButtonBar
@@ -60,14 +67,19 @@ enum class CreateFrom {
 }
 
 @Composable
-fun <T : ExtensionComponent> ExtensionCreateComponentOverlay(
+fun ExtensionCreateComponentOverlay(
+    storage: Storage,
+    workspaceRef: FlorisRef,
     extensionId: String?,
     extensionIndex: ExtensionIndex,
-    components: List<T>,
+    components: List<ExtensionComponent>,
     componentKlass: KClass<*>,
-    onCreate: (CreateFrom, ExtensionComponentName?) -> Unit,
+    onCreate: (ExtensionComponent) -> Unit,
     onDismiss: () -> Unit,
 ) {
+    val interactionController = LocalInteractionController.current
+
+    val scope = rememberCoroutineScope()
     var createFrom by rememberSaveable { mutableStateOf(CreateFrom.EXISTING) }
     val componentsForSelection = remember(extensionId, extensionIndex, components, componentKlass) {
         buildMap {
@@ -105,6 +117,80 @@ fun <T : ExtensionComponent> ExtensionCreateComponentOverlay(
         }
     }
 
+    suspend fun handleCreateThemeStylesheet() {
+        when (createFrom) {
+            CreateFrom.EMPTY -> {
+                if (components.any { it.id == newId.trim() }) {
+                    interactionController.showLongToast("A theme with this ID already exists!")
+                } else {
+                    val component = ThemeExtension.ThemeComponent(
+                        id = newId.trim(),
+                        name = newLabel.trim(),
+                        authors = newAuthors.lines().map { it.trim() }.filter { it.isNotBlank() },
+                    )
+                    onCreate(component)
+                }
+            }
+            CreateFrom.EXISTING -> {
+                val componentName = selectedComponentName ?: return
+                val componentId = if (components.any { it.id == componentName.componentId }) {
+                    var suffix = 1
+                    var tempId: String
+                    do {
+                        tempId = "${componentName.componentId}_${suffix++}"
+                    } while (components.any { it.id == tempId })
+                    tempId
+                } else {
+                    componentName.componentId
+                }
+                val existingComponent = (componentsForSelection[componentName] as? ThemeExtension.ThemeComponent ?: return)
+                val newComponent = existingComponent
+                    .copy(
+                        id = componentId,
+                        stylesheetPath = null,
+                    )
+                val srcRef = when {
+                    componentName.extensionId == "" -> {
+                        workspaceRef.subRef(existingComponent.stylesheetPath())
+                    }
+                    else -> {
+                        val externalExt = extensionIndex.extensions[componentName.extensionId] ?: return
+                        externalExt.sourceRef.subRef(existingComponent.stylesheetPath())
+                    }
+                }
+                val dstRef = workspaceRef.subRef(newComponent.stylesheetPath())
+                // it may be that the src component is declared but has no stylesheet file
+                if (storage.exists(srcRef)) {
+                    try {
+                        val parentRef = dstRef.parentRef
+                            ?: throw IOException("dstRef has no parent??")
+                        storage.mkdirs(parentRef)
+                        storage.copy(srcRef, dstRef)
+                    } catch (e: IOException) {
+                        interactionController.showLongToast(e.toString())
+                        return
+                    }
+                }
+                onCreate(newComponent)
+            }
+        }
+    }
+
+    fun handleCreate() {
+        val invalid = createFrom == CreateFrom.EMPTY && (newIdValidation.isInvalid() ||
+            newLabelValidation.isInvalid() || newAuthorsValidation.isInvalid())
+        if (invalid) {
+            showValidationErrors = true
+            return
+        }
+        scope.launch {
+            when (componentKlass) {
+                ThemeExtension.ThemeComponent::class -> handleCreateThemeStylesheet()
+                else -> error("no create handler available for class '$componentKlass'")
+            }
+        }
+    }
+
     BackHandler {
         onDismiss()
     }
@@ -120,21 +206,15 @@ fun <T : ExtensionComponent> ExtensionCreateComponentOverlay(
         bottomBar = {
             FlorisButtonBar {
                 Spacer(modifier = Modifier.weight(1f))
-                ButtonBarTextButton(text = stringRes(R.string.action__cancel)) {
-                    onDismiss()
-                }
+                ButtonBarTextButton(
+                    onClick = onDismiss,
+                    text = stringRes(R.string.action__cancel)
+                )
                 ButtonBarButton(
+                    onClick = { handleCreate() },
                     text = stringRes(R.string.action__create),
                     enabled = hasSufficientInfoForCreating(),
-                ) {
-                    val invalid = createFrom == CreateFrom.EMPTY && (newIdValidation.isInvalid() ||
-                        newLabelValidation.isInvalid() || newAuthorsValidation.isInvalid())
-                    if (invalid) {
-                        showValidationErrors = true
-                    } else {
-                        onCreate(createFrom, selectedComponentName)
-                    }
-                }
+                )
             }
         },
     ) { contentPadding ->
