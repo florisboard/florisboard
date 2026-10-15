@@ -21,7 +21,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DarkMode
 import androidx.compose.material.icons.filled.LightMode
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.RadioButton
@@ -36,10 +38,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
+import dev.patrickgold.florisboard.app.components.resetColors
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
 import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
@@ -90,7 +94,23 @@ fun ThemeSelectionScreen(action: ThemeSelectionScreenAction?) {
 
     FlorisScreenNg(
         title = title,
-        previewFieldVisible = true
+        previewFieldVisible = true,
+        actions = {
+            FilledTonalIconButton(
+                onClick = {
+                    scope.launch {
+                        themeIdPref.reset()
+                    }
+                },
+                enabled = activeThemeId != themeIdPref.default,
+                colors = IconButtonDefaults.resetColors(),
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_reset_settings),
+                    contentDescription = null,
+                )
+            }
+        },
     ) { contentPadding ->
         ScrollableScreenColumn(contentPadding) {
             for ((extensionId, extension) in themeIndex.extensions) key(extensionId) {

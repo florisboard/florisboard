@@ -54,6 +54,7 @@ import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.app.components.SpotlightSwitchPreference
 import dev.patrickgold.florisboard.app.components.SpotlightText
+import dev.patrickgold.florisboard.app.components.resetColors
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.keyboard3.ImeIcons
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
@@ -102,17 +103,14 @@ fun FnKeyScreen() {
             FilledTonalIconButton(
                 onClick = { resetRequested = true },
                 enabled = resetBtnEnabled,
-                colors = IconButtonDefaults.filledTonalIconButtonColors(
-                    containerColor = MaterialTheme.colorScheme.errorContainer,
-                    contentColor = MaterialTheme.colorScheme.error,
-                ),
+                colors = IconButtonDefaults.resetColors(),
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_reset_settings),
                     contentDescription = null,
                 )
             }
-        }
+        },
     ) { contentPadding ->
         ScrollableScreenColumn(contentPadding) {
             SpotlightText(
