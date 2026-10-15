@@ -17,21 +17,26 @@
 package dev.patrickgold.florisboard.app.ext
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Error
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
@@ -42,13 +47,10 @@ import dev.patrickgold.florisboard.lib.ValidationResult
 import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
 import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
-import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import org.florisboard.lib.compose.ButtonBarButton
 import org.florisboard.lib.compose.ButtonBarTextButton
 import org.florisboard.lib.compose.FlorisButtonBar
 import org.florisboard.lib.compose.stringRes
-
-private val TextFieldVerticalPadding = 8.dp
 
 @Composable
 fun ExtensionEditMetaOverlay(
@@ -66,11 +68,11 @@ fun ExtensionEditMetaOverlay(
     var title by rememberSaveable { mutableStateOf(meta.title) }
     val titleValidation = rememberValidationResult(ExtensionValidation.MetaTitle, title)
     var description by rememberSaveable { mutableStateOf(meta.description ?: "") }
+    var maintainers by rememberSaveable { mutableStateOf(meta.maintainers.joinToString("\n")) }
+    val maintainersValidation = rememberValidationResult(ExtensionValidation.MetaMaintainers, maintainers)
     var keywords by rememberSaveable { mutableStateOf(meta.keywords?.joinToString("\n") ?: "") }
     var homepage by rememberSaveable { mutableStateOf(meta.homepage ?: "") }
     var issueTracker by rememberSaveable { mutableStateOf(meta.issueTracker ?: "") }
-    var maintainers by rememberSaveable { mutableStateOf(meta.maintainers.joinToString("\n")) }
-    val maintainersValidation = rememberValidationResult(ExtensionValidation.MetaMaintainers, maintainers)
     var license by rememberSaveable { mutableStateOf(meta.license) }
     val licenseValidation = rememberValidationResult(ExtensionValidation.MetaLicense, license)
 
@@ -87,12 +89,21 @@ fun ExtensionEditMetaOverlay(
                 id = id.trim(),
                 version = version.trim(),
                 title = title.trim(),
-                description = description.trim().takeIf { it.isNotBlank() },
-                keywords = keywords.lines().map { it.trim() }.filter { it.isNotBlank() }.takeIf { it.isNotEmpty() },
-                homepage = homepage.trim().takeIf { it.isNotBlank() },
-                issueTracker = issueTracker.trim().takeIf { it.isNotBlank() },
-                maintainers = maintainers.lines().map { it.trim() }.filter { it.isNotBlank() }
-                    .map { ExtensionMaintainer.fromOrTakeRaw(it) },
+                description = description.trim().takeIf { it.isNotEmpty() },
+                maintainers = maintainers
+                    .lineSequence()
+                    .map(String::trim)
+                    .filter(String::isNotEmpty)
+                    .map(ExtensionMaintainer::fromOrTakeRaw)
+                    .toList(),
+                keywords = keywords
+                    .lineSequence()
+                    .map(String::trim)
+                    .filter(String::isNotEmpty)
+                    .toList()
+                    .ifEmpty { null },
+                homepage = homepage.trim().takeIf { it.isNotEmpty() },
+                issueTracker = issueTracker.trim().takeIf { it.isNotEmpty() },
                 license = license.trim(),
             )
             onConfirm(newMeta)
@@ -127,7 +138,7 @@ fun ExtensionEditMetaOverlay(
                 value = id,
                 onValueChange = { id = it },
                 label = stringRes(R.string.ext__meta__id),
-                showValidationError = showValidationErrors,
+                showValidationErrors = showValidationErrors,
                 validationResult = idValidation,
             )
             EditorSheetTextField(
@@ -135,7 +146,7 @@ fun ExtensionEditMetaOverlay(
                 value = version,
                 onValueChange = { version = it },
                 label = stringRes(R.string.ext__meta__version),
-                showValidationError = showValidationErrors,
+                showValidationErrors = showValidationErrors,
                 validationResult = versionValidation,
             )
             EditorSheetTextField(
@@ -143,13 +154,22 @@ fun ExtensionEditMetaOverlay(
                 value = title,
                 onValueChange = { title = it },
                 label = stringRes(R.string.ext__meta__title),
-                showValidationError = showValidationErrors,
+                showValidationErrors = showValidationErrors,
                 validationResult = titleValidation,
             )
             EditorSheetTextField(
                 value = description,
                 onValueChange = { description = it },
                 label = stringRes(R.string.ext__meta__description),
+            )
+            EditorSheetTextField(
+                isRequired = true,
+                value = maintainers,
+                onValueChange = { maintainers = it },
+                label = stringRes(R.string.ext__meta__maintainers),
+                singleLine = false,
+                showValidationErrors = showValidationErrors,
+                validationResult = maintainersValidation,
             )
             EditorSheetTextField(
                 value = keywords,
@@ -169,19 +189,10 @@ fun ExtensionEditMetaOverlay(
             )
             EditorSheetTextField(
                 isRequired = true,
-                value = maintainers,
-                onValueChange = { maintainers = it },
-                label = stringRes(R.string.ext__meta__maintainers),
-                singleLine = false,
-                showValidationError = showValidationErrors,
-                validationResult = maintainersValidation,
-            )
-            EditorSheetTextField(
-                isRequired = true,
                 value = license,
                 onValueChange = { license = it },
                 label = stringRes(R.string.ext__meta__license),
-                showValidationError = showValidationErrors,
+                showValidationErrors = showValidationErrors,
                 validationResult = licenseValidation,
             )
         }
@@ -190,42 +201,59 @@ fun ExtensionEditMetaOverlay(
 
 @Composable
 private fun EditorSheetTextField(
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    isRequired: Boolean = false,
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    isRequired: Boolean = false,
     singleLine: Boolean = true,
-    showValidationError: Boolean = false,
+    showValidationErrors: Boolean = false,
     validationResult: ValidationResult? = null,
 ) {
-    Column(modifier = Modifier.padding(vertical = TextFieldVerticalPadding)) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = TextFieldVerticalPadding),
-        ) {
+    val isError = showValidationErrors && validationResult?.isInvalid() == true
+
+    TextField(
+        modifier = modifier.fillMaxWidth(),
+        value = value,
+        onValueChange = onValueChange,
+        enabled = enabled,
+        singleLine = singleLine,
+        isError = isError,
+        label = {
             Text(
-                text = label,
-                style = MaterialTheme.typography.titleSmall,
+                text = buildAnnotatedString {
+                    append(label)
+                    if (isRequired) {
+                        append(" ")
+                        withStyle(SpanStyle(color = MaterialTheme.colorScheme.error)) {
+                            append("*")
+                        }
+                    }
+                },
             )
-            if (isRequired) {
-                Text(
-                    modifier = Modifier.padding(start = 2.dp),
-                    text = "*",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.error,
-                )
+        },
+        supportingText = {
+            Validation(
+                modifier = Modifier.padding(bottom = 8.dp),
+                showValidationErrors = showValidationErrors,
+                validationResult = validationResult,
+            )
+        },
+        trailingIcon = if (isError) {
+            {
+                Icon(Icons.Default.Error, null)
             }
-        }
-        JetPrefTextField(
-            modifier = modifier.fillMaxWidth(),
-            enabled = enabled,
-            value = value,
-            onValueChange = onValueChange,
-            singleLine = singleLine,
-        )
-        Validation(showValidationError, validationResult)
-    }
+        } else {
+            null
+        },
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = MaterialTheme.colorScheme.surface,
+            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+            disabledContainerColor = MaterialTheme.colorScheme.surface,
+            errorContainerColor = MaterialTheme.colorScheme.surface,
+            unfocusedIndicatorColor = MaterialTheme.colorScheme.outlineVariant,
+            disabledIndicatorColor = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.38f),
+        ),
+    )
 }
