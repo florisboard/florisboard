@@ -69,12 +69,18 @@ import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.collectIn
 import java.util.concurrent.atomic.AtomicBoolean
 
-enum class AppTheme(val id: String) {
-    AUTO("auto"),
-    AUTO_AMOLED("auto_amoled"),
-    LIGHT("light"),
-    DARK("dark"),
-    AMOLED_DARK("amoled_dark");
+enum class AppTheme(
+    val id: String,
+    val isAuto: Boolean = false,
+    val isLight: Boolean = false,
+    val isDark: Boolean = false,
+    val isAmoled: Boolean = false,
+) {
+    AUTO("auto", isAuto = true),
+    AUTO_AMOLED("auto_amoled", isAuto = true, isAmoled = true),
+    LIGHT("light", isLight = true),
+    DARK("dark", isDark = true),
+    AMOLED_DARK("amoled_dark", isDark = true, isAmoled = true);
 }
 
 val LocalNavController = staticCompositionLocalOf<NavController> {
@@ -130,7 +136,7 @@ class FlorisAppActivity : ComponentActivity() {
                     appName = R.string.app_name,
                 ) {
                     FlorisAppTheme(theme = appTheme) {
-                        Surface(color = MaterialTheme.colorScheme.background) {
+                        Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
                             AppContent()
                         }
                     }

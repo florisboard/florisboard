@@ -71,7 +71,7 @@ fun HomeScreen() {
             }
 
             SegmentedListColumn {
-                val count = 5
+                val count = 4
                 Preference(
                     shapes = ListItemDefaults.segmentedShapes(0, count),
                     icon = Icons.Default.Language,

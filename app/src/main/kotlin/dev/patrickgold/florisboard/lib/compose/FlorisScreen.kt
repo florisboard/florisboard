@@ -73,7 +73,7 @@ fun FlorisScreenNg(
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     SideEffect {
-        previewFieldController?.isVisible = previewFieldVisible
+        previewFieldController.isVisible = previewFieldVisible
     }
 
     Scaffold(
@@ -86,7 +86,7 @@ fun FlorisScreenNg(
                         onClick = navigationIconOnClick ?: { navController.popBackStack(); Unit },
                         modifier = Modifier.padding(start = 8.dp, end = 4.dp),
                         colors = IconButtonDefaults.filledTonalIconButtonColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
                         ),
                         content = { Icon(navigationIcon, null) },
                     )
@@ -96,6 +96,7 @@ fun FlorisScreenNg(
             ) },
         bottomBar = bottomBar,
         floatingActionButton = fab,
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
         content = content,
     )
 }
@@ -107,8 +108,8 @@ fun FlorisAppBar(
     actions: @Composable RowScope.() -> Unit = { },
     scrollBehavior: TopAppBarScrollBehavior,
     colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(
-        containerColor = MaterialTheme.colorScheme.background,
-        scrolledContainerColor = MaterialTheme.colorScheme.background,
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer,
     ),
 ) {
     MediumFlexibleTopAppBar(
