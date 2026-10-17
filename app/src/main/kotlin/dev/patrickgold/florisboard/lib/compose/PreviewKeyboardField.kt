@@ -67,7 +67,9 @@ private const val AnimationDuration = 200
 private val PreviewEnterTransition = EnterTransition.verticalTween(AnimationDuration)
 private val PreviewExitTransition = ExitTransition.verticalTween(AnimationDuration)
 
-val LocalPreviewFieldController = staticCompositionLocalOf<PreviewFieldController?> { null }
+val LocalPreviewFieldController = staticCompositionLocalOf<PreviewFieldController> {
+    error("LocalPreviewFieldController is only available within the settings UI")
+}
 
 @Composable
 fun rememberPreviewFieldController(): PreviewFieldController {

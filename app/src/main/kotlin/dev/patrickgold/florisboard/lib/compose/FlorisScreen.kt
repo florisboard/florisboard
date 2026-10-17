@@ -61,11 +61,11 @@ fun FlorisScreenNg(
     title: String,
     previewFieldVisible: Boolean,
     navigationIconVisible: Boolean = true,
+    navigationIcon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
+    navigationIconOnClick: (() -> Unit)? = null,
     actions: FlorisScreenActions = {},
     bottomBar: FlorisScreenBottomBar = {},
     fab: FlorisScreenFab = {},
-    navigationIcon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
-    navigationIconOnClick: (() -> Unit)? = null,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val navController = LocalNavController.current

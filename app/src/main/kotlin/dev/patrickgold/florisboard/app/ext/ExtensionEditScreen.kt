@@ -49,6 +49,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
+import dev.patrickgold.florisboard.app.settings.theme.ThemeEditorScreen
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponent
 import dev.patrickgold.florisboard.ime.extension.ExtensionController
 import dev.patrickgold.florisboard.ime.extension.ExtensionDefaults
@@ -439,6 +440,31 @@ fun ExtensionEditScreen(extensionId: String?, type: ExtensionType) {
                     }
                     is EditorAction.ManageComponent -> when (action.component) {
                         is ThemeExtension.ThemeComponent -> {
+                            ThemeEditorScreen(
+                                storage = storage,
+                                workspaceRef = state.workspaceRef,
+                                initialComponent = action.component,
+                                checkIdAlreadyUsed = { componentId ->
+                                    state.components.themeStylesheets.any { it.id == componentId }
+                                },
+                                onUpdate = { updatedComponent ->
+                                    editorState = state.copy(
+                                        components = state.components.copy(
+                                            themeStylesheets = state.components.themeStylesheets.map { component ->
+                                                if (component.id == updatedComponent.id) {
+                                                    updatedComponent
+                                                } else {
+                                                    component
+                                                }
+                                            },
+                                        ),
+                                    )
+                                    editorAction = EditorAction.None
+                                },
+                                onDismiss = {
+                                    editorAction = EditorAction.None
+                                },
+                            )
                             // TODO ThemeEditorScreen(workspace, action.editor)
                         }
                         else -> {

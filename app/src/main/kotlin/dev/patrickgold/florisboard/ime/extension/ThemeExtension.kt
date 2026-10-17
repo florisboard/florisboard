@@ -63,8 +63,10 @@ class ThemeExtension(
     ) : ExtensionComponent {
         fun stylesheetPath(): String = stylesheetPath.takeUnless { it.isNullOrBlank() } ?: defaultStylesheetPath(id)
 
-        fun defaultStylesheetPath(id: String): String {
-            return "stylesheets/$id.json"
+        companion object {
+            fun defaultStylesheetPath(id: String): String {
+                return "stylesheets/$id.json"
+            }
         }
     }
 }

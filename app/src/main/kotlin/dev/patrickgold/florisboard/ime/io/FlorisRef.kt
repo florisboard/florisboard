@@ -259,6 +259,16 @@ value class FlorisRef private constructor(val uri: Uri) : SourceFileRef {
             })
         }
 
+    fun relativeTo(other: FlorisRef): String {
+        require(isAssets || isCache || isInternal) {
+            "relativeTo behavior is only defined for assets/cache/internal refs"
+        }
+        val otherPath = (other.uri.path ?: "/").toPath(normalize = true)
+        val thisPath = (uri.path ?: "/").toPath(normalize = true)
+        val relPath = thisPath.relativeTo(otherPath)
+        return relPath.toString()
+    }
+
     /**
      * Returns if this URI contains data for all valid parts of a FlorisRef.
      */

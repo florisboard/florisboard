@@ -20,7 +20,6 @@ import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,11 +39,10 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ManageSearch
-import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -62,10 +60,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.TextUnit
@@ -73,8 +69,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
 import androidx.compose.ui.unit.sp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.app.ext.FONTS
 import dev.patrickgold.florisboard.app.ext.IMAGES
+import dev.patrickgold.florisboard.ime.extension.ExtensionValidation
+import dev.patrickgold.florisboard.ime.io.FlorisRef
+import dev.patrickgold.florisboard.ime.io.Storage
 import dev.patrickgold.florisboard.lib.ValidationResult
 import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
@@ -83,11 +83,8 @@ import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefColorPicker
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
-import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import dev.patrickgold.jetpref.material.ui.rememberJetPrefColorPickerState
-import java.io.File
-import org.florisboard.lib.snygg.color.ColorPalette
 import org.florisboard.lib.compose.DpSizeSaver
 import org.florisboard.lib.compose.FlorisChip
 import org.florisboard.lib.compose.FlorisIconButton
@@ -95,11 +92,11 @@ import org.florisboard.lib.compose.FlorisTextButton
 import org.florisboard.lib.compose.florisVerticalScroll
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.curlyFormat
-import org.florisboard.lib.kotlin.io.subDir
 import org.florisboard.lib.kotlin.toStringWithoutDotZero
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggRule
 import org.florisboard.lib.snygg.SnyggSpec
+import org.florisboard.lib.snygg.color.ColorPalette
 import org.florisboard.lib.snygg.value.SnyggContentScaleValue
 import org.florisboard.lib.snygg.value.SnyggCustomFontFamilyValue
 import org.florisboard.lib.snygg.value.SnyggCutCornerDpShapeValue
@@ -179,7 +176,6 @@ private enum class PaddingValue {
     }
 }
 
-/*
 @Composable
 internal fun EditPropertyDialog(
     initProperty: PropertyInfo,
@@ -187,7 +183,8 @@ internal fun EditPropertyDialog(
     colorRepresentation: ColorRepresentation,
     definedVariables: Map<String, SnyggValue>,
     fontNames: List<String>,
-    workspace: CacheManager.ExtEditorWorkspace<*>,
+    storage: Storage,
+    workspaceRef: FlorisRef,
     onConfirmNewValue: (String, SnyggValue) -> Boolean,
     onDelete: () -> Unit,
     onDismiss: () -> Unit,
@@ -324,7 +321,8 @@ internal fun EditPropertyDialog(
                     colorRepresentation = colorRepresentation,
                     definedVariables = definedVariables,
                     fontNames = fontNames,
-                    workspace = workspace,
+                    storage = storage,
+                    workspaceRef = workspaceRef,
                     isError = !isPropertyValueValid(),
                 )
             }
@@ -416,7 +414,8 @@ private fun PropertyValueEditor(
     colorRepresentation: ColorRepresentation,
     definedVariables: Map<String, SnyggValue>,
     fontNames: List<String>,
-    workspace: CacheManager.ExtEditorWorkspace<*>,
+    storage: Storage,
+    workspaceRef: FlorisRef,
     modifier: Modifier = Modifier,
     isError: Boolean = false,
 ) {
@@ -628,42 +627,34 @@ private fun PropertyValueEditor(
             }
             Column(modifier) {
                 val fontFiles = remember {
-                    workspace.extDir.subDir(FONTS).listFiles { it.isFile }.orEmpty().asList()
+                    storage.listOrNull(workspaceRef.subRef(FONTS))?.filter { ref ->
+                        storage.metadataOrNull(ref)?.isRegularFile == true
+                    }.orEmpty()
                 }
                 val imageFiles = remember {
-                    workspace.extDir.subDir(IMAGES).listFiles { it.isFile }.orEmpty().asList()
+                    storage.listOrNull(workspaceRef.subRef(IMAGES))?.filter { ref ->
+                        storage.metadataOrNull(ref)?.isRegularFile == true
+                    }.orEmpty()
                 }
                 var showSelectFileDialog by rememberSaveable { mutableStateOf(false) }
                 if (showSelectFileDialog) {
                     @Composable
-                    fun ClickableFilesWithHeading(title: String, files: List<File>) {
-                        ListItem(
-                            headlineContent = {
-                                Text(
-                                    text = title,
-                                    color = MaterialTheme.colorScheme.secondary,
-                                    fontWeight = FontWeight.Bold,
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
+                    fun ClickableFilesWithHeading(title: String, refs: List<FlorisRef>) {
+                        SegmentedListColumn(title = title) {
+                            val count = refs.size
+                            for ((index, ref) in refs.withIndex()) {
+                                SegmentedListItem(
+                                    onClick = {
+                                        // TODO relativeTo
+                                        val relPath = ref.relativeTo(workspaceRef)
+                                        inputStr = "flex:/" + Uri.encode(relPath, "/")
+                                        onValueChange(SnyggUriValue(inputStr))
+                                        showSelectFileDialog = false
+                                    },
+                                    shapes = ListItemDefaults.segmentedShapes(index, count),
+                                    content = { Text(ref.pathName) },
                                 )
-                            },
-                            colors = ListItemDefaults.colors(
-                                containerColor = AlertDialogDefaults.containerColor
-                            ),
-                        )
-                        files.forEach { file ->
-                            JetPrefListItem(
-                                modifier = Modifier.clickable {
-                                    val relPath = file.path.removePrefix(workspace.extDir.path)
-                                    inputStr = "flex:" + Uri.encode(relPath, "/")
-                                    onValueChange(SnyggUriValue(inputStr))
-                                    showSelectFileDialog = false
-                                },
-                                text = file.name,
-                                colors = ListItemDefaults.colors(
-                                    containerColor = AlertDialogDefaults.containerColor
-                                ),
-                            )
+                            }
                         }
                     }
                     JetPrefAlertDialog(
@@ -1255,4 +1246,3 @@ private fun ShapeValueEditor(
         }
     }
 }
-*/

@@ -27,7 +27,7 @@ material-kolor = "4.1.1"
 mikepenz-aboutlibraries = "15.2.0"
 okio = "3.18.2"
 patrickgold-compose-tooltip = "0.2.0-rc02"
-patrickgold-jetpref = "0.5.0-a04-SNAPSHOT"
+patrickgold-jetpref = "02ea747-SNAPSHOT"
 
 # Testing
 androidx-benchmark = "1.4.1"
