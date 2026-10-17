@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,117 +16,256 @@
 
 package dev.patrickgold.florisboard.app.ext
 
-import android.text.format.Formatter
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.selection.SelectionContainer
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ErrorOutline
+import androidx.compose.material.icons.filled.Extension
+import androidx.compose.material.icons.filled.Numbers
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.Style
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
+import dev.patrickgold.florisboard.app.components.SegmentedListColumn
+import dev.patrickgold.florisboard.app.components.segmentedErrorColors
+import dev.patrickgold.florisboard.ime.extension.ExtensionController
+import dev.patrickgold.florisboard.ime.extension.ExtensionDefaults
+import dev.patrickgold.florisboard.ime.extension.ExtensionManifest
+import dev.patrickgold.florisboard.ime.extension.Keyboard3Extension
 import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
-import dev.patrickgold.florisboard.ime.io.FileRegistry
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import org.florisboard.lib.compose.FlorisBulletSpacer
+import dev.patrickgold.florisboard.ime.extension.ThemeExtension
+import dev.patrickgold.florisboard.ime.io.AndroidStorage
+import dev.patrickgold.florisboard.ime.io.FlorisRef
+import dev.patrickgold.florisboard.ime.io.LocalStorageController
+import dev.patrickgold.florisboard.ime.io.createWorkspace
+import dev.patrickgold.florisboard.ime.io.queryFileName
+import dev.patrickgold.florisboard.ime.io.readFromUri
+import dev.patrickgold.florisboard.ime.io.readJson
+import dev.patrickgold.florisboard.ime.io.unzip
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
+import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import okio.IOException
+import org.florisboard.lib.compose.ButtonBarButton
+import org.florisboard.lib.compose.ButtonBarTextButton
+import org.florisboard.lib.compose.FlorisButton
 import org.florisboard.lib.compose.FlorisButtonBar
-import org.florisboard.lib.compose.FlorisOutlinedBox
-import org.florisboard.lib.compose.FlorisOutlinedButton
-import org.florisboard.lib.compose.defaultFlorisOutlinedBox
-import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.kotlin.resultOk
+import kotlin.concurrent.atomics.AtomicInt
+import kotlin.concurrent.atomics.ExperimentalAtomicApi
+import kotlin.concurrent.atomics.fetchAndIncrement
+import kotlin.time.Duration.Companion.seconds
 
 enum class ExtensionImportScreenType(
     val id: String,
     @StringRes val titleResId: Int,
-    val supportedFiles: List<FileRegistry.Entry>,
+    val acceptManifest: (ExtensionManifest) -> Boolean,
 ) {
     EXT_ANY(
         id = "ext-any",
         titleResId = R.string.ext__import__ext_any,
-        supportedFiles = listOf(FileRegistry.FlexExtension),
+        acceptManifest = { true },
     ),
     EXT_KEYBOARD3(
         id = "ext-keyboard3",
         titleResId = R.string.ext__import__ext_keyboard,
-        supportedFiles = listOf(FileRegistry.FlexExtension),
+        acceptManifest = { it is Keyboard3Extension.Manifest },
     ),
     EXT_THEME(
         id = "ext-theme",
         titleResId = R.string.ext__import__ext_theme,
-        supportedFiles = listOf(FileRegistry.FlexExtension),
+        acceptManifest = { it is ThemeExtension.Manifest },
     ),
     EXT_LANGUAGEPACK(
         id = "ext-languagepack",
         titleResId = R.string.ext__import__ext_languagepack,
-        supportedFiles = listOf(FileRegistry.FlexExtension),
+        acceptManifest = { false }, // TODO
     );
 }
 
+private class FileNameQueryFailed : Exception() {
+    override fun fillInStackTrace(): Throwable = this
+}
+
+private class WorkspaceCreationFailed(cause: IOException) : Exception(cause) {
+    override fun fillInStackTrace(): Throwable = this
+}
+
+private sealed interface ImportFile {
+    val uri: Uri
+    val fileName: String?
+    val workspaceRef: FlorisRef?
+
+    data class Processing(
+        override val uri: Uri,
+        override val fileName: String?,
+        override val workspaceRef: FlorisRef?,
+    ) : ImportFile
+
+    data class Failure(
+        override val uri: Uri,
+        override val fileName: String?,
+        override val workspaceRef: FlorisRef?,
+        val zippedRef: FlorisRef?,
+        val unzippedRef: FlorisRef?,
+        val cause: Exception,
+    ) : ImportFile
+
+    data class Success(
+        override val uri: Uri,
+        override val fileName: String,
+        override val workspaceRef: FlorisRef?,
+        val zippedRef: FlorisRef,
+        val unzippedRef: FlorisRef,
+        val manifest: ExtensionManifest,
+    ) : ImportFile
+}
+
+@OptIn(ExperimentalAtomicApi::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = FlorisScreen {
-    title = stringRes(type.titleResId)
-
+fun ExtensionImportScreen(
+    type: ExtensionImportScreenType,
+    givenUriList: List<Uri>? = null,
+) {
     val extensionController = LocalExtensionController.current
+    val interactionController = LocalInteractionController.current
     val navController = LocalNavController.current
-    val context = LocalContext.current
+    val storageController = LocalStorageController.current
 
-    /*
-    fun getSkipReason(fileInfo: CacheManager.FileInfo): Int {
-        return when {
-            !FileRegistry.matchesFileFilter(fileInfo, type.supportedFiles) -> {
-                R.string.ext__import__file_skip_unsupported
+    val scope = rememberCoroutineScope()
+    val extensionIndex by extensionController.activeIndex.collectAsState()
+    val storage by storageController.activeStorage.collectAsState()
+
+    val idBase = AtomicInt(0)
+    val importFiles = remember { mutableStateMapOf<Int, ImportFile>() }
+    val importBtnEnabled by remember {
+        derivedStateOf { importFiles.isNotEmpty() && importFiles.all { (_, v) -> v !is ImportFile.Processing } }
+    }
+
+    fun launchImportJob(uri: Uri) = scope.launch {
+        val id = idBase.fetchAndIncrement()
+        val workspaceRef = try {
+            storage.createWorkspace()
+        } catch (e: IOException) {
+            importFiles[id] = ImportFile.Failure(
+                uri = uri,
+                fileName = null,
+                workspaceRef = null,
+                zippedRef = null,
+                unzippedRef = null,
+                cause = WorkspaceCreationFailed(e),
+            )
+            return@launch
+        }
+        importFiles[id] = ImportFile.Processing(uri, null, workspaceRef)
+        val fileName = (storage as AndroidStorage).queryFileName(uri)?.trim()
+        if (fileName.isNullOrEmpty()) {
+            importFiles[id] = ImportFile.Failure(
+                uri = uri,
+                fileName = null,
+                workspaceRef = workspaceRef,
+                zippedRef = null,
+                unzippedRef = null,
+                cause = FileNameQueryFailed(),
+            )
+            return@launch
+        }
+        importFiles[id] = ImportFile.Processing(uri, fileName, workspaceRef)
+        delay(1.seconds)
+        val zippedRef = workspaceRef.subRef(fileName)
+        try {
+            (storage as AndroidStorage).readFromUri(uri, zippedRef)
+        } catch (e: IOException) {
+            importFiles[id] = ImportFile.Failure(
+                uri = uri,
+                fileName = fileName,
+                workspaceRef = workspaceRef,
+                zippedRef = zippedRef,
+                unzippedRef = null,
+                cause = e,
+            )
+            return@launch
+        }
+        val unzippedRef = workspaceRef.subRef(zippedRef.pathName + ".d")
+        val manifestRef = unzippedRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
+        val manifest: ExtensionManifest
+        try {
+            storage.mkdirs(unzippedRef)
+            storage.unzip(zippedRef, unzippedRef)
+            manifest = storage.readJson<ExtensionManifest>(manifestRef, ExtensionController.ExtensionJson)
+            if (!type.acceptManifest(manifest)) {
+                throw IOException("incorrect or invalid extension manifest type")
             }
-            fileInfo.ext != null -> {
-                val ext = fileInfo.ext
-                if (extensionManager.getExtensionById(ext.meta.id)?.sourceRef?.isAssets == true) {
-                    R.string.ext__import__file_skip_ext_core
-                } else {
-                    NATIVE_NULLPTR.toInt()
+        } catch (e: IOException) {
+            importFiles[id] = ImportFile.Failure(
+                uri = uri,
+                fileName = fileName,
+                workspaceRef = workspaceRef,
+                zippedRef = zippedRef,
+                unzippedRef = unzippedRef,
+                cause = e,
+            )
+            return@launch
+        }
+        importFiles[id] = ImportFile.Success(
+            uri = uri,
+            fileName = fileName,
+            workspaceRef = workspaceRef,
+            zippedRef = zippedRef,
+            unzippedRef = unzippedRef,
+            manifest = manifest,
+        )
+    }
+
+    LaunchedEffect(Unit) {
+        if (givenUriList.isNullOrEmpty()) {
+            return@LaunchedEffect
+        }
+        for (uri in givenUriList) {
+            launchImportJob(uri)
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            for ((_, importFile) in importFiles) {
+                importFile.workspaceRef?.let { workspaceRef ->
+                    try {
+                        storage.deleteRecursively(workspaceRef)
+                    } catch (_: IOException) {
+                        // ignore
+                    }
                 }
             }
-            else -> { // ext == null
-                R.string.ext__import__file_skip_ext_corrupted
-            }
         }
-    }
-
-    fun Result<CacheManager.ImporterWorkspace>.mapSkipReasons(): Result<CacheManager.ImporterWorkspace> {
-        return this.map { workspace ->
-            workspace.inputFileInfos.forEach { fileInfo ->
-                fileInfo.skipReason = getSkipReason(fileInfo)
-            }
-            workspace
-        }
-    }
-
-    var importResult by remember(initUuid) {
-        val workspace = initUuid?.let { cacheManager.importer.getWorkspaceByUuid(it) }
-            ?.let { resultOk(it) }
-            ?.mapSkipReasons()
-        mutableStateOf(workspace)
     }
 
     val importLauncher = rememberLauncherForActivityResult(
@@ -136,78 +275,58 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
             //  was cancelled (mostly by pressing the back button), so
             //  we don't display an error message here.
             if (uriList.isEmpty()) return@rememberLauncherForActivityResult
-            importResult?.getOrNull()?.close()
-            importResult = runCatching { cacheManager.readFromUriIntoCache(uriList) }.mapSkipReasons()
+            for (uri in uriList) {
+                launchImportJob(uri)
+            }
         },
     )
 
-    bottomBar {
-        FlorisButtonBar {
-            ButtonBarSpacer()
-            ButtonBarTextButton(
-                text = stringRes(R.string.action__cancel),
-            ) {
-                importResult?.getOrNull()?.close()
-                navController.popBackStack()
-            }
-            val enabled = remember(importResult) {
-                importResult?.getOrNull()?.takeIf { workspace ->
-                    workspace.inputFileInfos.any { it.skipReason == NATIVE_NULLPTR.toInt() }
-                } != null
-            }
-            ButtonBarButton(
-                text = stringRes(R.string.action__import),
-                enabled = enabled,
-            ) {
-                val workspace = importResult!!.getOrThrow()
-                runCatching {
-                    for (fileInfo in workspace.inputFileInfos) {
-                        if (fileInfo.skipReason != NATIVE_NULLPTR.toInt()) {
-                            continue
-                        }
-                        val ext = when (type) {
-                            ExtensionImportScreenType.EXT_ANY -> fileInfo.ext {
-                                ext?.let { extensionManager.import(it) }
-                            }
-                            ExtensionImportScreenType.EXT_KEYBOARD3 -> {
-                                ext.takeIf { it is KeyboardExtension }?.let { extensionManager.import(it) }
-                            }
-                            ExtensionImportScreenType.EXT_THEME -> {
-                                ext.takeIf { it is ThemeExtension }?.let { extensionManager.import(it) }
-                            }
-                            ExtensionImportScreenType.EXT_LANGUAGEPACK -> {
-                                ext.takeIf { it is LanguagePackExtension }?.let { extensionManager.import(it) }
+    FlorisScreenNg(
+        title = stringRes(type.titleResId),
+        previewFieldVisible = false,
+        bottomBar = {
+            val successText = stringRes(R.string.ext__import__success)
+            val failureText = stringRes(R.string.ext__import__failure)
+            FlorisButtonBar {
+                Spacer(modifier = Modifier.weight(1f))
+                ButtonBarTextButton(
+                    onClick = { navController.popBackStack() },
+                    text = stringRes(R.string.action__cancel),
+                )
+                ButtonBarButton(
+                    onClick = {
+                        scope.launch {
+                            runCatching {
+                                for ((_, importFile) in importFiles) {
+                                    if (importFile is ImportFile.Success) {
+                                        extensionController.import(importFile.unzippedRef)
+                                    }
+                                }
+                            }.onSuccess {
+                                interactionController.showLongToast(successText)
+                                navController.popBackStack()
+                            }.onFailure { error ->
+                                interactionController.showLongToast(failureText, "error_message" to error.localizedMessage)
                             }
                         }
-                        extensionController.import()
-                    }
-                }.onSuccess {
-                    workspace.close()
-                    context.showLongToastSync(R.string.ext__import__success)
-                    navController.popBackStack()
-                }.onFailure { error ->
-                    context.showLongToastSync(R.string.ext__import__failure, "error_message" to error.localizedMessage)
-                }
+                    },
+                    text = stringRes(R.string.action__import),
+                    enabled = importBtnEnabled,
+                )
             }
         }
-    }
-
-    content {
-        if (initUuid == null) {
-            FlorisOutlinedButton(
-                onClick = {
-                    importLauncher.launch("* / *")
-                },
-                modifier = Modifier
-                    .padding(vertical = 16.dp)
-                    .align(Alignment.CenterHorizontally),
-                text = stringRes(R.string.action__select_files),
-            )
-        }
-
-        val result = importResult
-        when {
-            result == null -> {
+    ) { contentPadding ->
+        ScrollableScreenColumn(contentPadding) {
+            if (importFiles.isEmpty()) {
+                FlorisButton(
+                    onClick = {
+                        importLauncher.launch("*/*")
+                    },
+                    modifier = Modifier
+                        .padding(vertical = 16.dp)
+                        .align(Alignment.CenterHorizontally),
+                    text = stringRes(R.string.action__select_files),
+                )
                 Text(
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
@@ -216,122 +335,108 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                     fontStyle = FontStyle.Italic,
                 )
             }
-            result.isSuccess -> {
-                val workspace = result.getOrThrow()
-                for (fileInfo in workspace.inputFileInfos) {
-                    FileInfoView(fileInfo)
-                }
-            }
-            result.isFailure -> {
-                Text(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    text = stringRes(R.string.ext__import__error_unexpected_exception),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.error,
-                )
-                SelectionContainer {
-                    Text(
-                        modifier = Modifier
-                            .florisHorizontalScroll()
-                            .padding(horizontal = 16.dp),
-                        text = result.exceptionOrNull()?.stackTraceToString() ?: "null",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.error,
-                        fontStyle = FontStyle.Italic,
-                    )
-                }
-            }
-        }
-    }
-     */
-}
 
-/*
-@Composable
-private fun FileInfoView(
-    fileInfo: CacheManager.FileInfo,
-) {
-    FlorisOutlinedBox(
-        modifier = Modifier.defaultFlorisOutlinedBox(),
-        title = fileInfo.file.name,
-        subtitle = fileInfo.mediaType ?: "application/unknown",
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
-        ) {
-            val grayColor = LocalContentColor.current.copy(alpha = 0.56f)
-            val ext = fileInfo.ext
-            Row {
-                Text(
-                    text = Formatter.formatShortFileSize(LocalContext.current, fileInfo.size),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = grayColor,
-                )
-                if (ext != null) {
-                    FlorisBulletSpacer()
-                    Text(
-                        text = ext.meta.id,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = grayColor,
-                    )
-                    FlorisBulletSpacer()
-                    Text(
-                        text = ext.meta.version,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = grayColor,
-                    )
+            for (importFile in importFiles.values) {
+                SegmentedListColumn(title = importFile.fileName ?: "(file name unknown)") {
+                    when (importFile) {
+                        is ImportFile.Processing -> {
+                            val count = 1
+                            SegmentedListItem(
+                                shapes = ListItemDefaults.segmentedShapes(0, count),
+                                leadingContent = {
+                                    LoadingIndicator(
+                                        modifier = Modifier.size(24.dp),
+                                    )
+                                },
+                                content = {
+                                    Text("Processing...")
+                                },
+                            )
+                        }
+                        is ImportFile.Failure -> {
+                            val count = 1
+                            SegmentedListItem(
+                                shapes = ListItemDefaults.segmentedShapes(0, count),
+                                colors = ListItemDefaults.segmentedErrorColors(),
+                                leadingContent = {
+                                    Icon(Icons.Default.ErrorOutline, null)
+                                },
+                                content = {
+                                    Text(stringRes(R.string.ext__import__file_skip))
+                                },
+                                supportingContent = {
+                                    Text(importFile.cause.message ?: importFile.cause::class.toString())
+                                },
+                            )
+                        }
+                        is ImportFile.Success -> {
+                            val manifest = importFile.manifest
+                            val count = 3 + when (manifest) {
+                                is ThemeExtension.Manifest -> 1
+                                else -> 0
+                            }
+                            val maintainers = remember(manifest.meta) {
+                                manifest.meta.maintainers.joinToString { it.name }
+                            }
+                            SegmentedListItem(
+                                shapes = ListItemDefaults.segmentedShapes(0, count),
+                                leadingContent = {
+                                    Icon(Icons.Default.Extension, null)
+                                },
+                                overlineContent = {
+                                    Text(manifest.meta.id)
+                                },
+                                content = {
+                                    Text(manifest.meta.title)
+                                },
+                                supportingContent = manifest.meta.description?.let { description ->
+                                    @Composable {
+                                        Text(
+                                            text = description.trim(),
+                                            maxLines = 2,
+                                            overflow = TextOverflow.Ellipsis,
+                                        )
+                                    }
+                                },
+                            )
+                            SegmentedListItem(
+                                shapes = ListItemDefaults.segmentedShapes(1, count),
+                                leadingContent = {
+                                    Icon(Icons.Default.Person, null)
+                                },
+                                content = {
+                                    Text(maintainers)
+                                },
+                            )
+                            SegmentedListItem(
+                                shapes = ListItemDefaults.segmentedShapes(2, count),
+                                leadingContent = {
+                                    Icon(Icons.Default.Numbers, null)
+                                },
+                                content = {
+                                    Text(manifest.meta.version)
+                                },
+                            )
+                            when (manifest) {
+                                is ThemeExtension.Manifest -> {
+                                    SegmentedListItem(
+                                        shapes = ListItemDefaults.segmentedShapes(3, count),
+                                        leadingContent = {
+                                            Icon(Icons.Outlined.Style, null)
+                                        },
+                                        content = {
+                                            Text("${manifest.themes.size} stylesheets")
+                                        },
+                                    )
+                                }
+                                is Keyboard3Extension.Manifest -> {
+                                    // TODO
+                                }
+                            }
+                        }
+                    }
                 }
-            }
-            if (ext != null) {
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = ext.meta.title,
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-                ext.meta.description?.let { description ->
-                    Text(
-                        text = description,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontStyle = FontStyle.Italic,
-                    )
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                val maintainers = remember(ext) {
-                    ext.meta.maintainers.joinToString { it.name }
-                }
-                Text(
-                    text = stringRes(R.string.ext__meta__maintainers_by, "maintainers" to maintainers),
-                    style = MaterialTheme.typography.bodyMedium,
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                for (component in ext.components()) {
-                    Text(
-                        text = component.id,
-                        style = MaterialTheme.typography.bodyMedium,
-                    )
-                }
-            }
-            if (fileInfo.skipReason != NATIVE_NULLPTR.toInt()) {
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(19.dp)
-                    .padding(top = 10.dp, bottom = 8.dp)
-                    .background(MaterialTheme.colorScheme.error.copy(alpha = 0.56f)))
-                Text(
-                    text = stringRes(R.string.ext__import__file_skip),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.error,
-                )
-                Text(
-                    text = stringRes(fileInfo.skipReason),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.error,
-                    fontStyle = FontStyle.Italic,
-                )
             }
         }
     }
 }
-     */

@@ -18,7 +18,9 @@ package dev.patrickgold.florisboard.ime.extension
 
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 
-interface Extension<M : ExtensionManifest> {
+sealed interface Extension<M : ExtensionManifest> {
+    val type: ExtensionType
+
     val manifest: M
 
     val sourceRef: FlorisRef

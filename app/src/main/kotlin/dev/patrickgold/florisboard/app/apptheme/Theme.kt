@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,15 +23,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import com.materialkolor.PaletteStyle
+import com.materialkolor.dynamiccolor.ColorSpec
 import dev.patrickgold.florisboard.app.AppTheme
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.snygg.color.neutralDynamicColorScheme
 import org.florisboard.lib.snygg.color.systemAccentOrDefault
-
 
 @Composable
 fun getColorScheme(
@@ -39,30 +39,24 @@ fun getColorScheme(
 ): ColorScheme {
     val prefs by FlorisPreferenceStore
     val accentColor by prefs.other.accentColor.collectAsState()
-
     val seedColor = systemAccentOrDefault(accentColor)
+    val isDark = theme.isDark || theme.isAuto && isSystemInDarkTheme()
 
-    return when (theme) {
-        AppTheme.AUTO, AppTheme.AUTO_AMOLED -> {
-            neutralDynamicColorScheme(
-                primary = seedColor,
-                isDark = isSystemInDarkTheme(),
-                isAmoled = theme == AppTheme.AUTO_AMOLED,
+    return neutralDynamicColorScheme(
+        primary = seedColor,
+        isDark = isDark,
+        isAmoled = theme.isAmoled,
+        style = PaletteStyle.TonalSpot,
+        specVersion = ColorSpec.SpecVersion.SPEC_2025,
+        modifyColorScheme = { scheme ->
+            scheme.copy(
+                surface = when {
+                    isDark -> scheme.surfaceContainerHighest
+                    else -> scheme.surface
+                },
             )
         }
-
-        AppTheme.DARK, AppTheme.LIGHT -> {
-            neutralDynamicColorScheme(primary = seedColor, isDark = theme == AppTheme.DARK)
-        }
-
-        AppTheme.AMOLED_DARK -> {
-            neutralDynamicColorScheme(primary = seedColor, isDark = true, isAmoled = true)
-        }
-    }
-}
-
-fun ColorScheme.amoled(): ColorScheme {
-    return this.copy(background = Color.Black, surface = Color.Black)
+    )
 }
 
 @Composable
@@ -70,14 +64,9 @@ fun FlorisAppTheme(
     theme: AppTheme,
     content: @Composable () -> Unit,
 ) {
-    val colors = getColorScheme(theme = theme)
+    val colorScheme = getColorScheme(theme = theme)
 
-    val darkTheme =
-        theme == AppTheme.DARK
-            || theme == AppTheme.AMOLED_DARK
-            || (theme == AppTheme.AUTO && isSystemInDarkTheme())
-            || (theme == AppTheme.AUTO_AMOLED && isSystemInDarkTheme())
-
+    val darkTheme = theme.isDark || theme.isAuto && isSystemInDarkTheme()
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -87,7 +76,7 @@ fun FlorisAppTheme(
     }
 
     MaterialTheme(
-        colorScheme = colors,
+        colorScheme = colorScheme,
         typography = Typography,
         content = content,
     )

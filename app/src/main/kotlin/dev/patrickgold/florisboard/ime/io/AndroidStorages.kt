@@ -18,25 +18,31 @@ package dev.patrickgold.florisboard.ime.io
 
 import android.net.Uri
 import android.provider.OpenableColumns
-import kotlinx.io.asSource
-import kotlinx.io.buffered
+import okio.buffer
+import okio.source
 import org.florisboard.lib.android.query
 import org.florisboard.lib.android.read
 
-fun AndroidStorage.readFromUri(
+fun AndroidStorage.queryFileName(
     srcUri: Uri,
-    dstDirRef: FlorisRef,
-) {
-    val contentResolver = context.contentResolver ?: error("Content resolver is null.")
-    contentResolver.query(srcUri)?.use { cursor ->
+): String? {
+    val contentResolver = context.contentResolver ?: return null
+    return contentResolver.query(srcUri)?.use { cursor ->
         val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
         cursor.moveToFirst()
-        val dstFileRef = dstDirRef.subRef(cursor.getString(nameIndex))
-        contentResolver.read(srcUri) { inputStream ->
-            inputStream.asSource().use { source ->
-                sink(dstFileRef).buffered().use { sink ->
-                    sink.transferFrom(source)
-                }
+        cursor.getString(nameIndex)
+    }
+}
+
+fun AndroidStorage.readFromUri(
+    srcUri: Uri,
+    dstRef: FlorisRef,
+) {
+    val contentResolver = context.contentResolver ?: error("Content resolver is null.")
+    contentResolver.read(srcUri) { inputStream ->
+        inputStream.source().use { source ->
+            sink(dstRef).buffer().use { sink ->
+                sink.writeAll(source)
             }
         }
     }

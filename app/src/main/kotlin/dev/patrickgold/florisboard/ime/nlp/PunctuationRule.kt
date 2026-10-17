@@ -16,7 +16,6 @@
 
 package dev.patrickgold.florisboard.ime.nlp
 
-import dev.patrickgold.florisboard.ime.extension.ExtensionComponent
 import kotlinx.serialization.Serializable
 
 /**
@@ -57,15 +56,15 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class PunctuationRule(
-    override val id: String,
-    override val name: String = id,
-    override val authors: List<String> = listOf("unspecified"),
+    val id: String,
+    val name: String = id,
+    val authors: List<String> = listOf("unspecified"),
     val symbolsPrecedingAutoSpace: String,
     val symbolsFollowingAutoSpace: String,
     val symbolsPrecedingPhantomSpace: String,
     val symbolsFollowingPhantomSpace: String,
     val symbolsTerminatingSentence: String,
-) : ExtensionComponent {
+) {
 
     companion object {
         /** Fallback rule which does bare bone matching for spaces in case a proper punctuation rule is not found. */

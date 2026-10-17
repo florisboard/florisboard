@@ -793,10 +793,6 @@
 
 
     <!-- Extension strings -->
-    <string name="ext__home__title">Addons and extensions</string>
-    <string name="ext__list__ext_theme">Theme extensions</string>
-    <string name="ext__list__ext_keyboard">Keyboard extensions</string>
-    <string name="ext__list__ext_languagepack">Language pack extensions</string>
     <string name="ext__meta__authors">Authors</string>
     <string name="ext__meta__components">Bundled components</string>
     <string name="ext__meta__components_theme">Bundled themes</string>
@@ -810,15 +806,12 @@
     <string name="ext__meta__label">Label</string>
     <string name="ext__meta__license">License</string>
     <string name="ext__meta__maintainers">Maintainers</string>
-    <string name="ext__meta__maintainers_by">By: {maintainers}</string>
     <string name="ext__meta__title">Title</string>
     <string name="ext__meta__version">Version</string>
     <string name="ext__error__not_found_title">Extension not found</string>
     <string name="ext__error__not_found_description">No extension with ID "{id}" could be found.</string>
-    <string name="ext__editor__title_create_any">Create extension</string>
     <string name="ext__editor__title_create_keyboard">Create keyboard extension</string>
     <string name="ext__editor__title_create_theme">Create theme extension</string>
-    <string name="ext__editor__title_edit_any">Edit extension</string>
     <string name="ext__editor__title_edit_keyboard">Edit keyboard extension</string>
     <string name="ext__editor__title_edit_theme">Edit theme extension</string>
     <string name="ext__editor__metadata__title">Manage meta data</string>
@@ -850,7 +843,6 @@
     <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Expected an extension archive of serial type \"{expected_serial_type}\" but was \"{actual_serial_type}\".</string>
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Expected a media file (image, audio, font, etc.) but found an extension archive.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Expected an extension archive but found a media file (image, audio, font, etc.).</string>
-    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">An unexpected error occurred during import. The following details were provided:</string>
     <string name="ext__validation__enter_package_name">Please enter a package name</string>
     <string name="ext__validation__error_package_name">Package name does not match regex {id_regex}</string>
     <string name="ext__validation__enter_version">Please enter a version</string>
@@ -876,13 +868,6 @@
     <string name="ext__validation__hint_value_above_50_percent">Any value above 50% will behave as if you set 50%, consider lowering your percent size</string>
     <string name="ext__update_box__internet_permission_hint">Since this app does not have Internet permission, updates for installed extensions must be checked manually.</string>
     <string name="ext__update_box__search_for_updates">Search for updates</string>
-    <string name="ext__addon_management_box__managing_placeholder">Managing {extensions}</string>
-    <string name="ext__addon_management_box__addon_manager_info">All tasks related to importing, exporting, creating, customizing, and removing extensions can be handled through the centralized addon manager.</string>
-    <string name="ext__addon_management_box__go_to_page">Go to {ext_home_title}</string>
-    <string name="ext__home__info">You can download and install extensions from the FlorisBoard Addons Store or import any extension file you have downloaded from the internet.</string>
-    <string name="ext__home__visit_store">Visit Addons Store</string>
-    <string name="ext__home__manage_extensions">Manage installed extensions</string>
-    <string name="ext__list__view_details">View details</string>
     <string name="ext__check_updates__title">Check for updates</string>
 
     <!-- Action strings -->

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,33 +42,24 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisAppActivity
-import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.FlorisScreenScope
+import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.datastore.model.collectAsState
-import dev.patrickgold.jetpref.datastore.ui.PreferenceUiScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.FlorisBulletSpacer
-import org.florisboard.lib.compose.FlorisStep
-import org.florisboard.lib.compose.FlorisStepLayout
-import org.florisboard.lib.compose.FlorisStepState
 import org.florisboard.lib.compose.stringRes
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
-fun SetupScreen() = FlorisScreen {
-    title = stringRes(R.string.setup__title)
-    navigationIconVisible = false
-    scrollable = false
-
+fun SetupScreen() {
     val navController = LocalNavController.current
     val context = LocalContext.current
 
@@ -90,28 +81,6 @@ fun SetupScreen() = FlorisScreen {
             }
         }
 
-    content(
-        isFlorisBoardEnabled,
-        isFlorisBoardSelected,
-        context,
-        navController,
-        requestNotification,
-        hasNotificationPermission,
-        scope,
-    )
-}
-
-@Composable
-private fun FlorisScreenScope.content(
-    isFlorisBoardEnabled: Boolean,
-    isFlorisBoardSelected: Boolean,
-    context: Context,
-    navController: NavController,
-    requestNotification: ManagedActivityResultLauncher<String, Boolean>,
-    hasNotificationPermission: NotificationPermissionState,
-    scope: CoroutineScope,
-) {
-
     val stepState = rememberSaveable(saver = FlorisStepState.Saver) {
         val initStep = when {
             !isFlorisBoardEnabled -> Steps.EnableIme.id
@@ -122,7 +91,11 @@ private fun FlorisScreenScope.content(
         FlorisStepState.new(init = initStep)
     }
 
-    content {
+    FlorisScreenNg(
+        title = stringRes(R.string.setup__title),
+        previewFieldVisible = false,
+        navigationIconVisible = false,
+    ) { contentPadding ->
         LaunchedEffect(isFlorisBoardEnabled, isFlorisBoardSelected, hasNotificationPermission) {
             stepState.setCurrentAuto(
                 when {
@@ -138,7 +111,7 @@ private fun FlorisScreenScope.content(
         // as soon as it gets selected.
         LaunchedEffect(Unit) {
             while (true) {
-                delay(200L)
+                delay(200.milliseconds)
                 val isEnabled = InputMethodUtils.isFlorisboardEnabled(context)
                 if (stepState.getCurrentAuto().value == Steps.EnableIme.id &&
                     stepState.getCurrentManual().value == -1 &&
@@ -157,6 +130,7 @@ private fun FlorisScreenScope.content(
         }
         FlorisStepLayout(
             modifier = Modifier
+                .padding(contentPadding)
                 .fillMaxSize()
                 .padding(horizontal = 16.dp),
             stepState = stepState,
@@ -164,18 +138,18 @@ private fun FlorisScreenScope.content(
                 StepText(stringRes(R.string.setup__intro_message))
                 Spacer(modifier = Modifier.height(16.dp))
             },
-            steps = steps(
+            steps = setupSteps(
                 context, navController, requestNotification, scope
             ),
             footer = {
-                footer(context)
+                SetupFooter(context)
             },
         )
     }
 }
 
 @Composable
-private fun footer(context: Context) {
+private fun SetupFooter(context: Context) {
     Spacer(modifier = Modifier.height(16.dp))
     Row(
         modifier = Modifier
@@ -196,12 +170,13 @@ private fun footer(context: Context) {
 }
 
 @Composable
-private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
+private fun setupSteps(
     context: Context,
     navController: NavController,
     requestNotification: ManagedActivityResultLauncher<String, Boolean>,
     scope: CoroutineScope,
 ): List<FlorisStep> {
+    val prefs by FlorisPreferenceStore
 
     return listOfNotNull(
         FlorisStep(
@@ -240,7 +215,7 @@ private fun PreferenceUiScope<FlorisPreferenceModel>.steps(
             StepText(stringRes(R.string.setup__finish_up__description_p1))
             StepText(stringRes(R.string.setup__finish_up__description_p2))
             StepButton(label = stringRes(R.string.setup__finish_up__finish_btn)) {
-                scope.launch { this@steps.prefs.internal.isImeSetUp.set(true) }
+                scope.launch { prefs.internal.isImeSetUp.set(true) }
                 navController.navigate(Routes.Settings.Home) {
                     popUpTo(Routes.Setup.Screen) {
                         inclusive = true

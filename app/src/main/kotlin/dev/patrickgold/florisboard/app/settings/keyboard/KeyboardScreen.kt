@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.toggleable
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.ListItemShapes
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
@@ -41,8 +43,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
+import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.hint.FlickKeyHintPlacement
@@ -50,7 +55,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
 import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
@@ -59,7 +64,6 @@ import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.LocalDefaultDialogPrefStrings
 import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialogDefaults
@@ -71,133 +75,160 @@ import kotlin.time.Duration
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
 @Composable
-fun KeyboardScreen() = FlorisScreen {
-    title = stringRes(R.string.settings__keyboard__title)
-    previewFieldVisible = true
-
+fun KeyboardScreen() {
+    val prefs by FlorisPreferenceStore
     val interactionController = LocalInteractionController.current
     val navController = LocalNavController.current
 
     val systemTimingOptions by interactionController.activeSystemTimingOptions.collectAsState()
 
-    content {
-        SwitchPreference(
-            prefs.keyboard.numberRow,
-            title = stringRes(R.string.pref__keyboard__number_row__label),
-            summary = stringRes(R.string.pref__keyboard__number_row__summary),
-        )
-        Preference(
-            title = stringRes(R.string.settings__fn_key__title),
-            summary = stringRes(R.string.settings__fn_key__summary),
-            onClick = { navController.navigate(Routes.Settings.Keyboard.FnKey) },
-        )
-        ListPreference(
-            prefs.keyboard.spaceBarMode,
-            title = stringRes(R.string.pref__keyboard__space_bar_mode__label),
-            entries = enumDisplayEntriesOf(SpaceBarMode::class),
-        )
-        DialogSliderPreference(
-            primaryPref = prefs.keyboard.fontSizeMultiplierPortrait,
-            secondaryPref = prefs.keyboard.fontSizeMultiplierLandscape,
-            title = stringRes(R.string.pref__keyboard__font_size_multiplier__label),
-            primaryLabel = stringRes(R.string.screen_orientation__portrait),
-            secondaryLabel = stringRes(R.string.screen_orientation__landscape),
-            valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
-            min = 50,
-            max = 150,
-            stepIncrement = 5,
-        )
-        DialogSliderPreference(
-            primaryPref = prefs.keyboard.keySpacingVertical,
-            secondaryPref = prefs.keyboard.keySpacingHorizontal,
-            title = stringRes(R.string.pref__keyboard__key_spacing__label),
-            primaryLabel = stringRes(R.string.screen_orientation__vertical),
-            secondaryLabel = stringRes(R.string.screen_orientation__horizontal),
-            valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
-            min = 50,
-            max = 150,
-            stepIncrement = 5,
-        )
-        ListPreference(
-            prefs.keyboard.landscapeInputUiMode,
-            title = stringRes(R.string.pref__keyboard__landscape_input_ui_mode__label),
-            entries = enumDisplayEntriesOf(LandscapeInputUiMode::class),
-        )
-        ListPreference(
-            listPref = prefs.keyboard.incognitoDisplayMode,
-            title = stringRes(R.string.pref__keyboard__incognito_indicator__label),
-            entries = enumDisplayEntriesOf(IncognitoDisplayMode::class),
-        )
+    FlorisScreenNg(
+        title = stringRes(R.string.settings__keyboard__title),
+        previewFieldVisible = true,
+    ) { contentPadding ->
+        ScrollableScreenColumn(contentPadding) {
+            SegmentedListColumn {
+                val count = 7
+                SwitchPreference(
+                    prefs.keyboard.numberRow,
+                    shapes = ListItemDefaults.segmentedShapes(0, count),
+                    title = stringRes(R.string.pref__keyboard__number_row__label),
+                    summary = stringRes(R.string.pref__keyboard__number_row__summary),
+                )
+                Preference(
+                    shapes = ListItemDefaults.segmentedShapes(1, count),
+                    title = stringRes(R.string.settings__fn_key__title),
+                    summary = stringRes(R.string.settings__fn_key__summary),
+                    onClick = { navController.navigate(Routes.Settings.Keyboard.FnKey) },
+                )
+                ListPreference(
+                    prefs.keyboard.spaceBarMode,
+                    shapes = ListItemDefaults.segmentedShapes(2, count),
+                    title = stringRes(R.string.pref__keyboard__space_bar_mode__label),
+                    entries = enumDisplayEntriesOf(SpaceBarMode::class),
+                )
+                DialogSliderPreference(
+                    primaryPref = prefs.keyboard.fontSizeMultiplierPortrait,
+                    secondaryPref = prefs.keyboard.fontSizeMultiplierLandscape,
+                    shapes = ListItemDefaults.segmentedShapes(3, count),
+                    title = stringRes(R.string.pref__keyboard__font_size_multiplier__label),
+                    primaryLabel = stringRes(R.string.screen_orientation__portrait),
+                    secondaryLabel = stringRes(R.string.screen_orientation__landscape),
+                    valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
+                    min = 50,
+                    max = 150,
+                    stepIncrement = 5,
+                )
+                DialogSliderPreference(
+                    primaryPref = prefs.keyboard.keySpacingVertical,
+                    secondaryPref = prefs.keyboard.keySpacingHorizontal,
+                    shapes = ListItemDefaults.segmentedShapes(4, count),
+                    title = stringRes(R.string.pref__keyboard__key_spacing__label),
+                    primaryLabel = stringRes(R.string.screen_orientation__vertical),
+                    secondaryLabel = stringRes(R.string.screen_orientation__horizontal),
+                    valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
+                    min = 50,
+                    max = 150,
+                    stepIncrement = 5,
+                )
+                ListPreference(
+                    prefs.keyboard.landscapeInputUiMode,
+                    shapes = ListItemDefaults.segmentedShapes(5, count),
+                    title = stringRes(R.string.pref__keyboard__landscape_input_ui_mode__label),
+                    entries = enumDisplayEntriesOf(LandscapeInputUiMode::class),
+                )
+                ListPreference(
+                    prefs.keyboard.incognitoDisplayMode,
+                    shapes = ListItemDefaults.segmentedShapes(6, count),
+                    title = stringRes(R.string.pref__keyboard__incognito_indicator__label),
+                    entries = enumDisplayEntriesOf(IncognitoDisplayMode::class),
+                )
+            }
 
-        PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_keypress__label)) {
-            Preference(
-                title = stringRes(R.string.settings__input_feedback__title),
-                onClick = { navController.navigate(Routes.Settings.Keyboard.InputFeedback) },
-            )
-            SwitchPreference(
-                prefs.keyboard.popupEnabled,
-                title = stringRes(R.string.pref__keyboard__popup_enabled__label),
-                summary = stringRes(R.string.pref__keyboard__popup_enabled__summary),
-            )
-            SwitchPreference(
-                prefs.keyboard.spaceBarSwitchesToCharacters,
-                title = stringRes(R.string.pref__keyboard__space_bar_switches_to_characters__label),
-                summary = stringRes(R.string.pref__keyboard__space_bar_switches_to_characters__summary),
-            )
-        }
+            SegmentedListColumn(title = stringRes(R.string.pref__keyboard__group_keypress__label)) {
+                val count = 3
+                Preference(
+                    shapes = ListItemDefaults.segmentedShapes(0, count),
+                    title = stringRes(R.string.settings__input_feedback__title),
+                    onClick = { navController.navigate(Routes.Settings.Keyboard.InputFeedback) },
+                )
+                SwitchPreference(
+                    prefs.keyboard.popupEnabled,
+                    shapes = ListItemDefaults.segmentedShapes(1, count),
+                    title = stringRes(R.string.pref__keyboard__popup_enabled__label),
+                    summary = stringRes(R.string.pref__keyboard__popup_enabled__summary),
+                )
+                SwitchPreference(
+                    prefs.keyboard.spaceBarSwitchesToCharacters,
+                    shapes = ListItemDefaults.segmentedShapes(2, count),
+                    title = stringRes(R.string.pref__keyboard__space_bar_switches_to_characters__label),
+                    summary = stringRes(R.string.pref__keyboard__space_bar_switches_to_characters__summary),
+                )
+            }
 
-        PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_long_press__label)) {
-            TimeoutPreference(
-                prefs.keyboard.longPressTimeoutUseSystem,
-                prefs.keyboard.longPressTimeout,
-                title = stringRes(R.string.pref__keyboard__long_press_timeout__label),
-                min = 100,
-                max = 700,
-                stepIncrement = 50,
-                systemTimeout = systemTimingOptions.longPressTimeout,
-            )
-            SwitchPreference(
-                prefs.keyboard.longPressKeyHintEnabled,
-                title = stringRes(R.string.pref__keyboard__long_press_key_hint_enabled__label),
-                summary = stringRes(R.string.pref__keyboard__long_press_key_hint_enabled__summary),
-            )
-            ListPreference(
-                prefs.keyboard.longPressKeyHintPlacement,
-                title = stringRes(R.string.pref__keyboard__long_press_key_hint_placement__label),
-                entries = enumDisplayEntriesOf(LongPressKeyHintPlacement::class),
-                enabledIf = { prefs.keyboard.longPressKeyHintEnabled isEqualTo true },
-            )
-        }
+            SegmentedListColumn(title = stringRes(R.string.pref__keyboard__group_long_press__label)) {
+                val count = 3
+                TimeoutPreference(
+                    prefs.keyboard.longPressTimeoutUseSystem,
+                    prefs.keyboard.longPressTimeout,
+                    shapes = ListItemDefaults.segmentedShapes(0, count),
+                    title = stringRes(R.string.pref__keyboard__long_press_timeout__label),
+                    min = 100,
+                    max = 700,
+                    stepIncrement = 50,
+                    systemTimeout = systemTimingOptions.longPressTimeout,
+                )
+                SwitchPreference(
+                    prefs.keyboard.longPressKeyHintEnabled,
+                    shapes = ListItemDefaults.segmentedShapes(1, count),
+                    title = stringRes(R.string.pref__keyboard__long_press_key_hint_enabled__label),
+                    summary = stringRes(R.string.pref__keyboard__long_press_key_hint_enabled__summary),
+                )
+                ListPreference(
+                    prefs.keyboard.longPressKeyHintPlacement,
+                    shapes = ListItemDefaults.segmentedShapes(2, count),
+                    title = stringRes(R.string.pref__keyboard__long_press_key_hint_placement__label),
+                    entries = enumDisplayEntriesOf(LongPressKeyHintPlacement::class),
+                    enabledIf = { prefs.keyboard.longPressKeyHintEnabled isEqualTo true },
+                )
+            }
 
-        PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_multi_tap__label)) {
-            TimeoutPreference(
-                prefs.keyboard.multiTapTimeoutUseSystem,
-                prefs.keyboard.multiTapTimeout,
-                title = stringRes(R.string.pref__keyboard__multi_tap_timeout__label),
-                min = 300,
-                max = 1500,
-                stepIncrement = 50,
-                systemTimeout = systemTimingOptions.multiTapTimeout,
-            )
-            SwitchPreference(
-                prefs.keyboard.multiTapHighlightEnabled,
-                title = stringRes(R.string.pref__keyboard__multi_tap_key_hint_enabled__label),
-                summary = stringRes(R.string.pref__keyboard__multi_tap_key_hint_enabled__summary),
-            )
-        }
+            SegmentedListColumn(title = stringRes(R.string.pref__keyboard__group_multi_tap__label)) {
+                val count = 2
+                TimeoutPreference(
+                    prefs.keyboard.multiTapTimeoutUseSystem,
+                    prefs.keyboard.multiTapTimeout,
+                    shapes = ListItemDefaults.segmentedShapes(0, count),
+                    title = stringRes(R.string.pref__keyboard__multi_tap_timeout__label),
+                    min = 300,
+                    max = 1500,
+                    stepIncrement = 50,
+                    systemTimeout = systemTimingOptions.multiTapTimeout,
+                )
+                SwitchPreference(
+                    prefs.keyboard.multiTapHighlightEnabled,
+                    shapes = ListItemDefaults.segmentedShapes(1, count),
+                    title = stringRes(R.string.pref__keyboard__multi_tap_key_hint_enabled__label),
+                    summary = stringRes(R.string.pref__keyboard__multi_tap_key_hint_enabled__summary),
+                )
+            }
 
-        PreferenceGroup(title = stringRes(R.string.pref__keyboard__group_flicks__label)) {
-            SwitchPreference(
-                prefs.keyboard.flickKeyHintEnabled,
-                title = "Show flick hints",
-                summary = "Displays the flick key as a hint",
-            )
-            ListPreference(
-                prefs.keyboard.flickKeyHintPlacement,
-                title = "Flick hint placement",
-                entries = enumDisplayEntriesOf(FlickKeyHintPlacement::class),
-                enabledIf = { prefs.keyboard.flickKeyHintEnabled isEqualTo true },
-            )
+            SegmentedListColumn(title = stringRes(R.string.pref__keyboard__group_flicks__label)) {
+                val count = 2
+                SwitchPreference(
+                    prefs.keyboard.flickKeyHintEnabled,
+                    shapes = ListItemDefaults.segmentedShapes(0, count),
+                    title = "Show flick hints",
+                    summary = "Displays the flick key as a hint",
+                )
+                ListPreference(
+                    prefs.keyboard.flickKeyHintPlacement,
+                    shapes = ListItemDefaults.segmentedShapes(1, count),
+                    title = "Flick hint placement",
+                    entries = enumDisplayEntriesOf(FlickKeyHintPlacement::class),
+                    enabledIf = { prefs.keyboard.flickKeyHintEnabled isEqualTo true },
+                )
+            }
         }
     }
 }
@@ -207,6 +238,7 @@ private fun TimeoutPreference(
     useSystemPref: PreferenceData<Boolean>,
     timeoutPref: PreferenceData<Int>,
     modifier: Modifier = Modifier,
+    shapes: ListItemShapes,
     icon: ImageVector? = null,
     title: String,
     min: Int,
@@ -223,6 +255,7 @@ private fun TimeoutPreference(
 
     Preference(
         modifier = modifier,
+        shapes = shapes,
         icon = icon,
         title = title,
         summary = when {

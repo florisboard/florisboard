@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,23 @@
 package dev.patrickgold.florisboard.lib.compose
 
 import android.app.Activity
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MediumFlexibleTopAppBar
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -35,18 +43,89 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
 import dev.patrickgold.jetpref.datastore.ui.PreferenceUiContent
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.compose.FlorisAppBar
-import org.florisboard.lib.compose.FlorisIconButton
-import org.florisboard.lib.compose.autoMirrorForRtl
 import org.florisboard.lib.compose.florisVerticalScroll
+
+@Composable
+fun FlorisScreenNg(
+    title: String,
+    previewFieldVisible: Boolean,
+    navigationIconVisible: Boolean = true,
+    navigationIcon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
+    navigationIconOnClick: (() -> Unit)? = null,
+    actions: FlorisScreenActions = {},
+    bottomBar: FlorisScreenBottomBar = {},
+    fab: FlorisScreenFab = {},
+    content: @Composable (PaddingValues) -> Unit,
+) {
+    val navController = LocalNavController.current
+    val previewFieldController = LocalPreviewFieldController.current
+    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+    SideEffect {
+        previewFieldController.isVisible = previewFieldVisible
+    }
+
+    Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            FlorisAppBar(
+                title,
+                (@Composable {
+                    FilledTonalIconButton(
+                        onClick = navigationIconOnClick ?: { navController.popBackStack(); Unit },
+                        modifier = Modifier.padding(start = 8.dp, end = 4.dp),
+                        colors = IconButtonDefaults.filledTonalIconButtonColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                        ),
+                        content = { Icon(navigationIcon, null) },
+                    )
+                }).takeIf { navigationIconVisible },
+                actions,
+                scrollBehavior,
+            ) },
+        bottomBar = bottomBar,
+        floatingActionButton = fab,
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        content = content,
+    )
+}
+
+@Composable
+fun FlorisAppBar(
+    title: String,
+    navigationIcon: (@Composable () -> Unit)?,
+    actions: @Composable RowScope.() -> Unit = { },
+    scrollBehavior: TopAppBarScrollBehavior,
+    colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        scrolledContainerColor = MaterialTheme.colorScheme.surfaceContainer,
+    ),
+) {
+    MediumFlexibleTopAppBar(
+        navigationIcon = navigationIcon ?: {},
+        title = {
+            Text(
+                text = title,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+            )
+        },
+        actions = { Row(Modifier.padding(end = 8.dp), content = actions) },
+        colors = colors,
+        scrollBehavior = scrollBehavior,
+    )
+}
 
 @Composable
 fun FlorisScreen(builder: @Composable FlorisScreenScope.() -> Unit) {
@@ -94,12 +173,12 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
     private var bottomBar: FlorisScreenBottomBar = @Composable { }
     private var content: FlorisScreenContent = @Composable { }
     private var fab: FlorisScreenFab = @Composable { }
-    private var navigationIcon: FlorisScreenNavigationIcon = @Composable {
+    private var navigationIcon: FlorisScreenNavigationIcon = {
         val navController = LocalNavController.current
-        FlorisIconButton(
+        FilledTonalIconButton(
             onClick = { navController.popBackStack() },
-            modifier = Modifier.autoMirrorForRtl(),
-            icon = Icons.AutoMirrored.Filled.ArrowBack,
+            modifier = Modifier.padding(start = 8.dp, end = 4.dp),
+            content = { Icon(Icons.AutoMirrored.Filled.ArrowBack, null) },
         )
     }
 
@@ -123,7 +202,6 @@ private class FlorisScreenScopeImpl : FlorisScreenScope {
         this.navigationIcon = navigationIcon
     }
 
-    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Render() {
         val context = LocalContext.current

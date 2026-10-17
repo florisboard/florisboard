@@ -24,6 +24,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import okio.Path.Companion.toPath
 import org.k3lp.lib.meta.source.SourceFileRef
 
 /**
@@ -247,6 +248,26 @@ value class FlorisRef private constructor(val uri: Uri) : SourceFileRef {
             val slashIndex = relPath.lastIndexOf('/')
             return relPath.substring(slashIndex + 1)
         }
+
+    val parentRef: FlorisRef?
+        get() {
+            val originalPathStr = uri.path ?: return null
+            val parent = originalPathStr.toPath(normalize = true).parent ?: return null
+            return from(uri.buildUpon().run {
+                encodedPath(parent.toString())
+                build()
+            })
+        }
+
+    fun relativeTo(other: FlorisRef): String {
+        require(isAssets || isCache || isInternal) {
+            "relativeTo behavior is only defined for assets/cache/internal refs"
+        }
+        val otherPath = (other.uri.path ?: "/").toPath(normalize = true)
+        val thisPath = (uri.path ?: "/").toPath(normalize = true)
+        val relPath = thisPath.relativeTo(otherPath)
+        return relPath.toString()
+    }
 
     /**
      * Returns if this URI contains data for all valid parts of a FlorisRef.

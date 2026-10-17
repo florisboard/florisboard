@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material.icons.filled.SettingsBackupRestore
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
@@ -32,154 +33,172 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.AppTheme
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
+import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ColorPickerPreference
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
-import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.snygg.color.ColorMappings
 import org.florisboard.lib.compose.stringRes
-
+import org.florisboard.lib.snygg.color.ColorMappings
 
 @Composable
-fun OtherScreen() = FlorisScreen {
-    title = stringRes(R.string.settings__other__title)
-    previewFieldVisible = true
-
+fun OtherScreen() {
+    val prefs by FlorisPreferenceStore
     val navController = LocalNavController.current
     val context = LocalContext.current
 
-    content {
-        ListPreference(
-            prefs.other.settingsTheme,
-            icon = Icons.Default.Palette,
-            title = stringRes(R.string.pref__other__settings_theme__label),
-            entries = enumDisplayEntriesOf(AppTheme::class),
-        )
-        ColorPickerPreference(
-            pref = prefs.other.accentColor,
-            title = stringRes(R.string.pref__other__settings_accent_color__label),
-            defaultValueLabel = stringRes(R.string.action__default),
-            icon = Icons.Default.FormatColorFill,
-            defaultColors = ColorMappings.colors,
-            showAlphaSlider = false,
-            enableAdvancedLayout = true,
-            colorOverride = {
-                if (it.isMaterialYou(context)) {
-                    Color.Unspecified
-                } else {
-                    it
-                }
+    FlorisScreenNg(
+        title = stringRes(R.string.settings__other__title),
+        previewFieldVisible = true,
+    ) { contentPadding ->
+        ScrollableScreenColumn(contentPadding) {
+            SegmentedListColumn {
+                val count = 6
+                ListPreference(
+                    prefs.other.settingsTheme,
+                    shapes = ListItemDefaults.segmentedShapes(0, count),
+                    icon = Icons.Default.Palette,
+                    title = stringRes(R.string.pref__other__settings_theme__label),
+                    entries = enumDisplayEntriesOf(AppTheme::class),
+                )
+                ColorPickerPreference(
+                    pref = prefs.other.accentColor,
+                    shapes = ListItemDefaults.segmentedShapes(1, count),
+                    title = stringRes(R.string.pref__other__settings_accent_color__label),
+                    defaultValueLabel = stringRes(R.string.action__default),
+                    icon = Icons.Default.FormatColorFill,
+                    defaultColors = ColorMappings.colors,
+                    showAlphaSlider = false,
+                    enableAdvancedLayout = true,
+                    colorOverride = {
+                        if (it.isMaterialYou(context)) {
+                            Color.Unspecified
+                        } else {
+                            it
+                        }
+                    },
+                )
+                ListPreference(
+                    prefs.other.settingsLanguage,
+                    shapes = ListItemDefaults.segmentedShapes(2, count),
+                    icon = Icons.Default.Language,
+                    title = stringRes(R.string.pref__other__settings_language__label),
+                    entries = listPrefEntries {
+                        listOf(
+                            "auto",
+                            "ar",
+                            "bg",
+                            "bs",
+                            "ca",
+                            "ckb",
+                            "cs",
+                            "da",
+                            "de",
+                            "el",
+                            "en",
+                            "eo",
+                            "es",
+                            "fa",
+                            "fi",
+                            "fr",
+                            "hr",
+                            "hu",
+                            "in",
+                            "it",
+                            "iw",
+                            "ja",
+                            "ko-KR",
+                            "ku",
+                            "lv-LV",
+                            "mk",
+                            "nds-DE",
+                            "nl",
+                            "no",
+                            "pl",
+                            "pt",
+                            "pt-BR",
+                            "ru",
+                            "sk",
+                            "sl",
+                            "sr",
+                            "sv",
+                            "tr",
+                            "uk",
+                            "zgh",
+                            "zh-CN",
+                        ).map { languageTag ->
+                            if (languageTag == "auto") {
+                                entry(
+                                    key = "auto",
+                                    label = stringRes(R.string.settings__system_default),
+                                )
+                            } else {
+                                val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
+                                val locale = FlorisLocale.fromTag(languageTag)
+                                entry(
+                                    locale.languageTag(), when (displayLanguageNamesIn) {
+                                        DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
+                                        DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
+                                    }
+                                )
+                            }
+                        }
+                    },
+                )
+                SwitchPreference(
+                    prefs.other.showAppIcon,
+                    shapes = ListItemDefaults.segmentedShapes(3, count),
+                    icon = Icons.Default.Preview,
+                    title = stringRes(R.string.pref__other__show_app_icon__label),
+                    summary = when {
+                        AndroidVersion.ATLEAST_API29_Q -> stringRes(R.string.pref__other__show_app_icon__summary_atleast_q)
+                        else -> null
+                    },
+                    enabledIf = { AndroidVersion.ATMOST_API28_P },
+                )
+                Preference(
+                    shapes = ListItemDefaults.segmentedShapes(4, count),
+                    icon = ImageVector.vectorResource(R.drawable.ic_keyboard_keys),
+                    title = stringRes(R.string.physical_keyboard__title),
+                    onClick = { navController.navigate(Routes.Settings.PhysicalKeyboard) },
+                )
+                Preference(
+                    shapes = ListItemDefaults.segmentedShapes(5, count),
+                    icon = Icons.Default.Adb,
+                    title = stringRes(R.string.devtools__title),
+                    onClick = { navController.navigate(Routes.Devtools.Home) },
+                )
             }
-        )
-        ListPreference(
-            prefs.other.settingsLanguage,
-            icon = Icons.Default.Language,
-            title = stringRes(R.string.pref__other__settings_language__label),
-            entries = listPrefEntries {
-                listOf(
-                    "auto",
-                    "ar",
-                    "bg",
-                    "bs",
-                    "ca",
-                    "ckb",
-                    "cs",
-                    "da",
-                    "de",
-                    "el",
-                    "en",
-                    "eo",
-                    "es",
-                    "fa",
-                    "fi",
-                    "fr",
-                    "hr",
-                    "hu",
-                    "in",
-                    "it",
-                    "iw",
-                    "ja",
-                    "ko-KR",
-                    "ku",
-                    "lv-LV",
-                    "mk",
-                    "nds-DE",
-                    "nl",
-                    "no",
-                    "pl",
-                    "pt",
-                    "pt-BR",
-                    "ru",
-                    "sk",
-                    "sl",
-                    "sr",
-                    "sv",
-                    "tr",
-                    "uk",
-                    "zgh",
-                    "zh-CN",
-                ).map { languageTag ->
-                    if (languageTag == "auto") {
-                        entry(
-                            key = "auto",
-                            label = stringRes(R.string.settings__system_default),
-                        )
-                    } else {
-                        val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
-                        val locale = FlorisLocale.fromTag(languageTag)
-                        entry(locale.languageTag(), when (displayLanguageNamesIn) {
-                            DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()
-                            DisplayLanguageNamesIn.NATIVE_LOCALE -> locale.displayName(locale)
-                        })
-                    }
-                }
-            }
-        )
-        SwitchPreference(
-            prefs.other.showAppIcon,
-            icon = Icons.Default.Preview,
-            title = stringRes(R.string.pref__other__show_app_icon__label),
-            summary = when {
-                AndroidVersion.ATLEAST_API29_Q -> stringRes(R.string.pref__other__show_app_icon__summary_atleast_q)
-                else -> null
-            },
-            enabledIf = { AndroidVersion.ATMOST_API28_P },
-        )
-        Preference(
-            icon = ImageVector.vectorResource(R.drawable.ic_keyboard_keys),
-            title = stringRes(R.string.physical_keyboard__title),
-            onClick = { navController.navigate(Routes.Settings.PhysicalKeyboard) },
-        )
-        Preference(
-            icon = Icons.Default.Adb,
-            title = stringRes(R.string.devtools__title),
-            onClick = { navController.navigate(Routes.Devtools.Home) },
-        )
 
-        PreferenceGroup(title = stringRes(R.string.backup_and_restore__title)) {
-            Preference(
-                onClick = { navController.navigate(Routes.Settings.Backup) },
-                icon = Icons.Default.Archive,
-                title = stringRes(R.string.backup_and_restore__back_up__title),
-                summary = stringRes(R.string.backup_and_restore__back_up__summary),
-            )
-            Preference(
-                onClick = { navController.navigate(Routes.Settings.Restore) },
-                icon = Icons.Default.SettingsBackupRestore,
-                title = stringRes(R.string.backup_and_restore__restore__title),
-                summary = stringRes(R.string.backup_and_restore__restore__summary),
-            )
+            SegmentedListColumn(title = stringRes(R.string.backup_and_restore__title)) {
+                val count = 2
+                Preference(
+                    onClick = { navController.navigate(Routes.Settings.Backup) },
+                    shapes = ListItemDefaults.segmentedShapes(0, count),
+                    icon = Icons.Default.Archive,
+                    title = stringRes(R.string.backup_and_restore__back_up__title),
+                    summary = stringRes(R.string.backup_and_restore__back_up__summary),
+                )
+                Preference(
+                    onClick = { navController.navigate(Routes.Settings.Restore) },
+                    shapes = ListItemDefaults.segmentedShapes(1, count),
+                    icon = Icons.Default.SettingsBackupRestore,
+                    title = stringRes(R.string.backup_and_restore__restore__title),
+                    summary = stringRes(R.string.backup_and_restore__restore__summary),
+                )
+            }
         }
     }
 }

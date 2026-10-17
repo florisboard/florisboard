@@ -80,7 +80,10 @@ fun FlorisSimpleCard(
     Card(
         onClick = onClick ?: { },
         enabled = onClick != null,
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .padding(vertical = 8.dp)
+            .fillMaxWidth(),
+        shape = MaterialTheme.shapes.large,
         colors = CardDefaults.cardColors(
             contentColor = contentColor,
             containerColor = backgroundColor,
@@ -304,5 +307,5 @@ fun FlorisOutlinedBox(
 fun Modifier.defaultFlorisOutlinedBox(): Modifier {
     return this
         .fillMaxWidth()
-        .padding(vertical = 8.dp, horizontal = 16.dp)
+        .padding(vertical = 8.dp)
 }

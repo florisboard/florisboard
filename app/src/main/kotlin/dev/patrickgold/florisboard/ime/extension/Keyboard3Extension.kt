@@ -14,26 +14,22 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.keyboard3.extension
+package dev.patrickgold.florisboard.ime.extension
 
-import dev.patrickgold.florisboard.ime.extension.Extension
-import dev.patrickgold.florisboard.ime.extension.ExtensionComponent
-import dev.patrickgold.florisboard.ime.extension.ExtensionDependencyDecl
-import dev.patrickgold.florisboard.ime.extension.ExtensionManifest
-import dev.patrickgold.florisboard.ime.extension.ExtensionMeta
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 data class Keyboard3Extension(
     override val manifest: Manifest,
     override val sourceRef: FlorisRef,
 ) : Extension<Keyboard3Extension.Manifest> {
-    companion object {
-        const val SERIAL_TYPE = "ime.extension.keyboard3"
-    }
+    @Transient
+    override val type: ExtensionType
+        get() = ExtensionType.KEYBOARD3
 
-    @SerialName(SERIAL_TYPE)
+    @SerialName("ime.extension.keyboard3")
     @Serializable
     data class Manifest(
         override val meta: ExtensionMeta,
@@ -41,7 +37,15 @@ data class Keyboard3Extension(
         val imports: List<ImportComponent>,
         val keyboards: List<KeyboardComponent>,
         val tests: List<TestComponent>,
-    ) : ExtensionManifest
+    ) : ExtensionManifest {
+        override fun components(): Sequence<ExtensionComponent> {
+            return sequence {
+                yieldAll(keyboards)
+                yieldAll(imports)
+                yieldAll(tests)
+            }
+        }
+    }
 
     /**
      * Describes an importable XML element in the `import` directory.

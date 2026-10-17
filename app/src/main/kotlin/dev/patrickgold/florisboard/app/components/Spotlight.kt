@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.app.settings.keyboard
+package dev.patrickgold.florisboard.app.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -51,7 +51,7 @@ fun SpotlightText(
     text: String,
 ) {
     Text(
-        modifier = modifier.padding(horizontal = 20.dp, vertical = 8.dp),
+        modifier = modifier.padding(horizontal = 4.dp, vertical = 8.dp),
         text = text,
         style = MaterialTheme.typography.bodyLarge,
         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -71,7 +71,7 @@ fun SpotlightSwitchPreference(
 
     Card(
         modifier = modifier
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(vertical = 8.dp)
             .fillMaxWidth()
             .clip(shape)
             .toggleable(

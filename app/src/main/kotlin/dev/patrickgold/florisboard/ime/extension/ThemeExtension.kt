@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-package dev.patrickgold.florisboard.ime.theme
+package dev.patrickgold.florisboard.ime.extension
 
-import dev.patrickgold.florisboard.ime.extension.Extension
-import dev.patrickgold.florisboard.ime.extension.ExtensionComponent
-import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
-import dev.patrickgold.florisboard.ime.extension.ExtensionDependencyDecl
-import dev.patrickgold.florisboard.ime.extension.ExtensionManifest
-import dev.patrickgold.florisboard.ime.extension.ExtensionMeta
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import kotlinx.serialization.json.JsonNames
 import org.florisboard.lib.snygg.color.MaterialYouFlags
 
@@ -34,17 +29,23 @@ class ThemeExtension(
     override val manifest: Manifest,
     override val sourceRef: FlorisRef,
 ) : Extension<ThemeExtension.Manifest> {
-    companion object {
-        const val SERIAL_TYPE = "ime.extension.theme"
-    }
+    @Transient
+    override val type: ExtensionType
+        get() = ExtensionType.THEME
 
-    @SerialName(SERIAL_TYPE)
+    @SerialName("ime.extension.theme")
     @Serializable
     data class Manifest(
         override val meta: ExtensionMeta,
         override val dependencies: ExtensionDependencyDecl = emptyMap(),
         val themes: List<ThemeComponent>,
-    ) : ExtensionManifest
+    ) : ExtensionManifest {
+        override fun components(): Sequence<ExtensionComponent> {
+            return sequence {
+                yieldAll(themes)
+            }
+        }
+    }
 
     @OptIn(ExperimentalSerializationApi::class)
     @Serializable
@@ -62,8 +63,10 @@ class ThemeExtension(
     ) : ExtensionComponent {
         fun stylesheetPath(): String = stylesheetPath.takeUnless { it.isNullOrBlank() } ?: defaultStylesheetPath(id)
 
-        fun defaultStylesheetPath(id: String): String {
-            return "stylesheets/$id.json"
+        companion object {
+            fun defaultStylesheetPath(id: String): String {
+                return "stylesheets/$id.json"
+            }
         }
     }
 }

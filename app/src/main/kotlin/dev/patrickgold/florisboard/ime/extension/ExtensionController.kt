@@ -20,9 +20,10 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.ime.io.Storage
 import dev.patrickgold.florisboard.ime.io.StorageController
+import dev.patrickgold.florisboard.ime.io.createWorkspace
 import dev.patrickgold.florisboard.ime.io.readJson
-import dev.patrickgold.florisboard.ime.keyboard3.extension.Keyboard3Extension
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.ime.io.zip
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -67,65 +68,186 @@ class ExtensionController(
         }
     }
 
-    fun delete(extension: Extension<*>): Boolean {
-        TODO()
+    suspend fun import(tmpExtRef: FlorisRef) {
+        val event = Event.Import(tmpExtRef)
+        eventChannel.send(event)
+        return event.response.await()
     }
 
-    fun export(extension: Extension<*>, ref: FlorisRef) {
-        TODO()
+    suspend fun export(extensionId: String, zipUriRef: FlorisRef) {
+        val event = Event.Export(extensionId, zipUriRef)
+        eventChannel.send(event)
+        return event.response.await()
+    }
+
+    suspend fun delete(extensionId: String) {
+        val event = Event.Delete(extensionId)
+        eventChannel.send(event)
+        return event.response.await()
     }
 
     private sealed interface Event {
-        data class ResetStorage(val newStorage: Storage) : Event
+        data class ResetStorage(
+            val newStorage: Storage,
+        ) : Event
+
+        data class Import(
+            val tmpExtRef: FlorisRef,
+            val response: CompletableDeferred<Unit> = CompletableDeferred(),
+        ) : Event
+
+        data class Export(
+            val extensionId: String,
+            val zipUriRef: FlorisRef,
+            val response: CompletableDeferred<Unit> = CompletableDeferred(),
+        ) : Event
+
+        data class Delete(
+            val extensionId: String,
+            val response: CompletableDeferred<Unit> = CompletableDeferred(),
+        ) : Event
+    }
+
+    private class MutableSource(
+        val ref: FlorisRef,
+        val extensions: MutableMap<String, Extension<*>> = mutableMapOf(),
+        val reports: MutableReportList = MutableReportList(),
+    ) {
+        fun clear() {
+            extensions.clear()
+            reports.clear()
+        }
     }
 
     private class MutableIndex(initialStorage: Storage) {
-        private val bundledRef = FlorisRef.assets(EXTENSIONS_PATH)
-        private val internalRef = FlorisRef.internal(EXTENSIONS_PATH)
+        private val bundledSource = MutableSource(ref = FlorisRef.assets(EXTENSIONS_PATH))
+        private val userSource = MutableSource(ref = FlorisRef.internal(EXTENSIONS_PATH))
 
         private var storage: Storage = initialStorage
-        private val extensions = mutableMapOf<String, Extension<*>>()
-        private val reports = MutableReportList()
 
         fun build(): ExtensionIndex {
             return ExtensionIndex(
                 storage = storage,
-                extensions = extensions.toMap(),
-                reports = reports.toReportList(),
+                extensions = buildMap {
+                    putAll(bundledSource.extensions)
+                    putAll(userSource.extensions)
+                },
+                reports = buildList {
+                    addAll(bundledSource.reports.toReportList())
+                    addAll(userSource.reports.toReportList())
+                },
             )
         }
 
         suspend fun handle(event: Event) {
             when (event) {
-                is Event.ResetStorage -> handleResetStorage(event.newStorage)
+                is Event.ResetStorage -> handleResetStorage(event)
+                is Event.Import -> {
+                    try {
+                        handleImport(event)
+                        event.response.complete(Unit)
+                    } catch (e: Throwable) {
+                        event.response.completeExceptionally(e)
+                    }
+                }
+                is Event.Export -> {
+                    try {
+                        handleExport(event)
+                        event.response.complete(Unit)
+                    } catch (e: Throwable) {
+                        event.response.completeExceptionally(e)
+                    }
+                }
+                is Event.Delete -> {
+                    try {
+                        handleDelete(event)
+                        event.response.complete(Unit)
+                    } catch (e: Throwable) {
+                        event.response.completeExceptionally(e)
+                    }
+                }
             }
         }
 
-        private suspend fun handleResetStorage(newStorage: Storage) {
-            storage = newStorage
-            extensions.clear()
-            reports.clear()
-            indexExtensions(bundledRef)
-            if (reports.numErrorReports == 0) {
-                indexExtensions(internalRef)
+        private suspend fun handleResetStorage(event: Event.ResetStorage) {
+            storage = event.newStorage
+            indexExtensions(bundledSource)
+            indexExtensions(userSource)
+        }
+
+        private suspend fun handleImport(event: Event.Import) {
+            val manifestRef = event.tmpExtRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
+            val manifest = storage.readJson<ExtensionManifest>(manifestRef, ExtensionJson)
+            require(manifest.meta.isValid()) { "Extension meta is malformed" }
+            val existingExtension = getExtensionById(manifest.meta.id)
+            if (existingExtension != null) {
+                require(existingExtension.canDelete()) {
+                    "Attempted to update bundled extension, which is not possible."
+                }
+                require(existingExtension.manifest::class == manifest::class) {
+                    "Attempted to update extension to different type, which is not supported."
+                }
+                val extRef = userSource.ref.subRef(manifest.meta.id)
+                storage.deleteRecursively(extRef)
+                // TODO this destroys the currently indexed extension in error cases!!!
+                storage.atomicMove(event.tmpExtRef, extRef)
+            } else {
+                val extRef = userSource.ref.subRef(manifest.meta.id)
+                storage.atomicMove(event.tmpExtRef, extRef)
+            }
+            indexExtensions(userSource)
+        }
+
+        private suspend fun handleExport(event: Event.Export) {
+            val extension = getExtensionById(event.extensionId)
+            requireNotNull(extension) { "No such extension: ${event.extensionId}" }
+            val workspaceRef = storage.createWorkspace()
+            try {
+                val intermediateRef = workspaceRef.subRef("${event.extensionId}.flex")
+                storage.zip(extension.sourceRef, intermediateRef)
+                storage.copy(intermediateRef, event.zipUriRef)
+            } finally {
+                storage.deleteRecursively(workspaceRef)
             }
         }
 
-        private fun indexExtensions(ref: FlorisRef) {
-            if (!storage.canAccessUnderlyingMedium(ref)) {
+        private suspend fun handleDelete(event: Event.Delete) {
+            val extension = getExtensionById(event.extensionId)
+            requireNotNull(extension) { "No such extension: ${event.extensionId}" }
+            require(extension.canDelete()) { "Delete not allowed" }
+            storage.deleteRecursively(extension.sourceRef)
+            indexExtensions(userSource)
+        }
+
+        private fun indexExtensions(source: MutableSource) {
+            source.clear()
+            if (!storage.canAccessStorage(source.ref)) {
                 // If we do not have access to the underlying medium all operations below would fail.
                 // This can happen if we are initialized before first device-unlock (in direct boot mode
                 // on Android).
                 return
             }
-            val extRefList =
+            if (source.ref.isInternal) {
                 try {
-                    storage.list(ref)
+                    storage.mkdirs(source.ref)
                 } catch (e: Throwable) {
-                    reports.add(
+                    source.reports.add(
                         ExtensionIndexViolation.UnexpectedError(
                             cause = e,
-                            sourceRange = ref.asSourceRange(),
+                            sourceRange = source.ref.asSourceRange(),
+                        )
+                    )
+                    return
+                }
+            }
+            val extRefList =
+                try {
+                    storage.list(source.ref)
+                } catch (e: Throwable) {
+                    source.reports.add(
+                        ExtensionIndexViolation.UnexpectedError(
+                            cause = e,
+                            sourceRange = source.ref.asSourceRange(),
                         )
                     )
                     return
@@ -138,7 +260,7 @@ class ExtensionController(
                         storage.readJson<ExtensionManifest>(manifestRef, ExtensionJson)
                     } catch (e: Throwable) {
                         // TODO fine-grained violations
-                        reports.add(
+                        source.reports.add(
                             ExtensionIndexViolation.UnexpectedError(
                                 cause = e,
                                 sourceRange = manifestRef.asSourceRange(),
@@ -147,7 +269,7 @@ class ExtensionController(
                         continue
                     }
                 if (extId != manifest.meta.id) {
-                    reports.add(
+                    source.reports.add(
                         ExtensionIndexViolation.IdMismatch(
                             idInDirName = extId,
                             idInManifest = manifest.meta.id,
@@ -156,9 +278,9 @@ class ExtensionController(
                     )
                     continue
                 }
-                val duplicateExtension = extensions[extId]
+                val duplicateExtension = getExtensionById(extId)
                 if (duplicateExtension != null) {
-                    reports.add(
+                    source.reports.add(
                         ExtensionIndexViolation.DuplicateExtension(
                             extRefA = duplicateExtension.sourceRef,
                             extRefB = extRef,
@@ -167,7 +289,7 @@ class ExtensionController(
                     )
                     continue
                 }
-                extensions[extId] = when (manifest) {
+                source.extensions[extId] = when (manifest) {
                     is Keyboard3Extension.Manifest -> {
                         Keyboard3Extension(manifest, extRef)
                     }
@@ -175,7 +297,7 @@ class ExtensionController(
                         ThemeExtension(manifest, extRef)
                     }
                     else -> {
-                        reports.add(
+                        source.reports.add(
                             ExtensionIndexViolation.UnknownManifest(
                                 klass = manifest::class,
                                 sourceRange = manifestRef.asSourceRange(),
@@ -185,6 +307,10 @@ class ExtensionController(
                     }
                 }
             }
+        }
+
+        private fun getExtensionById(id: String): Extension<*>? {
+            return bundledSource.extensions.getOrElse(id) { userSource.extensions[id] }
         }
     }
 

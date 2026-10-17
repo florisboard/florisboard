@@ -17,82 +17,53 @@
 package dev.patrickgold.florisboard.ime.io
 
 import android.content.Context
-import kotlinx.io.RawSink
-import kotlinx.io.RawSource
-import kotlinx.io.asSource
-import kotlinx.io.files.Path
+import okio.FileSystem
+import okio.IOException
+import okio.Path
+import okio.Path.Companion.toOkioPath
+import okio.Path.Companion.toPath
 
 class AndroidStorage(
     val id: Int,
     val context: Context,
     val isUserUnlocked: Boolean,
-) : StorageMultiplexer() {
-    val assetsStorage = object : Storage {
-        override fun canAccessUnderlyingMedium(ref: FlorisRef): Boolean {
-            return ref.isAssets
-        }
+) : Storage() {
+    private val assetFs = AssetFileSystem(context)
+    private val contentResolverFs = ContentResolverFileSystem(context)
+    private val systemFs = FileSystem.SYSTEM
 
-        override fun delete(ref: FlorisRef, mustExist: Boolean) {
-            throw UnsupportedOperationException("Cannot delete within assets ($ref)")
-        }
-
-        override fun deleteContents(ref: FlorisRef) {
-            throw UnsupportedOperationException("Cannot delete within assets ($ref)")
-        }
-
-        override fun deleteRecursively(ref: FlorisRef) {
-            throw UnsupportedOperationException("Cannot delete within assets ($ref)")
-        }
-
-        override fun exists(ref: FlorisRef): Boolean {
-            TODO("Not yet implemented")
-        }
-
-        override fun list(ref: FlorisRef): List<FlorisRef> {
-            return context.assets.list(ref.relativePath)?.map { name ->
-                ref.subRef(name)
-            } ?: emptyList()
-        }
-
-        override fun mkdirs(ref: FlorisRef) {
-            throw UnsupportedOperationException("Cannot mkdirs within assets ($ref)")
-        }
-
-        override fun source(ref: FlorisRef): RawSource {
-            return context.assets.open(ref.relativePath).asSource()
-        }
-
-        override fun sink(ref: FlorisRef): RawSink {
-            throw UnsupportedOperationException("Cannot write to assets ($ref)")
-        }
-    }
-
-    val cacheStorage = object : FileStorage() {
-        override fun getBasePath(): Path {
-            return Path(context.noBackupFilesDir.path, "cache")
-        }
-
-        override fun canAccessUnderlyingMedium(ref: FlorisRef): Boolean {
-            return isUserUnlocked && ref.isCache
-        }
-    }
-
-    val internalStorage = object : FileStorage() {
-        override fun getBasePath(): Path {
-            return Path(context.filesDir.path)
-        }
-
-        override fun canAccessUnderlyingMedium(ref: FlorisRef): Boolean {
-            return isUserUnlocked && ref.isInternal
-        }
-    }
-
-    override fun selectStorageBy(ref: FlorisRef): Storage {
+    override fun canAccessStorage(ref: FlorisRef): Boolean {
         return when {
-            ref.isAssets -> assetsStorage
-            ref.isCache -> cacheStorage
-            ref.isInternal -> internalStorage
-            else -> throw UnsupportedOperationException("No storage available for ref $ref")
+            ref.isAssets -> true
+            ref.isCache || ref.isInternal -> isUserUnlocked
+            else -> false
+        }
+    }
+
+    override fun resolve(ref: FlorisRef): Pair<FileSystem, Path> {
+        return when {
+            ref.isAssets -> {
+                assetFs to ref.relativePath.toPath(normalize = true)
+            }
+            ref.isCache -> {
+                val base = context.noBackupFilesDir.toOkioPath() / "cache"
+                val path = (base / ref.relativePath).normalized()
+                // TODO startsWith check
+                systemFs to path
+            }
+            ref.isInternal -> {
+                val base = context.filesDir.toOkioPath()
+                val path = (base / ref.relativePath).normalized()
+                // TODO startsWith check
+                systemFs to path
+            }
+            ref.scheme == "content" -> {
+                // is this a hack? yes
+                // does it work? also yes :)
+                val path = ref.encodeBase64Path()
+                contentResolverFs to path
+            }
+            else -> throw IOException("unknown ref scheme ${ref.scheme}")
         }
     }
 }
