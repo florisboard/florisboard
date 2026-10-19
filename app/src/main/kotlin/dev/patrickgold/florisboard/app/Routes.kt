@@ -74,6 +74,7 @@ import dev.patrickgold.florisboard.app.settings.theme.ThemeSelectionScreen
 import dev.patrickgold.florisboard.app.settings.theme.ThemeSelectionScreenAction
 import dev.patrickgold.florisboard.app.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.setup.SetupScreen
+import dev.patrickgold.florisboard.app.setupv2.SetupScreenV2
 import dev.patrickgold.florisboard.ime.extension.ExtensionType
 import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
@@ -263,7 +264,7 @@ object Routes {
                 ) + fadeOut(spring(stiffness = Spring.StiffnessMedium))
             },
         ) {
-            composable<Setup.Screen> { SetupScreen() }
+            composable<Setup.Screen> { SetupScreenV2() }
 
             composableWithDeepLink(Settings.Home::class) { HomeScreen() }
 

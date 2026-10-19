@@ -92,7 +92,7 @@ fun SetupScreen() {
     }
 
     FlorisScreenNg(
-        title = stringRes(R.string.setup__title),
+        title = stringRes(R.string.setup__welcome__title),
         previewFieldVisible = false,
         navigationIconVisible = false,
     ) { contentPadding ->
@@ -135,7 +135,7 @@ fun SetupScreen() {
                 .padding(horizontal = 16.dp),
             stepState = stepState,
             header = {
-                StepText(stringRes(R.string.setup__intro_message))
+                StepText(stringRes(R.string.setup__welcome__summary))
                 Spacer(modifier = Modifier.height(16.dp))
             },
             steps = setupSteps(
