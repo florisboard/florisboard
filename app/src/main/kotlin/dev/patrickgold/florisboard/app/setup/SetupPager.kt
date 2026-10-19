@@ -102,17 +102,16 @@ data class SetupStep(
     val satisfied: Boolean,
     val icon: ImageVector,
     val shape: RoundedPolygon,
-    val title: String,
-    val summary: String,
-    val description: String? = null,
-    val primaryLabel: String,
+    val title: @Composable () -> String,
+    val summary: @Composable () -> String,
+    val description: (@Composable () -> String)? = null,
+    val primaryLabel: @Composable () -> String,
     val onPrimary: SetupNavigator.() -> Unit,
     val primaryEnabled: Boolean = true,
-    val secondaryLabel: String? = null,
+    val secondaryLabel: (@Composable () -> String)? = null,
     val onSecondary: SetupNavigator.() -> Unit = {},
     val secondaryStyle: SetupSecondaryStyle = SetupSecondaryStyle.TEXT,
     val showProgress: Boolean = true,
-    val body: (@Composable ColumnScope.() -> Unit)? = null,
 )
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -129,7 +128,6 @@ fun SetupFlowLayout(
     steps: List<SetupStep>,
     modifier: Modifier = Modifier,
 ) {
-    if (steps.isEmpty()) return
     val currentSteps by rememberUpdatedState(steps)
     val scope = rememberCoroutineScope()
 
@@ -231,12 +229,12 @@ fun SetupFlowLayout(
                 Text(
                     modifier = Modifier
                         .semantics { heading() },
-                    text = infoStep.title,
+                    text = infoStep.title(),
                     style = MaterialTheme.typography.headlineMediumEmphasized,
                     textAlign = TextAlign.Center,
                 )
 
-                Text(infoStep.description)
+                Text(infoStep.description())
 
                 FilledTonalButton(
                     onClick = {
@@ -253,7 +251,6 @@ fun SetupFlowLayout(
             }
         }
     }
-
 }
 
 
@@ -399,14 +396,14 @@ private fun StepPage(
                 modifier = Modifier
                     .weight(1f)
                     .semantics { heading() },
-                text = step.title,
+                text = step.title(),
                 style = MaterialTheme.typography.headlineMediumEmphasized,
                 textAlign = TextAlign.Center,
             )
         }
         Text(
             modifier = Modifier.padding(top = 8.dp),
-            text = step.summary,
+            text = step.summary(),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Left,
@@ -419,7 +416,6 @@ private fun StepPage(
                 .florisVerticalScroll()
                 .padding(vertical = 16.dp),
         ) {
-            step.body?.invoke(this)
             if (step.required) {
                 Card {
                     Text(
@@ -448,7 +444,7 @@ private fun StepPage(
                 shapes = ButtonDefaults.shapes(),
                 contentPadding = buttonPadding,
             ) {
-                Text(step.primaryLabel)
+                Text(step.primaryLabel())
             }
             if (step.secondaryLabel != null) {
                 when (step.secondaryStyle) {
@@ -458,7 +454,7 @@ private fun StepPage(
                         shapes = ButtonDefaults.shapes(),
                         contentPadding = buttonPadding,
                     ) {
-                        Text(step.secondaryLabel)
+                        Text(step.secondaryLabel())
                     }
 
                     SetupSecondaryStyle.TONAL -> FilledTonalButton(
@@ -467,7 +463,7 @@ private fun StepPage(
                         shapes = ButtonDefaults.shapes(),
                         contentPadding = buttonPadding,
                     ) {
-                        Text(step.secondaryLabel)
+                        Text(step.secondaryLabel())
                     }
                 }
             }

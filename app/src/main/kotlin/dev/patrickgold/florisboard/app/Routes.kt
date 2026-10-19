@@ -98,7 +98,9 @@ inline fun <reified T : Any> NavGraphBuilder.composableWithDeepLink(
 object Routes {
     object Setup {
         @Serializable
-        object Screen
+        data class Screen(
+            val hasRestoredBackup: Boolean = false,
+        )
     }
 
     object Settings {
@@ -263,7 +265,10 @@ object Routes {
                 ) + fadeOut(spring(stiffness = Spring.StiffnessMedium))
             },
         ) {
-            composable<Setup.Screen> { SetupScreen() }
+            composable<Setup.Screen> { navBackStack ->
+                val payload = navBackStack.toRoute<Setup.Screen>()
+                SetupScreen(payload.hasRestoredBackup)
+            }
 
             composableWithDeepLink(Settings.Home::class) { HomeScreen() }
 

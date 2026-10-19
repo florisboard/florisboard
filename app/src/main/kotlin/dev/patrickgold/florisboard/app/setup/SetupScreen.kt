@@ -36,8 +36,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -50,6 +52,7 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.florisboard.lib.util.launchUrl
@@ -79,10 +82,11 @@ private sealed class Steps(val id: Int) {
 }
 
 @Composable
-fun SetupScreen() {
-    val navController = LocalNavController.current
-    val context = LocalContext.current
+fun SetupScreen(hasRestoredBackup: Boolean) {
     val prefs by FlorisPreferenceStore
+    val context = LocalContext.current
+    val navController = LocalNavController.current
+    val previewFieldController = LocalPreviewFieldController.current
     val scope = rememberCoroutineScope()
 
     val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled()
@@ -103,6 +107,10 @@ fun SetupScreen() {
             }
         }
 
+    SideEffect {
+        previewFieldController.isVisible = false
+    }
+
     var welcomeSeen by rememberSaveable { mutableStateOf(false) }
     var notificationsSkipped by rememberSaveable { mutableStateOf(false) }
 
@@ -116,97 +124,95 @@ fun SetupScreen() {
         }
     }
 
-    val steps = listOfNotNull(
-        SetupStep(
-            id = Steps.Welcome.id,
-            required = false,
-            satisfied = welcomeSeen,
-            icon = Icons.Default.Keyboard,
-            shape = SetupShapes.Welcome,
-            title = stringRes(R.string.setup__welcome__title),
-            summary = stringRes(R.string.setup__welcome__summary),
-            primaryLabel = stringRes(R.string.setup__welcome__get_started_btn),
-            onPrimary = {
-                welcomeSeen = true
-                next()
-            },
-            secondaryLabel = stringRes(R.string.setup__welcome__restore_btn),
-            secondaryStyle = SetupSecondaryStyle.TONAL,
-            onSecondary = {
-                welcomeSeen = true
-                navController.navigate(Routes.Settings.Restore)
-            },
-            showProgress = false,
-            body = {},
-        ),
-        SetupStep(
-            id = Steps.EnableIme.id,
-            required = true,
-            satisfied = isFlorisBoardEnabled,
-            icon = Icons.Default.Keyboard,
-            shape = SetupShapes.Enable,
-            title = stringRes(R.string.setup__enable_ime__title),
-            summary = stringRes(R.string.setup__enable_ime__summary),
-            description = stringRes(R.string.setup__enable_ime__description),
-            primaryLabel = stringRes(R.string.setup__enable_ime__open_settings_btn),
-            onPrimary = { InputMethodUtils.showImeEnablerActivity(context) }
-        ),
-        SetupStep(
-            id = Steps.SelectIme.id,
-            required = true,
-            satisfied = isFlorisBoardSelected,
-            icon = Icons.Default.SwapHoriz,
-            shape = SetupShapes.Select,
-            title = stringRes(R.string.setup__select_ime__title),
-            summary = stringRes(R.string.setup__select_ime__summary),
-            description = stringRes(R.string.setup__select_ime__description),
-            primaryLabel = stringRes(R.string.setup__select_ime__switch_keyboard_btn),
-            onPrimary = { InputMethodUtils.showImePicker(context) }
-        ),
-        if (AndroidVersion.ATLEAST_API33_T) {
+    val steps = remember(welcomeSeen, isFlorisBoardEnabled, isFlorisBoardSelected, notificationState, notificationsSkipped) {
+        listOfNotNull(
             SetupStep(
-                id = Steps.NotificationPermission.id,
+                id = Steps.Welcome.id,
                 required = false,
-                satisfied = notificationState != NotificationPermissionState.NOT_SET || notificationsSkipped,
-                icon = Icons.Default.Notifications,
-                shape = SetupShapes.Notifications,
-                title = stringRes(R.string.setup__grant_notification_permission__title),
-                summary = stringRes(R.string.setup__grant_notification_permission__description),
-                description = stringRes(R.string.setup__grant_notification_permission__description),
-                primaryLabel = stringRes(R.string.setup__grant_notification_permission__btn),
+                satisfied = welcomeSeen,
+                icon = Icons.Default.Keyboard,
+                shape = SetupShapes.Welcome,
+                title = { stringRes(R.string.setup__welcome__title) },
+                summary = { stringRes(R.string.setup__welcome__summary) },
+                primaryLabel = { stringRes(R.string.setup__welcome__get_started_btn) },
                 onPrimary = {
-                    scope.launch {
-                        prefs.internal.notificationPermissionState.set(NotificationPermissionState.NOT_SET)
-                    }
-                    requestNotification.launch(Manifest.permission.POST_NOTIFICATIONS)
-                },
-                secondaryLabel = stringRes(R.string.setup__grant_notification_permission__skip_btn),
-                onSecondary = {
-                    notificationsSkipped = true
+                    welcomeSeen = true
                     next()
-                }
-            )
-        } else null,
-        SetupStep(
-            id = Steps.FinishUp.id,
-            required = false,
-            satisfied = false,
-            icon = Icons.Default.Check,
-            shape = SetupShapes.Finish,
-            title = stringRes(R.string.setup__finish_up__title),
-            summary = stringRes(R.string.setup__finish_up__summary),
-            primaryLabel = stringRes(R.string.setup__finish_up__finish_btn),
-            onPrimary = {
-                scope.launch { prefs.internal.isImeSetUp.set(true) }
-                navController.navigate(Routes.Settings.Home) {
-                    popUpTo(Routes.Setup.Screen) { inclusive = true }
-                }
-            },
-            showProgress = false,
-            body = {},
-        ),
-
-    )
+                },
+                secondaryLabel = { stringRes(R.string.setup__welcome__restore_btn) },
+                secondaryStyle = SetupSecondaryStyle.TONAL,
+                onSecondary = {
+                    navController.navigate(Routes.Settings.Restore)
+                },
+                showProgress = false,
+            ),
+            SetupStep(
+                id = Steps.EnableIme.id,
+                required = true,
+                satisfied = isFlorisBoardEnabled,
+                icon = Icons.Default.Keyboard,
+                shape = SetupShapes.Enable,
+                title = { stringRes(R.string.setup__enable_ime__title) },
+                summary = { stringRes(R.string.setup__enable_ime__summary) },
+                description = { stringRes(R.string.setup__enable_ime__description) },
+                primaryLabel = { stringRes(R.string.setup__enable_ime__open_settings_btn) },
+                onPrimary = { InputMethodUtils.showImeEnablerActivity(context) },
+            ),
+            SetupStep(
+                id = Steps.SelectIme.id,
+                required = true,
+                satisfied = isFlorisBoardSelected,
+                icon = Icons.Default.SwapHoriz,
+                shape = SetupShapes.Select,
+                title = { stringRes(R.string.setup__select_ime__title) },
+                summary = { stringRes(R.string.setup__select_ime__summary) },
+                description = { stringRes(R.string.setup__select_ime__description) },
+                primaryLabel = { stringRes(R.string.setup__select_ime__switch_keyboard_btn) },
+                onPrimary = { InputMethodUtils.showImePicker(context) },
+            ),
+            if (AndroidVersion.ATLEAST_API33_T) {
+                SetupStep(
+                    id = Steps.NotificationPermission.id,
+                    required = false,
+                    satisfied = notificationState != NotificationPermissionState.NOT_SET || notificationsSkipped,
+                    icon = Icons.Default.Notifications,
+                    shape = SetupShapes.Notifications,
+                    title = { stringRes(R.string.setup__grant_notification_permission__title) },
+                    summary = { stringRes(R.string.setup__grant_notification_permission__description) },
+                    description = { stringRes(R.string.setup__grant_notification_permission__description) },
+                    primaryLabel = { stringRes(R.string.setup__grant_notification_permission__btn) },
+                    onPrimary = {
+                        scope.launch {
+                            prefs.internal.notificationPermissionState.set(NotificationPermissionState.NOT_SET)
+                        }
+                        requestNotification.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    },
+                    secondaryLabel = { stringRes(R.string.setup__grant_notification_permission__skip_btn) },
+                    onSecondary = {
+                        notificationsSkipped = true
+                        next()
+                    },
+                )
+            } else null,
+            SetupStep(
+                id = Steps.FinishUp.id,
+                required = false,
+                satisfied = false,
+                icon = Icons.Default.Check,
+                shape = SetupShapes.Finish,
+                title = { stringRes(R.string.setup__finish_up__title) },
+                summary = { stringRes(R.string.setup__finish_up__summary) },
+                primaryLabel = { stringRes(R.string.setup__finish_up__finish_btn) },
+                onPrimary = {
+                    scope.launch { prefs.internal.isImeSetUp.set(true) }
+                    navController.navigate(Routes.Settings.Home) {
+                        popUpTo(Routes.Setup.Screen::class) { inclusive = true }
+                    }
+                },
+                showProgress = false,
+            ),
+        )
+    }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.surfaceContainer,
