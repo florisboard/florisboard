@@ -21,24 +21,24 @@ import android.content.Context
 import android.content.Intent
 import android.provider.Settings
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flow
 import org.florisboard.lib.android.AndroidSettings
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.systemServiceOrNull
-import org.florisboard.lib.compose.observeAsState
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val DELIMITER = ':'
 private const val IME_SERVICE_CLASS_NAME = "dev.patrickgold.florisboard.FlorisImeService"
-private const val TIMED_QUERY_DELAY = 500L
+private val TIMED_QUERY_DELAY = 500.milliseconds
 
 object InputMethodUtils {
     fun isFlorisboardEnabled(context: Context): Boolean {
@@ -70,33 +70,35 @@ object InputMethodUtils {
     @Composable
     fun observeIsFlorisboardEnabled(
         context: Context = LocalContext.current.applicationContext,
-        foregroundOnly: Boolean = false,
     ): State<Boolean> {
-        return if (AndroidVersion.ATLEAST_API34_U) {
-            timedObserveIsFlorisBoardEnabled()
-        } else {
-            AndroidSettings.Secure.observeAsState(
-                key = Settings.Secure.ENABLED_INPUT_METHODS,
-                foregroundOnly = foregroundOnly,
-                transform = { parseIsFlorisboardEnabled(context, it.toString()) },
-            )
-        }
+        return observeIsFlorisboardEnabledFlow(context).collectAsState(isFlorisboardEnabled(context))
     }
 
     @Composable
     fun observeIsFlorisboardSelected(
         context: Context = LocalContext.current.applicationContext,
-        foregroundOnly: Boolean = false,
     ): State<Boolean> {
-        return if (AndroidVersion.ATLEAST_API34_U) {
-            timedObserveIsFlorisBoardSelected()
-        } else {
-            AndroidSettings.Secure.observeAsState(
-                key = Settings.Secure.DEFAULT_INPUT_METHOD,
-                foregroundOnly = foregroundOnly,
-                transform = { parseIsFlorisboardSelected(context, it.toString()) },
-            )
-        }
+        return observeIsFlorisboardSelectedFlow(context).collectAsState(isFlorisboardSelected(context))
+    }
+
+    fun observeIsFlorisboardEnabledFlow(context: Context): Flow<Boolean> {
+        val appContext = context.applicationContext
+        return flow {
+            while (true) {
+                emit(isFlorisboardEnabled(appContext))
+                delay(TIMED_QUERY_DELAY)
+            }
+        }.distinctUntilChanged()
+    }
+
+    fun observeIsFlorisboardSelectedFlow(context: Context): Flow<Boolean> {
+        val appContext = context.applicationContext
+        return flow {
+            while (true) {
+                emit(isFlorisboardSelected(appContext))
+                delay(TIMED_QUERY_DELAY)
+            }
+        }.distinctUntilChanged()
     }
 
     fun parseIsFlorisboardEnabled(context: Context, activeImeIds: String): Boolean {
@@ -127,33 +129,5 @@ object InputMethodUtils {
         } else {
             false
         }
-    }
-
-    @RequiresApi(api = 34)
-    @Composable
-    private fun timedObserveIsFlorisBoardEnabled(): State<Boolean> {
-        val state = remember { mutableStateOf(false) }
-        val context = LocalContext.current
-        LaunchedEffect(Unit) {
-            while (true) {
-                state.value = isFlorisboardEnabled(context)
-                delay(TIMED_QUERY_DELAY)
-            }
-        }
-        return state
-    }
-
-    @RequiresApi(api = 34)
-    @Composable
-    private fun timedObserveIsFlorisBoardSelected(): State<Boolean> {
-        val state = remember { mutableStateOf(false) }
-        val context = LocalContext.current
-        LaunchedEffect(Unit) {
-            while (true) {
-                state.value = isFlorisboardSelected(context)
-                delay(TIMED_QUERY_DELAY)
-            }
-        }
-        return state
     }
 }

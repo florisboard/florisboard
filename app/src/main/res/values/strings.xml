@@ -610,16 +610,18 @@
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licenses of the third-party libraries included in this app</string>
 
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Welcome!</string>
-    <string name="setup__intro_message" comment="Short intro message welcoming new users">Thanks for using {app_name}! This quick setup guides you through the required steps to use {app_name} on your device.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privacy policy</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Repository</string>
+    <string name="setup__welcome__title" comment="Title of Setup">Welcome!</string>
+    <string name="setup__welcome__summary">Thanks for using {app_name}! This quick setup guides you through the setup of {app_name}.</string>
+    <string name="setup__welcome__get_started_btn">Get started</string>
+    <string name="setup__welcome__restore_btn">I have a backup</string>
 
     <string name="setup__enable_ime__title">Enable {app_name}</string>
+    <string name="setup__enable_ime__summary">Enable it in your system settings.</string>
     <string name="setup__enable_ime__description">Android requires that every custom keyboard is separately enabled before you can use it. Open the System <i>Language &amp; Input</i> Settings, there enable "{app_name}".</string>
     <string name="setup__enable_ime__open_settings_btn">Open system settings</string>
 
     <string name="setup__select_ime__title">Select {app_name}</string>
+    <string name="setup__select_ime__summary">Choose it as your active keyboard.</string>
     <string name="setup__select_ime__description">{app_name} is now enabled in your system. To actively use it, switch to {app_name} by selecting it in the input selector dialog!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Switch keyboard</string>
 
@@ -629,11 +631,21 @@
         This permission can be changed at any time in the system settings.
     </string>
     <string name="setup__grant_notification_permission__btn">Grant permission</string>
+    <string name="setup__grant_notification_permission__summary">Only used if the app crashes.</string>
+    <string name="setup__grant_notification_permission__skip_btn">Skip for now</string>
 
     <string name="setup__finish_up__title">Finish up</string>
     <string name="setup__finish_up__description_p1">{app_name} is now enabled in the system and ready to be customized by you.</string>
     <string name="setup__finish_up__description_p2">If you encounter any issues, bugs, crashes or just want to make a suggestion, check out the project repository from the about screen!</string>
+    <string name="setup__finish_up__summary">Initial setup completed. You can now start customizing your experience in the settings app.</string>
     <string name="setup__finish_up__finish_btn">Start customizing</string>
+
+    <string name="setup__info__label">More info</string>
+    <string name="setup__info__got_it">Got it</string>
+    <string name="setup__step_required_hint__label">You need to finish this step to use {app_name}. The setup will move on automatically once ready.</string>
+
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privacy policy</string>
+    <string name="setup__footer__source_code" comment="Source code label for URL">Source code</string>
 
     <!-- Physical keyboard -->
     <string name="physical_keyboard__title">Physical keyboard</string>
@@ -873,8 +885,10 @@
     <!-- Action strings -->
     <string name="action__add">Add</string>
     <string name="action__apply">Apply</string>
+    <string name="action__back">Back</string>
     <string name="action__back_up">Back up</string>
     <string name="action__cancel">Cancel</string>
+    <string name="action__continue">Continue</string>
     <string name="action__create">Create</string>
     <string name="action__default">Default</string>
     <string name="action__delete">Delete</string>

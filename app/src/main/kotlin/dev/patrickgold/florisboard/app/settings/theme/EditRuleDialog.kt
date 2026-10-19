@@ -383,8 +383,8 @@ private fun EditCodeValueDialog(
     var errorId by rememberSaveable(codeValue) { mutableIntStateOf(NATIVE_NULLPTR.toInt()) }
 
     val focusRequester = remember { FocusRequester() }
-    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
-    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
+    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled()
+    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected()
 
     var isRecordingKey by remember { mutableStateOf(false) }
     var lastRecordingToast by remember { mutableStateOf<InteractionController.ToastHandle?>(null) }

@@ -47,8 +47,8 @@ import org.florisboard.lib.compose.stringRes
 fun HomeScreen() {
     val navController = LocalNavController.current
     val context = LocalContext.current
-    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
-    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
+    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled()
+    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected()
 
     FlorisScreenNg(
         title = stringRes(R.string.settings__home__title),
