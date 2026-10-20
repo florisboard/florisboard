@@ -257,8 +257,19 @@ object Routes {
             exitTransition = {
                 slideOut { IntOffset(-it.width, 0) } + fadeOut()
             },
-            popEnterTransition = { EnterTransition.None },
+            popEnterTransition = {
+                EnterTransition.None
+            } ,
             popExitTransition = {
+                scaleOut(
+                    targetScale = 0.85F,
+                    transformOrigin = TransformOrigin(pivotFractionX = 0.8f, pivotFractionY = 0.5f)
+                ) + fadeOut(spring(stiffness = Spring.StiffnessMedium))
+            },
+            predictivePopEnterTransition = {
+                EnterTransition.None
+            },
+            predictivePopExitTransition = {
                 scaleOut(
                     targetScale = 0.85F,
                     transformOrigin = TransformOrigin(pivotFractionX = 0.8f, pivotFractionY = 0.5f)
