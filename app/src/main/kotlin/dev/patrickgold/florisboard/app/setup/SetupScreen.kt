@@ -111,7 +111,7 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
         previewFieldController.isVisible = false
     }
 
-    var welcomeSeen by rememberSaveable { mutableStateOf(false) }
+    var welcomeSeen by rememberSaveable { mutableStateOf(hasRestoredBackup) }
     var notificationsSkipped by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
@@ -128,7 +128,7 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
         listOfNotNull(
             SetupStep(
                 id = Steps.Welcome.id,
-                required = false,
+                required = hasRestoredBackup,
                 satisfied = welcomeSeen,
                 icon = Icons.Default.Keyboard,
                 shape = SetupShapes.Welcome,
@@ -139,7 +139,7 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
                     welcomeSeen = true
                     next()
                 },
-                secondaryLabel = { stringRes(R.string.setup__welcome__restore_btn) + " (has? $hasRestoredBackup)" }, // TODO @Lars: integrate
+                secondaryLabel = { stringRes(R.string.setup__welcome__restore_btn) },
                 secondaryStyle = SetupSecondaryStyle.TONAL,
                 onSecondary = {
                     navController.navigate(Routes.Settings.Restore(isSetup = true))
