@@ -178,7 +178,7 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
                     icon = Icons.Default.Notifications,
                     shape = SetupShapes.Notifications,
                     title = { stringRes(R.string.setup__grant_notification_permission__title) },
-                    summary = { stringRes(R.string.setup__grant_notification_permission__description) },
+                    summary = { stringRes(R.string.setup__grant_notification_permission__summary) },
                     description = { stringRes(R.string.setup__grant_notification_permission__description) },
                     primaryLabel = { stringRes(R.string.setup__grant_notification_permission__btn) },
                     onPrimary = {
