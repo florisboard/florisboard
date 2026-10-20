@@ -47,24 +47,19 @@ import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
-import dev.patrickgold.florisboard.ime.io.AndroidStorage
 import dev.patrickgold.florisboard.ime.io.LocalStorageController
-import dev.patrickgold.florisboard.ime.io.createWorkspace
-import dev.patrickgold.florisboard.ime.io.readFromUri
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.rememberAndroidInteractionController
-import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.inferFlorisApplication
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
-import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
-import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
+import dev.patrickgold.florisboard.app.components.LocalPreviewFieldController
+import dev.patrickgold.florisboard.app.components.PreviewKeyboardField
+import dev.patrickgold.florisboard.app.components.rememberPreviewFieldController
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
-import java.util.concurrent.atomic.AtomicBoolean
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.hideAppIcon
 import org.florisboard.lib.android.showAppIcon
@@ -72,13 +67,20 @@ import org.florisboard.lib.compose.ProvideLocalizedResources
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.collectIn
+import java.util.concurrent.atomic.AtomicBoolean
 
-enum class AppTheme(val id: String) {
-    AUTO("auto"),
-    AUTO_AMOLED("auto_amoled"),
-    LIGHT("light"),
-    DARK("dark"),
-    AMOLED_DARK("amoled_dark");
+enum class AppTheme(
+    val id: String,
+    val isAuto: Boolean = false,
+    val isLight: Boolean = false,
+    val isDark: Boolean = false,
+    val isAmoled: Boolean = false,
+) {
+    AUTO("auto", isAuto = true),
+    AUTO_AMOLED("auto_amoled", isAuto = true, isAmoled = true),
+    LIGHT("light", isLight = true),
+    DARK("dark", isDark = true),
+    AMOLED_DARK("amoled_dark", isDark = true, isAmoled = true);
 }
 
 val LocalNavController = staticCompositionLocalOf<NavController> {
@@ -87,6 +89,7 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 
 class FlorisAppActivity : ComponentActivity() {
     private val prefs by FlorisPreferenceStore
+    private val noBackupPrefs by NoBackupPreferenceStore
     private val appContext = inferFlorisApplication()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
@@ -122,19 +125,19 @@ class FlorisAppActivity : ComponentActivity() {
             if (!loaded || isModelLoaded.getAndSet(true)) return@collectIn
             // Check if android 13+ is running and the NotificationPermission is not set
             if (AndroidVersion.ATLEAST_API33_T &&
-                prefs.internal.notificationPermissionState.get() == NotificationPermissionState.NOT_SET
+                noBackupPrefs.notificationPermissionState.get() == NotificationPermissionState.NOT_SET
             ) {
                 // update pref value to show the setup screen again
-                prefs.internal.isImeSetUp.set(false)
+                noBackupPrefs.isImeSetUp.set(false)
             }
-            AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
+            AppVersionUtils.updateVersionOnInstallAndLastUse(this, noBackupPrefs)
             setContent {
                 ProvideLocalizedResources(
                     resourcesContext,
                     appName = R.string.app_name,
                 ) {
                     FlorisAppTheme(theme = appTheme) {
-                        Surface(color = MaterialTheme.colorScheme.background) {
+                        Surface(color = MaterialTheme.colorScheme.surfaceContainer) {
                             AppContent()
                         }
                     }
@@ -183,7 +186,7 @@ class FlorisAppActivity : ComponentActivity() {
         val navController = rememberNavController()
         val previewFieldController = rememberPreviewFieldController()
 
-        val isImeSetUp by prefs.internal.isImeSetUp.collectAsState()
+        val isImeSetUp by noBackupPrefs.isImeSetUp.collectAsState()
 
         CompositionLocalProvider(
             LocalExtensionController provides appContext.extensionController,
@@ -229,14 +232,7 @@ class FlorisAppActivity : ComponentActivity() {
                     } else {
                         intent.clipData!!.getItemAt(0).uri
                     }
-                    try {
-                        val storage = appContext.storageController.activeStorage.value as AndroidStorage
-                        val workspaceRef = storage.createWorkspace()
-                        storage.readFromUri(uri, workspaceRef)
-                        navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, workspaceRef.pathName))
-                    } catch (e: Throwable) {
-                        interactionController.showLongToast("Failed to read uri from intent: ${e.message}")
-                    }
+                    navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, givenUriStr = uri.toString()))
                 }
             }
             intentToBeHandled = null

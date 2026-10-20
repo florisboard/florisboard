@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@ package dev.patrickgold.florisboard.app.settings.theme
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -42,13 +40,16 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material.icons.outlined.Error
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.ListItemShapes
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,9 +61,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.saveable.rememberSerializable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontFamily
@@ -70,19 +73,31 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import com.materialkolor.Contrast
 import com.materialkolor.PaletteStyle
 import com.materialkolor.dynamiccolor.ColorSpec
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.apptheme.ScreenHorizontalPadding
 import dev.patrickgold.florisboard.app.apptheme.Shapes
-import dev.patrickgold.florisboard.app.ext.ExtensionComponentView
+import dev.patrickgold.florisboard.app.components.SegmentedListColumn
+import dev.patrickgold.florisboard.app.ext.ExtensionComponentListItem
+import dev.patrickgold.florisboard.ime.extension.ExtensionValidation
+import dev.patrickgold.florisboard.ime.extension.ThemeExtension
+import dev.patrickgold.florisboard.ime.extension.extPreviewTheme
+import dev.patrickgold.florisboard.ime.io.FlorisRef
+import dev.patrickgold.florisboard.ime.io.Storage
+import dev.patrickgold.florisboard.ime.io.readText
+import dev.patrickgold.florisboard.ime.io.writeText
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.ime.theme.extPreviewTheme
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
-import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
+import dev.patrickgold.florisboard.ime.theme.LocalThemeController
+import dev.patrickgold.florisboard.ime.theme.ThemeController
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
+import dev.patrickgold.florisboard.app.components.LocalPreviewFieldController
+import dev.patrickgold.florisboard.app.components.Validation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
@@ -92,12 +107,9 @@ import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.FlorisIconButton
-import org.florisboard.lib.compose.FlorisOutlinedBox
-import org.florisboard.lib.compose.defaultFlorisOutlinedBox
 import org.florisboard.lib.compose.florisVerticalScroll
 import org.florisboard.lib.compose.rippleClickable
 import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.kotlin.io.subFile
 import org.florisboard.lib.snygg.SnyggAnnotationRule
 import org.florisboard.lib.snygg.SnyggElementRule
 import org.florisboard.lib.snygg.SnyggJsonConfiguration
@@ -109,8 +121,9 @@ import org.florisboard.lib.snygg.SnyggSpec
 import org.florisboard.lib.snygg.SnyggSpecDecl
 import org.florisboard.lib.snygg.SnyggStylesheet
 import org.florisboard.lib.snygg.SnyggStylesheetEditor
-import org.florisboard.lib.snygg.ui.Saver
 import org.florisboard.lib.snygg.color.MaterialYouFlagsSaver
+import org.florisboard.lib.snygg.ui.Saver
+import kotlin.time.Duration.Companion.milliseconds
 
 internal val PrettyPrintConfig = SnyggJsonConfiguration.of(
     prettyPrint = true,
@@ -132,58 +145,56 @@ private enum class StylesheetLoadingStrategy {
     TRY_LOAD_OR_PARSE_LENIENT; // user chose to auto-fix errors
 }
 
-/*
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun ThemeEditorScreen(
-    workspace: CacheManager.ExtEditorWorkspace<*>,
-    editor: ThemeExtensionComponentEditor,
-) = FlorisScreen {
-    title = stringRes(R.string.ext__editor__edit_component__title_theme)
-    scrollable = false
-
+    storage: Storage,
+    workspaceRef: FlorisRef,
+    initialComponent: ThemeExtension.ThemeComponent,
+    checkIdAlreadyUsed: (String) -> Boolean,
+    onUpdate: (ThemeExtension.ThemeComponent) -> Unit,
+    onDismiss: () -> Unit,
+) {
     val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
-    val themeManager by context.themeManager()
+    val themeController = LocalThemeController.current
 
     val scope = rememberCoroutineScope()
-    val previewFieldController = rememberPreviewFieldController().also { it.isVisible = true }
+    val previewFieldController = LocalPreviewFieldController.current
+
+    var stylesheetComponent by rememberSerializable { mutableStateOf(initialComponent) }
 
     var stylesheetLoadingStrategy by rememberSaveable {
         mutableStateOf(StylesheetLoadingStrategy.TRY_LOAD_OR_ASK_ON_CONFLICT)
     }
     var stylesheetEditorFailure by remember { mutableStateOf<Throwable?>(null) }
     val stylesheetEditor = remember(stylesheetLoadingStrategy) {
-        editor.stylesheetEditor ?: run {
-            stylesheetEditorFailure = null
-            val stylesheetPath = editor.stylesheetPath()
-            editor.stylesheetPathOnLoad = stylesheetPath
-            val stylesheetFile = workspace.extDir.subFile(stylesheetPath)
-            val stylesheetEditor = if (stylesheetFile.exists()) {
-                try {
-                    val stylesheetJson = stylesheetFile.readText()
-                    val config = when (stylesheetLoadingStrategy) {
-                        StylesheetLoadingStrategy.TRY_LOAD_OR_PARSE_LENIENT -> LenientConfig
-                        else -> PrettyPrintConfig
-                    }
-                    SnyggStylesheet.fromJson(stylesheetJson, config).getOrThrow().edit(CustomRuleComparator)
-                } catch (error: Throwable) {
-                    stylesheetEditorFailure = when (stylesheetLoadingStrategy) {
-                        StylesheetLoadingStrategy.TRY_LOAD_OR_ASK_ON_CONFLICT -> error
-                        else -> null
-                    }
-                    SnyggStylesheetEditor(SnyggStylesheet.SCHEMA_V2, comparator = CustomRuleComparator)
+        stylesheetEditorFailure = null
+        val stylesheetPath = stylesheetComponent.stylesheetPath()
+        val stylesheetRef = workspaceRef.subRef(stylesheetPath)
+        val stylesheetEditor = if (storage.exists(stylesheetRef)) {
+            try {
+                val stylesheetJsonText = storage.readText(stylesheetRef)
+                val config = when (stylesheetLoadingStrategy) {
+                    StylesheetLoadingStrategy.TRY_LOAD_OR_PARSE_LENIENT -> LenientConfig
+                    else -> PrettyPrintConfig
                 }
-            } else {
+                SnyggStylesheet.fromJson(stylesheetJsonText, config).getOrThrow().edit(CustomRuleComparator)
+            } catch (error: Throwable) {
+                stylesheetEditorFailure = when (stylesheetLoadingStrategy) {
+                    StylesheetLoadingStrategy.TRY_LOAD_OR_ASK_ON_CONFLICT -> error
+                    else -> null
+                }
                 SnyggStylesheetEditor(SnyggStylesheet.SCHEMA_V2, comparator = CustomRuleComparator)
             }
-            stylesheetEditor.rules.putIfAbsent(SnyggAnnotationRule.Defines, SnyggSinglePropertySetEditor())
-            stylesheetEditor
-        }.also { editor.stylesheetEditor = it }
+        } else {
+            SnyggStylesheetEditor(SnyggStylesheet.SCHEMA_V2, comparator = CustomRuleComparator)
+        }
+        stylesheetEditor.rules.putIfAbsent(SnyggAnnotationRule.Defines, SnyggSinglePropertySetEditor())
+        stylesheetEditor
     }
 
-    val definedVariables = remember(stylesheetEditor.rules, workspace.version) {
+    val definedVariables = remember(stylesheetEditor.version.intValue) {
         stylesheetEditor.rules.firstNotNullOfOrNull { (rule, propertySet) ->
             if (rule is SnyggAnnotationRule.Defines && propertySet is SnyggSinglePropertySetEditor) {
                 propertySet.properties
@@ -193,7 +204,7 @@ fun ThemeEditorScreen(
         } ?: emptyMap()
     }
 
-    val fontNames = remember(stylesheetEditor.rules, workspace.version) {
+    val fontNames = remember(stylesheetEditor.version.intValue) {
         stylesheetEditor.rules.mapNotNull { (rule, _) ->
             if (rule is SnyggAnnotationRule.Font) {
                 rule.fontName
@@ -214,52 +225,64 @@ fun ThemeEditorScreen(
     var showFineTuneDialog by rememberSaveable { mutableStateOf(false) }
 
     fun handleBackPress() {
-        workspace.currentAction = null
+        // TODO proper error handling
+        val stylesheetText = stylesheetEditor.build().toJson().getOrThrow()
+        storage.writeText(workspaceRef.subRef(stylesheetComponent.stylesheetPath()), stylesheetText)
+        onUpdate(stylesheetComponent)
     }
 
-    navigationIcon {
-        FlorisIconButton(
-            onClick = { handleBackPress() },
-            icon = Icons.Default.Close,
+    BackHandler {
+        handleBackPress()
+    }
+
+    DisposableEffect(stylesheetComponent, stylesheetEditor.version.intValue) {
+        themeController.activePreviewTheme.value = ThemeController.Theme.DEFAULT.copy(
+            name = extPreviewTheme(System.currentTimeMillis().toString()),
+            config = stylesheetComponent,
+            stylesheet = stylesheetEditor.build(),
+            extensionRef = workspaceRef,
+            storage = storage,
         )
+        onDispose {
+            themeController.activePreviewTheme.value = null
+        }
     }
 
-    actions {
-        FlorisIconButton(
-            onClick = { showFineTuneDialog = true },
-            icon = Icons.Default.Tune,
-        )
-    }
-
-    floatingActionButton {
-        ExtendedFloatingActionButton(
-            icon = { Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = null,
-            ) },
-            text = { Text(
-                text = stringRes(R.string.settings__theme_editor__add_rule),
-            ) },
-            onClick = { snyggRuleToEdit = SnyggEmptyRuleForAdding },
-        )
-    }
-
-    bottomBar {
-        PreviewKeyboardField(previewFieldController)
-    }
-
-    content {
+    FlorisScreenNg(
+        title = stringRes(R.string.ext__editor__edit_component__title_theme),
+        previewFieldVisible = true,
+        navigationIcon = Icons.Default.Close,
+        navigationIconOnClick = { handleBackPress() },
+        actions = {
+            FlorisIconButton(
+                onClick = { showFineTuneDialog = true },
+                icon = Icons.Default.Tune,
+            )
+        },
+        fab = {
+            ExtendedFloatingActionButton(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null,
+                    )
+                },
+                text = { Text(
+                    text = stringRes(R.string.settings__theme_editor__add_rule),
+                ) },
+                onClick = { snyggRuleToEdit = SnyggEmptyRuleForAdding },
+            )
+        },
+    ) { contentPadding ->
         stylesheetEditorFailure?.let { failure ->
             JetPrefAlertDialog(
                 title = stringRes(R.string.settings__theme_editor__stylesheet_error_title),
                 confirmLabel = stringRes(R.string.action__yes),
                 onConfirm = {
-                    editor.stylesheetEditor = null
                     stylesheetLoadingStrategy = StylesheetLoadingStrategy.TRY_LOAD_OR_PARSE_LENIENT
                 },
                 dismissLabel = stringRes(R.string.action__no),
                 onDismiss = {
-                    editor.stylesheetEditor = null
                     stylesheetLoadingStrategy = StylesheetLoadingStrategy.TRY_LOAD_OR_EMPTY
                 },
             ) {
@@ -276,10 +299,6 @@ fun ThemeEditorScreen(
             }
         }
 
-        BackHandler {
-            handleBackPress()
-        }
-
         val isImeVisible = WindowInsets.isImeVisible
         LaunchedEffect(showEditComponentMetaDialog, showFineTuneDialog, snyggRuleToEdit, snyggPropertyToEdit) {
             val visible = showEditComponentMetaDialog || showFineTuneDialog ||
@@ -288,7 +307,7 @@ fun ThemeEditorScreen(
                 oldFocusState = isImeVisible
                 focusManager.clearFocus()
             } else {
-                delay(250)
+                delay(250.milliseconds)
                 when (displayKbdAfterDialogs) {
                     DisplayKbdAfterDialogs.ALWAYS -> {
                         previewFieldController.focusRequester.requestFocus()
@@ -305,33 +324,23 @@ fun ThemeEditorScreen(
             }
         }
 
-        DisposableEffect(workspace.version) {
-            themeManager.previewThemeInfo.value = ThemeManager.ThemeInfo.DEFAULT.copy(
-                name = extPreviewTheme(System.currentTimeMillis().toString()),
-                config = editor.build(),
-                stylesheet = stylesheetEditor.build(),
-                loadedDir = workspace.extDir,
-            )
-            onDispose {
-                themeManager.previewThemeInfo.value = null
-            }
-        }
-
         // TODO: (priority = low)
         //  Floris scrollbar does not like lazy lists with non-constant item heights.
         //  Consider building a custom scrollbar tailored for this list specifically.
         val lazyListState = rememberLazyListState()
         LazyColumn(
-            //modifier = Modifier.florisScrollbar(lazyListState, isVertical = true),
+            modifier = Modifier
+                //.florisScrollbar(lazyListState, isVertical = true)
+                .padding(horizontal = ScreenHorizontalPadding),
+            contentPadding = contentPadding,
             state = lazyListState,
         ) {
             item {
-                Column {
-                    ExtensionComponentView(
-                        modifier = Modifier.defaultFlorisOutlinedBox(),
-                        meta = workspace.editor!!.meta,
-                        component = editor,
-                        onEditBtnClick = { showEditComponentMetaDialog = true },
+                SegmentedListColumn {
+                    ExtensionComponentListItem(
+                        shapes = ListItemDefaults.segmentedShapes(0, 1),
+                        component = stylesheetComponent,
+                        onEdit = { showEditComponentMetaDialog = true },
                     )
                     if (stylesheetEditor.rules.isEmpty() ||
                         (stylesheetEditor.rules.size == 1 && stylesheetEditor.rules.all { (rule, _) -> rule == SnyggAnnotationRule.Defines })
@@ -348,141 +357,186 @@ fun ThemeEditorScreen(
             items(stylesheetEditor.rules.toList()) { (rule, propertySet) -> key(rule) {
                 val propertySetSpec = SnyggSpec.propertySetSpecOf(rule)
                 val isVariablesRule = rule == SnyggAnnotationRule.Defines
-                FlorisOutlinedBox(
-                    modifier = Modifier
-                        .padding(vertical = 8.dp, horizontal = 16.dp)
-                        .fillMaxWidth(),
-                ) {
-                    Column(modifier = Modifier.fillMaxWidth()) {
-                        SnyggRuleRow(
-                            rule = rule,
-                            level = snyggLevel,
-                            showEditBtn = !isVariablesRule,
-                            onEditRuleBtnClick = {
-                                snyggRuleToEdit = rule
-                            },
-                            onAddPropertyBtnClick = {
-                                when(propertySet) {
-                                    is SnyggMultiplePropertySetsEditor -> {
-                                        workspace.update {
-                                            propertySet.sets.add(SnyggSinglePropertySetEditor())
-                                        }
-                                    }
-                                    is SnyggSinglePropertySetEditor -> {
-                                        snyggPropertySetForEditing = propertySet
-                                        snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
-                                            rule = rule,
-                                        )
+                SegmentedListColumn {
+                    val count = 1 + (if (isVariablesRule) 1 else 0) + when (propertySet) {
+                        is SnyggSinglePropertySetEditor -> propertySet.properties.size
+                        is SnyggMultiplePropertySetsEditor -> propertySet.sets.size
+                    }
+                    SnyggRuleRow(
+                        rule = rule,
+                        level = snyggLevel,
+                        shapes = ListItemDefaults.segmentedShapes(0, count),
+                        showEditBtn = !isVariablesRule,
+                        onEditRuleBtnClick = {
+                            snyggRuleToEdit = rule
+                        },
+                        onAddPropertyBtnClick = {
+                            when(propertySet) {
+                                is SnyggMultiplePropertySetsEditor -> {
+                                    stylesheetEditor.update {
+                                        propertySet.sets.add(SnyggSinglePropertySetEditor())
                                     }
                                 }
-                            },
-                        )
-                        if (isVariablesRule) {
-                            Text(
-                                modifier = Modifier.padding(bottom = 8.dp, start = 16.dp, end = 16.dp),
-                                text = stringRes(R.string.snygg__rule_annotation__defines_description),
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontStyle = FontStyle.Italic,
-                            )
-                        }
-
-                        @Composable
-                        fun SinglePropertySetEditor(
-                            propertySet: SnyggSinglePropertySetEditor,
-                        ) {
-                            for ((propertyName, propertySpec) in propertySetSpec?.properties.orEmpty()) {
-                                if (propertySpec.required && !propertySet.properties.containsKey(propertyName)) {
-                                    FlorisOutlinedBox(title = "Errors", modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)) {
-                                        Text(
-                                            modifier = Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
-                                            text = "Required property '$propertyName' does not exist",
-                                            color = MaterialTheme.colorScheme.error,
-                                        )
-                                    }
-                                }
-                            }
-                            for ((propertyName, propertyValue) in propertySet.properties) {
-                                if (true /*propertySpec != null && propertySpec.level <= snyggLevel*/ || isVariablesRule) {
-                                    JetPrefListItem(
-                                        modifier = Modifier.rippleClickable {
-                                            snyggPropertySetForEditing = propertySet
-                                            snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue)
-                                        },
-                                        text = context.translatePropertyName(propertyName, snyggLevel),
-                                        secondaryText = context.translatePropertyValue(propertyValue, snyggLevel, colorRepresentation),
-                                        singleLineSecondaryText = true,
-                                        trailing = { SnyggValueIcon(propertyValue, definedVariables) },
+                                is SnyggSinglePropertySetEditor -> {
+                                    snyggPropertySetForEditing = propertySet
+                                    snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
+                                        rule = rule,
                                     )
                                 }
                             }
-                        }
+                        },
+                    )
+                    if (isVariablesRule) {
+                        SegmentedListItem(
+                            shapes = ListItemDefaults.segmentedShapes(1, count),
+                            content = {
+                                Text(
+                                    text = stringRes(R.string.snygg__rule_annotation__defines_description),
+                                    fontStyle = FontStyle.Italic,
+                                )
+                            },
+                        )
+                    }
 
-                        when (propertySet) {
-                            is SnyggSinglePropertySetEditor -> {
-                                SinglePropertySetEditor(propertySet)
+                    @Composable
+                    fun SinglePropertySetEditor(
+                        propertySet: SnyggSinglePropertySetEditor,
+                        baseIndex: Int,
+                        count: Int,
+                        isNested: Boolean = false,
+                    ) {
+                        val missingRequiredPropertyNames = remember(propertySetSpec, propertySet) {
+                            buildList {
+                                for ((propertyName, propertySpec) in propertySetSpec?.properties.orEmpty()) {
+                                    if (propertySpec.required && !propertySet.properties.containsKey(propertyName)) {
+                                        add(propertyName)
+                                    }
+                                }
                             }
-                            is SnyggMultiplePropertySetsEditor -> {
-                                val sets = propertySet.sets
-                                sets.forEachIndexed { propertySetIndex, propertySet ->
-                                    key(propertySet.uuid) {
-                                        FlorisOutlinedBox(Modifier.padding(start = 8.dp, end = 8.dp, bottom = 8.dp)) {
-                                            Row {
-                                                Text("Source set", Modifier
-                                                    .padding(start = 16.dp)
-                                                    .align(Alignment.CenterVertically))
-                                                Spacer(Modifier.weight(1f))
-                                                FlorisIconButton(
-                                                    onClick = {
-                                                        workspace.update {
-                                                            if (propertySetIndex > 0) {
-                                                                val set = sets.removeAt(propertySetIndex)
-                                                                sets.add(propertySetIndex - 1, set)
-                                                            }
+                        }
+                        for (propertyName in missingRequiredPropertyNames) {
+                            SegmentedListItem(
+                                shapes = ListItemDefaults.segmentedShapes(baseIndex, count + missingRequiredPropertyNames.size),
+                                colors = ListItemDefaults.colors(
+                                    containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                                    contentColor = MaterialTheme.colorScheme.error,
+                                    leadingContentColor = MaterialTheme.colorScheme.error,
+                                ),
+                                leadingContent = { Icon(Icons.Outlined.Error, null) },
+                                content = { Text("Required property '$propertyName' does not exist") },
+                            )
+                        }
+                        for ((index, entry) in propertySet.properties.entries.withIndex()) {
+                            val (propertyName, propertyValue) = entry
+                            val effIndex = baseIndex + missingRequiredPropertyNames.size + index
+                            val effCount = count + missingRequiredPropertyNames.size
+                            SegmentedListItem(
+                                modifier = Modifier.rippleClickable {
+                                    snyggPropertySetForEditing = propertySet
+                                    snyggPropertyToEdit = PropertyInfo(rule, propertyName, propertyValue)
+                                },
+                                shapes = ListItemDefaults.segmentedShapes(effIndex, effCount),
+                                colors = if (!isNested) {
+                                    ListItemDefaults.colors(
+                                        containerColor = MaterialTheme.colorScheme.surface,
+                                        contentColor = MaterialTheme.colorScheme.onSurface,
+                                    )
+                                } else {
+                                    ListItemDefaults.colors(
+                                        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+                                        contentColor = MaterialTheme.colorScheme.onSurface,
+                                    )
+                                },
+                                content = { Text(context.translatePropertyName(propertyName, snyggLevel)) },
+                                supportingContent = {
+                                    Text(
+                                        text = context.translatePropertyValue(propertyValue, snyggLevel, colorRepresentation),
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                },
+                                trailingContent = { SnyggValueIcon(propertyValue, definedVariables) },
+                            )
+                        }
+                    }
+
+                    val baseIndex = if (isVariablesRule) 2 else 1
+                    when (propertySet) {
+                        is SnyggSinglePropertySetEditor -> {
+                            SinglePropertySetEditor(propertySet, baseIndex, count)
+                        }
+                        is SnyggMultiplePropertySetsEditor -> {
+                            val sets = propertySet.sets
+                            sets.forEachIndexed { propertySetIndex, propertySet ->
+                                val shapes = ListItemDefaults.segmentedShapes(baseIndex + propertySetIndex, count)
+                                key(propertySet.uuid) {
+                                    SegmentedListColumn(
+                                        modifier = Modifier
+                                            .clip(shapes.shape)
+                                            .background(MaterialTheme.colorScheme.surface)
+                                            .padding(horizontal = 8.dp),
+                                    ) {
+                                        Row {
+                                            Text("Source set", Modifier
+                                                .padding(start = 8.dp)
+                                                .align(Alignment.CenterVertically))
+                                            Spacer(Modifier.weight(1f))
+                                            FlorisIconButton(
+                                                onClick = {
+                                                    stylesheetEditor.update {
+                                                        if (propertySetIndex > 0) {
+                                                            val set = sets.removeAt(propertySetIndex)
+                                                            sets.add(propertySetIndex - 1, set)
                                                         }
-                                                    },
-                                                    icon = Icons.Default.KeyboardArrowUp,
-                                                    iconColor = MaterialTheme.colorScheme.primary,
-                                                    iconModifier = Modifier.size(ButtonDefaults.IconSize),
-                                                    enabled = propertySetIndex > 0,
-                                                )
-                                                FlorisIconButton(
-                                                    onClick = {
-                                                        workspace.update {
-                                                            if (propertySetIndex + 1 < sets.size) {
-                                                                val set = sets.removeAt(propertySetIndex)
-                                                                sets.add(propertySetIndex + 1, set)
-                                                            }
+                                                    }
+                                                },
+                                                icon = Icons.Default.KeyboardArrowUp,
+                                                iconColor = MaterialTheme.colorScheme.primary,
+                                                iconModifier = Modifier.size(ButtonDefaults.IconSize),
+                                                enabled = propertySetIndex > 0,
+                                            )
+                                            FlorisIconButton(
+                                                onClick = {
+                                                    stylesheetEditor.update {
+                                                        if (propertySetIndex + 1 < sets.size) {
+                                                            val set = sets.removeAt(propertySetIndex)
+                                                            sets.add(propertySetIndex + 1, set)
                                                         }
-                                                    },
-                                                    icon = Icons.Default.KeyboardArrowDown,
-                                                    iconColor = MaterialTheme.colorScheme.primary,
-                                                    iconModifier = Modifier.size(ButtonDefaults.IconSize),
-                                                    enabled = propertySetIndex + 1 < sets.size,
-                                                )
-                                                FlorisIconButton(
-                                                    onClick = {
-                                                        workspace.update {
-                                                            sets.removeAt(propertySetIndex)
-                                                        }
-                                                    },
-                                                    icon = Icons.Default.Delete,
-                                                    iconColor = MaterialTheme.colorScheme.primary,
-                                                    iconModifier = Modifier.size(ButtonDefaults.IconSize),
-                                                )
-                                                FlorisIconButton(
-                                                    onClick = {
-                                                        snyggPropertySetForEditing = propertySet
-                                                        snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
-                                                            rule = rule,
-                                                        )
-                                                    },
-                                                    icon = Icons.Default.Add,
-                                                    iconColor = MaterialTheme.colorScheme.primary,
-                                                    iconModifier = Modifier.size(ButtonDefaults.IconSize),
-                                                )
-                                            }
-                                            SinglePropertySetEditor(propertySet)
+                                                    }
+                                                },
+                                                icon = Icons.Default.KeyboardArrowDown,
+                                                iconColor = MaterialTheme.colorScheme.primary,
+                                                iconModifier = Modifier.size(ButtonDefaults.IconSize),
+                                                enabled = propertySetIndex + 1 < sets.size,
+                                            )
+                                            FlorisIconButton(
+                                                onClick = {
+                                                    stylesheetEditor.update {
+                                                        sets.removeAt(propertySetIndex)
+                                                    }
+                                                },
+                                                icon = Icons.Default.Delete,
+                                                iconColor = MaterialTheme.colorScheme.primary,
+                                                iconModifier = Modifier.size(ButtonDefaults.IconSize),
+                                            )
+                                            FlorisIconButton(
+                                                onClick = {
+                                                    snyggPropertySetForEditing = propertySet
+                                                    snyggPropertyToEdit = SnyggEmptyPropertyInfoForAdding.copy(
+                                                        rule = rule,
+                                                    )
+                                                },
+                                                icon = Icons.Default.Add,
+                                                iconColor = MaterialTheme.colorScheme.primary,
+                                                iconModifier = Modifier.size(ButtonDefaults.IconSize),
+                                            )
                                         }
+                                        SinglePropertySetEditor(
+                                            propertySet = propertySet,
+                                            baseIndex = 0,
+                                            count = propertySet.properties.size,
+                                            isNested = true,
+                                        )
                                     }
                                 }
                             }
@@ -498,10 +552,17 @@ fun ThemeEditorScreen(
 
         if (showEditComponentMetaDialog) {
             ComponentMetaEditorDialog(
-                workspace = workspace,
-                editor = editor,
-                onConfirm = { showEditComponentMetaDialog = false },
-                onDismiss = { showEditComponentMetaDialog = false },
+                component = stylesheetComponent,
+                checkIdAlreadyUsed = checkIdAlreadyUsed,
+                onConfirm = { newComponent ->
+                    val oldComponent = stylesheetComponent
+                    stylesheetComponent = newComponent
+                    // TODO if id has changed move file
+                    showEditComponentMetaDialog = false
+                },
+                onDismiss = {
+                    showEditComponentMetaDialog = false
+                },
             )
         }
 
@@ -524,7 +585,7 @@ fun ThemeEditorScreen(
                         rules.contains(newRule) -> {
                             false
                         }
-                        else -> workspace.update {
+                        else -> stylesheetEditor.update {
                             val set = rules.remove(oldRule)
                             when {
                                 set != null -> {
@@ -558,7 +619,7 @@ fun ThemeEditorScreen(
                     }
                 },
                 onDeleteRule = { rule ->
-                    workspace.update {
+                    stylesheetEditor.update {
                         stylesheetEditor.rules.remove(rule)
                     }
                     snyggRuleToEdit = null
@@ -575,20 +636,21 @@ fun ThemeEditorScreen(
                 colorRepresentation = colorRepresentation,
                 definedVariables = definedVariables,
                 fontNames = fontNames,
-                workspace = workspace,
+                storage = storage,
+                workspaceRef = workspaceRef,
                 onConfirmNewValue = { name, value ->
                     val properties = snyggPropertySetForEditing?.properties ?: return@EditPropertyDialog false
                     if (propertyToEdit == SnyggEmptyPropertyInfoForAdding && properties.containsKey(name)) {
                         return@EditPropertyDialog false
                     }
-                    workspace.update {
+                    stylesheetEditor.update {
                         properties[name] = value
                     }
                     snyggPropertyToEdit = null
                     true
                 },
                 onDelete = {
-                    workspace.update {
+                    stylesheetEditor.update {
                         snyggPropertySetForEditing?.properties?.remove(propertyToEdit.name)
                     }
                     snyggPropertyToEdit = null
@@ -601,24 +663,25 @@ fun ThemeEditorScreen(
 
 @Composable
 private fun ComponentMetaEditorDialog(
-    workspace: CacheManager.ExtEditorWorkspace<*>,
-    editor: ThemeExtensionComponentEditor,
-    onConfirm: () -> Unit,
+    component: ThemeExtension.ThemeComponent,
+    checkIdAlreadyUsed: (String) -> Boolean,
+    onConfirm: (ThemeExtension.ThemeComponent) -> Unit,
     onDismiss: () -> Unit,
 ) {
-    val context = LocalContext.current
+    val interactionController = LocalInteractionController.current
     var showValidationErrors by rememberSaveable { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
-    var id by rememberSaveable { mutableStateOf(editor.id) }
+    var id by rememberSaveable { mutableStateOf(component.id) }
     val idValidation = rememberValidationResult(ExtensionValidation.ComponentId, id)
-    var label by rememberSaveable { mutableStateOf(editor.label) }
+    var label by rememberSaveable { mutableStateOf(component.name) }
     val labelValidation = rememberValidationResult(ExtensionValidation.ComponentLabel, label)
-    var authors by rememberSaveable { mutableStateOf(editor.authors.joinToString("\n")) }
+    var authors by rememberSaveable { mutableStateOf(component.authors.joinToString("\n")) }
     val authorsValidation = rememberValidationResult(ExtensionValidation.ComponentAuthors, authors)
-    var isNightTheme by rememberSaveable { mutableStateOf(editor.isNightTheme) }
-    var materialYouFlags by rememberSaveable(stateSaver = MaterialYouFlagsSaver) { mutableStateOf(editor.materialYouFlags) }
-    var stylesheetPath by rememberSaveable { mutableStateOf(editor.stylesheetPath) }
-    val stylesheetPathValidation = rememberValidationResult(ExtensionValidation.ThemeComponentStylesheetPath, stylesheetPath)
+    var isNightTheme by rememberSaveable { mutableStateOf(component.isNightTheme) }
+    var materialYouFlags by rememberSaveable(stateSaver = MaterialYouFlagsSaver) { mutableStateOf(component.materialYouFlags) }
+    var stylesheetPath by rememberSaveable { mutableStateOf(component.stylesheetPath) }
+    val stylesheetPathValidation = rememberValidationResult(ExtensionValidation.ThemeComponentStylesheetPath, stylesheetPath ?: "")
 
     JetPrefAlertDialog(
         title = stringRes(R.string.ext__editor__metadata__title),
@@ -630,28 +693,31 @@ private fun ComponentMetaEditorDialog(
                 stylesheetPathValidation.isValid()
             if (!allFieldsValid) {
                 showValidationErrors = true
-            } else if (id != editor.id && (workspace.editor as? ThemeExtensionEditor)?.themes?.find { it.id == id.trim() } != null) {
-                context.showLongToastSync("A theme with this ID already exists!")
-            } else {
-                workspace.update {
-                    editor.id = id.trim()
-                    editor.label = label.trim()
-                    editor.authors = authors.lines().map { it.trim() }.filter { it.isNotBlank() }
-                    editor.isNightTheme = isNightTheme
-                    editor.stylesheetPath = stylesheetPath.trim()
-                    editor.materialYouFlags = materialYouFlags
+            } else if (id != component.id && checkIdAlreadyUsed(id)) {
+                scope.launch {
+                    interactionController.showLongToast("A theme with this ID already exists!")
                 }
-                onConfirm()
+            } else {
+                val newComponent = ThemeExtension.ThemeComponent(
+                    id = id.trim(),
+                    name = label.trim(),
+                    authors = authors.lines().map { it.trim() }.filter { it.isNotBlank() },
+                    isNightTheme = isNightTheme,
+                    stylesheetPath = stylesheetPath?.trim()?.ifEmpty { null },
+                    materialYouFlags = materialYouFlags,
+                )
+                onConfirm(newComponent)
             }
         },
         dismissLabel = stringRes(R.string.action__cancel),
         onDismiss = onDismiss,
-        contentPadding = PaddingValues(horizontal = 8.dp),
         scrollModifier = Modifier.florisVerticalScroll(),
+        properties = DialogProperties(usePlatformDefaultWidth = false),
     ) {
         Column {
             DialogProperty(text = stringRes(R.string.ext__meta__id)) {
                 JetPrefTextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = id,
                     onValueChange = { id = it },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
@@ -661,6 +727,7 @@ private fun ComponentMetaEditorDialog(
             }
             DialogProperty(text = stringRes(R.string.ext__meta__label)) {
                 JetPrefTextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = label,
                     onValueChange = { label = it },
                     singleLine = true,
@@ -669,13 +736,16 @@ private fun ComponentMetaEditorDialog(
             }
             DialogProperty(text = stringRes(R.string.ext__meta__authors)) {
                 JetPrefTextField(
+                    modifier = Modifier.fillMaxWidth(),
                     value = authors,
                     onValueChange = { authors = it },
                 )
                 Validation(showValidationErrors, authorsValidation)
             }
             JetPrefListItem(
-                modifier = Modifier.toggleable(isNightTheme) { isNightTheme = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .toggleable(isNightTheme) { isNightTheme = it },
                 text = stringRes(R.string.settings__theme_editor__component_meta_is_night_theme),
                 trailing = {
                     Switch(checked = isNightTheme, onCheckedChange = null)
@@ -684,12 +754,13 @@ private fun ComponentMetaEditorDialog(
             )
             DialogProperty(text = stringRes(R.string.settings__theme_editor__component_meta_stylesheet_path)) {
                 JetPrefTextField(
-                    value = stylesheetPath,
+                    modifier = Modifier.fillMaxWidth(),
+                    value = stylesheetPath ?: "",
                     onValueChange = { stylesheetPath = it },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii),
                     singleLine = true,
-                    placeholderText = if (stylesheetPath.isEmpty()) {
-                        ThemeExtensionComponent.defaultStylesheetPath(id.trim())
+                    placeholderText = if (stylesheetPath.isNullOrEmpty()) {
+                        ThemeExtension.ThemeComponent.defaultStylesheetPath(id.trim())
                     } else {
                         null
                     },
@@ -699,7 +770,9 @@ private fun ComponentMetaEditorDialog(
 
             DialogProperty(text = stringRes(R.string.settings__theme_editor__component_meta_material_you__title)) {
                 JetPrefDropdown(
-                    modifier = Modifier.padding(bottom = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
                     labelText = stringRes(R.string.settings__theme_editor__component_meta_material_you__palette_style),
                     optionsLabelProvider = {
                         it.name
@@ -711,7 +784,9 @@ private fun ComponentMetaEditorDialog(
                     selectedOptionIndex = materialYouFlags.paletteStyle.ordinal
                 )
                 JetPrefDropdown(
-                    modifier = Modifier.padding(bottom = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
                     labelText = stringRes(R.string.settings__theme_editor__component_meta_material_you__color_contrast),
                     optionsLabelProvider = {
                         it.name
@@ -723,7 +798,9 @@ private fun ComponentMetaEditorDialog(
                     selectedOptionIndex = materialYouFlags.contrastLevel.ordinal
                 )
                 JetPrefDropdown(
-                    modifier = Modifier.padding(bottom = 8.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 8.dp),
                     labelText = stringRes(R.string.settings__theme_editor__component_meta_material_you__spec_version),
                     optionsLabelProvider = {
                         it.name
@@ -744,6 +821,7 @@ private fun ComponentMetaEditorDialog(
 private fun SnyggRuleRow(
     rule: SnyggRule,
     level: SnyggLevel,
+    shapes: ListItemShapes,
     showEditBtn: Boolean,
     onEditRuleBtnClick: () -> Unit,
     onAddPropertyBtnClick: () -> Unit,
@@ -778,6 +856,8 @@ private fun SnyggRuleRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clip(shapes.shape)
+            .background(MaterialTheme.colorScheme.surface)
             .padding(horizontal = 6.dp),
     ) {
         Column(
@@ -850,7 +930,6 @@ private fun SnyggRuleRow(
         )
     }
 }
-*/
 
 @Composable
 internal fun DialogProperty(

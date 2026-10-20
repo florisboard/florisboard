@@ -16,7 +16,9 @@
 
 package dev.patrickgold.florisboard.ime.smartbar.quickaction
 
+import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
@@ -37,6 +39,9 @@ val QuickActionJsonConfig = Json {
             subclass(QuickAction.InsertText::class, QuickAction.InsertText.serializer())
             subclass(QuickAction.InsertK3Descriptor::class, QuickAction.InsertK3Descriptor.serializer())
             defaultDeserializer { QuickAction.InsertKey.serializer() }
+        }
+        polymorphic(KeyData::class) {
+            subclass(TextKeyData::class, TextKeyData.serializer())
         }
     }
 }

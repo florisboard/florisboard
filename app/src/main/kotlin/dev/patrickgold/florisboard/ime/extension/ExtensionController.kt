@@ -17,12 +17,17 @@
 package dev.patrickgold.florisboard.ime.extension
 
 import androidx.compose.runtime.staticCompositionLocalOf
+import dev.patrickgold.florisboard.app.settings.advanced.BackupArchiveFilter
+import dev.patrickgold.florisboard.app.settings.advanced.BackupDefaults
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.ime.io.Storage
 import dev.patrickgold.florisboard.ime.io.StorageController
+import dev.patrickgold.florisboard.ime.io.createWorkspace
 import dev.patrickgold.florisboard.ime.io.readJson
-import dev.patrickgold.florisboard.ime.keyboard3.extension.Keyboard3Extension
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
+import dev.patrickgold.florisboard.ime.io.unzip
+import dev.patrickgold.florisboard.ime.io.zip
+import dev.patrickgold.jetpref.datastore.runtime.ImportStrategy
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -31,10 +36,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.polymorphic
 import org.florisboard.lib.kotlin.collectIn
 import org.k3lp.lib.meta.report.MutableReportList
+import kotlin.uuid.Uuid
 
 /**
  * Provides the [ExtensionController] instance this composition tree is associated with.
@@ -48,7 +52,7 @@ class ExtensionController(
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
-    private val eventChannel = Channel<Event>(Channel.RENDEZVOUS)
+    private val eventChannel = Channel<Event<*>>(Channel.RENDEZVOUS)
     private val mutableIndex = MutableIndex(storageController.activeStorage.value)
 
     val activeIndex: StateFlow<ExtensionIndex>
@@ -67,78 +71,290 @@ class ExtensionController(
         }
     }
 
-    fun delete(extension: Extension<*>): Boolean {
-        TODO()
+    suspend fun import(extSrcRef: FlorisRef) {
+        val event = Event.Import(extSrcRef)
+        eventChannel.send(event)
+        return event.response.await()
     }
 
-    fun export(extension: Extension<*>, ref: FlorisRef) {
-        TODO()
+    suspend fun export(extensionId: String, zipUriRef: FlorisRef) {
+        val event = Event.Export(extensionId, zipUriRef)
+        eventChannel.send(event)
+        return event.response.await()
     }
 
-    private sealed interface Event {
-        data class ResetStorage(val newStorage: Storage) : Event
+    suspend fun delete(extensionId: String) {
+        val event = Event.Delete(extensionId)
+        eventChannel.send(event)
+        return event.response.await()
+    }
+
+    suspend fun backup(
+        backupDirRef: FlorisRef,
+        filter: BackupArchiveFilter,
+    ) {
+        val event = Event.Backup(backupDirRef, filter)
+        eventChannel.send(event)
+        return event.response.await()
+    }
+
+    suspend fun restore(
+        backupDirRef: FlorisRef,
+        importStrategy: ImportStrategy,
+        filter: BackupArchiveFilter,
+        isLegacyMode: Boolean,
+    ) {
+        val event = Event.Restore(backupDirRef, importStrategy, filter, isLegacyMode)
+        eventChannel.send(event)
+        return event.response.await()
+    }
+
+    private sealed class Event<R> {
+        val response: CompletableDeferred<R> = CompletableDeferred()
+
+        data class ResetStorage(
+            val newStorage: Storage,
+        ) : Event<Unit>()
+
+        data class Import(
+            val extSrcRef: FlorisRef,
+        ) : Event<Unit>()
+
+        data class Export(
+            val extensionId: String,
+            val zipUriRef: FlorisRef,
+        ) : Event<Unit>()
+
+        data class Delete(
+            val extensionId: String,
+        ) : Event<Unit>()
+
+        data class Backup(
+            val backupDirRef: FlorisRef,
+            val filter: BackupArchiveFilter,
+        ) : Event<Unit>()
+
+        data class Restore(
+            val backupDirRef: FlorisRef,
+            val importStrategy: ImportStrategy,
+            val filter: BackupArchiveFilter,
+            val isLegacyMode: Boolean,
+        ) : Event<Unit>()
+    }
+
+    private class MutableSource(
+        val ref: FlorisRef,
+        val extensions: MutableMap<String, Extension<*>> = mutableMapOf(),
+        val reports: MutableReportList = MutableReportList(),
+    ) {
+        fun clear() {
+            extensions.clear()
+            reports.clear()
+        }
+
+        fun removeWhere(storage: Storage, predicate: (Extension<*>) -> Boolean) {
+            extensions.entries.removeAll { (_, extension) ->
+                if (predicate(extension)) {
+                    storage.deleteRecursively(extension.sourceRef)
+                    true
+                } else {
+                    false
+                }
+            }
+        }
     }
 
     private class MutableIndex(initialStorage: Storage) {
-        private val bundledRef = FlorisRef.assets(EXTENSIONS_PATH)
-        private val internalRef = FlorisRef.internal(EXTENSIONS_PATH)
+        private val bundledSource = MutableSource(ref = FlorisRef.assets(EXTENSIONS_PATH))
+        private val userSource = MutableSource(ref = FlorisRef.internal(EXTENSIONS_PATH))
 
         private var storage: Storage = initialStorage
-        private val extensions = mutableMapOf<String, Extension<*>>()
-        private val reports = MutableReportList()
 
         fun build(): ExtensionIndex {
             return ExtensionIndex(
                 storage = storage,
-                extensions = extensions.toMap(),
-                reports = reports.toReportList(),
+                extensions = buildMap {
+                    putAll(bundledSource.extensions)
+                    putAll(userSource.extensions)
+                },
+                reports = buildList {
+                    addAll(bundledSource.reports.toReportList())
+                    addAll(userSource.reports.toReportList())
+                },
             )
         }
 
-        suspend fun handle(event: Event) {
-            when (event) {
-                is Event.ResetStorage -> handleResetStorage(event.newStorage)
+        fun handle(event: Event<*>) {
+            try {
+                when (event) {
+                    is Event.ResetStorage -> event.response.complete(handleResetStorage(event))
+                    is Event.Import -> event.response.complete(handleImport(event))
+                    is Event.Export -> event.response.complete(handleExport(event))
+                    is Event.Delete -> event.response.complete(handleDelete(event))
+                    is Event.Backup -> event.response.complete(handleBackup(event))
+                    is Event.Restore -> event.response.complete(handleRestore(event))
+                }
+            } catch (e: Throwable) {
+                event.response.completeExceptionally(e)
             }
         }
 
-        private suspend fun handleResetStorage(newStorage: Storage) {
-            storage = newStorage
-            extensions.clear()
-            reports.clear()
-            indexExtensions(bundledRef)
-            if (reports.numErrorReports == 0) {
-                indexExtensions(internalRef)
+        private fun handleResetStorage(event: Event.ResetStorage) {
+            storage = event.newStorage
+            indexExtensions(bundledSource)
+            indexExtensions(userSource)
+        }
+
+        private fun handleImport(event: Event.Import) {
+            importExtension(event.extSrcRef)
+            indexExtensions(userSource)
+        }
+
+        private fun handleExport(event: Event.Export) {
+            val extension = getExtensionById(event.extensionId)
+            requireNotNull(extension) { "No such extension: ${event.extensionId}" }
+            val workspaceRef = storage.createWorkspace()
+            try {
+                val intermediateRef = workspaceRef.subRef("${event.extensionId}.flex")
+                storage.zip(extension.sourceRef, intermediateRef)
+                storage.copy(intermediateRef, event.zipUriRef)
+            } finally {
+                storage.deleteRecursively(workspaceRef)
             }
         }
 
-        private fun indexExtensions(ref: FlorisRef) {
-            if (!storage.canAccessUnderlyingMedium(ref)) {
+        private fun handleDelete(event: Event.Delete) {
+            val extension = getExtensionById(event.extensionId)
+            requireNotNull(extension) { "No such extension: ${event.extensionId}" }
+            require(extension.canDelete()) { "Delete not allowed" }
+            storage.deleteRecursively(extension.sourceRef)
+            indexExtensions(userSource)
+        }
+
+        private fun handleBackup(event: Event.Backup) {
+            val (backupDirRef, filter) = event
+            val extensionsDir = backupDirRef.subRef(BackupDefaults.FILES_DIR).subRef(EXTENSIONS_PATH)
+            for ((extensionId, extension) in userSource.extensions) {
+                if (!filter.includes(extension.type)) {
+                    continue
+                }
+                storage.copyRecursively(extension.sourceRef, extensionsDir.subRef(extensionId))
+            }
+        }
+
+        private fun handleRestore(event: Event.Restore) {
+            val (backupDirRef, importStrategy, filter, isLegacyMode) = event
+            if (importStrategy == ImportStrategy.Erase) {
+                userSource.removeWhere(storage) { extension ->
+                    filter.includes(extension.type)
+                }
+            }
+            val backupFilesDirRef = backupDirRef.subRef(BackupDefaults.FILES_DIR)
+            val extensionsDirRef = when {
+                // we can only import legacy theme extensions, legacy keyboard extensions are not compatible
+                isLegacyMode -> backupFilesDirRef.subRef(BackupDefaults.OLD_EXT_IME_THEME_PATH)
+                else -> backupFilesDirRef.subRef(EXTENSIONS_PATH)
+            }
+            // TODO better error reporting
+            for (entryRef in storage.listOrNull(extensionsDirRef) ?: emptyList()) {
+                val extSrcRef = when {
+                    isLegacyMode -> {
+                        val extSrcRef = entryRef.parentRef!!.subRef(Uuid.random().toHexDashString())
+                        storage.unzip(entryRef, extSrcRef)
+                        extSrcRef
+                    }
+                    else -> entryRef
+                }
+                if (storage.metadataOrNull(extSrcRef)?.isDirectory != true) {
+                    continue
+                }
+                val manifestRef = extSrcRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
+                if (!storage.exists(manifestRef)) {
+                    continue
+                }
+                val manifest = try {
+                    storage.readJson<ExtensionManifest>(manifestRef)
+                } catch (e: Throwable) {
+                    continue
+                }
+                if (isLegacyMode && entryRef.okioPathName != manifest.meta.id + ".flex") {
+                    continue
+                }
+                if (!isLegacyMode && extSrcRef.okioPathName != manifest.meta.id) {
+                    continue
+                }
+                if (!filter.includes(manifest.type)) {
+                    continue
+                }
+                importExtension(extSrcRef)
+            }
+            indexExtensions(userSource)
+        }
+
+        private fun importExtension(extSrcRef: FlorisRef) {
+            val manifestRef = extSrcRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
+            val manifest = storage.readJson<ExtensionManifest>(manifestRef, ExtensionJson)
+            require(manifest.meta.isValid()) { "Extension meta is malformed" }
+            val existingExtension = getExtensionById(manifest.meta.id)
+            if (existingExtension != null) {
+                require(existingExtension.canDelete()) {
+                    "Attempted to update bundled extension, which is not possible."
+                }
+                require(existingExtension.manifest::class == manifest::class) {
+                    "Attempted to update extension to different type, which is not supported."
+                }
+                val extDstRef = userSource.ref.subRef(manifest.meta.id)
+                storage.deleteRecursively(extDstRef)
+                // TODO this destroys the currently indexed extension in error cases!!!
+                storage.copyRecursively(extSrcRef, extDstRef)
+            } else {
+                val extDstRef = userSource.ref.subRef(manifest.meta.id)
+                storage.copyRecursively(extSrcRef, extDstRef)
+            }
+        }
+
+        private fun indexExtensions(source: MutableSource) {
+            source.clear()
+            if (!storage.canAccessStorage(source.ref)) {
                 // If we do not have access to the underlying medium all operations below would fail.
                 // This can happen if we are initialized before first device-unlock (in direct boot mode
                 // on Android).
                 return
             }
-            val extRefList =
+            if (source.ref.isInternal) {
                 try {
-                    storage.list(ref)
+                    storage.mkdirs(source.ref)
                 } catch (e: Throwable) {
-                    reports.add(
+                    source.reports.add(
                         ExtensionIndexViolation.UnexpectedError(
                             cause = e,
-                            sourceRange = ref.asSourceRange(),
+                            sourceRange = source.ref.asSourceRange(),
+                        )
+                    )
+                    return
+                }
+            }
+            val extRefList =
+                try {
+                    storage.list(source.ref)
+                } catch (e: Throwable) {
+                    source.reports.add(
+                        ExtensionIndexViolation.UnexpectedError(
+                            cause = e,
+                            sourceRange = source.ref.asSourceRange(),
                         )
                     )
                     return
                 }
             for (extRef in extRefList) {
-                val extId = extRef.pathName
+                val extId = extRef.okioPathName
                 val manifestRef = extRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
                 val manifest =
                     try {
                         storage.readJson<ExtensionManifest>(manifestRef, ExtensionJson)
                     } catch (e: Throwable) {
                         // TODO fine-grained violations
-                        reports.add(
+                        source.reports.add(
                             ExtensionIndexViolation.UnexpectedError(
                                 cause = e,
                                 sourceRange = manifestRef.asSourceRange(),
@@ -147,7 +363,7 @@ class ExtensionController(
                         continue
                     }
                 if (extId != manifest.meta.id) {
-                    reports.add(
+                    source.reports.add(
                         ExtensionIndexViolation.IdMismatch(
                             idInDirName = extId,
                             idInManifest = manifest.meta.id,
@@ -156,9 +372,9 @@ class ExtensionController(
                     )
                     continue
                 }
-                val duplicateExtension = extensions[extId]
+                val duplicateExtension = getExtensionById(extId)
                 if (duplicateExtension != null) {
-                    reports.add(
+                    source.reports.add(
                         ExtensionIndexViolation.DuplicateExtension(
                             extRefA = duplicateExtension.sourceRef,
                             extRefB = extRef,
@@ -167,7 +383,7 @@ class ExtensionController(
                     )
                     continue
                 }
-                extensions[extId] = when (manifest) {
+                source.extensions[extId] = when (manifest) {
                     is Keyboard3Extension.Manifest -> {
                         Keyboard3Extension(manifest, extRef)
                     }
@@ -175,7 +391,7 @@ class ExtensionController(
                         ThemeExtension(manifest, extRef)
                     }
                     else -> {
-                        reports.add(
+                        source.reports.add(
                             ExtensionIndexViolation.UnknownManifest(
                                 klass = manifest::class,
                                 sourceRange = manifestRef.asSourceRange(),
@@ -185,6 +401,10 @@ class ExtensionController(
                     }
                 }
             }
+        }
+
+        private fun getExtensionById(id: String): Extension<*>? {
+            return bundledSource.extensions.getOrElse(id) { userSource.extensions[id] }
         }
     }
 
@@ -198,12 +418,6 @@ class ExtensionController(
             isLenient = false
             prettyPrint = true
             prettyPrintIndent = "  "
-            serializersModule = SerializersModule {
-                polymorphic(ExtensionManifest::class) {
-                    subclass(Keyboard3Extension.Manifest::class, Keyboard3Extension.Manifest.serializer())
-                    subclass(ThemeExtension.Manifest::class, ThemeExtension.Manifest.serializer())
-                }
-            }
         }
     }
 }

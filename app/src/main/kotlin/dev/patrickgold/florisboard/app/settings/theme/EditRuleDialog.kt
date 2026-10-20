@@ -27,7 +27,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -78,7 +77,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
+import dev.patrickgold.florisboard.app.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown
@@ -384,8 +383,8 @@ private fun EditCodeValueDialog(
     var errorId by rememberSaveable(codeValue) { mutableIntStateOf(NATIVE_NULLPTR.toInt()) }
 
     val focusRequester = remember { FocusRequester() }
-    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled(foregroundOnly = true)
-    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected(foregroundOnly = true)
+    val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled()
+    val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected()
 
     var isRecordingKey by remember { mutableStateOf(false) }
     var lastRecordingToast by remember { mutableStateOf<InteractionController.ToastHandle?>(null) }
@@ -652,7 +651,6 @@ private fun TextKeyDataPreviewBox(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun <V : Any> EnumLikeAttributeBox(
     text: String,

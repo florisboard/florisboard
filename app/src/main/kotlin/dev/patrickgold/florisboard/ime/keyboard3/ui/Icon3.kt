@@ -17,6 +17,7 @@
 package dev.patrickgold.florisboard.ime.keyboard3.ui
 
 import android.content.Context
+import androidx.annotation.DrawableRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowRightAlt
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -54,6 +55,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.vectorResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard3.ImeIcons
@@ -61,7 +63,6 @@ import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
-import dev.patrickgold.florisboard.lib.compose.vectorResource
 import org.florisboard.lib.compose.icons.ForwardDelete
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.k3lp.lib.text.K3Descriptor
@@ -172,5 +173,14 @@ fun staticIcon3(value: K3Descriptor, context: Context): ImageVector? {
         ImeIcons.Undo -> Icons.AutoMirrored.Filled.Undo
         ImeIcons.Voice -> Icons.Default.KeyboardVoice
         else -> null
+    }
+}
+
+private fun Context.vectorResource(@DrawableRes id: Int): ImageVector? {
+    val theme = this.theme
+    return try {
+        ImageVector.vectorResource(theme = theme, resId = id, res = this.resources)
+    } catch (_: Exception) {
+        null
     }
 }
