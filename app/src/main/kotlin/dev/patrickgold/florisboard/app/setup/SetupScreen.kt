@@ -46,17 +46,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisAppActivity
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.NoBackupPreferenceStore
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.components.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.launchActivity
-import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -84,7 +83,6 @@ private sealed class Steps(val id: Int) {
 
 @Composable
 fun SetupScreen(hasRestoredBackup: Boolean) {
-    val prefs by FlorisPreferenceStore
     val noBackupPrefs by NoBackupPreferenceStore
     val context = LocalContext.current
     val navController = LocalNavController.current
@@ -232,7 +230,7 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
 
 @Composable
 private fun SetupLinks() {
-    val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -241,12 +239,12 @@ private fun SetupLinks() {
         horizontalArrangement = Arrangement.Center,
     ) {
         val privacyPolicyUrl = stringRes(R.string.florisboard__privacy_policy_url)
-        TextButton(onClick = { context.launchUrl(privacyPolicyUrl) }) {
+        TextButton(onClick = { uriHandler.openUri(privacyPolicyUrl) }) {
             Text(text = stringRes(R.string.setup__footer__privacy_policy))
         }
         FlorisBulletSpacer()
         val repositoryUrl = stringRes(R.string.florisboard__repo_url)
-        TextButton(onClick = { context.launchUrl(repositoryUrl) }) {
+        TextButton(onClick = { uriHandler.openUri(repositoryUrl) }) {
             Text(text = stringRes(R.string.setup__footer__source_code))
         }
     }

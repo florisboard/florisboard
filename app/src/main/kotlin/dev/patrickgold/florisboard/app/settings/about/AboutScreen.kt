@@ -34,6 +34,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,7 +46,6 @@ import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.app.components.FlorisScreenNg
-import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.compose.FlorisCanvasIcon
@@ -54,6 +54,7 @@ import org.florisboard.lib.compose.stringRes
 @Composable
 fun AboutScreen() {
     val navController = LocalNavController.current
+    val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
     val clipboardManager by context.clipboardManager()
 
@@ -86,10 +87,6 @@ fun AboutScreen() {
             SegmentedListColumn {
                 val count = 6
                 Preference(
-                    shapes = ListItemDefaults.segmentedShapes(0, count),
-                    icon = Icons.Outlined.Info,
-                    title = stringRes(R.string.about__version__title),
-                    summary = appVersion,
                     onClick = {
                         try {
                             clipboardManager.addNewPlaintext(appVersion)
@@ -102,53 +99,57 @@ fun AboutScreen() {
                             ).show()
                         }
                     },
+                    shapes = ListItemDefaults.segmentedShapes(0, count),
+                    icon = Icons.Outlined.Info,
+                    title = stringRes(R.string.about__version__title),
+                    summary = appVersion,
                 )
+                val changelogUrl = when {
+                    BuildConfig.DEBUG -> stringRes(
+                        R.string.florisboard__commit_by_hash_url,
+                        "hash" to BuildConfig.BUILD_COMMIT_HASH,
+                    )
+                    else -> stringRes(
+                        R.string.florisboard__changelog_url,
+                        "version" to BuildConfig.VERSION_NAME,
+                    )
+                }
                 Preference(
+                    onClick = { uriHandler.openUri(changelogUrl) },
                     shapes = ListItemDefaults.segmentedShapes(1, count),
                     icon = Icons.Default.History,
                     title = stringRes(R.string.about__changelog__title),
                     summary = stringRes(R.string.about__changelog__summary),
-                    onClick = {
-                        if (BuildConfig.DEBUG) {
-                            context.launchUrl(
-                                R.string.florisboard__commit_by_hash_url,
-                                "hash" to BuildConfig.BUILD_COMMIT_HASH,
-                            )
-                        } else {
-                            context.launchUrl(
-                                R.string.florisboard__changelog_url,
-                                "version" to BuildConfig.VERSION_NAME,
-                            )
-                        }
-                    },
                 )
+                val repoUrl = stringRes(R.string.florisboard__repo_url)
                 Preference(
+                    onClick = { uriHandler.openUri(repoUrl) },
                     shapes = ListItemDefaults.segmentedShapes(2, count),
                     icon = Icons.Default.Code,
                     title = stringRes(R.string.about__repository__title),
                     summary = stringRes(R.string.about__repository__summary),
-                    onClick = { context.launchUrl(R.string.florisboard__repo_url) },
                 )
+                val privacyPolicyUrl = stringRes(R.string.florisboard__privacy_policy_url)
                 Preference(
+                    onClick = { uriHandler.openUri(privacyPolicyUrl) },
                     shapes = ListItemDefaults.segmentedShapes(3, count),
                     icon = Icons.Outlined.Policy,
                     title = stringRes(R.string.about__privacy_policy__title),
                     summary = stringRes(R.string.about__privacy_policy__summary),
-                    onClick = { context.launchUrl(R.string.florisboard__privacy_policy_url) },
                 )
                 Preference(
+                    onClick = { navController.navigate(Routes.Settings.ProjectLicense) },
                     shapes = ListItemDefaults.segmentedShapes(4, count),
                     icon = Icons.Outlined.Description,
                     title = stringRes(R.string.about__project_license__title),
                     summary = stringRes(R.string.about__project_license__summary, "license_name" to "Apache 2.0"),
-                    onClick = { navController.navigate(Routes.Settings.ProjectLicense) },
                 )
                 Preference(
+                    onClick = { navController.navigate(Routes.Settings.ThirdPartyLicenses) },
                     shapes = ListItemDefaults.segmentedShapes(5, count),
                     icon = Icons.Outlined.Description,
                     title = stringRes(id = R.string.about__third_party_licenses__title),
                     summary = stringRes(id = R.string.about__third_party_licenses__summary),
-                    onClick = { navController.navigate(Routes.Settings.ThirdPartyLicenses) },
                 )
             }
         }

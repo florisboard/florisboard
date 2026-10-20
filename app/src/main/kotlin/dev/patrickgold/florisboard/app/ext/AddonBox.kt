@@ -26,11 +26,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.extension.ExtensionIndex
-import dev.patrickgold.florisboard.lib.util.launchUrl
 import org.florisboard.lib.compose.FlorisOutlinedBox
 import org.florisboard.lib.compose.FlorisTextButton
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
@@ -38,7 +37,7 @@ import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun UpdateBox(extensionIndex: ExtensionIndex) {
-    val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
     FlorisOutlinedBox(
         modifier = Modifier.defaultFlorisOutlinedBox(),
     ) {
@@ -54,7 +53,7 @@ fun UpdateBox(extensionIndex: ExtensionIndex) {
         ) {
             FlorisTextButton(
                 onClick = {
-                    context.launchUrl(extensionIndex.generateUpdateUrl())
+                    uriHandler.openUri(extensionIndex.generateUpdateUrl())
                 },
                 icon = Icons.Outlined.FileDownload,
                 text = stringRes(id = R.string.ext__update_box__search_for_updates)

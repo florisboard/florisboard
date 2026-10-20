@@ -20,41 +20,10 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.widget.Toast
-import androidx.annotation.StringRes
-import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.lib.devtools.flogError
-import org.florisboard.lib.android.stringRes
-import org.florisboard.lib.kotlin.CurlyArg
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
 import kotlin.reflect.KClass
-
-fun Context.launchUrl(url: String) {
-    val intent = Intent().also {
-        it.action = Intent.ACTION_VIEW
-        it.data = FlorisRef.fromUrl(url).uri
-        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-    }
-    try {
-        this.startActivity(intent)
-    } catch (e: ActivityNotFoundException) {
-        flogError { e.toString() }
-        Toast.makeText(
-            this,
-            this.stringRes(R.string.general__no_browser_app_found_for_url, "url" to url),
-            Toast.LENGTH_LONG,
-        ).show()
-    }
-}
-
-fun Context.launchUrl(@StringRes url: Int) {
-    launchUrl(this.stringRes(url))
-}
-
-fun Context.launchUrl(@StringRes url: Int, vararg args: CurlyArg) {
-    launchUrl(this.stringRes(url, *args))
-}
 
 inline fun <T : Any> Context.launchActivity(kClass: KClass<T>, intentModifier: (Intent) -> Unit = { }) {
     contract {

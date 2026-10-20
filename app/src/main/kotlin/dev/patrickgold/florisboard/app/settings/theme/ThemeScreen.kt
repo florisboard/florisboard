@@ -39,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextOverflow
 import dev.patrickgold.florisboard.BuildConfig
 import dev.patrickgold.florisboard.R
@@ -54,7 +55,6 @@ import dev.patrickgold.florisboard.ime.extension.ExtensionType
 import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
 import dev.patrickgold.florisboard.app.components.FlorisScreenNg
-import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ColorPickerPreference
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
@@ -70,6 +70,7 @@ fun ThemeScreen() {
     val context = LocalContext.current
     val navController = LocalNavController.current
     val themeController = LocalThemeController.current
+    val uriHandler = LocalUriHandler.current
 
     val themeIndex by themeController.effectiveThemeIndex.collectAsState()
     val mode by prefs.theme.mode.collectAsState()
@@ -157,7 +158,7 @@ fun ThemeScreen() {
             SegmentedListColumn {
                 val count = 3
                 SegmentedListItem(
-                    onClick = { context.launchUrl("https://${BuildConfig.FLADDONS_STORE_URL}/") },
+                    onClick = { uriHandler.openUri("https://${BuildConfig.FLADDONS_STORE_URL}/") },
                     shapes = ListItemDefaults.segmentedShapes(0, count),
                     verticalAlignment = Alignment.CenterVertically,
                     leadingContent = { Icon(Icons.Default.Shop, null) },

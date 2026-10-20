@@ -51,12 +51,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.components.FlorisConfirmDeleteDialog
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.ime.extension.Extension
@@ -67,9 +69,6 @@ import dev.patrickgold.florisboard.ime.io.FileRegistry
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
-import dev.patrickgold.florisboard.app.components.FlorisConfirmDeleteDialog
-import dev.patrickgold.florisboard.app.components.FlorisScreenNg
-import dev.patrickgold.florisboard.lib.util.launchUrl
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.stringRes
 
@@ -162,7 +161,7 @@ private fun ExtensionDetails(
     onExport: () -> Unit,
     onEdit: () -> Unit,
 ) {
-    val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
     val meta = extension.manifest.meta
 
     SegmentedListColumn {
@@ -258,7 +257,7 @@ private fun ExtensionDetails(
         SegmentedListItem(
             onClick = {
                 if (meta.homepage != null) {
-                    context.launchUrl(meta.homepage)
+                    uriHandler.openUri(meta.homepage)
                 }
             },
             shapes = ListItemDefaults.segmentedShapes(5, count),
@@ -268,7 +267,7 @@ private fun ExtensionDetails(
         SegmentedListItem(
             onClick = {
                 if (meta.issueTracker != null) {
-                    context.launchUrl(meta.issueTracker)
+                    uriHandler.openUri(meta.issueTracker)
                 }
             },
             shapes = ListItemDefaults.segmentedShapes(6, count),
