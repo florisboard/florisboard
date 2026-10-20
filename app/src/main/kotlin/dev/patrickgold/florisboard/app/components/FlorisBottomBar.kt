@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.florisboard.lib.compose
+package dev.patrickgold.florisboard.app.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -34,13 +34,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun FlorisButtonBar(
+fun FlorisBottomBar(
     content: @Composable RowScope.() -> Unit,
 ) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
-        color = MaterialTheme.colorScheme.surface,
-        shadowElevation = 32.dp,
+        color = MaterialTheme.colorScheme.surfaceContainerHighest,
     ) {
         Row(
             modifier = Modifier
@@ -53,7 +52,7 @@ fun FlorisButtonBar(
 }
 
 @Composable
-fun ButtonBarButton(
+fun FlorisBottomBarPrimaryButton(
     text: String,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -81,7 +80,7 @@ fun ButtonBarButton(
 }
 
 @Composable
-fun ButtonBarTextButton(
+fun FlorisBottomBarSecondaryButton(
     text: String,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,

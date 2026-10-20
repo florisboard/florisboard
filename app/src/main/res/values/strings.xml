@@ -681,6 +681,7 @@
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">This backup archive was generated in a third-party app, which is generally not supported. Data losses may occur, restore at your own risk!</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">This backup archive contains invalid metadata. Either it has been corrupted or poorly modified. Restoring from this archive is not possible, please select another one.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">This backup archive does not contain any files to restore, please select another one.</string>
+    <string name="backup_and_restore__restore__file_name_query_error">An error occurred while querying the selected file\'s name.</string>
     <string name="backup_and_restore__restore__mode">Restore mode</string>
     <string name="backup_and_restore__restore__mode_merge">Merge with current data</string>
     <string name="backup_and_restore__restore__mode_erase_and_overwrite">Erase and overwrite current data</string>

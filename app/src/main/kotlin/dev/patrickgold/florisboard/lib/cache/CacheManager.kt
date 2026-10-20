@@ -16,37 +16,6 @@
 
 package dev.patrickgold.florisboard.lib.cache
 
-import android.content.Context
-import android.net.Uri
-import android.provider.OpenableColumns
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import dev.patrickgold.florisboard.app.ext.EditorAction
-import dev.patrickgold.florisboard.app.settings.advanced.Backup
-import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import org.florisboard.lib.android.query
-import org.florisboard.lib.android.readToFile
-import org.florisboard.lib.kotlin.io.FsDir
-import org.florisboard.lib.kotlin.io.FsFile
-import org.florisboard.lib.kotlin.io.readJson
-import org.florisboard.lib.kotlin.io.subDir
-import org.florisboard.lib.kotlin.io.subFile
-import java.io.Closeable
-import java.io.File
-import java.util.UUID
-
 /*
 class CacheManager(context: Context) {
     companion object {

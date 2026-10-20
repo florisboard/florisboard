@@ -53,9 +53,9 @@ import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.launch
 import okio.IOException
-import org.florisboard.lib.compose.ButtonBarButton
-import org.florisboard.lib.compose.ButtonBarTextButton
-import org.florisboard.lib.compose.FlorisButtonBar
+import dev.patrickgold.florisboard.app.components.FlorisBottomBarPrimaryButton
+import dev.patrickgold.florisboard.app.components.FlorisBottomBarSecondaryButton
+import dev.patrickgold.florisboard.app.components.FlorisBottomBar
 import org.florisboard.lib.compose.FlorisInfoCard
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
 import org.florisboard.lib.compose.stringRes
@@ -204,13 +204,13 @@ fun ExtensionCreateComponentOverlay(
         navigationIcon = Icons.Default.Close,
         navigationIconOnClick = onDismiss,
         bottomBar = {
-            FlorisButtonBar {
+            FlorisBottomBar {
                 Spacer(modifier = Modifier.weight(1f))
-                ButtonBarTextButton(
+                FlorisBottomBarSecondaryButton(
                     onClick = onDismiss,
                     text = stringRes(R.string.action__cancel)
                 )
-                ButtonBarButton(
+                FlorisBottomBarPrimaryButton(
                     onClick = { handleCreate() },
                     text = stringRes(R.string.action__create),
                     enabled = hasSufficientInfoForCreating(),

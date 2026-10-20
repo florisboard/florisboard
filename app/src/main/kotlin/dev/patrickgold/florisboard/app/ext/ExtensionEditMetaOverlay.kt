@@ -48,9 +48,9 @@ import dev.patrickgold.florisboard.lib.ValidationResult
 import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
 import dev.patrickgold.florisboard.lib.compose.Validation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
-import org.florisboard.lib.compose.ButtonBarButton
-import org.florisboard.lib.compose.ButtonBarTextButton
-import org.florisboard.lib.compose.FlorisButtonBar
+import dev.patrickgold.florisboard.app.components.FlorisBottomBarPrimaryButton
+import dev.patrickgold.florisboard.app.components.FlorisBottomBarSecondaryButton
+import dev.patrickgold.florisboard.app.components.FlorisBottomBar
 import org.florisboard.lib.compose.stringRes
 
 @Composable
@@ -121,12 +121,12 @@ fun ExtensionEditMetaOverlay(
         navigationIcon = Icons.Default.Close,
         navigationIconOnClick = onDismiss,
         bottomBar = {
-            FlorisButtonBar {
+            FlorisBottomBar {
                 Spacer(modifier = Modifier.weight(1f))
-                ButtonBarTextButton(text = stringRes(R.string.action__cancel)) {
+                FlorisBottomBarSecondaryButton(text = stringRes(R.string.action__cancel)) {
                     onDismiss()
                 }
-                ButtonBarButton(text = stringRes(R.string.action__apply)) {
+                FlorisBottomBarPrimaryButton(text = stringRes(R.string.action__apply)) {
                     handleApply()
                 }
             }

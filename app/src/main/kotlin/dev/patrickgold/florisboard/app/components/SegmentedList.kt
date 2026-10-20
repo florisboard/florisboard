@@ -19,7 +19,11 @@ package dev.patrickgold.florisboard.app.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ListItemColors
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.ListItemShapes
@@ -27,9 +31,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
+import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.state.ToggleableState
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.apptheme.SegmentedListColumnVerticalPadding
 
 @Composable
@@ -92,5 +99,57 @@ fun SegmentedRadioListItem(
         },
         content = content,
         supportingContent = supportingContent,
+    )
+}
+
+@Composable
+internal fun CheckboxListItem(
+    onClick: () -> Unit,
+    shapes: ListItemShapes,
+    checked: Boolean,
+    text: String,
+    isSecondaryListItem: Boolean = false
+) {
+    SegmentedListItem(
+        onClick = onClick,
+        shapes = shapes,
+        leadingContent = {
+            Row {
+                if (isSecondaryListItem) {
+                    Spacer(modifier = Modifier.width(40.dp))
+                }
+                Checkbox(
+                    checked = checked,
+                    onCheckedChange = null,
+                )
+            }
+        },
+        content = { Text(text) },
+    )
+}
+
+@Composable
+internal fun TriStateCheckboxListItem(
+    onClick: () -> Unit,
+    shapes: ListItemShapes,
+    state: ToggleableState,
+    text: String,
+    isSecondaryListItem: Boolean = false,
+) {
+    SegmentedListItem(
+        onClick = onClick,
+        shapes = shapes,
+        leadingContent = {
+            Row {
+                if (isSecondaryListItem) {
+                    Spacer(modifier = Modifier.width(40.dp))
+                }
+                TriStateCheckbox(
+                    state = state,
+                    onClick = null,
+                )
+            }
+        },
+        content = { Text(text) },
     )
 }

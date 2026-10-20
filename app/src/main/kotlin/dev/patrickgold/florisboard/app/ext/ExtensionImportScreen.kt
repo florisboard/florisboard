@@ -74,10 +74,10 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okio.IOException
-import org.florisboard.lib.compose.ButtonBarButton
-import org.florisboard.lib.compose.ButtonBarTextButton
+import dev.patrickgold.florisboard.app.components.FlorisBottomBarPrimaryButton
+import dev.patrickgold.florisboard.app.components.FlorisBottomBarSecondaryButton
 import org.florisboard.lib.compose.FlorisButton
-import org.florisboard.lib.compose.FlorisButtonBar
+import dev.patrickgold.florisboard.app.components.FlorisBottomBar
 import org.florisboard.lib.compose.stringRes
 import kotlin.concurrent.atomics.AtomicInt
 import kotlin.concurrent.atomics.ExperimentalAtomicApi
@@ -287,13 +287,13 @@ fun ExtensionImportScreen(
         bottomBar = {
             val successText = stringRes(R.string.ext__import__success)
             val failureText = stringRes(R.string.ext__import__failure)
-            FlorisButtonBar {
+            FlorisBottomBar {
                 Spacer(modifier = Modifier.weight(1f))
-                ButtonBarTextButton(
+                FlorisBottomBarSecondaryButton(
                     onClick = { navController.popBackStack() },
                     text = stringRes(R.string.action__cancel),
                 )
-                ButtonBarButton(
+                FlorisBottomBarPrimaryButton(
                     onClick = {
                         scope.launch {
                             runCatching {

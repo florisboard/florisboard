@@ -71,9 +71,9 @@ import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
 import okio.IOException
-import org.florisboard.lib.compose.ButtonBarButton
-import org.florisboard.lib.compose.ButtonBarTextButton
-import org.florisboard.lib.compose.FlorisButtonBar
+import dev.patrickgold.florisboard.app.components.FlorisBottomBarPrimaryButton
+import dev.patrickgold.florisboard.app.components.FlorisBottomBarSecondaryButton
+import dev.patrickgold.florisboard.app.components.FlorisBottomBar
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.tryOrNull
 import kotlin.reflect.KClass
@@ -276,12 +276,12 @@ fun ExtensionEditScreen(extensionId: String?, type: ExtensionType) {
             previewFieldVisible = false,
             navigationIconOnClick = { handleBackPress() },
             bottomBar = {
-                FlorisButtonBar {
+                FlorisBottomBar {
                     Spacer(modifier = Modifier.weight(1f))
-                    ButtonBarTextButton(text = stringRes(R.string.action__cancel)) {
+                    FlorisBottomBarSecondaryButton(text = stringRes(R.string.action__cancel)) {
                         handleBackPress()
                     }
-                    ButtonBarButton(text = stringRes(R.string.action__save), enabled = state is EditorState.Workspace) {
+                    FlorisBottomBarPrimaryButton(text = stringRes(R.string.action__save), enabled = state is EditorState.Workspace) {
                         handleSave()
                     }
                 }

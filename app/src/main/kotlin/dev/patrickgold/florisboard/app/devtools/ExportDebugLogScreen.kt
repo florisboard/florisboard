@@ -47,7 +47,7 @@ import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
 import dev.patrickgold.florisboard.lib.devtools.Devtools
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.FlorisButton
-import org.florisboard.lib.compose.FlorisButtonBar
+import dev.patrickgold.florisboard.app.components.FlorisBottomBar
 import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.compose.florisScrollbar
 import org.florisboard.lib.compose.stringRes
@@ -73,7 +73,7 @@ fun ExportDebugLogScreen() {
         title = stringRes(R.string.devtools__debuglog__title),
         previewFieldVisible = false,
         bottomBar = {
-            FlorisButtonBar {
+            FlorisBottomBar {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly,
