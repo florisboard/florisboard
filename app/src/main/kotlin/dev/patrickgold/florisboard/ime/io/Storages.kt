@@ -95,6 +95,7 @@ fun Storage.deleteAllWorkspaces() {
 fun Storage.unzip(srcRef: FlorisRef, dstRef: FlorisRef) {
     val (srcFs, srcPath) = resolve(srcRef)
     val (dstFs, dstPath) = resolve(dstRef)
+    dstFs.createDirectories(dstPath)
     val zipFs = srcFs.openZip(srcPath)
     for (entry in zipFs.listRecursively(".".toPath())) {
         val entryRel = entry.toString().removePrefix("/").toPath()
