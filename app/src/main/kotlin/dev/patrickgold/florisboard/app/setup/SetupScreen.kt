@@ -139,10 +139,10 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
                     welcomeSeen = true
                     next()
                 },
-                secondaryLabel = { stringRes(R.string.setup__welcome__restore_btn) },
+                secondaryLabel = { stringRes(R.string.setup__welcome__restore_btn) + " (has? $hasRestoredBackup)" }, // TODO @Lars: integrate
                 secondaryStyle = SetupSecondaryStyle.TONAL,
                 onSecondary = {
-                    navController.navigate(Routes.Settings.Restore)
+                    navController.navigate(Routes.Settings.Restore(isSetup = true))
                 },
                 showProgress = false,
             ),

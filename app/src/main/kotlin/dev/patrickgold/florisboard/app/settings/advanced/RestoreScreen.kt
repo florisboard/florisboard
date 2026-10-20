@@ -88,6 +88,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.apptheme.SegmentedListColumnVerticalPadding
 import dev.patrickgold.florisboard.app.components.FlorisBottomBar
 import dev.patrickgold.florisboard.app.components.FlorisBottomBarPrimaryButton
@@ -103,6 +104,7 @@ import dev.patrickgold.florisboard.ime.io.AndroidStorage
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.ime.io.LocalStorageController
 import dev.patrickgold.florisboard.ime.io.createWorkspace
+import dev.patrickgold.florisboard.ime.io.filterLinesInPlace
 import dev.patrickgold.florisboard.ime.io.queryFileName
 import dev.patrickgold.florisboard.ime.io.readJson
 import dev.patrickgold.florisboard.ime.io.unzip
@@ -145,7 +147,8 @@ sealed interface RestoreScreenState {
         override val workspaceRef: FlorisRef,
         val backupDirRef: FlorisRef,
         val metadata: BackupArchiveMetadata,
-        val importStrategy: ImportStrategy = ImportStrategy.Merge,
+        val isSetup: Boolean,
+        val importStrategy: ImportStrategy,
         val filter: BackupArchiveFilter = BackupArchiveFilter(),
     ) : RestoreScreenState
 
@@ -159,7 +162,7 @@ sealed interface RestoreScreenState {
 }
 
 @Composable
-fun RestoreScreen() {
+fun RestoreScreen(isSetup: Boolean) {
     val context = LocalContext.current
     val extensionController = LocalExtensionController.current
     val interactionController = LocalInteractionController.current
@@ -213,6 +216,11 @@ fun RestoreScreen() {
                         workspaceRef = workspaceRef,
                         backupDirRef = unzippedRef,
                         metadata = metadata,
+                        isSetup = isSetup,
+                        importStrategy = when {
+                            isSetup -> ImportStrategy.Erase
+                            else -> ImportStrategy.Merge
+                        },
                     )
                 } catch (e: IOException) {
                     restoreScreenState = RestoreScreenState.Error(
@@ -232,7 +240,10 @@ fun RestoreScreen() {
                 .subRef(AndroidAppDataStorage.JETPREF_DIR_NAME)
                 .subRef("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
             if (storage.exists(prefRef)) {
-                val (_, prefPath) = storage.resolve(prefRef)
+                val (prefFs, prefPath) = storage.resolve(prefRef)
+                prefFs.filterLinesInPlace(prefPath) { line ->
+                    !line.startsWith("b;internal__is_ime_set_up;")
+                }
                 val fileBasedStorage = FileBasedStorage(prefPath.toString())
                 FlorisPreferenceStore.import(state.importStrategy, fileBasedStorage).getOrThrow()
             }
@@ -333,7 +344,13 @@ fun RestoreScreen() {
                                 try {
                                     performRestore(state)
                                     interactionController.showLongToast(successMsg)
-                                    navController.navigateUp()
+                                    if (isSetup) {
+                                        navController.navigate(Routes.Setup.Screen(hasRestoredBackup = true)) {
+                                            popUpTo(Routes.Setup.Screen::class) { inclusive = true }
+                                        }
+                                    } else {
+                                        navController.navigateUp()
+                                    }
                                 } catch (e: Throwable) {
                                     interactionController.showLongToast(
                                         failureMsg,
@@ -513,20 +530,22 @@ private fun ReadyColumn(
                 },
             )
         }
-        SegmentedListColumn(title = stringRes(R.string.backup_and_restore__restore__mode)) {
-            val count = 2
-            SegmentedRadioListItem(
-                onClick = { onUpdateState(state.copy(importStrategy = ImportStrategy.Merge)) },
-                selected = state.importStrategy == ImportStrategy.Merge,
-                shapes = ListItemDefaults.segmentedShapes(0, count),
-                content = { Text(stringRes(R.string.backup_and_restore__restore__mode_merge)) },
-            )
-            SegmentedRadioListItem(
-                onClick = { onUpdateState(state.copy(importStrategy = ImportStrategy.Erase)) },
-                selected = state.importStrategy == ImportStrategy.Erase,
-                shapes = ListItemDefaults.segmentedShapes(1, count),
-                content = { Text(stringRes(R.string.backup_and_restore__restore__mode_erase_and_overwrite)) },
-            )
+        if (!state.isSetup) {
+            SegmentedListColumn(title = stringRes(R.string.backup_and_restore__restore__mode)) {
+                val count = 2
+                SegmentedRadioListItem(
+                    onClick = { onUpdateState(state.copy(importStrategy = ImportStrategy.Merge)) },
+                    selected = state.importStrategy == ImportStrategy.Merge,
+                    shapes = ListItemDefaults.segmentedShapes(0, count),
+                    content = { Text(stringRes(R.string.backup_and_restore__restore__mode_merge)) },
+                )
+                SegmentedRadioListItem(
+                    onClick = { onUpdateState(state.copy(importStrategy = ImportStrategy.Erase)) },
+                    selected = state.importStrategy == ImportStrategy.Erase,
+                    shapes = ListItemDefaults.segmentedShapes(1, count),
+                    content = { Text(stringRes(R.string.backup_and_restore__restore__mode_erase_and_overwrite)) },
+                )
+            }
         }
         BackupArchiveFilterColumn(
             filter = state.filter,

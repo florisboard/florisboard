@@ -190,7 +190,7 @@ object Routes {
 
         @Serializable
         @Deeplink("settings/other/restore")
-        object Restore
+        data class Restore(val isSetup: Boolean = false)
 
         @Serializable
         @Deeplink("settings/about")
@@ -313,7 +313,10 @@ object Routes {
             composableWithDeepLink(Settings.Other::class) { OtherScreen() }
             composableWithDeepLink(Settings.PhysicalKeyboard::class) { PhysicalKeyboardScreen() }
             composableWithDeepLink(Settings.Backup::class) { BackupScreen() }
-            composableWithDeepLink(Settings.Restore::class) { RestoreScreen() }
+            composableWithDeepLink(Settings.Restore::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Settings.Restore>()
+                RestoreScreen(payload.isSetup)
+            }
 
             composableWithDeepLink(Settings.About::class) { AboutScreen() }
             composableWithDeepLink(Settings.ProjectLicense::class) { ProjectLicenseScreen() }

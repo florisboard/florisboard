@@ -192,7 +192,7 @@ fun OtherScreen() {
                     summary = stringRes(R.string.backup_and_restore__back_up__summary),
                 )
                 Preference(
-                    onClick = { navController.navigate(Routes.Settings.Restore) },
+                    onClick = { navController.navigate(Routes.Settings.Restore()) },
                     shapes = ListItemDefaults.segmentedShapes(1, count),
                     icon = Icons.Default.SettingsBackupRestore,
                     title = stringRes(R.string.backup_and_restore__restore__title),

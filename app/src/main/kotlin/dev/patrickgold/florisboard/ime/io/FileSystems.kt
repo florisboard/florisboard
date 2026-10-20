@@ -18,6 +18,8 @@ package dev.patrickgold.florisboard.ime.io
 
 import okio.FileSystem
 import okio.Path
+import okio.buffer
+import kotlin.uuid.Uuid
 
 fun FileSystem.canonicalizeOrNull(
     path: Path,
@@ -30,4 +32,22 @@ fun FileSystem.canonicalizeOrNull(
         generateSequence(canonicalPath) { it.parent }
             .any { it == canonicalBase }
     }
+}
+
+fun FileSystem.filterLinesInPlace(
+    path: Path,
+    predicate: (String) -> Boolean,
+) {
+    val tmp = path.parent!!.resolve(Uuid.random().toHexDashString())
+    source(path).buffer().use { source ->
+        sink(tmp).buffer().use { sink ->
+            while (true) {
+                val line = source.readUtf8Line() ?: break
+                if (predicate(line)) {
+                    sink.writeUtf8(line).writeUtf8("\n")
+                }
+            }
+        }
+    }
+    atomicMove(tmp, path)
 }
