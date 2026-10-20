@@ -18,7 +18,9 @@
 
 package dev.patrickgold.florisboard.app.setup
 
+import androidx.activity.BackEventCompat
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.PredictiveBackHandler
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
@@ -27,7 +29,6 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -84,13 +85,16 @@ import androidx.graphics.shapes.Morph
 import androidx.graphics.shapes.RoundedPolygon
 import androidx.graphics.shapes.toPath
 import dev.patrickgold.florisboard.R
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.florisVerticalScroll
 import org.florisboard.lib.compose.stringRes
+import kotlin.coroutines.cancellation.CancellationException
 
 interface SetupNavigator {
     fun next()
     fun back()
+    fun predictiveBack(progress: Float)
 }
 
 enum class SetupSecondaryStyle { TEXT, TONAL }
@@ -123,6 +127,11 @@ internal object SetupShapes {
     val Finish = MaterialShapes.SoftBurst.normalized()
 }
 
+private fun peekProgress(raw: Float, max: Float = 0.45f): Float {
+    val inv = 1f - raw.coerceIn(0f, 1f)
+    return max * (1f - inv * inv)
+}
+
 @Composable
 fun SetupFlowLayout(
     steps: List<SetupStep>,
@@ -145,6 +154,9 @@ fun SetupFlowLayout(
 
     val navigator = remember(pagerState) {
         object : SetupNavigator {
+            private var gestureStartPage = -1
+            private var appliedOffset = 0f
+
             override fun next() {
                 val page = pagerState.currentPage
                 val step = currentSteps.getOrNull(page) ?: return
@@ -155,19 +167,58 @@ fun SetupFlowLayout(
             }
 
             override fun back() {
-                val page = pagerState.currentPage
+                val page = if (gestureStartPage >= 0) gestureStartPage else pagerState.currentPage
                 val previous = currentSteps.getOrNull(page - 1) ?: return
                 if (previous.required) return
                 scope.launch { pagerState.animateScrollToPage(page - 1) }
             }
+
+            override fun predictiveBack(progress: Float) {
+                if (gestureStartPage < 0) gestureStartPage = pagerState.currentPage
+                val previous = currentSteps.getOrNull(gestureStartPage - 1) ?: return
+                if (previous.required) return
+
+                val pageSize = pagerState.layoutInfo.pageSize + pagerState.layoutInfo.pageSpacing
+                val targetOffset = -progress * pageSize
+                pagerState.dispatchRawDelta(targetOffset - appliedOffset)
+                appliedOffset = targetOffset
+            }
+
+            fun cancelPredictiveBack() {
+                val page = gestureStartPage
+                reset()
+                if (page >= 0) scope.launch { pagerState.animateScrollToPage(page) }
+            }
+
+            fun finishPredictiveBack() {
+                back()
+                reset()
+            }
+
+            private fun reset() {
+                gestureStartPage = -1
+                appliedOffset = 0f
+            }
+
         }
     }
 
     val targetPage = pagerState.targetPage.coerceIn(0, steps.lastIndex)
     val targetStep = steps[targetPage]
 
-    val canGoBack = steps.getOrNull(pagerState.currentPage - 1)?.required == false
+    val canGoBack = steps.getOrNull(pagerState.currentPage - 1)?.required == false && steps.getOrNull(pagerState.currentPage) != steps.last()
     BackHandler(enabled = canGoBack) { navigator.back() }
+    PredictiveBackHandler(enabled = canGoBack) { progress: Flow<BackEventCompat> ->
+        try {
+            progress.collect { backEvent ->
+                navigator.predictiveBack(peekProgress(backEvent.progress))
+            }
+            navigator.finishPredictiveBack()
+        } catch (e: CancellationException) {
+            navigator.cancelPredictiveBack()
+            throw e
+        }
+    }
 
     var infoStepId by rememberSaveable { mutableStateOf<Int?>(null) }
 
