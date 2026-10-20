@@ -57,8 +57,8 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.keyboard3.ui.GlobalStateNumPopupsShowing
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofillSuggestion
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.lib.toIntOffset
 import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.toIntOffset
 import org.florisboard.lib.snygg.SnyggSinglePropertySet
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
 

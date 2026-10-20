@@ -105,7 +105,6 @@ import dev.patrickgold.florisboard.ime.io.AndroidStorage
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.ime.io.LocalStorageController
 import dev.patrickgold.florisboard.ime.io.createWorkspace
-import dev.patrickgold.florisboard.ime.io.filterLinesInPlace
 import dev.patrickgold.florisboard.ime.io.queryFileName
 import dev.patrickgold.florisboard.ime.io.readJson
 import dev.patrickgold.florisboard.ime.io.unzip
@@ -242,10 +241,7 @@ fun RestoreScreen(isSetup: Boolean) {
                 .subRef(AndroidAppDataStorage.JETPREF_DIR_NAME)
                 .subRef("${FlorisPreferenceModel.NAME}.${AndroidAppDataStorage.JETPREF_FILE_EXT}")
             if (storage.exists(prefRef)) {
-                val (prefFs, prefPath) = storage.resolve(prefRef)
-                prefFs.filterLinesInPlace(prefPath) { line ->
-                    !line.startsWith("b;internal__is_ime_set_up;")
-                }
+                val (_, prefPath) = storage.resolve(prefRef)
                 val fileBasedStorage = FileBasedStorage(prefPath.toString())
                 FlorisPreferenceStore.import(state.importStrategy, fileBasedStorage).getOrThrow()
             }

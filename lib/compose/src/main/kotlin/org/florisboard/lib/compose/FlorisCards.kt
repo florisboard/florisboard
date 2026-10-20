@@ -36,7 +36,6 @@ import androidx.compose.material.icons.outlined.Warning
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -45,13 +44,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-
 
 object FlorisCardDefaults {
     val IconRequiredSize = 24.dp
@@ -192,54 +186,6 @@ fun FlorisInfoCard(
         ) }) else null,
         text = text,
         contentPadding = contentPadding,
-    )
-}
-
-@Composable
-fun FlorisOutlinedBox(
-    modifier: Modifier = Modifier,
-    title: String,
-    onTitleClick: (() -> Unit)? = null,
-    subtitle: String? = null,
-    onSubtitleClick: (() -> Unit)? = null,
-    borderWidth: Dp = 1.dp,
-    borderColor: Color = MaterialTheme.colorScheme.outlineVariant,
-    shape: Shape = BoxDefaults.OutlinedBoxShape,
-    contentPadding: PaddingValues = BoxDefaults.ContentPadding,
-    content: @Composable ColumnScope.() -> Unit,
-) {
-    FlorisOutlinedBox(
-        modifier = modifier,
-        title = {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.titleSmall,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-            )
-        },
-        onTitleClick = onTitleClick,
-        subtitle = if (subtitle != null) {
-            {
-                Text(
-                    modifier = Modifier
-                        .padding(start = 6.dp, end = 6.dp, bottom = 4.dp),
-                    text = subtitle,
-                    color = LocalContentColor.current.copy(alpha = 0.56f),
-                    fontWeight = FontWeight.Normal,
-                    fontFamily = FontFamily.Monospace,
-                    fontSize = 10.sp,
-                )
-            }
-        } else {
-            null
-        },
-        onSubtitleClick = onSubtitleClick,
-        borderWidth = borderWidth,
-        borderColor = borderColor,
-        shape = shape,
-        contentPadding = contentPadding,
-        content = content,
     )
 }
 
