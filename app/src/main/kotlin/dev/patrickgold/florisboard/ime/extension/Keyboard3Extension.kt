@@ -19,16 +19,11 @@ package dev.patrickgold.florisboard.ime.extension
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 
 data class Keyboard3Extension(
     override val manifest: Manifest,
     override val sourceRef: FlorisRef,
 ) : Extension<Keyboard3Extension.Manifest> {
-    @Transient
-    override val type: ExtensionType
-        get() = ExtensionType.KEYBOARD3
-
     @SerialName("ime.extension.keyboard3")
     @Serializable
     data class Manifest(
@@ -38,6 +33,9 @@ data class Keyboard3Extension(
         val keyboards: List<KeyboardComponent>,
         val tests: List<TestComponent>,
     ) : ExtensionManifest {
+        override val type: ExtensionType
+            get() = ExtensionType.KEYBOARD3
+
         override fun components(): Sequence<ExtensionComponent> {
             return sequence {
                 yieldAll(keyboards)

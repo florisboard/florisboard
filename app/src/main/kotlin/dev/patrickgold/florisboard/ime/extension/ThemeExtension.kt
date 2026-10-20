@@ -21,7 +21,6 @@ import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 import kotlinx.serialization.json.JsonNames
 import org.florisboard.lib.snygg.color.MaterialYouFlags
 
@@ -29,10 +28,6 @@ class ThemeExtension(
     override val manifest: Manifest,
     override val sourceRef: FlorisRef,
 ) : Extension<ThemeExtension.Manifest> {
-    @Transient
-    override val type: ExtensionType
-        get() = ExtensionType.THEME
-
     @SerialName("ime.extension.theme")
     @Serializable
     data class Manifest(
@@ -40,6 +35,9 @@ class ThemeExtension(
         override val dependencies: ExtensionDependencyDecl = emptyMap(),
         val themes: List<ThemeComponent>,
     ) : ExtensionManifest {
+        override val type: ExtensionType
+            get() = ExtensionType.THEME
+
         override fun components(): Sequence<ExtensionComponent> {
             return sequence {
                 yieldAll(themes)

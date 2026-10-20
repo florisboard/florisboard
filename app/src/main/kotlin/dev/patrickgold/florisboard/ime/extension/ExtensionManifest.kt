@@ -16,10 +16,18 @@
 
 package dev.patrickgold.florisboard.ime.extension
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
+import kotlinx.serialization.json.JsonClassDiscriminator
 
+@OptIn(ExperimentalSerializationApi::class)
 @Serializable
+@JsonClassDiscriminator("$")
 sealed interface ExtensionManifest {
+    @Transient
+    val type: ExtensionType
+
     val meta: ExtensionMeta
 
     val dependencies: ExtensionDependencyDecl

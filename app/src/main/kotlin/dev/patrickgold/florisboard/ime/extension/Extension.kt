@@ -20,6 +20,7 @@ import dev.patrickgold.florisboard.ime.io.FlorisRef
 
 sealed interface Extension<M : ExtensionManifest> {
     val type: ExtensionType
+        get() = manifest.type
 
     val manifest: M
 
