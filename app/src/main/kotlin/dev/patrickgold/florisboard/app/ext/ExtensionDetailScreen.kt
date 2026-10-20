@@ -190,6 +190,7 @@ private fun ExtensionDetails(
                 onClick = onEdit,
                 colors = IconButtonDefaults.filledIconButtonColors(),
                 label = stringRes(R.string.action__edit),
+                enabled = extension.canDelete(),
                 content = { Icon(Icons.Default.Edit, null) },
             )
         }
