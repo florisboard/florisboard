@@ -214,7 +214,7 @@ fun ExtensionImportScreen(
             )
             return@launch
         }
-        val unzippedRef = workspaceRef.subRef(zippedRef.pathName + ".d")
+        val unzippedRef = workspaceRef.subRef(zippedRef.okioPathName + ".d")
         val manifestRef = unzippedRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
         val manifest: ExtensionManifest
         try {

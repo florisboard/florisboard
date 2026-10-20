@@ -43,17 +43,17 @@ class AndroidStorage(
     override fun resolve(ref: FlorisRef): Pair<FileSystem, Path> {
         return when {
             ref.isAssets -> {
-                assetFs to ref.relativePath.toPath(normalize = true)
+                assetFs to ref.okioRelPath
             }
             ref.isCache -> {
                 val base = context.cacheDir.toOkioPath()
-                val path = (base / ref.relativePath).normalized()
+                val path = (base / ref.okioRelPath).normalized()
                 // TODO startsWith check
                 systemFs to path
             }
             ref.isInternal -> {
                 val base = context.filesDir.toOkioPath()
-                val path = (base / ref.relativePath).normalized()
+                val path = (base / ref.okioRelPath).normalized()
                 // TODO startsWith check
                 systemFs to path
             }

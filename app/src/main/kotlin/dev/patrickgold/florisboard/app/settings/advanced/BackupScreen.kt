@@ -173,7 +173,7 @@ fun BackupScreen() {
         }
         val metadata = BackupArchiveMetadata(
             packageName = BuildConfig.APPLICATION_ID,
-            versionCode = BuildConfig.VERSION_CODE + 1,
+            versionCode = BuildConfig.VERSION_CODE,
             versionName = BuildConfig.VERSION_NAME,
             timestamp = System.currentTimeMillis(),
         )
@@ -190,7 +190,7 @@ fun BackupScreen() {
             when (backupDestination) {
                 BackupDestination.FILE_SYS -> {
                     backupWorkspace = workspace
-                    backUpToFileSystemLauncher.launch(workspace.archiveRef.pathName)
+                    backUpToFileSystemLauncher.launch(workspace.archiveRef.okioPathName)
                 }
                 BackupDestination.SHARE_INTENT -> {
                     val (_, path) = storage.resolve(workspace.archiveRef)

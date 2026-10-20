@@ -24,6 +24,7 @@ import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import okio.Path
 import okio.Path.Companion.toPath
 import org.k3lp.lib.meta.source.SourceFileRef
 
@@ -59,6 +60,8 @@ value class FlorisRef private constructor(val uri: Uri) : SourceFileRef {
         private const val URL_HTTP_PREFIX = "http://"
         private const val URL_HTTPS_PREFIX = "https://"
         private const val URL_MAILTO_PREFIX = "mailto:"
+
+        private val OKIO_ROOT_PATH = "/".toPath()
 
         /**
          * Constructs a new [FlorisRef] pointing to a UI screen within the app
@@ -230,68 +233,57 @@ value class FlorisRef private constructor(val uri: Uri) : SourceFileRef {
     val authority: String
         get() = uri.authority ?: ""
 
+    val okioAbsPath: Path
+        get() = uri.path?.toPath(normalize = true) ?: OKIO_ROOT_PATH
+
     /**
      * Returns the relative path of this URI, without a leading forward slash.
      * Works only for assets, cache or internal references.
      */
-    val relativePath: String
-        get() = (uri.path ?: "").removePrefix("/")
+    val okioRelPath: Path
+        get() = okioAbsPath.relativeTo(OKIO_ROOT_PATH)
 
     /**
      * Returns the name segment of the relative path, that is the last segment in
      * relative path separated by a slash. Returns the full relative path if no
      * slashes are present.
      */
-    val pathName: String
-        get() {
-            val relPath = uri.path ?: return ""
-            val slashIndex = relPath.lastIndexOf('/')
-            return relPath.substring(slashIndex + 1)
-        }
+    val okioPathName: String
+        get() = okioAbsPath.name
 
     val parentRef: FlorisRef?
         get() {
-            val originalPathStr = uri.path ?: return null
-            val parent = originalPathStr.toPath(normalize = true).parent ?: return null
+            val parent = okioAbsPath.parent ?: return null
             return from(uri.buildUpon().run {
                 encodedPath(parent.toString())
                 build()
             })
         }
 
-    fun relativeTo(other: FlorisRef): String {
-        require(isAssets || isCache || isInternal) {
-            "relativeTo behavior is only defined for assets/cache/internal refs"
-        }
-        val otherPath = (other.uri.path ?: "/").toPath(normalize = true)
-        val thisPath = (uri.path ?: "/").toPath(normalize = true)
-        val relPath = thisPath.relativeTo(otherPath)
-        return relPath.toString()
-    }
-
     /**
-     * Returns if this URI contains data for all valid parts of a FlorisRef.
-     */
-    val isValid: Boolean
-        get() = scheme.isNotBlank() && authority.isNotBlank()
-
-    /**
-     * Returns if this URI contains data for all valid parts of a FlorisRef.
-     */
-    val isInvalid: Boolean
-        get() = !isValid
-
-    /**
-     * Returns a new reference pointing to a sub directory(file with given [name].
+     * Returns a new reference appending given [relPathStr] to this ref.
      *
-     * @param name The name of the sub file/directory.
+     * @param relPathStr The relative path to append.
      *
      * @return The newly constructed reference.
      */
-    fun subRef(name: String) = from(uri.buildUpon().run {
-        appendEncodedPath(name)
-        build()
-    })
+    fun subRef(relPathStr: String): FlorisRef {
+        val relPath = relPathStr.toPath(normalize = true)
+        require(relPath.isRelative)
+        val newAbsPath = (okioAbsPath / relPath).normalized()
+        return from(uri.buildUpon().run {
+            encodedPath(newAbsPath.toString())
+            build()
+        })
+    }
+
+    fun relativeTo(other: FlorisRef): String {
+        require(isAssets && other.isAssets || isCache && other.isCache || isInternal && other.isInternal) {
+            "relativeTo behavior is only defined for assets/cache/internal refs"
+        }
+        val relPath = okioAbsPath.relativeTo(other.okioAbsPath)
+        return relPath.toString()
+    }
 
     /**
      * Returns the encoded string representation of this URI.

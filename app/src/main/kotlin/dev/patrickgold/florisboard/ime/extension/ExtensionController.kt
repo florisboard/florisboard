@@ -277,10 +277,10 @@ class ExtensionController(
                 } catch (e: Throwable) {
                     continue
                 }
-                if (isLegacyMode && entryRef.pathName != manifest.meta.id + ".flex") {
+                if (isLegacyMode && entryRef.okioPathName != manifest.meta.id + ".flex") {
                     continue
                 }
-                if (!isLegacyMode && extSrcRef.pathName != manifest.meta.id) {
+                if (!isLegacyMode && extSrcRef.okioPathName != manifest.meta.id) {
                     continue
                 }
                 if (!filter.includes(manifest.type)) {
@@ -347,7 +347,7 @@ class ExtensionController(
                     return
                 }
             for (extRef in extRefList) {
-                val extId = extRef.pathName
+                val extId = extRef.okioPathName
                 val manifestRef = extRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
                 val manifest =
                     try {

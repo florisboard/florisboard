@@ -249,7 +249,7 @@ private fun FileListColumn(
                 onClick = { dialogFileRef = fileRef },
                 shapes = ListItemDefaults.segmentedShapes(index, count),
                 leadingContent = { Icon(icon, null) },
-                content = { Text(fileRef.pathName) },
+                content = { Text(fileRef.okioPathName) },
             )
         }
         SegmentedListItem(
@@ -261,7 +261,7 @@ private fun FileListColumn(
     }
 
     dialogFileRef?.let { fileRef ->
-        var fileNameInput by rememberSerializable { mutableStateOf(fileRef.pathName) }
+        var fileNameInput by rememberSerializable { mutableStateOf(fileRef.okioPathName) }
         JetPrefAlertDialog(
             title = stringRes(R.string.general__properties),
             confirmLabel = stringRes(R.string.action__apply),

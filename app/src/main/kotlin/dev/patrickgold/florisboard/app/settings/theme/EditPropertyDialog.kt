@@ -652,7 +652,7 @@ private fun PropertyValueEditor(
                                         showSelectFileDialog = false
                                     },
                                     shapes = ListItemDefaults.segmentedShapes(index, count),
-                                    content = { Text(ref.pathName) },
+                                    content = { Text(ref.okioPathName) },
                                 )
                             }
                         }
