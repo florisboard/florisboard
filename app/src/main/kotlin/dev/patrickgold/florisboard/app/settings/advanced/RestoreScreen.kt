@@ -93,6 +93,7 @@ import dev.patrickgold.florisboard.app.apptheme.SegmentedListColumnVerticalPaddi
 import dev.patrickgold.florisboard.app.components.FlorisBottomBar
 import dev.patrickgold.florisboard.app.components.FlorisBottomBarPrimaryButton
 import dev.patrickgold.florisboard.app.components.FlorisBottomBarSecondaryButton
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.app.components.SegmentedRadioListItem
@@ -111,7 +112,6 @@ import dev.patrickgold.florisboard.ime.io.unzip
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.inferFlorisApplication
-import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.jetpref.datastore.runtime.AndroidAppDataStorage
 import dev.patrickgold.jetpref.datastore.runtime.FileBasedStorage
 import dev.patrickgold.jetpref.datastore.runtime.ImportStrategy
@@ -175,9 +175,11 @@ fun RestoreScreen(isSetup: Boolean) {
         mutableStateOf<RestoreScreenState>(RestoreScreenState.Idle)
     }
 
-    DisposableEffect(restoreScreenState) {
+    DisposableEffect(restoreScreenState.workspaceRef) {
         val workspaceRef = restoreScreenState.workspaceRef
-        onDispose { workspaceRef?.let { storage.deleteRecursively(it, mustExist = false) } }
+        onDispose {
+            workspaceRef?.let { storage.deleteRecursively(it, mustExist = false) }
+        }
     }
 
     val restoreDataFromFileSystemLauncher = rememberLauncherForActivityResult(
@@ -635,7 +637,7 @@ private fun SharedTransitionScope.SelectFileButton(
                 onClick = onClick,
                 enabled = enabled,
             ) {
-                Text("Change")
+                Text(stringRes(R.string.action__change))
             }
         } else {
             val size = ButtonDefaults.MediumContainerHeight
@@ -652,7 +654,7 @@ private fun SharedTransitionScope.SelectFileButton(
                 )
                 Spacer(Modifier.width(ButtonDefaults.iconSpacingFor(size)))
                 Text(
-                    text = "Select file",
+                    text = stringRes(R.string.action__select_file),
                     style = ButtonDefaults.textStyleFor(size),
                 )
             }

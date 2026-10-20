@@ -889,6 +889,7 @@
     <string name="action__back">Back</string>
     <string name="action__back_up">Back up</string>
     <string name="action__cancel">Cancel</string>
+    <string name="action__change">Change</string>
     <string name="action__continue">Continue</string>
     <string name="action__create">Create</string>
     <string name="action__default">Default</string>
