@@ -25,7 +25,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.NoBackupPreferenceStore
 import dev.patrickgold.florisboard.app.Routes
+import dev.patrickgold.florisboard.app.components.FlorisConfirmDeleteDialog
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
 import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.app.components.SpotlightSwitchPreference
@@ -35,8 +38,6 @@ import dev.patrickgold.florisboard.ime.dictionary.FlorisUserDictionaryDatabase
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionArrangement
-import dev.patrickgold.florisboard.app.components.FlorisConfirmDeleteDialog
-import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
@@ -52,6 +53,7 @@ class DebugOnPurposeCrashException : Exception(
 @Composable
 fun DevtoolsScreen() {
     val prefs by FlorisPreferenceStore
+    val noBackupPrefs by NoBackupPreferenceStore
     val interactionController = LocalInteractionController.current
     val navController = LocalNavController.current
     val scope = rememberCoroutineScope()
@@ -138,7 +140,7 @@ fun DevtoolsScreen() {
                     enabledIf = { prefs.devtools.enabled isEqualTo true },
                 )
                 Preference(
-                    onClick = { scope.launch { prefs.internal.isImeSetUp.set(false) } },
+                    onClick = { scope.launch { noBackupPrefs.isImeSetUp.set(false) } },
                     shapes = ListItemDefaults.segmentedShapes(8, count),
                     title = stringRes(R.string.devtools__reset_flag__label, "flag_name" to "isImeSetUp"),
                     summary = stringRes(R.string.devtools__reset_flag_is_ime_set_up__summary),
@@ -251,21 +253,21 @@ fun DevtoolsScreen() {
 
             SegmentedListColumn(title = "prefs.internal.version*") {
                 val count = 3
-                val versionOnInstall by prefs.internal.versionOnInstall.collectAsState()
+                val versionOnInstall by noBackupPrefs.versionOnInstall.collectAsState()
                 Preference(
                     onClick = {},
                     shapes = ListItemDefaults.segmentedShapes(0, count),
                     title = "prefs.internal.versionOnInstall",
                     summary = versionOnInstall,
                 )
-                val versionLastUse by prefs.internal.versionLastUse.collectAsState()
+                val versionLastUse by noBackupPrefs.versionLastUse.collectAsState()
                 Preference(
                     onClick = {},
                     shapes = ListItemDefaults.segmentedShapes(1, count),
                     title = "prefs.internal.versionLastUse",
                     summary = versionLastUse,
                 )
-                val versionLastChangelog by prefs.internal.versionLastChangelog.collectAsState()
+                val versionLastChangelog by noBackupPrefs.versionLastChangelog.collectAsState()
                 Preference(
                     onClick = {},
                     shapes = ListItemDefaults.segmentedShapes(2, count),

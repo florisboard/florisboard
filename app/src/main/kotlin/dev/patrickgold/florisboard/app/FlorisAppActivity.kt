@@ -89,6 +89,7 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 
 class FlorisAppActivity : ComponentActivity() {
     private val prefs by FlorisPreferenceStore
+    private val noBackupPrefs by NoBackupPreferenceStore
     private val appContext = inferFlorisApplication()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
@@ -124,12 +125,12 @@ class FlorisAppActivity : ComponentActivity() {
             if (!loaded || isModelLoaded.getAndSet(true)) return@collectIn
             // Check if android 13+ is running and the NotificationPermission is not set
             if (AndroidVersion.ATLEAST_API33_T &&
-                prefs.internal.notificationPermissionState.get() == NotificationPermissionState.NOT_SET
+                noBackupPrefs.notificationPermissionState.get() == NotificationPermissionState.NOT_SET
             ) {
                 // update pref value to show the setup screen again
-                prefs.internal.isImeSetUp.set(false)
+                noBackupPrefs.isImeSetUp.set(false)
             }
-            AppVersionUtils.updateVersionOnInstallAndLastUse(this, prefs)
+            AppVersionUtils.updateVersionOnInstallAndLastUse(this, noBackupPrefs)
             setContent {
                 ProvideLocalizedResources(
                     resourcesContext,
@@ -185,7 +186,7 @@ class FlorisAppActivity : ComponentActivity() {
         val navController = rememberNavController()
         val previewFieldController = rememberPreviewFieldController()
 
-        val isImeSetUp by prefs.internal.isImeSetUp.collectAsState()
+        val isImeSetUp by noBackupPrefs.isImeSetUp.collectAsState()
 
         CompositionLocalProvider(
             LocalExtensionController provides appContext.extensionController,

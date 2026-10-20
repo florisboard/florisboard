@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.lib.util
 
 import android.content.Context
-import dev.patrickgold.florisboard.app.FlorisPreferenceModel
+import dev.patrickgold.florisboard.app.NoBackupPreferenceModel
 
 object AppVersionUtils {
     private fun getRawVersionName(context: Context): String {
@@ -28,26 +28,26 @@ object AppVersionUtils {
         }
     }
 
-    fun shouldShowChangelog(context: Context, prefs: FlorisPreferenceModel): Boolean {
+    fun shouldShowChangelog(context: Context, noBackupPrefs: NoBackupPreferenceModel): Boolean {
         val installVersion =
-            VersionName.fromString(prefs.internal.versionOnInstall.get()) ?: VersionName.DEFAULT
+            VersionName.fromString(noBackupPrefs.versionOnInstall.get()) ?: VersionName.DEFAULT
         val lastChangelogVersion =
-            VersionName.fromString(prefs.internal.versionLastChangelog.get()) ?: VersionName.DEFAULT
+            VersionName.fromString(noBackupPrefs.versionLastChangelog.get()) ?: VersionName.DEFAULT
         val currentVersion =
             VersionName.fromString(getRawVersionName(context)) ?: VersionName.DEFAULT
 
         return lastChangelogVersion < currentVersion && installVersion != currentVersion
     }
 
-    suspend fun updateVersionOnInstallAndLastUse(context: Context, prefs: FlorisPreferenceModel) {
-        if (prefs.internal.versionOnInstall.get() == VersionName.DEFAULT_RAW) {
-            prefs.internal.versionOnInstall.set(getRawVersionName(context))
+    suspend fun updateVersionOnInstallAndLastUse(context: Context, noBackupPrefs: NoBackupPreferenceModel) {
+        if (noBackupPrefs.versionOnInstall.get() == VersionName.DEFAULT_RAW) {
+            noBackupPrefs.versionOnInstall.set(getRawVersionName(context))
         }
-        prefs.internal.versionLastUse.set(getRawVersionName(context))
+        noBackupPrefs.versionLastUse.set(getRawVersionName(context))
     }
 
-    suspend fun updateVersionLastChangelog(context: Context, prefs: FlorisPreferenceModel) {
-        prefs.internal.versionLastChangelog.set(getRawVersionName(context))
+    suspend fun updateVersionLastChangelog(context: Context, noBackupPrefs: NoBackupPreferenceModel) {
+        noBackupPrefs.versionLastChangelog.set(getRawVersionName(context))
     }
 }
 

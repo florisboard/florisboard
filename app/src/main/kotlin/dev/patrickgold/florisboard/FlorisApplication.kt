@@ -28,6 +28,8 @@ import android.util.Log
 import androidx.core.os.UserManagerCompat
 import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.NoBackupPreferenceModel
+import dev.patrickgold.florisboard.app.NoBackupPreferenceStore
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
 import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
@@ -135,11 +137,16 @@ class FlorisApplication : Application() {
     fun init() {
         cacheDir?.deleteContentsRecursively()
         scope.launch {
-            val result = FlorisPreferenceStore.initAndroid(
+            val resultAppPrefs = FlorisPreferenceStore.initAndroid(
                 context = this@FlorisApplication,
                 datastoreName = FlorisPreferenceModel.NAME,
             )
-            Log.i("PREFS", result.toString())
+            Log.i("PREFS", resultAppPrefs.toString())
+            val resultNoBackupPrefs = NoBackupPreferenceStore.initAndroid(
+                context = this@FlorisApplication,
+                datastoreName = NoBackupPreferenceModel.NAME,
+            )
+            Log.i("PREFS", resultNoBackupPrefs.toString())
             preferenceStoreLoaded.value = true
         }
         clipboardManager.value.initializeForContext(this)

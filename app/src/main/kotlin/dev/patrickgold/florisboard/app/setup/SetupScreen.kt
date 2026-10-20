@@ -51,6 +51,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
+import dev.patrickgold.florisboard.app.NoBackupPreferenceStore
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.components.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
@@ -84,6 +85,7 @@ private sealed class Steps(val id: Int) {
 @Composable
 fun SetupScreen(hasRestoredBackup: Boolean) {
     val prefs by FlorisPreferenceStore
+    val noBackupPrefs by NoBackupPreferenceStore
     val context = LocalContext.current
     val navController = LocalNavController.current
     val previewFieldController = LocalPreviewFieldController.current
@@ -92,12 +94,12 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
     val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled()
     val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected()
 
-    val notificationState by prefs.internal.notificationPermissionState.collectAsState()
+    val notificationState by noBackupPrefs.notificationPermissionState.collectAsState()
 
     val requestNotification =
         rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             scope.launch {
-                prefs.internal.notificationPermissionState.set(
+                noBackupPrefs.notificationPermissionState.set(
                     if (isGranted) {
                         NotificationPermissionState.GRANTED
                     } else {
@@ -183,7 +185,7 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
                     primaryLabel = { stringRes(R.string.setup__grant_notification_permission__btn) },
                     onPrimary = {
                         scope.launch {
-                            prefs.internal.notificationPermissionState.set(NotificationPermissionState.NOT_SET)
+                            noBackupPrefs.notificationPermissionState.set(NotificationPermissionState.NOT_SET)
                         }
                         requestNotification.launch(Manifest.permission.POST_NOTIFICATIONS)
                     },
@@ -204,7 +206,7 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
                 summary = { stringRes(R.string.setup__finish_up__summary) },
                 primaryLabel = { stringRes(R.string.setup__finish_up__finish_btn) },
                 onPrimary = {
-                    scope.launch { prefs.internal.isImeSetUp.set(true) }
+                    scope.launch { noBackupPrefs.isImeSetUp.set(true) }
                     navController.navigate(Routes.Settings.Home) {
                         popUpTo(Routes.Setup.Screen::class) { inclusive = true }
                     }

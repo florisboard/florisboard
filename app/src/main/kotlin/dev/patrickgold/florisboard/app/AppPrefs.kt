@@ -22,20 +22,19 @@ import androidx.compose.ui.platform.LocalConfiguration
 import dev.patrickgold.florisboard.app.settings.theme.ColorPreferenceSerializer
 import dev.patrickgold.florisboard.app.settings.theme.DisplayKbdAfterDialogs
 import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
-import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
 import dev.patrickgold.florisboard.ime.extension.extCoreTheme
-import dev.patrickgold.florisboard.ime.keyboard3.touch.ShiftKeyBehavior
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionTimingOptions
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyAction
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyArrangement
+import dev.patrickgold.florisboard.ime.keyboard3.touch.ShiftKeyBehavior
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiHairStyle
@@ -52,7 +51,6 @@ import dev.patrickgold.florisboard.ime.smartbar.quickaction.QuickActionJsonConfi
 import dev.patrickgold.florisboard.ime.text.gestures.SwipeAction
 import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
 import dev.patrickgold.florisboard.ime.window.ImeWindowConfig
-import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.annotations.Preferences
 import dev.patrickgold.jetpref.datastore.jetprefDataStoreOf
 import dev.patrickgold.jetpref.datastore.model.LocalTime
@@ -413,34 +411,6 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         val hapticFeatGestureMovingSwipe = boolean(
             key = "input_feedback__haptic_feat_gesture_moving_swipe",
             default = true,
-        )
-    }
-
-    val internal = Internal()
-    inner class Internal {
-        val homeIsBetaToolboxCollapsed = boolean(
-            key = "internal__home_is_beta_toolbox_collapsed_040a01",
-            default = false,
-        )
-        val isImeSetUp = boolean(
-            key = "internal__is_ime_set_up",
-            default = false,
-        )
-        val versionOnInstall = string(
-            key = "internal__version_on_install",
-            default = VersionName.DEFAULT_RAW,
-        )
-        val versionLastUse = string(
-            key = "internal__version_last_use",
-            default = VersionName.DEFAULT_RAW,
-        )
-        val versionLastChangelog = string(
-            key = "internal__version_last_changelog",
-            default = VersionName.DEFAULT_RAW,
-        )
-        val notificationPermissionState = enum(
-            key = "internal__notification_permission_state",
-            default = NotificationPermissionState.NOT_SET,
         )
     }
 
