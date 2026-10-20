@@ -138,7 +138,7 @@
             android:exported="false">
         </provider>
 
-        <!-- Default file provider to share files from the "files" or "cache" dir -->
+        <!-- Default file provider to share files from the "cache/workspaces/" dir -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider.file"

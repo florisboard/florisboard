@@ -46,7 +46,7 @@ class AndroidStorage(
                 assetFs to ref.relativePath.toPath(normalize = true)
             }
             ref.isCache -> {
-                val base = context.noBackupFilesDir.toOkioPath() / "cache"
+                val base = context.cacheDir.toOkioPath()
                 val path = (base / ref.relativePath).normalized()
                 // TODO startsWith check
                 systemFs to path
