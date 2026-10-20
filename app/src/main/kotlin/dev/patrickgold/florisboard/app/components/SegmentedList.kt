@@ -82,8 +82,8 @@ fun ListItemDefaults.segmentedErrorColors(): ListItemColors {
 @Composable
 fun SegmentedRadioListItem(
     onClick: () -> Unit,
-    shapes: ListItemShapes,
     selected: Boolean,
+    shapes: ListItemShapes,
     content: @Composable () -> Unit,
     supportingContent: @Composable (() -> Unit)? = null,
 ) {

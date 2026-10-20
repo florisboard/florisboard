@@ -89,6 +89,15 @@ class ExtensionController(
         return event.response.await()
     }
 
+    suspend fun backup(
+        backupDirRef: FlorisRef,
+        filter: BackupArchiveFilter,
+    ) {
+        val event = Event.Backup(backupDirRef, filter)
+        eventChannel.send(event)
+        return event.response.await()
+    }
+
     suspend fun restore(
         backupDirRef: FlorisRef,
         importStrategy: ImportStrategy,
@@ -118,6 +127,11 @@ class ExtensionController(
 
         data class Delete(
             val extensionId: String,
+        ) : Event<Unit>()
+
+        data class Backup(
+            val backupDirRef: FlorisRef,
+            val filter: BackupArchiveFilter,
         ) : Event<Unit>()
 
         data class Restore(
@@ -177,6 +191,7 @@ class ExtensionController(
                     is Event.Import -> event.response.complete(handleImport(event))
                     is Event.Export -> event.response.complete(handleExport(event))
                     is Event.Delete -> event.response.complete(handleDelete(event))
+                    is Event.Backup -> event.response.complete(handleBackup(event))
                     is Event.Restore -> event.response.complete(handleRestore(event))
                 }
             } catch (e: Throwable) {
@@ -214,6 +229,17 @@ class ExtensionController(
             require(extension.canDelete()) { "Delete not allowed" }
             storage.deleteRecursively(extension.sourceRef)
             indexExtensions(userSource)
+        }
+
+        private fun handleBackup(event: Event.Backup) {
+            val (backupDirRef, filter) = event
+            val extensionsDir = backupDirRef.subRef(BackupDefaults.FILES_DIR).subRef(EXTENSIONS_PATH)
+            for ((extensionId, extension) in userSource.extensions) {
+                if (!filter.includes(extension.type)) {
+                    continue
+                }
+                storage.copyRecursively(extension.sourceRef, extensionsDir.subRef(extensionId))
+            }
         }
 
         private fun handleRestore(event: Event.Restore) {

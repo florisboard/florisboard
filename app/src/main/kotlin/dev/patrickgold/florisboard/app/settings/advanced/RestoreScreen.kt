@@ -196,9 +196,9 @@ fun RestoreScreen() {
                 var workspaceRef: FlorisRef? = null
                 try {
                     workspaceRef = storage.createWorkspace()
-                    val zippedRef = workspaceRef.subRef(BackupDefaults.RESTORE_ARCHIVE_FILE_NAME)
+                    val zippedRef = workspaceRef.subRef(BackupDefaults.ARCHIVE_FILE_NAME)
                     storage.copy(FlorisRef.from(uri), zippedRef)
-                    val unzippedRef = workspaceRef.subRef(BackupDefaults.RESTORE_ARCHIVE_DIR_NAME)
+                    val unzippedRef = workspaceRef.subRef(BackupDefaults.ARCHIVE_DIR_NAME)
                     storage.unzip(zippedRef, unzippedRef)
                     val metadata = storage.readJson<BackupArchiveMetadata>(unzippedRef.subRef(BackupDefaults.METADATA_JSON_NAME))
                     if (metadata.packageName.isBlank() || metadata.versionCode < BackupDefaults.RESTORE_MIN_VERSION_CODE) {
@@ -517,14 +517,14 @@ private fun ReadyColumn(
             val count = 2
             SegmentedRadioListItem(
                 onClick = { onUpdateState(state.copy(importStrategy = ImportStrategy.Merge)) },
-                shapes = ListItemDefaults.segmentedShapes(0, count),
                 selected = state.importStrategy == ImportStrategy.Merge,
+                shapes = ListItemDefaults.segmentedShapes(0, count),
                 content = { Text(stringRes(R.string.backup_and_restore__restore__mode_merge)) },
             )
             SegmentedRadioListItem(
                 onClick = { onUpdateState(state.copy(importStrategy = ImportStrategy.Erase)) },
-                shapes = ListItemDefaults.segmentedShapes(1, count),
                 selected = state.importStrategy == ImportStrategy.Erase,
+                shapes = ListItemDefaults.segmentedShapes(1, count),
                 content = { Text(stringRes(R.string.backup_and_restore__restore__mode_erase_and_overwrite)) },
             )
         }

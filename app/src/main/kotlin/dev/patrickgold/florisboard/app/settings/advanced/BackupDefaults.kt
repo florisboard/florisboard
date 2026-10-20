@@ -29,18 +29,13 @@ object BackupDefaults {
     const val PACKAGE_NAME_PREFIX = "dev.patrickgold.florisboard"
 
     const val RESTORE_MIN_VERSION_CODE = 64
-    const val RESTORE_ARCHIVE_FILE_NAME = "backup.zip"
-    const val RESTORE_ARCHIVE_DIR_NAME = "backup.zip.d"
+    const val ARCHIVE_FILE_NAME = "backup.zip"
+    const val ARCHIVE_DIR_NAME = "backup.zip.d"
 
     const val OLD_EXT_VERSION_CODE_CUTOFF = 119 // v0.6.0-alpha02
     const val OLD_EXT_IME_THEME_PATH = "ime/theme"
 
     fun defaultFileName(metadata: BackupArchiveMetadata): String {
         return "backup_${metadata.packageName}_${metadata.versionCode}_${metadata.timestamp}.zip"
-    }
-
-    enum class Destination {
-        FILE_SYS,
-        SHARE_INTENT;
     }
 }

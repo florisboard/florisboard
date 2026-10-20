@@ -223,14 +223,14 @@ fun ExtensionCreateComponentOverlay(
                 val count = 2
                 SegmentedRadioListItem(
                     onClick = { createFrom = CreateFrom.EXISTING },
-                    shapes = ListItemDefaults.segmentedShapes(0, count),
                     selected = createFrom == CreateFrom.EXISTING,
+                    shapes = ListItemDefaults.segmentedShapes(0, count),
                     content = { Text(stringRes(R.string.ext__editor__create_component__from_existing)) },
                 )
                 SegmentedRadioListItem(
                     onClick = { createFrom = CreateFrom.EMPTY },
-                    shapes = ListItemDefaults.segmentedShapes(1, count),
                     selected = createFrom == CreateFrom.EMPTY,
+                    shapes = ListItemDefaults.segmentedShapes(1, count),
                     content = { Text(stringRes(R.string.ext__editor__create_component__from_empty)) },
                 )
             }
@@ -242,8 +242,8 @@ fun ExtensionCreateComponentOverlay(
                         val (componentName, component) = entry
                         SegmentedRadioListItem(
                             onClick = { selectedComponentName = componentName },
-                            shapes = ListItemDefaults.segmentedShapes(index, count),
                             selected = selectedComponentName == componentName,
+                            shapes = ListItemDefaults.segmentedShapes(index, count),
                             content = { Text(component.name) },
                             supportingContent = { Text(componentName.toString()) },
                         )
