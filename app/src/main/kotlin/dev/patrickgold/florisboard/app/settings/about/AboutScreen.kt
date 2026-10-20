@@ -109,10 +109,17 @@ fun AboutScreen() {
                     title = stringRes(R.string.about__changelog__title),
                     summary = stringRes(R.string.about__changelog__summary),
                     onClick = {
-                        context.launchUrl(
-                            R.string.florisboard__changelog_url,
-                            "version" to BuildConfig.VERSION_NAME
-                        )
+                        if (BuildConfig.DEBUG) {
+                            context.launchUrl(
+                                R.string.florisboard__commit_by_hash_url,
+                                "hash" to BuildConfig.BUILD_COMMIT_HASH,
+                            )
+                        } else {
+                            context.launchUrl(
+                                R.string.florisboard__changelog_url,
+                                "version" to BuildConfig.VERSION_NAME,
+                            )
+                        }
                     },
                 )
                 Preference(
