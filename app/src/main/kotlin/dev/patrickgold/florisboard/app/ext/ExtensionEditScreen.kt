@@ -65,8 +65,8 @@ import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.ime.io.LocalStorageController
 import dev.patrickgold.florisboard.ime.io.createWorkspace
 import dev.patrickgold.florisboard.ime.io.writeJson
-import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
-import dev.patrickgold.florisboard.lib.compose.FlorisUnsavedChangesDialog
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
+import dev.patrickgold.florisboard.app.components.FlorisUnsavedChangesDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable

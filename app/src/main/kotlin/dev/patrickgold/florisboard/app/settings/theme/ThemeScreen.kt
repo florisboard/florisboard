@@ -53,7 +53,7 @@ import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
 import dev.patrickgold.florisboard.ime.extension.ExtensionType
 import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.ime.theme.PreferredThemeMode
-import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ColorPickerPreference

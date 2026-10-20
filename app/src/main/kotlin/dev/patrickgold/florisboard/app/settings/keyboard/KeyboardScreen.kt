@@ -55,7 +55,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.hint.LongPressKeyHintPlacement
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.landscapeinput.LandscapeInputUiMode
 import dev.patrickgold.florisboard.ime.smartbar.IncognitoDisplayMode
-import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.jetpref.datastore.model.PreferenceData
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference

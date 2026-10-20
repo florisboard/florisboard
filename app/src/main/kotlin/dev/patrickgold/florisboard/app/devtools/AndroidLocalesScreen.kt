@@ -37,7 +37,7 @@ import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showShortToast
-import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.FlorisIconButton

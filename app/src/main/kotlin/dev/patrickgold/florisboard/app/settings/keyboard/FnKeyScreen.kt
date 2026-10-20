@@ -62,7 +62,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyAction
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.keyboard3.touch.computeKeyDisplay
 import dev.patrickgold.florisboard.ime.keyboard3.ui.staticIcon3
-import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog

@@ -51,7 +51,7 @@ import dev.patrickgold.florisboard.ime.io.readFromUri
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showShortToast
-import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import kotlinx.coroutines.CoroutineScope

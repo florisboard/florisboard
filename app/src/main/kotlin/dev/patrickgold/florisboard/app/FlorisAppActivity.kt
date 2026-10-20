@@ -54,9 +54,9 @@ import dev.patrickgold.florisboard.ime.keyboard3.interaction.rememberAndroidInte
 import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.inferFlorisApplication
 import dev.patrickgold.florisboard.lib.FlorisLocale
-import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
-import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
-import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
+import dev.patrickgold.florisboard.app.components.LocalPreviewFieldController
+import dev.patrickgold.florisboard.app.components.PreviewKeyboardField
+import dev.patrickgold.florisboard.app.components.rememberPreviewFieldController
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings

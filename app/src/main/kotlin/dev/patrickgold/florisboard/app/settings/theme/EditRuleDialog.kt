@@ -77,7 +77,7 @@ import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.lib.compose.FlorisHyperlinkText
+import dev.patrickgold.florisboard.app.components.FlorisHyperlinkText
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefDropdown

@@ -76,7 +76,7 @@ import dev.patrickgold.florisboard.ime.extension.ExtensionValidation
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.ime.io.Storage
 import dev.patrickgold.florisboard.lib.ValidationResult
-import dev.patrickgold.florisboard.lib.compose.Validation
+import dev.patrickgold.florisboard.app.components.Validation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui

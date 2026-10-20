@@ -70,7 +70,7 @@ import dev.patrickgold.florisboard.ime.io.readJson
 import dev.patrickgold.florisboard.ime.io.unzip
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
-import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okio.IOException

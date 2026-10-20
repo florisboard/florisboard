@@ -95,9 +95,9 @@ import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.ime.theme.ThemeController
-import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
-import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
-import dev.patrickgold.florisboard.lib.compose.Validation
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
+import dev.patrickgold.florisboard.app.components.LocalPreviewFieldController
+import dev.patrickgold.florisboard.app.components.Validation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog

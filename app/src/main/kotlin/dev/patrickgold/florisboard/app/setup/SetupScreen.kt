@@ -52,7 +52,7 @@ import dev.patrickgold.florisboard.app.FlorisAppActivity
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
-import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
+import dev.patrickgold.florisboard.app.components.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.util.InputMethodUtils
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import dev.patrickgold.florisboard.lib.util.launchUrl

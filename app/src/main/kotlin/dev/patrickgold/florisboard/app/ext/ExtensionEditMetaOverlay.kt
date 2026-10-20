@@ -45,8 +45,8 @@ import dev.patrickgold.florisboard.ime.extension.ExtensionMaintainer
 import dev.patrickgold.florisboard.ime.extension.ExtensionMeta
 import dev.patrickgold.florisboard.ime.extension.ExtensionValidation
 import dev.patrickgold.florisboard.lib.ValidationResult
-import dev.patrickgold.florisboard.lib.compose.FlorisScreenNg
-import dev.patrickgold.florisboard.lib.compose.Validation
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
+import dev.patrickgold.florisboard.app.components.Validation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.florisboard.app.components.FlorisBottomBarPrimaryButton
 import dev.patrickgold.florisboard.app.components.FlorisBottomBarSecondaryButton
