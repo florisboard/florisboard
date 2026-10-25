@@ -51,10 +51,13 @@ import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LongPress
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.rememberPointerTracker
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.trackPointerInput
+import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKey
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchLayer
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModel
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.theme.ImeUiAttrs
+import dev.patrickgold.florisboard.ime.theme.putAttr
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.jetpref.datastore.model.collectAsState
@@ -80,6 +83,7 @@ fun ImeKeyboardBox(
     val imeState by imeController.activeState.collectAsState()
     val model by remember { derivedStateOf { imeState.model } }
     val touchLayerId by remember { derivedStateOf { imeState.touchLayerId } }
+    val inputShiftState by remember { derivedStateOf { imeState.flags.inputShiftState } }
 
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val keyMarginHPx by remember {
@@ -226,6 +230,7 @@ fun ImeKeyboardBox(
                             )
                             layout(placeable.width, placeable.height) { placeable.place(offset) }
                         },
+                    inputShiftState = inputShiftState,
                 )
                 if (devtoolsEnabled && debugShowTouchBoundaries) {
                     Box(
@@ -252,15 +257,21 @@ private fun ImeKeyboardKeyBox(
     isPressed: Boolean,
     longPress: LongPress,
     multiTapIndex: Int,
+    inputShiftState: InputShiftState,
     modifier: Modifier = Modifier,
 ) {
     val display = displayOverride ?: touchKey.display
     val output = touchKey.attrs.output
-    val attributes: SnyggQueryAttributes = remember(output) {
+    val layerId = touchKey.attrs.layerId
+    val attributes: SnyggQueryAttributes = remember(output, layerId, inputShiftState) {
         buildMap {
             if (output != null) {
-                put(FlorisImeUi.Attr.Output, output.asAttrValue())
+                putAttr(ImeUiAttrs.Output, output)
             }
+            if (layerId != null) {
+                putAttr(ImeUiAttrs.TargetLayer, layerId)
+            }
+            putAttr(ImeUiAttrs.ShiftState, inputShiftState)
         }
     }
     // TODO some keys an be disabled (copy cut etc)
@@ -294,6 +305,7 @@ private fun ImeKeyboardKeyBox(
         if (touchKey.longPressKeyHint != null) {
             Display3(
                 elementName = FlorisImeUi.KeyHint.elementName,
+                attributes = attributes,
                 modifier = Modifier
                     .align(touchKey.longPressKeyHintPlacement.alignment)
                     .scaleToFitHorizontally(),

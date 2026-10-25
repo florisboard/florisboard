@@ -57,6 +57,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.theme.ImeUiAttrs
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.compose.FlorisIconButton
 import org.florisboard.lib.compose.drawableRes
@@ -148,7 +149,7 @@ fun ImeSystemUiFloating() {
 
     val attributes = remember(windowConfig.mode) {
         mapOf(
-            FlorisImeUi.Attr.WindowMode to windowConfig.mode.toString()
+            ImeUiAttrs.WindowMode.eq(windowConfig.mode),
         )
     }
 
@@ -238,7 +239,7 @@ private fun RowScope.NavigationPill() {
 
     val attributes = remember(windowConfig.mode) {
         mapOf(
-            FlorisImeUi.Attr.WindowMode to windowConfig.mode.toString()
+            ImeUiAttrs.WindowMode.eq(windowConfig.mode),
         )
     }
 

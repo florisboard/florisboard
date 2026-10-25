@@ -64,6 +64,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import org.florisboard.lib.compose.icons.ForwardDelete
+import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.k3lp.lib.text.K3Descriptor
 
@@ -72,6 +73,7 @@ fun Icon3(
     value: K3Descriptor,
     modifier: Modifier = Modifier,
     elementName: String? = null,
+    attributes: SnyggQueryAttributes = emptyMap(),
 ) {
     val context = LocalContext.current
     val imeController = LocalImeController.current
@@ -131,6 +133,7 @@ fun Icon3(
             imageVector = imageVector,
             modifier = modifier,
             elementName = elementName,
+            attributes = attributes,
         )
     }
 }

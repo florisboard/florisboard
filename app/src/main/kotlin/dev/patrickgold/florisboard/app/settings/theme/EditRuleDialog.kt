@@ -275,7 +275,8 @@ internal fun EditRuleDialog(
                 }
 
                 val codes = remember(currentRule) {
-                    attributes[FlorisImeUi.Attr.Code] ?: emptyList()
+                    //attributes[FlorisImeUi.Attr.Code] ?: emptyList()
+                    emptyList<String>()
                 }
                 var editCodeDialogValue by rememberSaveable { mutableStateOf<String?>(null) }
                 val initCodeValue = editCodeDialogValue
@@ -285,12 +286,12 @@ internal fun EditRuleDialog(
                         checkExisting = { codes.contains(it) },
                         onAdd = {
                             currentRule = copy(
-                                attributes = attributes.including(FlorisImeUi.Attr.Code to it)
+                                //attributes = attributes.including(FlorisImeUi.Attr.Code to it)
                             )
                         },
                         onDelete = {
                             currentRule = copy(
-                                attributes = attributes.excluding(FlorisImeUi.Attr.Code to it)
+                                //attributes = attributes.excluding(FlorisImeUi.Attr.Code to it)
                             )
                         },
                         onDismiss = { editCodeDialogValue = null },
@@ -335,7 +336,7 @@ internal fun EditRuleDialog(
                 )
                 */
 
-                EnumLikeAttributeBox(
+                /*EnumLikeAttributeBox(
                     text = stringRes(R.string.settings__theme_editor__rule_shift_states),
                     enumClass = InputShiftState::class,
                     attribute = FlorisImeUi.Attr.ShiftState,
@@ -351,7 +352,7 @@ internal fun EditRuleDialog(
                     attributes = attributes,
                     setAttributes = { currentRule = copy(attributes = it) },
                     level = level,
-                )
+                )*/
             }
         }
     }

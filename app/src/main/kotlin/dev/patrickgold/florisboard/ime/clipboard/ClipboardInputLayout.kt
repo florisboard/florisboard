@@ -104,6 +104,7 @@ import dev.patrickgold.florisboard.ime.smartbar.AnimationDuration
 import dev.patrickgold.florisboard.ime.smartbar.VerticalEnterTransition
 import dev.patrickgold.florisboard.ime.smartbar.VerticalExitTransition
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.theme.ImeUiAttrs
 import dev.patrickgold.florisboard.lib.observeAsTransformingState
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
 import dev.patrickgold.jetpref.datastore.model.collectAsState
@@ -264,8 +265,10 @@ fun ClipboardInputLayout(
         contentScrollInsteadOfClip: Boolean,
         modifier: Modifier = Modifier,
     ) {
-        val attributes = remember(item) {
-            mapOf("type" to item.type.toString().lowercase())
+        val attributes = remember(item.type) {
+            mapOf(
+                ImeUiAttrs.ClipboardItemType.eq(item.type),
+            )
         }
         SnyggBox(
             elementName = elementName,
@@ -424,10 +427,10 @@ fun ClipboardInputLayout(
                             itemType: ItemType,
                         ) {
                             val active = activeFilterTypes.contains(itemType)
-                            val attributes = remember(active) {
+                            val attributes = remember(active, itemType) {
                                 mapOf(
-                                    "state" to if (active) "active" else "inactive",
-                                    "type" to itemType.toString().lowercase(),
+                                    ImeUiAttrs.ClipboardFilterState.eq(active),
+                                    ImeUiAttrs.ClipboardItemType.eq(itemType),
                                 )
                             }
                             SnyggChip(
@@ -584,7 +587,11 @@ fun ClipboardInputLayout(
                             Spacer(modifier = Modifier.weight(1f))
                             SnyggButton(
                                 elementName = FlorisImeUi.ClipboardClearAllDialogButton.elementName,
-                                attributes = mapOf("action" to "no"),
+                                attributes = remember {
+                                    mapOf(
+                                        ImeUiAttrs.ClipboardDialogAction.eq(false),
+                                    )
+                                },
                                 onClick = {
                                     showClearAllHistory = false
                                 },
@@ -596,7 +603,11 @@ fun ClipboardInputLayout(
                             val clearedHistoryMsg = stringRes(R.string.clipboard__cleared_history)
                             SnyggButton(
                                 elementName = FlorisImeUi.ClipboardClearAllDialogButton.elementName,
-                                attributes = mapOf("action" to "yes"),
+                                attributes = remember {
+                                    mapOf(
+                                        ImeUiAttrs.ClipboardDialogAction.eq(true),
+                                    )
+                                },
                                 onClick = {
                                     scope.launch {
                                         clipboardManager.clearExactHistory(filteredHistory.unpinned)

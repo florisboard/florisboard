@@ -22,10 +22,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.SnyggStylesheet
+import org.k3lp.lib.text.asK3String
 
 val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
     defines {
@@ -64,21 +66,22 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         background = `var`("--surface-variant")
         foreground = `var`("--on-surface")
     }
-    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.ENTER)) {
+    FlorisImeUi.Key.elementName(ImeUiAttrs.Output.eqAnyOf(ImeActions.Enter)) {
         background = `var`("--primary")
         foreground = `var`("--on-surface")
     }
-    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.ENTER), selector = SnyggSelector.PRESSED) {
+    FlorisImeUi.Key.elementName(ImeUiAttrs.Output.eqAnyOf(ImeActions.Enter), selector = SnyggSelector.PRESSED) {
         background = `var`("--primary-variant")
         foreground = `var`("--on-surface")
     }
-    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.SPACE)) {
+    FlorisImeUi.Key.elementName(ImeUiAttrs.Output.eqAnyOf(" ".asK3String())) {
         background = `var`("--surface")
         foreground = `var`("--on-surface")
         fontSize = fontSize(12.sp)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(
+    // TODO
+    /*FlorisImeUi.Key.elementName(FlorisImeUi.Attr.Code to listOf(
         KeyCode.VIEW_CHARACTERS,
         KeyCode.VIEW_SYMBOLS,
         KeyCode.VIEW_SYMBOLS2,
@@ -99,7 +102,7 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         FlorisImeUi.Attr.ShiftState to listOf(InputShiftState.CAPS_LOCK.toString()),
     ) {
         foreground = rgbaColor(255, 152, 0)
-    }
+    }*/
     FlorisImeUi.KeyHint.elementName {
         background = rgbaColor(0, 0, 0, 0f)
         foreground = `var`("--on-surface-variant")
@@ -211,10 +214,10 @@ val FlorisImeThemeBaseStyle = SnyggStylesheet.v2 {
         textMaxLines = textMaxLines(2)
         textOverflow = textOverflow(TextOverflow.Ellipsis)
     }
-    FlorisImeUi.SmartbarActionsEditorTile.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.NOOP)) {
+    FlorisImeUi.SmartbarActionsEditorTile.elementName(ImeUiAttrs.Output.eqAnyOf(ImeActions.NoopSpacer)) {
         foreground = `var`("--on-background-disabled")
     }
-    FlorisImeUi.SmartbarActionsEditorTile.elementName(FlorisImeUi.Attr.Code to listOf(KeyCode.DRAG_MARKER)) {
+    FlorisImeUi.SmartbarActionsEditorTile.elementName(ImeUiAttrs.Output.eqAnyOf(ImeActions.NoopDragMarker)) {
         foreground = rgbaColor(255, 0, 0)
     }
 

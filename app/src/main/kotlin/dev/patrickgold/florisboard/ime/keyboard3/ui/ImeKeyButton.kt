@@ -39,7 +39,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionKind
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.touch.isRepeatable
-import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.theme.ImeUiAttrs
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -79,6 +79,8 @@ fun ImeKeyButton(
     val scope = rememberCoroutineScope()
 
     val imeState by imeController.activeState.collectAsState()
+    val touchLayerId by remember { derivedStateOf { imeState.touchLayerId } }
+    val inputShiftState by remember { derivedStateOf { imeState.flags.inputShiftState } }
     val model by remember { derivedStateOf { imeState.model } }
     val display = remember(model, output) { model.displays.byOutput[output]?.display ?: output }
 
@@ -89,9 +91,11 @@ fun ImeKeyButton(
 
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    val attributes = remember(output) {
+    val attributes = remember(output, touchLayerId, inputShiftState) {
         mapOf(
-            FlorisImeUi.Attr.Output to output.asAttrValue(),
+            ImeUiAttrs.Output.eq(output),
+            ImeUiAttrs.Layer.eq(touchLayerId),
+            ImeUiAttrs.ShiftState.eq(inputShiftState),
         )
     }
     val selector = when {
