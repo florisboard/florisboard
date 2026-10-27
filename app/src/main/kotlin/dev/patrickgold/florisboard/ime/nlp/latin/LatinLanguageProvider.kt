@@ -18,6 +18,9 @@ package dev.patrickgold.florisboard.ime.nlp.latin
 
 import android.content.Context
 import android.icu.text.BreakIterator
+import android.util.AtomicFile
+import androidx.core.util.readText
+import androidx.core.util.writeText
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
@@ -26,26 +29,38 @@ import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
+import dev.patrickgold.florisboard.lib.devtools.flogError
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.florisboard.lib.android.readText
 import org.florisboard.libnative.NlpBridge
 import org.k3lp.runtime.K3Content
 import java.io.File
+import java.io.FileNotFoundException
+import java.io.IOException
+import kotlin.time.Duration.Companion.seconds
 
 class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
     companion object {
         const val ProviderId = "org.florisboard.nlp.providers.latin"
         private const val MAX_PRECEDING_WORDS = 3
         private const val MAX_CONTEXT_BUFFER = 5
+        private val SAVE_DELAY = 5.seconds
     }
 
     override val providerId = ProviderId
 
     private val appContext by context.appContext()
     private val breakIterators = BreakIteratorGroup()
-    private val personalDictFile = File(appContext.filesDir, "personal_dict.json")
-    private val contextMapFile = File(appContext.filesDir, "context_map.json")
+    private val personalDictFile = AtomicFile(File(appContext.filesDir, "personal_dict.json"))
+    private val contextMapFile = AtomicFile(File(appContext.filesDir, "context_map.json"))
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private var pendingSave: Job? = null
 
     private var latestEditorContent: K3Content? = null
     private var isPrivateSession: Boolean = false
@@ -197,7 +212,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             }
             // Also boost the word itself in personal dictionary
             NlpBridge.learnWord(lastWord, emptyList())
-            
+            scheduleSave()
+
             // Update context buffer with the new word
             if (contextBuffer.lastOrNull() != lastWord) {
                 contextBuffer.add(lastWord)
@@ -274,6 +290,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
         val context = latestEditorContent?.let { extractContextWords(it, subtype) } ?: emptyList()
         NlpBridge.learnWord(word, context)
+        scheduleSave()
     }
 
     override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
@@ -281,11 +298,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         
         val word = candidate.text.toString().lowercase().trim()
         NlpBridge.penalizeWord(word)
+        scheduleSave()
     }
 
     override suspend fun removeSuggestion(subtype: Subtype, candidate: SuggestionCandidate): Boolean {
         val word = candidate.text.toString().lowercase().trim()
-        return NlpBridge.removeWord(word)
+        return NlpBridge.removeWord(word).also { if (it) scheduleSave() }
     }
 
     override suspend fun getListOfWords(subtype: Subtype): List<String> = emptyList()
@@ -295,14 +313,31 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     private fun loadPersistedData() {
-        if (personalDictFile.exists()) {
-            personalDictFile.readText().takeIf { it.isNotBlank() }?.let {
-                NlpBridge.importPersonalDict(it)
-            }
+        personalDictFile.readTextOrNull()?.takeIf { it.isNotBlank() }?.let {
+            NlpBridge.importPersonalDict(it)
         }
-        if (contextMapFile.exists()) {
-            contextMapFile.readText().takeIf { it.isNotBlank() }?.let {
-                NlpBridge.importContextMap(it)
+        contextMapFile.readTextOrNull()?.takeIf { it.isNotBlank() }?.let {
+            NlpBridge.importContextMap(it)
+        }
+    }
+
+    private fun AtomicFile.readTextOrNull(): String? {
+        return try {
+            readText()
+        } catch (_: FileNotFoundException) {
+            null
+        }
+    }
+
+    @Synchronized
+    private fun scheduleSave() {
+        pendingSave?.cancel()
+        pendingSave = scope.launch {
+            delay(SAVE_DELAY)
+            try {
+                savePersistedData()
+            } catch (e: IOException) {
+                flogError { "Failed to save learned words: $e" }
             }
         }
     }
@@ -313,6 +348,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     }
 
     override suspend fun destroy() {
+        synchronized(this) { pendingSave }?.cancelAndJoin()
         savePersistedData()
         NlpBridge.clear()
         loadedLanguages.clear()
