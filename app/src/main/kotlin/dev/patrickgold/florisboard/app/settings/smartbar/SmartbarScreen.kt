@@ -16,23 +16,38 @@
 
 package dev.patrickgold.florisboard.app.settings.smartbar
 
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.smartbar.CandidatesDisplayMode
 import dev.patrickgold.florisboard.ime.smartbar.ExtendedActionsPlacement
 import dev.patrickgold.florisboard.ime.smartbar.SmartbarLayout
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.jetpref.datastore.model.observeAsState
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
+import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
+import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
+import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import org.florisboard.lib.compose.stringRes
 
 @Composable
 fun SmartbarScreen() = FlorisScreen {
     title = stringRes(R.string.settings__smartbar__title)
     previewFieldVisible = true
+
+    var showApiKeyDialog by remember { mutableStateOf(false) }
 
     content {
         SwitchPreference(
@@ -84,6 +99,47 @@ fun SmartbarScreen() = FlorisScreen {
                 enabledIf = { prefs.smartbar.enabled isEqualTo true },
                 visibleIf = { prefs.smartbar.layout isEqualTo SmartbarLayout.SUGGESTIONS_ACTIONS_EXTENDED },
             )
+        }
+
+        PreferenceGroup(title = stringRes(R.string.pref__ai__group__label)) {
+            val apiKey by prefs.ai.openRouterApiKey.observeAsState()
+            Preference(
+                icon = Icons.Default.AutoAwesome,
+                title = stringRes(R.string.pref__ai__openrouter_api_key__label),
+                summary = if (apiKey.isBlank()) {
+                    stringRes(R.string.pref__ai__openrouter_api_key__summary_not_set)
+                } else {
+                    stringRes(
+                        R.string.pref__ai__openrouter_api_key__summary_set,
+                        "last4" to apiKey.takeLast(4),
+                    )
+                },
+                onClick = { showApiKeyDialog = true },
+            )
+        }
+
+        if (showApiKeyDialog) {
+            var apiKeyInput by remember { mutableStateOf(prefs.ai.openRouterApiKey.get()) }
+            JetPrefAlertDialog(
+                title = stringRes(R.string.pref__ai__openrouter_api_key__label),
+                confirmLabel = stringRes(R.string.action__apply),
+                onConfirm = {
+                    prefs.ai.openRouterApiKey.set(apiKeyInput.trim())
+                    showApiKeyDialog = false
+                },
+                onDismiss = { showApiKeyDialog = false },
+            ) {
+                JetPrefTextField(
+                    value = apiKeyInput,
+                    onValueChange = { apiKeyInput = it },
+                    labelText = stringRes(R.string.pref__ai__openrouter_api_key__dialog__label),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done,
+                    ),
+                )
+            }
         }
     }
 }

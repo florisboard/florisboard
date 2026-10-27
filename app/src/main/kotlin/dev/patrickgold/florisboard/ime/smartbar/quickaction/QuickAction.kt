@@ -20,6 +20,7 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.editorInstance
+import dev.patrickgold.florisboard.ime.ai.AiRewriter
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -68,6 +69,14 @@ sealed class QuickAction {
             editorInstance.commitText(data)
         }
     }
+
+    @Serializable
+    @SerialName("ai_rewrite")
+    object AiRewrite : QuickAction() {
+        override fun onPointerUp(context: Context) {
+            AiRewriter.rewrite(context)
+        }
+    }
 }
 
 fun QuickAction.keyData(): KeyData {
@@ -110,6 +119,7 @@ fun QuickAction.computeDisplayName(evaluator: ComputingEvaluator): String {
             else -> R.string.general__invalid_fatal
         })
         is QuickAction.InsertText -> data
+        is QuickAction.AiRewrite -> stringRes(R.string.quick_action__ai_rewrite)
     }
 }
 
@@ -148,5 +158,6 @@ fun QuickAction.computeTooltip(evaluator: ComputingEvaluator): String {
             else -> R.string.general__invalid_fatal
         })
         is QuickAction.InsertText -> "Insert text '$data'"
+        is QuickAction.AiRewrite -> stringRes(R.string.quick_action__ai_rewrite__tooltip)
     }
 }

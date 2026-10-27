@@ -663,6 +663,14 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
     }
 
+    val ai = Ai()
+    inner class Ai {
+        val openRouterApiKey = string(
+            key = "ai__openrouter_api_key",
+            default = "",
+        )
+    }
+
     val smartbar = Smartbar()
     inner class Smartbar {
         val enabled = boolean(
@@ -865,6 +873,11 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
                     dynamicActions = arrangement.dynamicActions.map { migrateAction(it) },
                     hiddenActions = arrangement.hiddenActions.map { migrateAction(it) },
                 )
+                if (QuickAction.AiRewrite !in newArrangement) {
+                    newArrangement = newArrangement.copy(
+                        dynamicActions = listOf(QuickAction.AiRewrite) + newArrangement.dynamicActions
+                    )
+                }
                 if (QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH) !in newArrangement) {
                     newArrangement = newArrangement.copy(
                         dynamicActions = newArrangement.dynamicActions.plus(QuickAction.InsertKey(TextKeyData.LANGUAGE_SWITCH))

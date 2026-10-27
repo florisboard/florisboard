@@ -26,6 +26,8 @@ import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
@@ -151,6 +153,16 @@ fun QuickActionButton(
                             selector = selector,
                             text = action.data.firstOrNull().toString().ifBlank { "?" },
                         )
+                    }
+
+                    is QuickAction.AiRewrite -> {
+                        SnyggBox(
+                            elementName = "$elementName-icon",
+                            attributes = attributes,
+                            selector = selector,
+                        ) {
+                            SnyggIcon(imageVector = Icons.Default.AutoAwesome)
+                        }
                     }
                 }
 

@@ -101,6 +101,8 @@
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Current drag marker position</string>
     <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">None</string>
     <string name="quick_action__noop__tooltip" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">No operation</string>
+    <string name="quick_action__ai_rewrite" comment="Please mind the limited available space for the quick action strings">AI rewrite</string>
+    <string name="quick_action__ai_rewrite__tooltip">Rewrite the selected text or the text before the cursor using AI</string>
     <string name="quick_actions_overflow__customize_actions_button">Reorder actions</string>
     <string name="quick_actions_editor__header">Customize action order</string>
     <string name="quick_actions_editor__subheader_sticky_action">Sticky action ({n})</string>
@@ -467,6 +469,17 @@
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__label" comment="Preference title">Auto-expand/collapse</string>
     <string name="pref__smartbar__shared_actions_auto_expand_collapse__summary" comment="Preference summary">Auto-expands/collapses the shared action row based on current state</string>
     <string name="pref__smartbar__extended_actions_placement__label" comment="Preference title">Action row placement</string>
+
+    <!-- AI strings -->
+    <string name="pref__ai__group__label" comment="Preference group title">AI</string>
+    <string name="pref__ai__openrouter_api_key__label" comment="Preference title">OpenRouter API key</string>
+    <string name="pref__ai__openrouter_api_key__summary_not_set" comment="Preference summary if no API key is configured">Not set</string>
+    <string name="pref__ai__openrouter_api_key__summary_set" comment="Preference summary if an API key is configured, {last4} are the last four characters of the key">Key set (ending in {last4})</string>
+    <string name="pref__ai__openrouter_api_key__dialog__label">API key</string>
+    <string name="ai_rewrite__missing_api_key">Set your OpenRouter API key in Settings > Smartbar</string>
+    <string name="ai_rewrite__no_text">Select text or place the cursor after text to rewrite</string>
+    <string name="ai_rewrite__in_progress">Rewriting text…</string>
+    <string name="ai_rewrite__failed">AI rewrite failed</string>
 
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Typing</string>

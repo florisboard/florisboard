@@ -20,6 +20,7 @@ kotlinx-serialization-json = "1.9.0"
 ksp = "2.2.20-2.0.3"
 material-kolor = "4.0.5"
 mikepenz-aboutlibraries = "13.1.0"
+okhttp = "4.12.0"
 patrickgold-compose-tooltip = "0.2.0-rc02"
 patrickgold-jetpref = "20251119T222500Z-SNAPSHOT"
 
@@ -64,6 +65,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 material-kolor = { module = "com.materialkolor:material-kolor-android", version.ref = "material-kolor" }
 mikepenz-aboutlibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "mikepenz-aboutlibraries" }
 mikepenz-aboutlibraries-compose = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "mikepenz-aboutlibraries" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 patrickgold-compose-tooltip = { module = "dev.patrickgold.compose.tooltip:tooltip", version.ref = "patrickgold-compose-tooltip" }
 patrickgold-jetpref-datastore-model = { module = "dev.patrickgold.jetpref:jetpref-datastore-model", version.ref = "patrickgold-jetpref" }
 patrickgold-jetpref-datastore-model-processor = { module = "dev.patrickgold.jetpref:jetpref-datastore-model-processor", version.ref = "patrickgold-jetpref" }
