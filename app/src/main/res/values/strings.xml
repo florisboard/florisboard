@@ -480,6 +480,9 @@
     <string name="ai_rewrite__no_text">Select text or place the cursor after text to rewrite</string>
     <string name="ai_rewrite__in_progress">Rewriting text…</string>
     <string name="ai_rewrite__failed">AI rewrite failed</string>
+    <string name="ai_rewrite__prompt_dialog__title">AI Prompt</string>
+    <string name="ai_rewrite__prompt_dialog__label">Prompt</string>
+    <string name="ai_rewrite__prompt_dialog__send">Send</string>
 
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Typing</string>

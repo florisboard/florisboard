@@ -20,7 +20,6 @@ import android.content.Context
 import androidx.compose.runtime.Composable
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.ime.ai.AiRewriter
 import dev.patrickgold.florisboard.ime.keyboard.ComputingEvaluator
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
@@ -72,11 +71,7 @@ sealed class QuickAction {
 
     @Serializable
     @SerialName("ai_rewrite")
-    object AiRewrite : QuickAction() {
-        override fun onPointerUp(context: Context) {
-            AiRewriter.rewrite(context)
-        }
-    }
+    object AiRewrite : QuickAction()
 }
 
 fun QuickAction.keyData(): KeyData {

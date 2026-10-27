@@ -24,10 +24,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.lib.devtools.flogError
 import java.io.IOException
 import java.util.concurrent.TimeUnit
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.buildJsonArray
@@ -47,12 +44,15 @@ object AiRewriter {
     private const val Endpoint = "https://openrouter.ai/api/v1/chat/completions"
     private const val Model = "openai/gpt-4o-mini"
     private const val MaxCharsBeforeCursor = 500
-    private const val SystemPrompt = "You are a writing assistant. Rewrite the user's text to be " +
-        "clearer and more concise while preserving its meaning. Return only the rewritten text, " +
-        "without quotes, explanations, or additional commentary."
+    const val DefaultPrompt = "Fix the grammar and spelling of this text."
+
+    data class RewriteTarget(
+        val inputConnection: InputConnection,
+        val hadSelection: Boolean,
+        val sourceText: String,
+    )
 
     private val prefs by FlorisPreferenceStore
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     private val json = Json { ignoreUnknownKeys = true }
     private val mediaType = "application/json".toMediaType()
     private val client = OkHttpClient.Builder()
@@ -61,11 +61,11 @@ object AiRewriter {
         .writeTimeout(60, TimeUnit.SECONDS)
         .build()
 
-    fun rewrite(context: Context) {
+    fun captureTarget(context: Context): RewriteTarget? {
         val inputConnection = FlorisImeService.currentInputConnection()
         if (inputConnection == null) {
             context.showShortToastSync(R.string.ai_rewrite__no_text)
-            return
+            return null
         }
 
         val selectedText = inputConnection.getSelectedText(0)?.toString().orEmpty()
@@ -76,8 +76,22 @@ object AiRewriter {
         }
         if (sourceText.isBlank()) {
             context.showShortToastSync(R.string.ai_rewrite__no_text)
-            return
+            return null
         }
+
+        return RewriteTarget(
+            inputConnection = inputConnection,
+            hadSelection = selectedText.isNotEmpty(),
+            sourceText = sourceText,
+        )
+    }
+
+    suspend fun rewrite(
+        context: Context,
+        prompt: String = DefaultPrompt,
+        target: RewriteTarget? = null,
+    ) {
+        val rewriteTarget = target ?: captureTarget(context) ?: return
 
         val apiKey = prefs.ai.openRouterApiKey.get().trim()
         if (apiKey.isEmpty()) {
@@ -86,36 +100,34 @@ object AiRewriter {
         }
 
         context.showShortToastSync(R.string.ai_rewrite__in_progress)
-        scope.launch {
-            runCatching {
-                withContext(Dispatchers.IO) {
-                    requestRewrite(apiKey, sourceText)
-                }
-            }.onSuccess { rewrittenText ->
-                if (rewrittenText.isBlank()) {
-                    context.showShortToastSync(R.string.ai_rewrite__failed)
-                } else {
-                    replaceText(
-                        inputConnection = inputConnection,
-                        hadSelection = selectedText.isNotEmpty(),
-                        sourceLength = sourceText.length,
-                        rewrittenText = rewrittenText,
-                    )
-                }
-            }.onFailure { error ->
-                flogError { "AI rewrite failed: ${error.message}" }
-                context.showShortToastSync(R.string.ai_rewrite__failed)
+        runCatching {
+            withContext(Dispatchers.IO) {
+                requestRewrite(apiKey, rewriteTarget.sourceText, prompt.ifBlank { DefaultPrompt })
             }
+        }.onSuccess { rewrittenText ->
+            if (rewrittenText.isBlank()) {
+                context.showShortToastSync(R.string.ai_rewrite__failed)
+            } else {
+                replaceText(
+                    inputConnection = rewriteTarget.inputConnection,
+                    hadSelection = rewriteTarget.hadSelection,
+                    sourceLength = rewriteTarget.sourceText.length,
+                    rewrittenText = rewrittenText,
+                )
+            }
+        }.onFailure { error ->
+            flogError { "AI rewrite failed: ${error.message}" }
+            context.showShortToastSync(R.string.ai_rewrite__failed)
         }
     }
 
-    private fun requestRewrite(apiKey: String, text: String): String {
+    private fun requestRewrite(apiKey: String, text: String, prompt: String): String {
         val requestBody = buildJsonObject {
             put("model", Model)
             put("messages", buildJsonArray {
                 add(buildJsonObject {
                     put("role", "system")
-                    put("content", SystemPrompt)
+                    put("content", prompt)
                 })
                 add(buildJsonObject {
                     put("role", "user")
