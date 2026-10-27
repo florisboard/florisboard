@@ -24,6 +24,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,6 +41,7 @@ import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
+import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.stringRes
 
 @Composable
@@ -48,6 +50,7 @@ fun SmartbarScreen() = FlorisScreen {
     previewFieldVisible = true
 
     var showApiKeyDialog by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     content {
         SwitchPreference(
@@ -124,8 +127,10 @@ fun SmartbarScreen() = FlorisScreen {
                 title = stringRes(R.string.pref__ai__openrouter_api_key__label),
                 confirmLabel = stringRes(R.string.action__apply),
                 onConfirm = {
-                    prefs.ai.openRouterApiKey.set(apiKeyInput.trim())
-                    showApiKeyDialog = false
+                    scope.launch {
+                        prefs.ai.openRouterApiKey.set(apiKeyInput.trim())
+                        showApiKeyDialog = false
+                    }
                 },
                 onDismiss = { showApiKeyDialog = false },
             ) {
