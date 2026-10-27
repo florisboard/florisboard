@@ -110,7 +110,6 @@ impl Default for LanguageDictionary {
 pub struct NlpEngine {
     languages: RwLock<HashMap<String, LanguageDictionary>>,
     active_languages: RwLock<Vec<String>>,
-    personal_trie: RwLock<TrieNode>,
     personal_dict: RwLock<HashMap<String, u32>>,
     context_map: RwLock<HashMap<String, HashMap<String, u32>>>,
 }
@@ -120,7 +119,6 @@ impl NlpEngine {
         Self {
             languages: RwLock::new(HashMap::new()),
             active_languages: RwLock::new(vec![String::from("en_US")]),
-            personal_trie: RwLock::new(TrieNode::default()),
             personal_dict: RwLock::new(HashMap::new()),
             context_map: RwLock::new(HashMap::new()),
         }
@@ -431,8 +429,13 @@ impl NlpEngine {
             });
         }
 
-        self.collect_from_trie(&self.personal_trie.read().unwrap(), &normalized, prefix, context, PERSONAL_BONUS, typed_is_valid_word, &canonical_forms, &mut suggestions);
-        
+        let personal_matches: Vec<(String, u32)> = self.personal_dict.read().unwrap()
+            .iter()
+            .filter(|(word, _)| word.starts_with(&normalized))
+            .map(|(word, freq)| (word.clone(), *freq))
+            .collect();
+        self.collect_prefix_matches(personal_matches, prefix, context, PERSONAL_BONUS, typed_is_valid_word, &canonical_forms, &mut suggestions);
+
         if !binary_tries.is_empty() {
             for bt in &binary_tries {
                 self.collect_from_binary_trie(bt, &normalized, prefix, context, typed_is_valid_word, &canonical_forms, &mut suggestions);
@@ -441,8 +444,10 @@ impl NlpEngine {
             let languages = self.languages.read().unwrap();
             let langs = self.active_languages.read().unwrap();
             for lang in langs.iter() {
-                if let Some(ld) = languages.get(lang) {
-                    self.collect_from_trie(&ld.trie, &normalized, prefix, context, 0.0, typed_is_valid_word, &canonical_forms, &mut suggestions);
+                if let Some(node) = languages.get(lang).and_then(|ld| ld.trie.search_prefix(&normalized)) {
+                    let mut words = Vec::new();
+                    node.collect_words(&mut words, 100);
+                    self.collect_prefix_matches(words, prefix, context, 0.0, typed_is_valid_word, &canonical_forms, &mut suggestions);
                 }
             }
         }
@@ -563,10 +568,9 @@ impl NlpEngine {
         }
     }
 
-    fn collect_from_trie(
+    fn collect_prefix_matches(
         &self,
-        trie: &TrieNode,
-        normalized_prefix: &str,
+        words: Vec<(String, u32)>,
         original_prefix: &str,
         context: &[String],
         bonus: f64,
@@ -574,28 +578,23 @@ impl NlpEngine {
         canonical_forms: &HashMap<String, String>,
         heap: &mut BinaryHeap<Suggestion>,
     ) {
-        if let Some(node) = trie.search_prefix(normalized_prefix) {
-            let mut words = Vec::new();
-            node.collect_words(&mut words, 100);
+        for (word, freq) in words {
+            let display = format_with_canonical(&word, original_prefix, canonical_forms);
+            let is_exact_match = word.eq_ignore_ascii_case(original_prefix);
 
-            for (word, freq) in words {
-                let display = format_with_canonical(&word, original_prefix, canonical_forms);
-                let is_exact_match = word.eq_ignore_ascii_case(original_prefix);
-                
-                let prefix_bonus = 0.3;
-                let mut conf = self.frequency_score(freq) * 0.6 + self.context_score(&word, context) * 0.2 + bonus + prefix_bonus;
-                if is_exact_match {
-                    conf += EXACT_MATCH_BONUS;
-                }
-
-                let auto_commit = !typed_is_valid_word && !is_exact_match && conf >= 0.7 && freq >= 100;
-
-                heap.push(Suggestion {
-                    text: display,
-                    confidence: conf,
-                    is_eligible_for_auto_commit: auto_commit,
-                });
+            let prefix_bonus = 0.3;
+            let mut conf = self.frequency_score(freq) * 0.6 + self.context_score(&word, context) * 0.2 + bonus + prefix_bonus;
+            if is_exact_match {
+                conf += EXACT_MATCH_BONUS;
             }
+
+            let auto_commit = !typed_is_valid_word && !is_exact_match && conf >= 0.7 && freq >= 100;
+
+            heap.push(Suggestion {
+                text: display,
+                confidence: conf,
+                is_eligible_for_auto_commit: auto_commit,
+            });
         }
     }
 
@@ -705,12 +704,6 @@ impl NlpEngine {
         }
 
         {
-            let mut trie = self.personal_trie.write().unwrap();
-            let freq = self.personal_dict.read().unwrap().get(&normalized).copied().unwrap_or(5);
-            trie.insert(&normalized, freq);
-        }
-
-        {
             let mut ctx_map = self.context_map.write().unwrap();
             for prev in context.iter().take(MAX_CONTEXT_WORDS) {
                 let assoc = ctx_map.entry(prev.to_lowercase()).or_default();
@@ -733,8 +726,14 @@ impl NlpEngine {
 
     pub fn remove_word(&self, word: &str) -> bool {
         let normalized = word.to_lowercase();
-        let mut personal = self.personal_dict.write().unwrap();
-        personal.remove(&normalized).is_some()
+        let mut removed = self.personal_dict.write().unwrap().remove(&normalized).is_some();
+
+        let mut ctx_map = self.context_map.write().unwrap();
+        for followers in ctx_map.values_mut() {
+            removed |= followers.remove(&normalized).is_some();
+        }
+        ctx_map.retain(|_, followers| !followers.is_empty());
+        removed
     }
 
     pub fn get_frequency(&self, word: &str) -> f64 {
@@ -757,12 +756,8 @@ impl NlpEngine {
             serde_json::from_str(json_data).map_err(|e| e.to_string())?;
 
         let mut personal = self.personal_dict.write().unwrap();
-        let mut trie = self.personal_trie.write().unwrap();
-
         for (word, freq) in dict {
-            let normalized = word.to_lowercase();
-            personal.insert(normalized.clone(), freq);
-            trie.insert(&normalized, freq);
+            personal.insert(word.to_lowercase(), freq);
         }
         Ok(())
     }
@@ -782,7 +777,6 @@ impl NlpEngine {
     }
 
     pub fn clear(&self) {
-        *self.personal_trie.write().unwrap() = TrieNode::default();
         self.personal_dict.write().unwrap().clear();
         self.context_map.write().unwrap().clear();
         self.languages.write().unwrap().clear();
@@ -920,6 +914,18 @@ mod tests {
 
         let personal = engine.personal_dict.read().unwrap();
         assert!(personal.contains_key("floris"));
+    }
+
+    #[test]
+    fn test_removed_word_is_not_suggested() {
+        let engine = NlpEngine::new();
+        engine.learn_word("zorbly", &["alpha".to_string()]);
+        assert!(engine.suggest("zor", &[], 5).iter().any(|s| s.text == "zorbly"));
+        assert!(engine.predict_next_word(&["alpha".to_string()], 5).iter().any(|s| s.text == "zorbly"));
+
+        assert!(engine.remove_word("zorbly"));
+        assert!(!engine.suggest("zor", &[], 5).iter().any(|s| s.text == "zorbly"));
+        assert!(engine.predict_next_word(&["alpha".to_string()], 5).is_empty());
     }
 
     #[test]
