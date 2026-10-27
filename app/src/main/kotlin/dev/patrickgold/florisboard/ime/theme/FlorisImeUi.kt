@@ -44,7 +44,7 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
         resId = R.string.snygg__rule_element__window_resize_handle,
     ),
     WindowResizeOverlayFixed(
-        elementName = "winow-resize-overlay-fixed",
+        elementName = "window-resize-overlay-fixed",
         resId = R.string.snygg__rule_element__window_resize_overlay_fixed
     ),
     FloatingDockToFixedIndicator(
@@ -414,6 +414,7 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
     object Attr {
         const val Code = "code"
         const val Mode = "mode"
+        const val Output = "output"
         const val ShiftState = "shiftstate"
         const val WindowMode = "windowmode"
     }

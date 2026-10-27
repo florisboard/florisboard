@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,13 +28,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
+import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggButton
@@ -43,17 +44,16 @@ import org.florisboard.lib.snygg.ui.SnyggText
 @Composable
 fun QuickActionsOverflowPanel() {
     val prefs by FlorisPreferenceStore
-    val context = LocalContext.current
-    val keyboardManager by context.keyboardManager()
+    val imeController = LocalImeController.current
 
-    val actionArrangement by prefs.smartbar.actionArrangement.observeAsState()
-    val evaluator by keyboardManager.activeSmartbarEvaluator.collectAsState()
+    val actionArrangement by prefs.smartbar.actionArrangement.collectAsState()
 
     val dynamicActions = actionArrangement.dynamicActions
+    val smartbarVisibleDynamicActionsCount by imeController.activeSmartbarVisibleDynamicActionsCount.collectAsState()
     val dynamicActionsCountToShow = when {
         dynamicActions.isEmpty() -> 0
         else -> {
-            (dynamicActions.size - keyboardManager.smartbarVisibleDynamicActionsCount).coerceIn(dynamicActions.indices)
+            (dynamicActions.size - smartbarVisibleDynamicActionsCount).coerceIn(dynamicActions.indices)
         }
     }
     val visibleActions = remember(actionArrangement, dynamicActionsCountToShow) {
@@ -69,19 +69,22 @@ fun QuickActionsOverflowPanel() {
         LazyVerticalGrid(
             modifier = Modifier
                 .fillMaxWidth(),
-            columns = GridCells.Adaptive(FlorisImeSizing.smartbarHeight * 2.2f),
+            columns = GridCells.Adaptive(FlorisImeSizing.smartbarHeight.coerceAtLeast(1.dp) * 2.2f),
         ) {
             items(visibleActions) { action ->
                 QuickActionButton(
                     action = action,
-                    evaluator = evaluator,
                     type = QuickActionBarType.INTERACTIVE_TILE,
                 )
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
                 SnyggButton(
                     elementName = FlorisImeUi.SmartbarActionsOverflowCustomizeButton.elementName,
-                    onClick = { keyboardManager.activeState.isActionsEditorVisible = true },
+                    onClick = {
+                        imeController.updateStateBlocking {
+                            emitDescriptor(ImeActions.ToggleActionsEditor)
+                        }
+                    },
                     modifier = Modifier
                         .wrapContentWidth(),
                 ) {

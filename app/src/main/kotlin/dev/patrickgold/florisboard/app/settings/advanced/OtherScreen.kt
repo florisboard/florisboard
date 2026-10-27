@@ -38,7 +38,7 @@ import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ColorPickerPreference
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
@@ -47,14 +47,14 @@ import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
 import dev.patrickgold.jetpref.datastore.ui.isMaterialYou
 import dev.patrickgold.jetpref.datastore.ui.listPrefEntries
 import org.florisboard.lib.android.AndroidVersion
-import org.florisboard.lib.color.ColorMappings
+import org.florisboard.lib.snygg.color.ColorMappings
 import org.florisboard.lib.compose.stringRes
 
 
 @Composable
 fun OtherScreen() = FlorisScreen {
     title = stringRes(R.string.settings__other__title)
-    previewFieldVisible = false
+    previewFieldVisible = true
 
     val navController = LocalNavController.current
     val context = LocalContext.current
@@ -136,7 +136,7 @@ fun OtherScreen() = FlorisScreen {
                             label = stringRes(R.string.settings__system_default),
                         )
                     } else {
-                        val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.observeAsState()
+                        val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
                         val locale = FlorisLocale.fromTag(languageTag)
                         entry(locale.languageTag(), when (displayLanguageNamesIn) {
                             DisplayLanguageNamesIn.SYSTEM_LOCALE -> locale.displayName()

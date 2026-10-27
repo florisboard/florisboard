@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,32 +16,30 @@
 
 package dev.patrickgold.florisboard.ime.theme
 
-import android.content.Context
+import dev.patrickgold.florisboard.ime.io.AndroidStorage
 import dev.patrickgold.florisboard.lib.devtools.flogError
-import org.florisboard.lib.kotlin.io.subFile
+import kotlinx.io.files.SystemFileSystem
 import org.florisboard.lib.snygg.value.SnyggAssetResolver
 import java.net.URI
 
-class FlorisAssetResolver(val context: Context, val themeInfo: ThemeManager.ThemeInfo) : SnyggAssetResolver {
+// TODO this class needs a proper rewrite
+class FlorisAssetResolver(val theme: ThemeController.Theme) : SnyggAssetResolver {
     override fun resolveAbsolutePath(uri: String) = runCatching {
         val uri = URI.create(uri)
         require(uri.scheme == "flex")
         require(uri.authority.isNullOrEmpty())
-        val baseDir = checkNotNull(themeInfo.loadedDir) { "Loaded directory was null" }
-        val basePath = baseDir.canonicalPath
-        val canonicalFile = baseDir.subFile(uri.path).canonicalFile
-        val canonicalPath = canonicalFile.path
-        check(canonicalPath.startsWith(basePath)) {
-            "Calculated path '$canonicalPath' does not start with base path '$basePath'"
-        }
-        check(canonicalFile.exists()) {
-            "Calculated path '$canonicalPath' does not exist"
-        }
-        check(canonicalFile.isFile()) {
+        val extensionRef = checkNotNull(theme.extensionRef) { "Loaded directory was null" }
+        check(extensionRef.isCache || extensionRef.isInternal)
+        val storage = checkNotNull(theme.storage) { "Storage was null" }
+        check(storage is AndroidStorage)
+        val effStorage = if (extensionRef.isCache) storage.cacheStorage else storage.internalStorage
+        // resolve implies within storage bounds & exists
+        val canonicalPath = effStorage.resolveCanonicalPath(extensionRef)
+        check(SystemFileSystem.metadataOrNull(canonicalPath)?.isRegularFile == true) {
             "Calculated path '$canonicalPath' is not a file"
         }
-        canonicalPath
+        canonicalPath.toString()
     }.onFailure { exception ->
-        flogError { "FlorisAssetResolver failed to resolve URI '$uri'\n  error: ${exception.message}\n  with:  $themeInfo" }
+        flogError { "FlorisAssetResolver failed to resolve URI '$uri'\n  error: ${exception.message}\n  with:  $theme" }
     }
 }

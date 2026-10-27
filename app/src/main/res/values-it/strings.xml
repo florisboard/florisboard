@@ -193,6 +193,7 @@
     <string name="settings__theme_editor__property_value_shape_apply_for_all_corners">Applica per tutti gli angoli</string>
     <string name="settings__theme_editor__property_value_color_dialog_title">Modifica stringa di colore</string>
     <string name="settings__theme_editor__file_selector_dialog_title">Seleziona file</string>
+    <string name="settings__theme_editor__file_selector_no_files_text">Impostazioni / Modifica tema / seleziona file / nessun file di testo</string>
     <string name="settings__theme_editor__component_meta_is_night_theme">È tema scuro</string>
     <string name="settings__theme_editor__component_meta_is_borderless">È senza bordi</string>
     <string name="settings__theme_editor__component_meta_stylesheet_path">Percorso del file di stile</string>
@@ -320,7 +321,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Moltiplicatore dimensione carattere</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Inserimento a schermo intero orizzontale</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Spaziatura tasti</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Pressione tasti</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Visibilità Popup</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Mostra popup quando si preme un tasto</string>

@@ -301,7 +301,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Множник шрифту</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Розкладка</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Ввід на цілий екран (пейзаж)</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Відстань між клавішами</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Натискання клавіші</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Видимість спливних вікон</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показувати спливаючу підказку при натисканні клавіші</string>

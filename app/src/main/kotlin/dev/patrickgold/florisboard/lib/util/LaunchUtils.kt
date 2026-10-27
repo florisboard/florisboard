@@ -22,8 +22,8 @@ import android.content.Intent
 import android.widget.Toast
 import androidx.annotation.StringRes
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.lib.devtools.flogError
-import dev.patrickgold.florisboard.lib.io.FlorisRef
 import org.florisboard.lib.android.stringRes
 import org.florisboard.lib.kotlin.CurlyArg
 import kotlin.contracts.InvocationKind

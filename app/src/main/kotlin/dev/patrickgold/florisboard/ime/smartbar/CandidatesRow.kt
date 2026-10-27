@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 The FlorisBoard Contributors
+ * Copyright (C) 2024-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,17 +37,17 @@ import androidx.compose.ui.input.pointer.PointerEventTimeoutCancellationExceptio
 import androidx.compose.ui.input.pointer.PointerInputChange
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.input.InputShiftState
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.keyboardManager
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.snygg.SnyggSelector
@@ -57,19 +57,22 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSpacer
 import org.florisboard.lib.snygg.ui.SnyggText
+import kotlin.time.Duration
 
 val CandidatesRowScrollbarHeight = 2.dp
 
 @Composable
 fun CandidatesRow(modifier: Modifier = Modifier) {
     val prefs by FlorisPreferenceStore
+    val imeController = LocalImeController.current
+    val interactionController = LocalInteractionController.current
     val context = LocalContext.current
-    val keyboardManager by context.keyboardManager()
     val nlpManager by context.nlpManager()
     val subtypeManager by context.subtypeManager()
 
-    val displayMode by prefs.suggestion.displayMode.observeAsState()
+    val displayMode by prefs.suggestion.displayMode.collectAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
+    val timingOptions by interactionController.activeTimingOptions.collectAsState()
     val keyboardState by keyboardManager.activeState.collectAsState()
     val shiftState = keyboardState.inputShiftState
     val locale = subtypeManager.activeSubtype.primaryLocale
@@ -123,8 +126,10 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                     shiftState = shiftState,
                     locale = locale,
                     onClick = {
-                        // Can't use candidate directly
-                        keyboardManager.commitCandidate(candidates[n])
+                        imeController.updateStateBlocking {
+                            // Can't use candidate directly
+                            emitCandidate(candidates[n])
+                        }
                     },
                     onLongPress = {
                         // Can't use candidate directly
@@ -135,7 +140,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                             false
                         }
                     },
-                    longPressDelay = prefs.keyboard.longPressDelay.get().toLong(),
+                    longPressTimeout = timingOptions.longPressTimeout,
                 )
             }
         }
@@ -151,8 +156,8 @@ private fun CandidateItem(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
     onLongPress: () -> Boolean = { false },
-    longPressDelay: Long,
-) = with(LocalDensity.current) {
+    longPressTimeout: Duration,
+) {
     var isPressed by remember { mutableStateOf(false) }
 
     val elementName = if (candidate is ClipboardSuggestionCandidate) {
@@ -175,7 +180,7 @@ private fun CandidateItem(
                     if (down.pressed != down.previousPressed) down.consume()
                     var upOrCancel: PointerInputChange? = null
                     try {
-                        upOrCancel = withTimeout(longPressDelay) {
+                        upOrCancel = withTimeout(longPressTimeout.inWholeMilliseconds) {
                             waitForUpOrCancellation()
                         }
                         upOrCancel?.let { if (it.pressed != it.previousPressed) it.consume() }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,24 +14,21 @@
  * limitations under the License.
  */
 
+import com.android.build.api.dsl.ApplicationExtension
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.mikepenz.aboutlibraries)
     alias(libs.plugins.kotest)
+    alias(libs.plugins.kotlinx.kover)
 }
 
-val projectMinSdk: String by project
-val projectTargetSdk: String by project
-val projectCompileSdk: String by project
-val projectVersionCode: String by project
-val projectVersionName: String by project
+val projectVersionName = providers.gradleProperty("projectVersionName").get()
 val projectVersionNameSuffix = projectVersionName.substringAfter("-", "").let { suffix ->
     if (suffix.isNotEmpty()) {
         "-$suffix"
@@ -48,15 +45,15 @@ kotlin {
             "-jvm-default=enable",
             "-Xwhen-guards",
             "-Xexplicit-backing-fields",
-            "-XXLanguage:+ContextParameters",
+            "-Xcontext-parameters",
             "-XXLanguage:+LocalTypeAliases",
         ))
     }
 }
 
-android {
+configure<ApplicationExtension> {
     namespace = "dev.patrickgold.florisboard"
-    compileSdk = projectCompileSdk.toInt()
+    compileSdk = providers.gradleProperty("projectCompileSdk").get().toInt()
     buildToolsVersion = tools.versions.buildTools.get()
     ndkVersion = tools.versions.ndk.get()
 
@@ -65,17 +62,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    ksp {
-        arg("room.schemaLocation", "$projectDir/schemas")
-        arg("room.incremental", "true")
-        arg("room.expandProjection", "true")
-    }
-
     defaultConfig {
         applicationId = "dev.patrickgold.florisboard"
-        minSdk = projectMinSdk.toInt()
-        targetSdk = projectTargetSdk.toInt()
-        versionCode = projectVersionCode.toInt()
+        minSdk = providers.gradleProperty("projectMinSdk").get().toInt()
+        targetSdk = providers.gradleProperty("projectTargetSdk").get().toInt()
+        versionCode = providers.gradleProperty("projectVersionCode").get().toInt()
         versionName = projectVersionName.substringBefore("-")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -86,12 +77,7 @@ android {
 
         sourceSets {
             maybeCreate("main").apply {
-                assets {
-                    srcDirs("src/main/assets")
-                }
-                java {
-                    srcDirs("src/main/kotlin")
-                }
+                assets.directories += "src/main/assets"
             }
         }
     }
@@ -117,11 +103,6 @@ android {
 
             isDebuggable = true
             isJniDebuggable = false
-
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_debug")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_debug_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_debug_foreground")
-            resValue("string", "floris_app_name", "FlorisBoard Debug")
         }
 
         create("beta") {
@@ -131,11 +112,6 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             isMinifyEnabled = true
             isShrinkResources = true
-
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_beta")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_beta_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_beta_foreground")
-            resValue("string", "floris_app_name", "FlorisBoard Beta")
         }
 
         named("release") {
@@ -144,11 +120,6 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             isMinifyEnabled = true
             isShrinkResources = true
-
-            resValue("mipmap", "floris_app_icon", "@mipmap/ic_app_icon_stable")
-            resValue("mipmap", "floris_app_icon_round", "@mipmap/ic_app_icon_stable_round")
-            resValue("drawable", "floris_app_icon_foreground", "@drawable/ic_app_icon_stable_foreground")
-            resValue("string", "floris_app_name", "@string/app_name")
         }
 
         create("benchmark") {
@@ -159,14 +130,6 @@ android {
 
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
-
-            resValue("string", "floris_app_name", "FlorisBoard Bench")
-        }
-    }
-
-    aboutLibraries {
-        collect {
-            configPath = file("src/main/config")
         }
     }
 
@@ -184,6 +147,18 @@ android {
     }
 }
 
+aboutLibraries {
+    collect {
+        configPath = file("src/main/config")
+    }
+}
+
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+    arg("room.incremental", "true")
+    arg("room.expandProjection", "true")
+}
+
 tasks.withType<Test> {
     testLogging {
         events = setOf(TestLogEvent.FAILED, TestLogEvent.PASSED, TestLogEvent.SKIPPED)
@@ -191,11 +166,16 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+kover {
+    useJacoco()
+}
+
 dependencies {
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
     // testImplementation(composeBom)
     // androidTestImplementation(composeBom)
+    // My connection security code is: 9 8 5 0, check that you see the same numbers in my connection approval dialog.
 
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.activity.ktx)
@@ -217,8 +197,10 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.window.core)
     implementation(libs.cache4k)
+    implementation(libs.k3lp.core)
     implementation(libs.kotlin.reflect)
     implementation(libs.kotlinx.coroutines)
+    implementation(libs.kotlinx.io)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.mikepenz.aboutlibraries.core)
     implementation(libs.mikepenz.aboutlibraries.compose)
@@ -229,7 +211,6 @@ dependencies {
     implementation(libs.patrickgold.jetpref.material.ui)
 
     implementation(projects.lib.android)
-    implementation(projects.lib.color)
     implementation(projects.lib.compose)
     implementation(projects.lib.kotlin)
     implementation(projects.lib.native)

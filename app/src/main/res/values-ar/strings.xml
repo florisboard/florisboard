@@ -302,7 +302,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">مضاعف حجم الخط</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">التخطيط</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">إدخال ملء الشاشة الأفقي</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">المسافة بين المفاتيح</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">ضغط المفتاح</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">رؤية النافذة المنبثقة</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">إظهار النافذة المنبثقة عندما تضغط على مفتاح</string>

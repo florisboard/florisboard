@@ -199,7 +199,6 @@
     <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Písanie veľkých písmen</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Úprava veľkosti písma</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Rozloženie</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Rozstupy medzi klávesmi</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Stlačenie klávesu</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Viditeľnosť vyskakovacieho okna</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Keď stlačíte kláves, zobrazí sa vyskakovacie okno</string>

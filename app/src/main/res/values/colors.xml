@@ -13,9 +13,6 @@
     <color name="textColorError">#FFFFFF</color><!-- White -->
 
     <color name="ic_app_icon_background">#3D3E42</color>
-    <color name="ic_app_icon_stable_background">@color/ic_app_icon_background</color>
-    <color name="ic_app_icon_beta_background">@color/ic_app_icon_background</color>
-    <color name="ic_app_icon_debug_background">@color/ic_app_icon_background</color>
 
     <color name="cardViewBackgroundColor">#FFFFFF</color><!-- White -->
     <color name="navigationBarColor">#000000</color><!-- Black -->

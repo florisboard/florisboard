@@ -16,18 +16,15 @@
 
 package dev.patrickgold.florisboard.ime.media.emoji
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.util.stream.Collectors
 import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.nlp.EmojiSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import io.github.reactivecircus.cache4k.Cache
+import org.k3lp.runtime.K3Content
 
 /**
  * Provides emoji suggestions within a text input context.
@@ -59,37 +56,26 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
 
     override suspend fun suggest(
         subtype: Subtype,
-        content: EditorContent,
+        content: K3Content,
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean
     ): List<SuggestionCandidate> {
         val preferredSkinTone = prefs.emoji.preferredSkinTone.get()
         val showName = prefs.emoji.suggestionCandidateShowName.get()
-        val query = validateInputQuery(content.composingText) ?: return emptyList()
+        val query = content.compositionText?.let { validateInputQuery(it) } ?: return emptyList()
         val emojis = cachedEmojiMappings.get(subtype.primaryLocale)?.get(preferredSkinTone) ?: emptyList()
-        val candidates = withContext(Dispatchers.Default) {
-            emojis.parallelStream()
-                .map { emoji ->
-                    val nameWeight = emoji.name.containsWeighted(query, ignoreCase = true)
-                    val keywordWeight = emoji.keywords
-                        .any { it.contains(query, ignoreCase = true) }
-                        .let { if (it) 1.0 else 0.0 }
-                    emoji to (nameWeight * 0.7 + keywordWeight * 0.3)
-                }
-                .sorted { (_, a), (_, b) -> b.compareTo(a) }
-                .limit(maxCandidateCount.toLong())
-                .filter { (_, a) -> a > 0 }
-                .map { (emoji, _) ->
-                    EmojiSuggestionCandidate(
-                        emoji = emoji,
-                        showName = showName,
-                        sourceProvider = this@EmojiSuggestionProvider,
-                    )
-                }
-                .collect(Collectors.toList())
-        }
-        return candidates
+        return emojis.searchByInput(
+            query = query,
+            limit = maxCandidateCount.toLong(),
+            transform = { emoji ->
+                EmojiSuggestionCandidate(
+                    emoji = emoji,
+                    showName = showName,
+                    sourceProvider = this@EmojiSuggestionProvider,
+                )
+            },
+        )
     }
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
@@ -131,13 +117,5 @@ class EmojiSuggestionProvider(private val context: Context) : SuggestionProvider
             return null
         }
         return emojiPartialName
-    }
-}
-
-private fun String.containsWeighted(other: String, ignoreCase: Boolean = false): Double = let { str ->
-    if (str.contains(other, ignoreCase = ignoreCase)) {
-        other.length.toDouble() / str.length.toDouble()
-    } else {
-        0.0
     }
 }

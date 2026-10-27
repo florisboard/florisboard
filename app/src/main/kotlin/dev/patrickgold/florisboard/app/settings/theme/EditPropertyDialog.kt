@@ -76,9 +76,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.ext.FONTS
 import dev.patrickgold.florisboard.app.ext.IMAGES
 import dev.patrickgold.florisboard.lib.ValidationResult
-import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.ext.ExtensionValidation
 import dev.patrickgold.florisboard.lib.rememberValidationResult
 import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import dev.patrickgold.jetpref.material.ui.ExperimentalJetPrefMaterial3Ui
@@ -89,7 +87,7 @@ import dev.patrickgold.jetpref.material.ui.JetPrefListItem
 import dev.patrickgold.jetpref.material.ui.JetPrefTextField
 import dev.patrickgold.jetpref.material.ui.rememberJetPrefColorPickerState
 import java.io.File
-import org.florisboard.lib.color.ColorPalette
+import org.florisboard.lib.snygg.color.ColorPalette
 import org.florisboard.lib.compose.DpSizeSaver
 import org.florisboard.lib.compose.FlorisChip
 import org.florisboard.lib.compose.FlorisIconButton
@@ -181,6 +179,7 @@ private enum class PaddingValue {
     }
 }
 
+/*
 @Composable
 internal fun EditPropertyDialog(
     initProperty: PropertyInfo,
@@ -1256,3 +1255,4 @@ private fun ShapeValueEditor(
         }
     }
 }
+*/

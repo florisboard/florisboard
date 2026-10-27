@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,14 +47,14 @@ import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.PushPin
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableIntStateOf
@@ -84,16 +84,15 @@ import androidx.emoji2.text.EmojiCompat
 import androidx.emoji2.widget.EmojiTextView
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.editorInstance
-import dev.patrickgold.florisboard.ime.input.LocalInputFeedbackController
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
-import dev.patrickgold.florisboard.ime.text.keyboard.TextKeyData
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionKind
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showShortToast
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.launch
 import org.florisboard.lib.android.AndroidKeyguardManager
-import org.florisboard.lib.android.showShortToast
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.compose.florisScrollbar
 import org.florisboard.lib.compose.header
@@ -104,6 +103,7 @@ import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggText
 import org.florisboard.lib.snygg.ui.rememberSnyggThemeQuery
+import org.k3lp.lib.text.asK3String
 import kotlin.math.ceil
 
 private val EmojiCategoryValues = EmojiCategory.entries
@@ -135,17 +135,17 @@ fun EmojiPaletteView(
 ) {
     val prefs by FlorisPreferenceStore
     val context = LocalContext.current
-    val editorInstance by context.editorInstance()
-    val keyboardManager by context.keyboardManager()
+    val imeController = LocalImeController.current
 
-    val activeEditorInfo by editorInstance.activeInfoFlow.collectAsState()
+    val imeState by imeController.activeState.collectAsState()
+    val editorInfo by remember { derivedStateOf { imeState.editor.info } }
     val systemFontPaint = remember(Typeface.DEFAULT) {
         Paint().apply {
             typeface = Typeface.DEFAULT
         }
     }
-    val metadataVersion = activeEditorInfo.emojiCompatMetadataVersion
-    val replaceAll = activeEditorInfo.emojiCompatReplaceAll
+    val metadataVersion = editorInfo.emojiCompatMetadataVersion
+    val replaceAll = editorInfo.emojiCompatReplaceAll
     val emojiCompatInstance by FlorisEmojiCompat.getAsFlow(replaceAll).collectAsState()
     val emojiMappings = remember(emojiCompatInstance, fullEmojiMappings, metadataVersion, systemFontPaint) {
         fullEmojiMappings.byCategory.mapValues { (_, emojiSetList) ->
@@ -161,8 +161,8 @@ fun EmojiPaletteView(
 
     val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
 
-    val preferredSkinTone by prefs.emoji.preferredSkinTone.observeAsState()
-    val emojiHistoryEnabled by prefs.emoji.historyEnabled.observeAsState()
+    val preferredSkinTone by prefs.emoji.preferredSkinTone.collectAsState()
+    val emojiHistoryEnabled by prefs.emoji.historyEnabled.collectAsState()
 
     var activeCategory by remember(emojiHistoryEnabled) {
         if (emojiHistoryEnabled) {
@@ -195,8 +195,10 @@ fun EmojiPaletteView(
             isPinned = isPinned,
             isRecent = isRecent,
             onEmojiInput = { emoji ->
-                keyboardManager.inputEventDispatcher.sendDownUp(emoji)
                 scope.launch {
+                    imeController.updateState {
+                        emitText(emoji.value.asK3String())
+                    }
                     EmojiHistoryHelper.markEmojiUsed(prefs, emoji)
                 }
             },
@@ -234,23 +236,23 @@ fun EmojiPaletteView(
         activeCategory: EmojiCategory,
         onCategoryChange: (EmojiCategory) -> Unit,
     ) {
-        val inputFeedbackController = LocalInputFeedbackController.current
+        val interactionController = LocalInteractionController.current
         val selectedTabIndex = categoryToPageNumber(activeCategory)
         val style = rememberSnyggThemeQuery(FlorisImeUi.MediaEmojiTab.elementName)
-        TabRow(
+        PrimaryTabRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(FlorisImeSizing.smartbarHeight),
             selectedTabIndex = selectedTabIndex,
             containerColor = Color.Transparent,
             contentColor = style.foreground(),
-            indicator = { tabPositions ->
+            indicator = {
                 val style = rememberSnyggThemeQuery(
                     elementName = FlorisImeUi.MediaEmojiTab.elementName,
                     selector = SnyggSelector.FOCUS,
                 )
                 TabRowDefaults.PrimaryIndicator(
-                    Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                    Modifier.tabIndicatorOffset(selectedTabIndex),
                     height = 4.dp,
                     color = style.foreground(),
                 )
@@ -262,7 +264,7 @@ fun EmojiPaletteView(
                 }
                 Tab(
                     onClick = {
-                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                        interactionController.performFeedback(InteractionKind.KeyPress)
                         onCategoryChange(category)
                     },
                     selected = activeCategory == category,
@@ -404,7 +406,7 @@ private fun EmojiKey(
     onEmojiInput: (Emoji) -> Unit,
     onHistoryAction: () -> Unit,
 ) {
-    val inputFeedbackController = LocalInputFeedbackController.current
+    val interactionController = LocalInteractionController.current
     val base = emojiSet.base(withSkinTone = preferredSkinTone)
     val variations = emojiSet.variations(withoutSkinTone = preferredSkinTone)
     var showVariantsBox by remember { mutableStateOf(false) }
@@ -415,13 +417,13 @@ private fun EmojiKey(
             .pointerInput(Unit) {
                 detectTapGestures(
                     onPress = {
-                        inputFeedbackController.keyPress(TextKeyData.UNSPECIFIED)
+                        interactionController.performFeedback(InteractionKind.KeyPress)
                     },
                     onTap = {
                         onEmojiInput(base)
                     },
                     onLongPress = {
-                        inputFeedbackController.keyLongPress(TextKeyData.UNSPECIFIED)
+                        interactionController.performFeedback(InteractionKind.LongPress)
                         if (variations.isNotEmpty() || isPinned || isRecent) {
                             showVariantsBox = true
                         }
@@ -526,7 +528,6 @@ private fun EmojiVariationsPopup(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun EmojiHistoryPopup(
     emoji: Emoji,
@@ -538,9 +539,9 @@ private fun EmojiHistoryPopup(
     val prefs by FlorisPreferenceStore
     val scope = rememberCoroutineScope()
     val emojiKeyHeight = FlorisImeSizing.smartbarHeight
-    val context = LocalContext.current
-    val pinnedUS by prefs.emoji.historyPinnedUpdateStrategy.observeAsState()
-    val recentUS by prefs.emoji.historyRecentUpdateStrategy.observeAsState()
+    val interactionController = LocalInteractionController.current
+    val pinnedUS by prefs.emoji.historyPinnedUpdateStrategy.collectAsState()
+    val recentUS by prefs.emoji.historyRecentUpdateStrategy.collectAsState()
     val showMoveLeft = isCurrentlyPinned && !pinnedUS.isAutomatic || !recentUS.isAutomatic
     val showMoveRight = isCurrentlyPinned && !pinnedUS.isAutomatic || !recentUS.isAutomatic
 
@@ -613,12 +614,13 @@ private fun EmojiHistoryPopup(
                         },
                     )
                 }
+                val actionMsg = stringRes(R.string.emoji__history__removal_success_message)
                 Action(
                     icon = Icons.Outlined.Delete,
                     action = {
                         EmojiHistoryHelper.removeEmoji(prefs, emoji)
-                        context.showShortToast(
-                            R.string.emoji__history__removal_success_message,
+                        interactionController.showShortToast(
+                            actionMsg,
                             "emoji" to emoji.value,
                         )
                     },

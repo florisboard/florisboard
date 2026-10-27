@@ -44,15 +44,11 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.cacheManager
-import dev.patrickgold.florisboard.extensionManager
-import dev.patrickgold.florisboard.ime.keyboard.KeyboardExtension
-import dev.patrickgold.florisboard.ime.nlp.LanguagePackExtension
+import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
+import dev.patrickgold.florisboard.ime.io.FileRegistry
 import dev.patrickgold.florisboard.ime.theme.ThemeExtension
 import dev.patrickgold.florisboard.lib.NATIVE_NULLPTR
-import dev.patrickgold.florisboard.lib.cache.CacheManager
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.io.FileRegistry
 import org.florisboard.lib.compose.FlorisBulletSpacer
 import org.florisboard.lib.compose.FlorisButtonBar
 import org.florisboard.lib.compose.FlorisOutlinedBox
@@ -60,7 +56,6 @@ import org.florisboard.lib.compose.FlorisOutlinedButton
 import org.florisboard.lib.compose.defaultFlorisOutlinedBox
 import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.android.showLongToastSync
 import org.florisboard.lib.kotlin.resultOk
 
 enum class ExtensionImportScreenType(
@@ -73,8 +68,8 @@ enum class ExtensionImportScreenType(
         titleResId = R.string.ext__import__ext_any,
         supportedFiles = listOf(FileRegistry.FlexExtension),
     ),
-    EXT_KEYBOARD(
-        id = "ext-keyboard",
+    EXT_KEYBOARD3(
+        id = "ext-keyboard3",
         titleResId = R.string.ext__import__ext_keyboard,
         supportedFiles = listOf(FileRegistry.FlexExtension),
     ),
@@ -94,11 +89,11 @@ enum class ExtensionImportScreenType(
 fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = FlorisScreen {
     title = stringRes(type.titleResId)
 
+    val extensionController = LocalExtensionController.current
     val navController = LocalNavController.current
     val context = LocalContext.current
-    val cacheManager by context.cacheManager()
-    val extensionManager by context.extensionManager()
 
+    /*
     fun getSkipReason(fileInfo: CacheManager.FileInfo): Int {
         return when {
             !FileRegistry.matchesFileFilter(fileInfo, type.supportedFiles) -> {
@@ -170,12 +165,11 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                         if (fileInfo.skipReason != NATIVE_NULLPTR.toInt()) {
                             continue
                         }
-                        val ext = fileInfo.ext
-                        when (type) {
-                            ExtensionImportScreenType.EXT_ANY -> {
+                        val ext = when (type) {
+                            ExtensionImportScreenType.EXT_ANY -> fileInfo.ext {
                                 ext?.let { extensionManager.import(it) }
                             }
-                            ExtensionImportScreenType.EXT_KEYBOARD -> {
+                            ExtensionImportScreenType.EXT_KEYBOARD3 -> {
                                 ext.takeIf { it is KeyboardExtension }?.let { extensionManager.import(it) }
                             }
                             ExtensionImportScreenType.EXT_THEME -> {
@@ -185,6 +179,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
                                 ext.takeIf { it is LanguagePackExtension }?.let { extensionManager.import(it) }
                             }
                         }
+                        extensionController.import()
                     }
                 }.onSuccess {
                     workspace.close()
@@ -201,7 +196,7 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
         if (initUuid == null) {
             FlorisOutlinedButton(
                 onClick = {
-                    importLauncher.launch("*/*")
+                    importLauncher.launch("* / *")
                 },
                 modifier = Modifier
                     .padding(vertical = 16.dp)
@@ -248,8 +243,10 @@ fun ExtensionImportScreen(type: ExtensionImportScreenType, initUuid: String?) = 
             }
         }
     }
+     */
 }
 
+/*
 @Composable
 private fun FileInfoView(
     fileInfo: CacheManager.FileInfo,
@@ -337,3 +334,4 @@ private fun FileInfoView(
         }
     }
 }
+     */

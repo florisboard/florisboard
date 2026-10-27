@@ -103,13 +103,13 @@ object InputMethodUtils {
         flogDebug { activeImeIds }
         return activeImeIds.split(DELIMITER).map { componentStr ->
             ComponentName.unflattenFromString(componentStr)
-        }.any { it?.packageName == context.packageName && it?.className == IME_SERVICE_CLASS_NAME }
+        }.any { it?.packageName == context.packageName && it.className == IME_SERVICE_CLASS_NAME }
     }
 
     fun parseIsFlorisboardSelected(context: Context, selectedImeId: String): Boolean {
         flogDebug { selectedImeId }
         val component = ComponentName.unflattenFromString(selectedImeId)
-        return component?.packageName == context.packageName && component?.className == IME_SERVICE_CLASS_NAME
+        return component?.packageName == context.packageName && component.className == IME_SERVICE_CLASS_NAME
     }
 
     fun showImeEnablerActivity(context: Context) {

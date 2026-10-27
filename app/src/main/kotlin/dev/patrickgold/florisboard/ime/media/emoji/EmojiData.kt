@@ -27,7 +27,7 @@ private typealias EmojiDataBySkinToneImpl = EnumMap<EmojiSkinTone, MutableList<E
 typealias EmojiDataByCategory = Map<EmojiCategory, List<EmojiSet>>
 typealias EmojiDataBySkinTone = Map<EmojiSkinTone, List<Emoji>>
 
-data class EmojiData(
+class EmojiData(
     val byCategory: EmojiDataByCategory,
     val bySkinTone: EmojiDataBySkinTone,
 ) {

@@ -1,6 +1,6 @@
 ## Description
 
-<!-- Meaningfull description here -->
+<!-- Meaningful description here -->
 
 ## APK testing
 

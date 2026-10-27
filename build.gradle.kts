@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,12 @@
 plugins {
     alias(libs.plugins.agp.application) apply false
     alias(libs.plugins.agp.library) apply false
+    alias(libs.plugins.agp.multiplatform.library) apply false
     alias(libs.plugins.agp.test) apply false
+    alias(libs.plugins.compose.multiplatform) apply false
     alias(libs.plugins.kotest) apply false
-    alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.plugin.compose) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.kotlinx.kover) apply false

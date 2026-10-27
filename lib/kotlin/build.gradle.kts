@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2024-2025 The FlorisBoard Contributors
+ * Copyright (C) 2024-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,19 +23,9 @@ plugins {
     alias(libs.plugins.kotest)
 }
 
-val projectGroupId: String by project
-val artifactId = "florisboard-lib-kotlin"
-val projectVersion: String by project
-
 java {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
-}
-
-sourceSets {
-    maybeCreate("main").apply {
-        java.srcDir("src/main/kotlin")
-    }
 }
 
 tasks {
@@ -43,7 +33,7 @@ tasks {
         compilerOptions.jvmTarget = JvmTarget.JVM_11
         compilerOptions.freeCompilerArgs = listOf(
             "-opt-in=kotlin.contracts.ExperimentalContracts",
-            "-Xjvm-default=all-compatibility",
+            "-jvm-default=enable",
         )
     }
     compileTestKotlin {

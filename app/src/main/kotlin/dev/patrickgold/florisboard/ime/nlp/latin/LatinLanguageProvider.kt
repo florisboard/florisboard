@@ -20,7 +20,6 @@ import android.content.Context
 import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.editor.EditorContent
 import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
@@ -31,6 +30,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.florisboard.lib.android.readText
 import org.florisboard.libnative.NlpBridge
+import org.k3lp.runtime.K3Content
 import java.io.File
 
 class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProvider {
@@ -139,7 +139,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     override suspend fun suggest(
         subtype: Subtype,
-        content: EditorContent,
+        content: K3Content,
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean

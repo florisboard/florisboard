@@ -1,8 +1,10 @@
+
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,58 +20,60 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
  */
 
 plugins {
-    alias(libs.plugins.agp.library)
-    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.agp.multiplatform.library)
     alias(libs.plugins.kotlin.plugin.compose)
+    alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlinx.kover)
 }
 
-val projectMinSdk: String by project
-val projectCompileSdk: String by project
-
 kotlin {
+    android {
+        namespace = "org.florisboard.lib.snygg"
+        compileSdk = providers.gradleProperty("projectCompileSdk").get().toInt()
+        minSdk = providers.gradleProperty("projectMinSdk").get().toInt()
+
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+        }
+
+        withHostTestBuilder {}.configure {}
+    }
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_11)
         freeCompilerArgs.set(listOf(
             "-Xconsistent-data-class-copy-visibility",
-            "-Xwhen-guards",
         ))
     }
-}
 
-android {
-    namespace = "org.florisboard.lib.snygg"
-    compileSdk = projectCompileSdk.toInt()
+    sourceSets {
+        commonMain.dependencies {
+            implementation(projects.lib.kotlin)
 
-    defaultConfig {
-        minSdk = projectMinSdk.toInt()
+            api(libs.material.kolor)
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
+            implementation(libs.compose.multiplatform.runtime)
+            implementation(libs.compose.multiplatform.foundation)
+            implementation(libs.compose.multiplatform.material3)
+            // TODO: remove and replace with imageVector or XML asset.
+            //  This is only used in SnygIcon preview.
+            implementation(libs.compose.multiplatform.material.icons.extended)
 
-    buildFeatures {
-        compose = true
-    }
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            implementation(libs.coil.compose)
+            implementation(libs.coil.gif)
+            implementation(libs.kotlinx.serialization.json)
         }
-        create("beta") {
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+
+        androidMain.dependencies {
+            implementation(projects.lib.android)
+
+            implementation(libs.androidx.core.ktx)
+            implementation(libs.androidx.compose.ui.tooling.preview)
         }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+
+        commonTest.dependencies {
+            implementation(libs.kotlin.test.junit5)
+        }
     }
 }
 
@@ -84,39 +88,25 @@ kover {
     useJacoco()
 }
 
-dependencies {
-    implementation(projects.lib.android)
-    implementation(projects.lib.color)
-    implementation(projects.lib.kotlin)
-
-    val composeBom = platform(libs.androidx.compose.bom)
-    implementation(composeBom)
-    // testImplementation(composeBom)
-    // androidTestImplementation(composeBom)
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.material.icons)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.gif)
-    implementation(libs.kotlinx.serialization.json)
-
-    testImplementation(libs.kotlin.test.junit5)
-}
-
 tasks.register<JavaExec>("generateJsonSchema") {
-    dependsOn("build")
+    description = "Generate the JSON schema for Snygg themes"
+    group = "Generation"
+    dependsOn("compileAndroidMain")
     mainClass.set("org.florisboard.lib.snygg.SnyggJsonSchemaGenerator")
-    val debugVariant = android.libraryVariants.first { it.name == "debug" }
+    val debugRuntime = configurations.named("androidRuntimeClasspath")
+    val compileTask = tasks.named<KotlinCompile>("compileAndroidMain")
+    val debugRuntimeArtifactView = debugRuntime.get().incoming.artifactView {
+        attributes { attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, "android-classes") }
+    }
     classpath = files(
-        debugVariant.javaCompileProvider.get().classpath.map { it.absolutePath },
+        compileTask.map { it.destinationDirectory },
+        debugRuntimeArtifactView.files
     )
     args = listOf("schemas/stylesheet.schema.json")
     workingDir = projectDir
     standardOutput = System.out
 }
 
-tasks["build"].finalizedBy("generateJsonSchema")
+tasks.matching { it.name == "compileAndroidMain" }.configureEach {
+    finalizedBy("generateJsonSchema")
+}

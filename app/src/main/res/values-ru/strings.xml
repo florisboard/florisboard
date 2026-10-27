@@ -91,8 +91,10 @@
     <string name="quick_action__toggle_autocorrect__tooltip">Включить автоисправление</string>
     <string name="quick_action__voice_input" comment="Please mind the limited available space for the quick action strings">Голос. ввод</string>
     <string name="quick_action__voice_input__tooltip" comment="IME stands for Input Method Editor and is indirectly equivalent to 'keyboard'.">Открытый провайдер голосового ввода</string>
+    <string name="quick_action__floating_window_mode" comment="Please mind the limited available space for the quick action strings">Плавающая</string>
     <string name="quick_action__one_handed_mode" comment="Please mind the limited available space for the quick action strings">Одной рукой</string>
     <string name="quick_action__one_handed_mode__tooltip">Включить режим управления одной рукой</string>
+    <string name="quick_action__resize_mode" comment="Please mind the limited available space for the quick action strings">Изменить размер</string>
     <string name="quick_action__drag_marker" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Курсор</string>
     <string name="quick_action__drag_marker__tooltip" comment="This action is only used as a placeholder in the actions editor drag and drop screen and only visible in debug mode">Текущее положение маркера перетаскивания</string>
     <string name="quick_action__noop" comment="Noop=no operation; this action is only used as a placeholder in the actions editor drag and drop screen">Отсутствует</string>
@@ -217,6 +219,8 @@
     <string name="snygg__rule_annotation__font_name">Название шрифта</string>
     <string name="snygg__rule_element__root">Корень</string>
     <string name="snygg__rule_element__window">Окно</string>
+    <string name="snygg__rule_element__window_inner">Внутреннее окно</string>
+    <string name="snygg__rule_element__window_move_handle">Ручка передвижения окна</string>
     <string name="snygg__rule_element__key">Кнопка</string>
     <string name="snygg__rule_element__key_hint">Подсказка кнопки</string>
     <string name="snygg__rule_element__key_popup_box">Обертка всплывающей клавиши</string>
@@ -407,7 +411,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Множитель размера шрифта</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Внешний вид</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">На весь экран в альбомном режиме</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Расстояние между кнопками</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Нажатие клавиши</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Превью символов</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Показывать всплывающую подсказку при нажатии кнопки</string>
@@ -807,6 +810,7 @@
     <string name="action__delete">Удалить</string>
     <string name="action__delete_confirm_title">Подтвердить удаление</string>
     <string name="action__delete_confirm_message">Вы уверены, что хотите удалить \"{name}\"? Это действие не может быть отменено после выполнения.</string>
+    <string name="action__reset">Сброс</string>
     <string name="action__reset_confirm_title">Подтвердить сброс</string>
     <string name="action__reset_confirm_message">Вы уверены, что хотите сбросить \"{name}\"? Это действие не может быть отменено после выполнения.</string>
     <string name="action__discard">Отменить</string>
@@ -821,6 +825,7 @@
     <string name="action__import_files">Импорт файлов</string>
     <string name="action__no">Нет</string>
     <string name="action__ok">OK</string>
+    <string name="action__done">Готово</string>
     <string name="action__restore">Восстановление</string>
     <string name="action__save">Сохранить</string>
     <string name="action__select">Выбрать</string>
@@ -939,6 +944,8 @@
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Сдвиг (вручную)</string>
     <string name="enum__input_shift_state__shifted_automatic" comment="Enum value label">Сдвиг (авто)</string>
     <string name="enum__input_shift_state__caps_lock" comment="Enum value label">Caps Lock</string>
+    <string name="enum__ime_window_mode__fixed" comment="Enum value label">Фиксированный</string>
+    <string name="enum__ime_window_mode__floating" comment="Enum value label">Плавающий</string>
     <string name="enum__keyboard_mode__characters" comment="Enum value label">Символы</string>
     <string name="enum__keyboard_mode__symbols" comment="Enum value label">Символы</string>
     <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Символы 2</string>

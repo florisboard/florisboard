@@ -160,7 +160,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Kirjasinkoon kerroin</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">Ulkoasu</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Vaakatason kokonäytön syöttö</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Näppäinten välitys</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Painallus</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Ponnahdusikkunan näkyvyys</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Näytä ponnahdusikkuna, kun painat näppäintä</string>

@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.width
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.UseSerializers
 import org.florisboard.lib.compose.DpSizeSerializer
+import kotlin.math.sqrt
 
 /**
  * The window props describe the necessary properties for window placement and sizing.
@@ -38,7 +39,22 @@ sealed interface ImeWindowProps {
      */
     val keyboardHeight: Dp
 
-    fun calcFontScale(constraints: ImeWindowConstraints): Float
+    fun keyboardWidth(constraints: ImeWindowConstraints): Dp
+
+    fun calcKeyMarginH(constraints: ImeWindowConstraints): Dp {
+        val factor = keyboardWidth(constraints) / constraints.defKeyboardWidth
+        return constraints.defKeyMarginH * sqrt(factor)
+    }
+
+    fun calcKeyMarginV(constraints: ImeWindowConstraints): Dp {
+        val factor = keyboardHeight / constraints.defKeyboardHeight
+        return constraints.defKeyMarginV * sqrt(factor)
+    }
+
+    fun calcFontScale(constraints: ImeWindowConstraints): Float {
+        val factor = keyboardHeight / constraints.defKeyboardHeight
+        return sqrt(factor)
+    }
 
     /**
      * The window props for fixed mode. It assumes the window is docked to the bottom root window edge and
@@ -91,9 +107,9 @@ sealed interface ImeWindowProps {
             )
         }
 
-        override fun calcFontScale(constraints: ImeWindowConstraints): Float {
-            val fontScale = keyboardHeight / constraints.defKeyboardHeight
-            return fontScale.coerceAtMost(1f)
+        override fun keyboardWidth(constraints: ImeWindowConstraints): Dp {
+            val rootBounds = constraints.rootBounds
+            return (rootBounds.width - paddingLeft - paddingRight).coerceIn(0.dp, rootBounds.width)
         }
     }
 
@@ -142,9 +158,8 @@ sealed interface ImeWindowProps {
             )
         }
 
-        override fun calcFontScale(constraints: ImeWindowConstraints): Float {
-            val fontScale = keyboardHeight / constraints.defKeyboardHeight
-            return fontScale.coerceAtMost(1f)
+        override fun keyboardWidth(constraints: ImeWindowConstraints): Dp {
+            return keyboardWidth
         }
     }
 }

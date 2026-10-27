@@ -31,8 +31,8 @@ import io.kotest.property.arbitrary.float
 import io.kotest.property.arbitrary.int
 
 fun Arb.Companion.density() = arbitrary {
-    val density = Arb.float(0.75f, 4.0f).bind()
-    val fontScale = Arb.float(0.85f, 2.0f).bind()
+    val density = Arb.float(0.75f, 4.0f, includeNaNs = false).bind()
+    val fontScale = Arb.float(0.85f, 2.0f, includeNaNs = false).bind()
     Density(density, fontScale)
 }
 

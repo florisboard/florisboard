@@ -1,8 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">FlorisBoard</string>
 
-    <string name="key__phone_pause" comment="Label for the Pause key in the telephone keyboard layout">Pause</string>
-    <string name="key__phone_wait" comment="Label for the Wait key in the telephone keyboard layout">Wait</string>
     <string name="key_popup__threedots_alt" comment="Content description for the three-dots icon in a key popup">Three-dot icon. If visible, indicates that more letters can be used if longer pressed.</string>
 
     <!-- One-handed strings -->
@@ -20,8 +18,8 @@
     <string name="prefs__media__emoji_history__title" comment="Preference group title">Emoji history</string>
     <string name="prefs__media__emoji_history_enabled" comment="Preference title">Enable emoji history</string>
     <string name="prefs__media__emoji_history_enabled__summary" comment="Preference summary">Retain recently used emojis for quick access</string>
-    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Update strategy (Pinned)</string>
-    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Update strategy (Recent)</string>
+    <string name="prefs__media__emoji_history_pinned_update_strategy" comment="Preference title">Update strategy (pinned)</string>
+    <string name="prefs__media__emoji_history_recent_update_strategy" comment="Preference title">Update strategy (recent)</string>
     <string name="prefs__media__emoji_history_max_size">Maximum items to keep</string>
     <string name="prefs__media__emoji_history_pinned_reset">Reset pinned emojis</string>
     <string name="prefs__media__emoji_history_reset">Reset recent emojis</string>
@@ -37,18 +35,18 @@
     <string name="prefs__media__emoji_suggestion_candidate_max_count" comment="Preference title">Maximum candidate count</string>
 
     <!-- Emoji strings -->
-    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys &amp; Emotions</string>
-    <string name="emoji__category__people_body" comment="Emoji category name">People &amp; Body</string>
-    <string name="emoji__category__animals_nature" comment="Emoji category name">Animals &amp; Nature</string>
-    <string name="emoji__category__food_drink" comment="Emoji category name">Food &amp; Drink</string>
-    <string name="emoji__category__travel_places" comment="Emoji category name">Travel &amp; Places</string>
+    <string name="emoji__category__smileys_emotion" comment="Emoji category name">Smileys and emotions</string>
+    <string name="emoji__category__people_body" comment="Emoji category name">People and body</string>
+    <string name="emoji__category__animals_nature" comment="Emoji category name">Animals and nature</string>
+    <string name="emoji__category__food_drink" comment="Emoji category name">Food and drink</string>
+    <string name="emoji__category__travel_places" comment="Emoji category name">Travel and places</string>
     <string name="emoji__category__activities" comment="Emoji category name">Activities</string>
     <string name="emoji__category__objects" comment="Emoji category name">Objects</string>
     <string name="emoji__category__symbols" comment="Emoji category name">Symbols</string>
     <string name="emoji__category__flags" comment="Emoji category name">Flags</string>
     <string name="emoji__history__empty_message" comment="Message if the emoji history is empty">No recently used emojis found. Once you start typing emojis they will automatically appear here.</string>
     <string name="emoji__history__phone_locked_message" comment="Message to show if phone is locked">To access your emoji history, please first unlock your device.</string>
-    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Pro tip: Long press emojis in the emoji history to pin or remove them!</string>
+    <string name="emoji__history__usage_tip" comment="Feature discoverability for actions of emoji history">Pro tip: long press emojis in the emoji history to pin or remove them!</string>
     <string name="emoji__history__removal_success_message" comment="Toast message if user has used the delete action on an emoji in the emoji history">Removed {emoji} from emoji history</string>
     <string name="emoji__history__pinned">Pinned</string>
     <string name="emoji__history__recent">Recent</string>
@@ -127,7 +125,7 @@
     <string name="settings__home__ime_not_enabled" comment="Error message shown in Home fragment when FlorisBoard is not enabled in the system">FlorisBoard is not enabled in the system and thus won\'t be available as an input method in the input picker. Click here to resolve this issue.</string>
     <string name="settings__home__ime_not_selected" comment="Warning message shown in Home fragment when FlorisBoard is not selected as the default keyboard">FlorisBoard is not selected as the default input method. Click here to resolve this issue.</string>
 
-    <string name="settings__localization__title" comment="Title of languages and Layout screen">Languages &amp; Layouts</string>
+    <string name="settings__localization__title" comment="Title of languages and layout screen">Languages and layouts</string>
     <string name="settings__localization__display_language_names_in__label" comment="Label of Display language names in preference">Display language names in</string>
     <string name="settings__localization__display_keyboard_labels_in_subtype_language" comment="Label of Display keyboard labels in subtype language preference">Display keyboard labels in subtype language</string>
     <string name="settings__localization__group_subtypes__label" comment="Label of subtypes group">Subtypes</string>
@@ -162,7 +160,7 @@
     <string name="settings__localization__subtype_error_fields_no_value" comment="Error message shown in subtype editor if at least one field is set to '- select -' (means no value specified)">At least one field does not have a value selected. Please choose a value for the field(s).</string>
     <string name="settings__localization__subtype_error_layout_not_installed" comment="Error message shown in subtype list when a layout is not installed, where %s will be replaced by the layout ID">{layout_id} (not installed)</string>
     <string name="settings__localization__group_layouts__label" comment="Label of layouts group">Layouts</string>
-    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Delete Confirmation</string>
+    <string name="settings__localization__subtype_delete_confirmation_title" comment="Title of the subtype delete confirmation dialog">Delete confirmation</string>
     <string name="settings__localization__subtype_delete_confirmation_warning" comment="Warning message in the confirmation dialog to confirm the user's intent to delete">Are you sure you want to delete this subtype?</string>
 
     <string name="settings__theme__title" comment="Title of the Theme screen">Theme</string>
@@ -190,7 +188,7 @@
     <string name="settings__theme_editor__edit_rule">Edit rule</string>
     <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
     <string name="settings__theme_editor__rule_already_exists">This stylesheet rule is already defined.</string>
-    <string name="settings__theme_editor__rule_name">Element / Annotation</string>
+    <string name="settings__theme_editor__rule_name">Element / annotation</string>
     <string name="settings__theme_editor__rule_codes">Target key codes</string>
     <string name="settings__theme_editor__rule_groups">Groups</string>
     <string name="settings__theme_editor__rule_modes">Target modes (layers)</string>
@@ -235,7 +233,7 @@
 
     <string name="snygg__rule_element__root">Root</string>
     <string name="snygg__rule_element__window">Window</string>
-    <string name="snygg__rule_element__window_inner">Window Inner</string>
+    <string name="snygg__rule_element__window_inner">Window inner</string>
 
     <string name="snygg__rule_element__window_move_handle">Window move handle</string>
     <string name="snygg__rule_element__window_resize_action">Window resize action</string>
@@ -387,13 +385,13 @@
     <string name="snygg__property_value__yes">Yes</string>
     <string name="snygg__property_value__no">No</string>
     <string name="snygg__property_value__solid_color">Solid color</string>
-    <string name="snygg__property_value__material_you_light_color">Material You color (Light)</string>
-    <string name="snygg__property_value__material_you_dark_color">Material You color (Dark)</string>
+    <string name="snygg__property_value__material_you_light_color">Material You color (light)</string>
+    <string name="snygg__property_value__material_you_dark_color">Material You color (dark)</string>
     <string name="snygg__property_value__font_family_generic">Font family (generic)</string>
     <string name="snygg__property_value__font_family_custom">Font family (custom)</string>
     <string name="snygg__property_value__font_style">Font style</string>
     <string name="snygg__property_value__font_weight">Font weight</string>
-    <string name="snygg__property_value__padding">Padding or Margin</string>
+    <string name="snygg__property_value__padding">Padding or margin</string>
     <string name="snygg__property_value__rectangle_shape">Rectangle shape</string>
     <string name="snygg__property_value__circle_shape">Circle shape</string>
     <string name="snygg__property_value__cut_corner_shape_dp">Cut corner shape (dp)</string>
@@ -410,8 +408,8 @@
     <string name="snygg__property_value__text_overflow">Text overflow</string>
     <string name="snygg__property_value__uri">URI reference</string>
 
-    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sounds &amp; Vibration</string>
-    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / Sounds</string>
+    <string name="settings__input_feedback__title" comment="Title of Input Feedback screen">Sounds and vibration</string>
+    <string name="pref__input_feedback__group_audio__label" comment="Preference group title">Audio feedback / sounds</string>
     <string name="pref__input_feedback__audio_enabled__label" comment="Preference title">Enable audio feedback</string>
     <string name="pref__input_feedback__audio_enabled__summary_disabled" comment="Preference summary">Never play sounds for input events, regardless of system settings</string>
     <string name="pref__input_feedback__audio_volume__label" comment="Preference title">Sound volume for input events</string>
@@ -420,14 +418,9 @@
     <string name="pref__input_feedback__audio_feat_key_repeated_action__label" comment="Preference title">Key repeated action sounds</string>
     <string name="pref__input_feedback__audio_feat_gesture_swipe__label" comment="Preference title">Gesture swipe sounds</string>
     <string name="pref__input_feedback__audio_feat_gesture_moving_swipe__label" comment="Preference title">Gesture moving swipe sounds</string>
-    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptic feedback / Vibration</string>
+    <string name="pref__input_feedback__group_haptic__label" comment="Preference group title">Haptic feedback / vibration</string>
     <string name="pref__input_feedback__haptic_enabled__label" comment="Preference title">Enable haptic feedback</string>
     <string name="pref__input_feedback__haptic_enabled__summary_disabled" comment="Preference summary">Never vibrate for input events, regardless of system settings</string>
-    <string name="pref__input_feedback__haptic_vibration_mode__label" comment="Preference title">Vibration mode</string>
-    <string name="pref__input_feedback__haptic_vibration_duration__label" comment="Preference title">Vibration duration</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__label" comment="Preference title">Vibration strength</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_vibrator" comment="Preference summary">This feature requires a hardware vibrator, which seems to be missing on this device</string>
-    <string name="pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl" comment="Preference summary">This feature requires hardware amplitude control support, which is missing on your device</string>
     <string name="pref__input_feedback__haptic_feat_key_press__label" comment="Preference title">Key press vibration</string>
     <string name="pref__input_feedback__haptic_feat_key_long_press__label" comment="Preference title">Key long press vibration</string>
     <string name="pref__input_feedback__haptic_feat_key_repeated_action__label" comment="Preference title">Key repeated action vibration</string>
@@ -442,30 +435,42 @@
     <string name="settings__keyboard__title" comment="Title of Keyboard preferences screen">Keyboard</string>
     <string name="pref__keyboard__number_row__label" comment="Preference title">Number row</string>
     <string name="pref__keyboard__number_row__summary" comment="Preference summary">Show a number row above the character layout</string>
-    <string name="pref__keyboard__hinted_number_row_mode__label" comment="Preference title">Hinted number row</string>
-    <string name="pref__keyboard__hinted_symbols_mode__label" comment="Preference title">Hinted symbols</string>
-    <string name="pref__keyboard__utility_key_enabled__label" comment="Preference title">Show utility key</string>
-    <string name="pref__keyboard__utility_key_enabled__summary" comment="Preference summary">Shows a configurable utility key next to space bar</string>
-    <string name="pref__keyboard__utility_key_action__label" comment="Preference title">Utility key action</string>
     <string name="pref__keyboard__space_bar_mode__label" comment="Preference title">Spacebar label</string>
-    <string name="pref__keyboard__capitalization_behavior__label" comment="Preference title">Capitalization behavior</string>
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">Font size multiplier</string>
-    <string name="pref__keyboard__group_layout__label" comment="Preference group title">Layout</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">Landscape fullscreen input</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Key spacing</string>
+    <string name="pref__keyboard__key_spacing__label" comment="Preference title">Key spacing factor</string>
     <string name="pref__keyboard__group_keypress__label" comment="Preference group title">Key press</string>
-    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup Visibility</string>
+    <string name="pref__keyboard__popup_enabled__label" comment="Preference title">Popup visibility</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">Show popup when you press a key</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__label" comment="Preference title">Accents include symbol popups</string>
-    <string name="pref__keyboard__merge_hint_popups_enabled__summary" comment="Preference summary">Adds symbol popups to the default layout\'s accents</string>
-    <string name="pref__keyboard__long_press_delay__label" comment="Preference title">Long key press delay</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__label" comment="Preference title">Space bar switches to characters</string>
     <string name="pref__keyboard__space_bar_switches_to_characters__summary" comment="Preference summary">Automatically switches back to characters when in symbols or numeric</string>
     <string name="pref__keyboard__incognito_indicator__label" comment="Preference title">Incognito indicator</string>
+    <string name="pref__keyboard__timeout_pref_use_system_summary" comment="Summary of the long press/multi tap timeout pref to indicate that the current mode is infer from system. {v} refers to the current system value in ms.">Use system ({v} ms)</string>
+    <string name="pref__keyboard__timeout_pref_use_system_switch" comment="Label of the 'Use system' switch within the long press/multi tap timeout dialogs">Use system</string>
+    <string name="pref__keyboard__group_long_press__label" comment="Preference group title">Long press</string>
+    <string name="pref__keyboard__long_press_timeout__label" comment="Preference title">Long press timeout</string>
+    <string name="pref__keyboard__long_press_key_hint_enabled__label" comment="Preference title">Show hints</string>
+    <string name="pref__keyboard__long_press_key_hint_enabled__summary" comment="Preference summary">Displays each key\'s default long press key, if any, as a hint</string>
+    <string name="pref__keyboard__long_press_key_hint_placement__label" comment="Preference title">Hint placement</string>
+    <string name="pref__keyboard__group_multi_tap__label" comment="Preference group title">Multi tap</string>
+    <string name="pref__keyboard__multi_tap_key_hint_enabled__label" comment="Preference title">Show multi tap highlight</string>
+    <string name="pref__keyboard__multi_tap_key_hint_enabled__summary" comment="Preference summary">Highlight pending output while multi tap gesture is active</string>
+    <string name="pref__keyboard__multi_tap_timeout__label" comment="Preference title">Multi tap timeout</string>
+    <string name="pref__keyboard__group_flicks__label" comment="Preference group title">Flicks</string>
+
+    <string name="settings__fn_key__title" comment="Title of Fn key screen">Fn key and actions</string>
+    <string name="settings__fn_key__summary" comment="Summary of Fn key screen (shown in Keyboard screen)">Configure Fn key and its associated actions</string>
+    <string name="settings__fn_key__spotlight_text" comment="Spotlight text of Fn key screen (shown at the top of the Fn key screen)">Show a universal Fn key across all keyboard layouts that support it. Typically, the Fn key is left to the space bar, but the exact position may vary.</string>
+    <string name="settings__fn_key__spotlight_switch_text" comment="Spotlight switch text of Fn key screen (shown at the top of the Fn key screen)">Show universal Fn key</string>
+    <string name="settings__fn_key__short_press_group_title">Short press action</string>
+    <string name="settings__fn_key__long_press_group_title">Long press actions</string>
+    <string name="settings__fn_key__long_press_add_action_btn">Add long press action</string>
+    <string name="settings__fn_key__add_action_dialog_title">Add action</string>
+    <string name="settings__fn_key__edit_action_dialog_title">Edit action</string>
 
     <!-- Smartbar strings -->
     <string name="settings__smartbar__title" comment="Title of Smartbar screen">Smartbar</string>
-    <string name="pref__smartbar__enabled__label" comment="Preference title">Enable Smartbar</string>
+    <string name="pref__smartbar__enabled__label" comment="Preference title">Enable smartbar</string>
     <string name="pref__smartbar__enabled__summary" comment="Preference summary">Will show on top of the keyboard</string>
     <string name="pref__smartbar__layout__label" comment="Preference title">Layout</string>
     <string name="pref__smartbar__group_layout_specific__label" comment="Preference group title">Layout-specific options</string>
@@ -477,6 +482,14 @@
 
     <!-- Typing strings -->
     <string name="settings__typing__title" comment="Title of Typing screen">Typing</string>
+
+    <string name="pref__typing_caps_group__title" comment="Title of Typing > Caps group">Capitalization</string>
+    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
+    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
+    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Remember caps lock state</string>
+    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock will stay on when moving to another text field</string>
+    <string name="pref__typing__shift_key_behavior__label" comment="Preference title">Shift key behavior</string>
+
     <string name="pref__suggestion__title" comment="Preference group title">Suggestions</string>
     <string name="pref__suggestion__enabled__label" comment="Preference title">Display suggestions</string>
     <string name="pref__suggestion__enabled__summary" comment="Preference summary">Provides suggestions while you type</string>
@@ -487,12 +500,8 @@
     <string name="pref__suggestion__api30_inline_suggestions_enabled__summary" comment="Preference summary">Show inline suggestions provided by autofill services</string>
     <string name="pref__suggestion__incognito_mode__label" comment="Label of Incognito mode preference in Typing">Incognito mode</string>
     <string name="pref__correction__title" comment="Preference group title">Corrections</string>
-    <string name="pref__correction__auto_capitalization__label" comment="Preference title">Auto-capitalization</string>
-    <string name="pref__correction__auto_capitalization__summary" comment="Preference summary">Capitalize words based on the current input context</string>
     <string name="pref__correction__auto_space_punctuation__label" comment="Preference title">Auto-space after punctuation</string>
     <string name="pref__correction__auto_space_punctuation__summary" comment="Preference summary">Automatically insert a space after a punctuation</string>
-    <string name="pref__correction__remember_caps_lock_state__label" comment="Preference title">Remember caps lock state</string>
-    <string name="pref__correction__remember_caps_lock_state__summary" comment="Preference summary">Caps lock will stay on when moving to another text field</string>
     <string name="pref__correction__double_space_period__label" comment="Preference title">Double-space period</string>
     <string name="pref__correction__double_space_period__summary" comment="Preference summary">Tapping twice on spacebar inserts a period followed by a space</string>
     <string name="pref__spelling__title" comment="Preference group title">Spelling</string>
@@ -513,8 +522,8 @@
     <string name="pref__dictionary__enable_internal_user_dictionary__summary" comment="Preference summary">Suggest words stored in the internal user dictionary</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__label" comment="Preference title">Manage internal user dictionary</string>
     <string name="pref__dictionary__manage_floris_user_dictionary__summary" comment="Preference summary">Add, view, and remove entries for the internal user dictionary</string>
-    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Internal User Dictionary</string>
-    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System User Dictionary</string>
+    <string name="settings__udm__title_floris" comment="Title of the User Dictionary Manager activity for internal">Internal user dictionary</string>
+    <string name="settings__udm__title_system" comment="Title of the User Dictionary Manager activity for system">System user dictionary</string>
     <string name="settings__udm__no_words_in_dictionary" comment="String to show if no words are present in the dictionary">This user dictionary does not contain any words.</string>
     <string name="settings__udm__word_summary_freq" comment="Summary label for a word entry. The decimal placeholder inserts the frequency for the word it summarizes.">Frequency: {freq}</string>
     <string name="settings__udm__word_summary_freq_shortcut" comment="Summary label for a word entry. The first placeholder inserts the frequency for the word it summarizes, the second placeholder the shortcut defined.">Frequency: {freq} | Shortcut: {shortcut}</string>
@@ -535,7 +544,7 @@
     <string name="settings__udm__dialog__locale_label" comment="Label for the language code in the user dictionary add/edit dialog">Language code (optional)</string>
     <string name="settings__udm__dialog__locale_error_invalid" comment="Error label for the language code in the user dictionary add/edit dialog">This language code does not conform to the expected syntax. The code must either be a language only (like en), a language and country (like en_US) or a language, country, and script (like en_US-script).</string>
 
-    <string name="settings__gestures__title" comment="Title of Gestures screen">Gestures &amp; Glide typing</string>
+    <string name="settings__gestures__title" comment="Title of Gestures screen">Gestures and glide typing</string>
     <string name="pref__glide__title" comment="Preference group title">Glide typing</string>
     <string name="pref__glide__enabled__label" comment="Preference title">Enable glide typing</string>
     <string name="pref__glide__enabled__summary" comment="Preference summary">Type in a word by sliding your finger through its letters</string>
@@ -548,7 +557,7 @@
     <string name="pref__glide__immediate_backspace_deletes_word__summary">Pressing delete right after a glide deletes the whole word</string>
     <string name="pref__gestures__general_title" comment="Preference group title">General gestures</string>
     <string name="pref__gestures__space_bar_title" comment="Preference group title">Space bar gestures</string>
-    <string name="pref__gestures__other_title" comment="Preference group title">Other gestures / Gesture thresholds</string>
+    <string name="pref__gestures__other_title" comment="Preference group title">Other gestures / gesture thresholds</string>
     <string name="pref__gestures__swipe_up__label" comment="Preference title">Swipe up</string>
     <string name="pref__gestures__swipe_down__label" comment="Preference title">Swipe down</string>
     <string name="pref__gestures__swipe_left__label" comment="Preference title">Swipe left</string>
@@ -567,7 +576,7 @@
     <string name="pref__other__settings_theme__auto_amoled" comment="Possible value of Settings theme preference in Other">System default (AMOLED)</string>
     <string name="pref__other__settings_theme__light" comment="Possible value of Settings theme preference in Other">Light</string>
     <string name="pref__other__settings_theme__dark" comment="Possible value of Settings theme preference in Other">Dark</string>
-    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED Dark</string>
+    <string name="pref__other__settings_theme__amoled_dark" comment="Possible value of Settings theme preference in Other">AMOLED dark</string>
     <string name="pref__other__settings_accent_color__label" comment="Label of accent color preference in Other">
         Settings accent color
     </string>
@@ -595,7 +604,7 @@
     <string name="about__privacy_policy__summary" comment="Preference summary">The privacy policy for this project</string>
     <string name="about__project_license__title" comment="Preference title">Project license</string>
     <string name="about__project_license__summary" comment="Preference summary">FlorisBoard is licensed under {license_name}</string>
-    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: Failed to load license text.\n-&gt; Reason: {error_message}</string>
+    <string name="about__project_license__error_license_text_failed" comment="Error text for license text loading failure">Error: failed to load license text.\n-&gt; Reason: {error_message}</string>
     <string name="about__project_license__error_reason_asset_manager_null" comment="Error text if asset manager is null">Asset manager reference is null</string>
     <string name="about__third_party_licenses__title" comment="Preference title">Third-party licenses</string>
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licenses of the third-party libraries included in this app</string>
@@ -608,23 +617,23 @@
 
     <string name="setup__enable_ime__title">Enable {app_name}</string>
     <string name="setup__enable_ime__description">Android requires that every custom keyboard is separately enabled before you can use it. Open the System <i>Language &amp; Input</i> Settings, there enable "{app_name}".</string>
-    <string name="setup__enable_ime__open_settings_btn">Open System Settings</string>
+    <string name="setup__enable_ime__open_settings_btn">Open system settings</string>
 
     <string name="setup__select_ime__title">Select {app_name}</string>
     <string name="setup__select_ime__description">{app_name} is now enabled in your system. To actively use it, switch to {app_name} by selecting it in the input selector dialog!</string>
-    <string name="setup__select_ime__switch_keyboard_btn">Switch Keyboard</string>
+    <string name="setup__select_ime__switch_keyboard_btn">Switch keyboard</string>
 
-    <string name="setup__grant_notification_permission__title">Permit Crash Report Notifications</string>
+    <string name="setup__grant_notification_permission__title">Permit crash report notifications</string>
     <string name="setup__grant_notification_permission__description">As of Android 13+, apps must ask for permission to
         send notifications. In Florisboard, this is only used to open a crash report screen in the event of a crash.
         This permission can be changed at any time in the system settings.
     </string>
-    <string name="setup__grant_notification_permission__btn">Grant Permission</string>
+    <string name="setup__grant_notification_permission__btn">Grant permission</string>
 
-    <string name="setup__finish_up__title">Finish Up</string>
+    <string name="setup__finish_up__title">Finish up</string>
     <string name="setup__finish_up__description_p1">{app_name} is now enabled in the system and ready to be customized by you.</string>
     <string name="setup__finish_up__description_p2">If you encounter any issues, bugs, crashes or just want to make a suggestion, check out the project repository from the about screen!</string>
-    <string name="setup__finish_up__finish_btn">Start Customizing</string>
+    <string name="setup__finish_up__finish_btn">Start customizing</string>
 
     <!-- Physical keyboard -->
     <string name="physical_keyboard__title">Physical keyboard</string>
@@ -635,7 +644,7 @@
     <string name="physical_keyboard__show_on_screen_keyboard__summary">Show on-screen keyboard while using physical keyboard</string>
 
     <!-- Back up & Restore -->
-    <string name="backup_and_restore__title">Back up &amp; Restore</string>
+    <string name="backup_and_restore__title">Back up and restore</string>
     <string name="backup_and_restore__back_up__title">Back up data</string>
     <string name="backup_and_restore__back_up__summary">Generate a backup archive of preferences and customizations</string>
     <string name="backup_and_restore__back_up__destination">Select backup destination</string>
@@ -673,7 +682,7 @@
     <string name="crash_dialog__bug_report_template" comment="Name of the template to use in the GitHub issue tracker (is always in English)" translatable="false">Crash report</string>
     <string name="crash_dialog__copy_to_clipboard" comment="Label of Copy to clipboard button in crash dialog">Copy to system clipboard</string>
     <string name="crash_dialog__copy_to_clipboard_success" comment="Label of Copy to clipboard success message in crash dialog">Copied to system clipboard</string>
-    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Cannot copy to system clipboard: Clipboard manager instance not found</string>
+    <string name="crash_dialog__copy_to_clipboard_failure" comment="Label of Copy to clipboard failure message in crash dialog">Cannot copy to system clipboard: clipboard manager instance not found</string>
     <string name="crash_dialog__open_issue_tracker" comment="Label of Open issue tracker button in crash dialog">Open issue tracker (github.com)</string>
     <string name="crash_dialog__close" comment="Label of Close button in crash dialog">Close</string>
     <string name="crash_notification_channel__title" comment="Title of crash notification channel">FlorisBoard error reports</string>
@@ -753,8 +762,8 @@
     <string name="devtools__show_inline_autofill_overlay__summary">Overlays the current inline autofill results for debugging</string>
     <string name="devtools__show_key_touch_boundaries__label" comment="Label of Show key touch boundaries in Devtools">Show key touch boundaries</string>
     <string name="devtools__show_key_touch_boundaries__summary" comment="Summary of Show key touch boundaries in Devtools">Outline the key touch boundaries in red</string>
-    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Show drag&amp;drop helpers</string>
-    <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Render otherwise invisible helpers in drag&amp;drop screens for debugging</string>
+    <string name="devtools__show_drag_and_drop_helpers__label" comment="Label of Show drag and drop helpers in Devtools">Show drag and drop helpers</string>
+    <string name="devtools__show_drag_and_drop_helpers__summary" comment="Summary of Show drag and drop helpers in Devtools">Render otherwise invisible helpers in drag and drop screens for debugging</string>
     <string name="devtools__clear_udm_internal_database__label" comment="Label of Clear internal user dictionary database in Devtools">Clear internal user dictionary database</string>
     <string name="devtools__clear_udm_internal_database__summary" comment="Summary of Clear internal user dictionary database in Devtools">Clears all words from the dictionary database table</string>
     <string name="devtools__reset_quick_actions_to_default__label">Reset Smartbar quick actions</string>
@@ -784,7 +793,7 @@
 
 
     <!-- Extension strings -->
-    <string name="ext__home__title">Addons &amp; Extensions</string>
+    <string name="ext__home__title">Addons and extensions</string>
     <string name="ext__list__ext_theme">Theme extensions</string>
     <string name="ext__list__ext_keyboard">Keyboard extensions</string>
     <string name="ext__list__ext_languagepack">Language pack extensions</string>
@@ -866,7 +875,7 @@
     <string name="ext__validation__enter_number_between_0_100">Please enter a positive number between 0 and 100</string>
     <string name="ext__validation__hint_value_above_50_percent">Any value above 50% will behave as if you set 50%, consider lowering your percent size</string>
     <string name="ext__update_box__internet_permission_hint">Since this app does not have Internet permission, updates for installed extensions must be checked manually.</string>
-    <string name="ext__update_box__search_for_updates">Search for Updates</string>
+    <string name="ext__update_box__search_for_updates">Search for updates</string>
     <string name="ext__addon_management_box__managing_placeholder">Managing {extensions}</string>
     <string name="ext__addon_management_box__addon_manager_info">All tasks related to importing, exporting, creating, customizing, and removing extensions can be handled through the centralized addon manager.</string>
     <string name="ext__addon_management_box__go_to_page">Go to {ext_home_title}</string>
@@ -874,7 +883,7 @@
     <string name="ext__home__visit_store">Visit Addons Store</string>
     <string name="ext__home__manage_extensions">Manage installed extensions</string>
     <string name="ext__list__view_details">View details</string>
-    <string name="ext__check_updates__title">Check for Updates</string>
+    <string name="ext__check_updates__title">Check for updates</string>
 
     <!-- Action strings -->
     <string name="action__add">Add</string>
@@ -945,9 +954,9 @@
     <!-- Enum label and description strings -->
     <string name="enum__candidates_display_mode__classic" comment="Enum value label">Classic (3 columns)</string>
     <string name="enum__candidates_display_mode__dynamic" comment="Enum value label">Dynamic width</string>
-    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamic width &amp; scrollable</string>
+    <string name="enum__candidates_display_mode__dynamic_scrollable" comment="Enum value label">Dynamic width and scrollable</string>
 
-    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Enable Capslock by double tapping shift</string>
+    <string name="enum__capitalization_behavior__capslock_by_double_tap" comment="Enum value label">Enable caps lock by double tapping shift</string>
     <string name="enum__capitalization_behavior__capslock_by_cycle" comment="Enum value label">Switch to the next capitalization step each time the shift key is pressed</string>
 
     <string name="enum__clipboard_sync_behavior__no_events" comment="Enum value label">No events</string>
@@ -959,9 +968,9 @@
     <string name="enum__clipboard_sync_behavior__all_events" comment="Enum value label">All events</string>
     <string name="enum__clipboard_sync_behavior__all_events__description" comment="Enum value description">Both events setting and clearing clip data are synced in this direction. In this mode, sync includes text content.</string>
 
-    <string name="enum__color_representation__hex" comment="Enum value label">Hexadecimal</string>
-    <string name="enum__color_representation__rgb" comment="Enum value label">Red Green Blue</string>
-    <string name="enum__color_representation__hsv" comment="Enum value label">Hue Saturation Value</string>
+    <string name="enum__color_representation__hex" comment="Enum value label">HEX</string>
+    <string name="enum__color_representation__rgb" comment="Enum value label">RGB</string>
+    <string name="enum__color_representation__hsv" comment="Enum value label">HSV</string>
 
     <string name="enum__display_kbd_after_dialogs__always" comment="Enum value label">Always show</string>
     <string name="enum__display_kbd_after_dialogs__always__description" comment="Enum value description">Always show the keyboard after closing any editor dialog</string>
@@ -1009,18 +1018,6 @@
     <string name="enum__extended_actions_placement__overlay_app_ui" comment="Enum value label">Overlay app UI</string>
     <string name="enum__extended_actions_placement__overlay_app_ui__description" comment="Enum value description">Places the extended actions row as an overlay above the app UI, without affecting the resulting keyboard UI height. Note that this placement may cause the app input field to be partially overdrawn</string>
 
-    <string name="enum__haptic_vibration_mode__use_vibrator_directly" comment="Enum value label">Use vibrator directly</string>
-    <string name="enum__haptic_vibration_mode__use_vibrator_directly__description" comment="Enum value description">{app_name} directly interacts with the default hardware vibrator. This gives more control over duration and strength of a vibration, but the vibration may not be as smooth and optimized as using the haptic feedback interface</string>
-    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface" comment="Enum value label">Use haptic feedback interface</string>
-    <string name="enum__haptic_vibration_mode__use_haptic_feedback_interface__description" comment="Enum value description">{app_name} uses the haptic feedback interface to trigger a predefined vibration sequence for key presses. This may work exceptionally well on some devices, but completely fail or perform very poorly on others</string>
-
-    <string name="enum__key_hint_mode__accent_priority" comment="Enum value label">Accent is prioritized</string>
-    <string name="enum__key_hint_mode__accent_priority__description" comment="Enum value description">The initial character selected after long press is always the primary accent, or the hint symbol if no primary accent is available</string>
-    <string name="enum__key_hint_mode__hint_priority" comment="Enum value label">Hint is prioritized</string>
-    <string name="enum__key_hint_mode__hint_priority__description" comment="Enum value description">The initial character selected after long press is always the hint symbol, or the primary accent if no hint symbol is available</string>
-    <string name="enum__key_hint_mode__smart_priority" comment="Enum value label">Smart prioritization</string>
-    <string name="enum__key_hint_mode__smart_priority__description" comment="Enum value description">The initial character selected after long press is dynamically decided to be either the primary accent or the hint symbol, based on the current language and layout</string>
-
     <string name="enum__incognito_display_mode__replace_shared_actions_toggle" comment="Enum value label">Replace shared actions toggle icon with the incognito indicator</string>
     <string name="enum__incognito_display_mode__display_behind_keyboard" comment="Enum value label">Display the incognito indicator behind the keyboard</string>
 
@@ -1031,10 +1028,9 @@
     <string name="enum__incognito_mode__dynamic_on_off" comment="Enum value label">Dynamically on/off</string>
     <string name="enum__incognito_mode__dynamic_on_off__description" comment="Enum value description">Recommended option. Incognito mode will be dynamically enabled or disabled either through the target app\'s passed options or by manually toggling it through the incognito quick action in the Smartbar.</string>
 
+    <!-- not enums anymore really -->
     <string name="enum__input_feedback_activation_mode__audio_respect_system_settings" comment="Enum value label">Dynamically play sounds for input events, depending on system settings</string>
-    <string name="enum__input_feedback_activation_mode__audio_ignore_system_settings" comment="Enum value label">Always play sounds for input events, regardless of system settings</string>
     <string name="enum__input_feedback_activation_mode__haptic_respect_system_settings" comment="Enum value label">Dynamically vibrate for input events, depending on system settings</string>
-    <string name="enum__input_feedback_activation_mode__haptic_ignore_system_settings" comment="Enum value label">Always vibrate for input events, regardless of system settings</string>
 
     <string name="enum__input_shift_state__unshifted" comment="Enum value label">Unshifted</string>
     <string name="enum__input_shift_state__shifted_manual" comment="Enum value label">Shifted (manual)</string>
@@ -1044,17 +1040,16 @@
     <string name="enum__ime_window_mode__fixed" comment="Enum value label">Fixed</string>
     <string name="enum__ime_window_mode__floating" comment="Enum value label">Floating</string>
 
-    <string name="enum__keyboard_mode__characters" comment="Enum value label">Characters</string>
-    <string name="enum__keyboard_mode__symbols" comment="Enum value label">Symbols</string>
-    <string name="enum__keyboard_mode__symbols2" comment="Enum value label">Symbols 2</string>
-    <string name="enum__keyboard_mode__numeric" comment="Enum value label">Numeric</string>
-    <string name="enum__keyboard_mode__numeric_advanced" comment="Enum value label">Numeric advanced</string>
-    <string name="enum__keyboard_mode__phone" comment="Enum value label">Phone</string>
-    <string name="enum__keyboard_mode__phone2" comment="Enum value label">Phone 2</string>
-
     <string name="enum__landscape_input_ui_mode__never_show" comment="Enum value label">Never show</string>
     <string name="enum__landscape_input_ui_mode__always_show" comment="Enum value label">Always show</string>
     <string name="enum__landscape_input_ui_mode__dynamically_show" comment="Enum value label">Dynamically show</string>
+
+    <string name="enum__long_press_key_hint_placement__top_start" comment="Enum value label">Top start</string>
+    <string name="enum__long_press_key_hint_placement__top_center" comment="Enum value label">Top center</string>
+    <string name="enum__long_press_key_hint_placement__top_end" comment="Enum value label">Top end</string>
+    <string name="enum__long_press_key_hint_placement__bottom_start" comment="Enum value label">Bottom start</string>
+    <string name="enum__long_press_key_hint_placement__bottom_center" comment="Enum value label">Bottom center</string>
+    <string name="enum__long_press_key_hint_placement__bottom_end" comment="Enum value label">Bottom end</string>
 
     <string name="enum__shape_corner__top_start" comment="Enum value label">Top start</string>
     <string name="enum__shape_corner__top_end" comment="Enum value label">Top end</string>
@@ -1065,9 +1060,9 @@
     <string name="enum__smartbar_layout__suggestions_only__description" comment="Enum value description">Shows only the candidate row, without any action row/toggle or sticky action</string>
     <string name="enum__smartbar_layout__actions_only" comment="Enum value label">Actions only</string>
     <string name="enum__smartbar_layout__actions_only__description" comment="Enum value description">Shows only the actions row, without the candidate row or an explicit sticky action</string>
-    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Suggestions &amp; Actions shared</string>
+    <string name="enum__smartbar_layout__suggestions_action_shared" comment="Enum value label">Suggestions and actions shared</string>
     <string name="enum__smartbar_layout__suggestions_action_shared__description" comment="Enum value description">Shared toggleable candidate and actions row, with sticky action</string>
-    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Suggestions &amp; Actions extended</string>
+    <string name="enum__smartbar_layout__suggestions_actions_extended" comment="Enum value label">Suggestions and actions extended</string>
     <string name="enum__smartbar_layout__suggestions_actions_extended__description" comment="Enum value description">Static candidate row and additional toggleable action row, with sticky action</string>
 
     <string name="enum__snygg_level__basic" comment="Enum value label">Basic</string>
@@ -1112,17 +1107,13 @@
     <string name="enum__swipe_action__switch_to_prev_keyboard" comment="Enum value label">Switch to previous keyboard</string>
     <string name="enum__swipe_action__switch_to_prev_subtype" comment="Enum value label">Switch to previous subtype</string>
     <string name="enum__swipe_action__switch_to_next_subtype" comment="Enum value label">Switch to next subtype</string>
-    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Toggle Smartbar visibility</string>
+    <string name="enum__swipe_action__toggle_smartbar_visibility" comment="Enum value label">Toggle smartbar visibility</string>
+    <string name="enum__swipe_action__toggle_compact_layout" comment="Enum value label">Toggle compact layout</string>
 
     <string name="enum__theme_mode__always_day" comment="Enum value label">Always day</string>
     <string name="enum__theme_mode__always_night" comment="Enum value label">Always night</string>
     <string name="enum__theme_mode__follow_system" comment="Enum value label">Follow system</string>
     <string name="enum__theme_mode__follow_time" comment="Enum value label">Follow time</string>
-
-    <string name="enum__utility_key_action__switch_to_emojis" comment="Enum value label">Switch to emojis</string>
-    <string name="enum__utility_key_action__switch_language" comment="Enum value label">Switch language</string>
-    <string name="enum__utility_key_action__switch_keyboard_app" comment="Enum value label">Switch keyboard app</string>
-    <string name="enum__utility_key_action__dynamic_switch_language_emojis" comment="Enum value label">Dynamic: Switch to emojis / Switch language</string>
 
     <!-- Unit strings (symbols) -->
     <string name="unit__hours__symbol" translatable="false">{v} h</string>

@@ -20,18 +20,18 @@ import android.content.ClipData
 import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.editorInstance
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDao
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardHistoryDatabase
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
+import java.io.Closeable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -41,10 +41,8 @@ import org.florisboard.lib.android.AndroidClipboardManager
 import org.florisboard.lib.android.AndroidClipboardManager_OnPrimaryClipChangedListener
 import org.florisboard.lib.android.clearPrimaryClipAnyApi
 import org.florisboard.lib.android.setOrClearPrimaryClip
-import org.florisboard.lib.android.showShortToastSync
 import org.florisboard.lib.android.systemService
 import org.florisboard.lib.kotlin.tryOrNull
-import java.io.Closeable
 
 /**
  * [ClipboardManager] manages the clipboard and clipboard history.
@@ -90,27 +88,26 @@ class ClipboardManager(
 
     private val prefs by FlorisPreferenceStore
     private val appContext by context.appContext()
-    private val editorInstance by context.editorInstance()
     private val systemClipboardManager = context.systemService(AndroidClipboardManager::class)
 
     private val ioScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private var cleanUpJob: Job
+    private val cleanUpJob: Job
     private var clipHistoryDb: ClipboardHistoryDatabase? = null
     private val clipHistoryDao: ClipboardHistoryDao? get() = clipHistoryDb?.clipboardItemDao()
 
-    private val _historyFlow = MutableStateFlow(ClipboardHistory.EMPTY)
-    val historyFlow = _historyFlow.asStateFlow()
+    val historyFlow: StateFlow<ClipboardHistory>
+        field = MutableStateFlow(ClipboardHistory.EMPTY)
     val currentHistory: ClipboardHistory
         get() = historyFlow.value
 
     private val primaryClipLastFromCallbackGuard = Mutex(locked = false)
     private var primaryClipLastFromCallback: ClipData? = null
-    private val _primaryClipFlow = MutableStateFlow<ClipboardItem?>(null)
-    val primaryClipFlow = _primaryClipFlow.asStateFlow()
+    val primaryClipFlow: StateFlow<ClipboardItem?>
+        field = MutableStateFlow(null)
     inline var primaryClip
         get() = primaryClipFlow.value
         private set(v) {
-            _primaryClipFlow.value = v
+            primaryClipFlow.value = v
         }
 
     init {
@@ -128,7 +125,7 @@ class ClipboardManager(
             if (clipHistoryDb == null) {
                 clipHistoryDb = ClipboardHistoryDatabase.new(context.applicationContext)
                 withContext(Dispatchers.Main) {
-                    clipHistoryDao?.getAllLive()?.observeForever { items ->
+                    clipHistoryDao?.getAllAsFlow()?.collect { items ->
                         updateHistory(items)
                     }
                 }
@@ -140,7 +137,7 @@ class ClipboardManager(
         val itemsSorted = items.sortedByDescending { it.creationTimestampMs }
         val clipHistory = ClipboardHistory(itemsSorted)
         enforceHistoryLimit(clipHistory)
-        _historyFlow.value = clipHistory
+        historyFlow.value = clipHistory
     }
 
     /**
@@ -233,7 +230,9 @@ class ClipboardManager(
      */
     private fun insertOrMoveBeginning(newItem: ClipboardItem) {
         if (prefs.clipboard.historyEnabled.get()) {
-            val historyElement = currentHistory.all.firstOrNull { it.type == ItemType.TEXT && it.text == newItem.text }
+            val historyElement = currentHistory.all.firstOrNull { item ->
+                item.type == ItemType.TEXT && item.text == newItem.text && item.isSensitive == newItem.isSensitive
+            }
             if (historyElement != null) {
                 moveToTheBeginning(
                     oldItem = historyElement,
@@ -374,10 +373,14 @@ class ClipboardManager(
     }
 
     fun pasteItem(item: ClipboardItem) {
-        val editorInstance by appContext.editorInstance()
-        editorInstance.commitClipboardItem(item).also { result ->
-            if (!result) {
-                appContext.showShortToastSync("Failed to paste item.")
+        val imeController = appContext.imeController
+        // TODO this asks for a deadlock from ImeController update scope
+        imeController.updateStateBlocking {
+            emitClipboardItem(item).also { result ->
+                if (!result) {
+                    // TODO we have no access to interactionController here
+                    //appContext.showShortToastSync("Failed to paste item.")
+                }
             }
         }
     }
@@ -386,13 +389,13 @@ class ClipboardManager(
      * Returns true if the editor can accept the clip item, else false.
      */
     fun canBePasted(clipItem: ClipboardItem?): Boolean {
-        if (clipItem == null) return false
-
-        return clipItem.mimeTypes.contains("text/plain") || editorInstance.activeInfo.contentMimeTypes.any { editorType ->
+        val imeController = appContext.imeController
+        val info = imeController.snapshotState().editor.info
+        return clipItem != null && (clipItem.mimeTypes.contains("text/plain") || info.contentMimeTypes.any { editorType ->
             clipItem.mimeTypes.any { clipType ->
                 compareMimeTypes(clipType, editorType)
             }
-        }
+        })
     }
 
     /**

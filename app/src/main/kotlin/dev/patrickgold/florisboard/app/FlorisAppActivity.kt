@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,15 +46,25 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
 import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
-import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.cacheManager
+import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
+import dev.patrickgold.florisboard.ime.io.AndroidStorage
+import dev.patrickgold.florisboard.ime.io.LocalStorageController
+import dev.patrickgold.florisboard.ime.io.createWorkspace
+import dev.patrickgold.florisboard.ime.io.readFromUri
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.rememberAndroidInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
+import dev.patrickgold.florisboard.ime.theme.LocalThemeController
+import dev.patrickgold.florisboard.inferFlorisApplication
 import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.compose.LocalPreviewFieldController
 import dev.patrickgold.florisboard.lib.compose.PreviewKeyboardField
 import dev.patrickgold.florisboard.lib.compose.rememberPreviewFieldController
 import dev.patrickgold.florisboard.lib.util.AppVersionUtils
-import dev.patrickgold.jetpref.datastore.model.observeAsState
+import dev.patrickgold.jetpref.datastore.model.collectAsState
 import dev.patrickgold.jetpref.datastore.ui.ProvideDefaultDialogPrefStrings
+import java.util.concurrent.atomic.AtomicBoolean
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.hideAppIcon
 import org.florisboard.lib.android.showAppIcon
@@ -62,7 +72,6 @@ import org.florisboard.lib.compose.ProvideLocalizedResources
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.kotlin.collectIn
-import java.util.concurrent.atomic.AtomicBoolean
 
 enum class AppTheme(val id: String) {
     AUTO("auto"),
@@ -78,8 +87,7 @@ val LocalNavController = staticCompositionLocalOf<NavController> {
 
 class FlorisAppActivity : ComponentActivity() {
     private val prefs by FlorisPreferenceStore
-    private val appContext by appContext()
-    private val cacheManager by cacheManager()
+    private val appContext = inferFlorisApplication()
     private var appTheme by mutableStateOf(AppTheme.AUTO)
     private var showAppIcon = true
     private var resourcesContext by mutableStateOf(this as Context)
@@ -171,14 +179,20 @@ class FlorisAppActivity : ComponentActivity() {
 
     @Composable
     private fun AppContent() {
+        val interactionController = rememberAndroidInteractionController(prefs)
         val navController = rememberNavController()
         val previewFieldController = rememberPreviewFieldController()
 
-        val isImeSetUp by prefs.internal.isImeSetUp.observeAsState()
+        val isImeSetUp by prefs.internal.isImeSetUp.collectAsState()
 
         CompositionLocalProvider(
+            LocalExtensionController provides appContext.extensionController,
+            LocalImeController provides appContext.imeController,
+            LocalInteractionController provides interactionController,
             LocalNavController provides navController,
             LocalPreviewFieldController provides previewFieldController,
+            LocalStorageController provides appContext.storageController,
+            LocalThemeController provides appContext.themeController,
         ) {
             ProvideDefaultDialogPrefStrings(
                 confirmLabel = stringRes(R.string.action__ok),
@@ -210,13 +224,19 @@ class FlorisAppActivity : ComponentActivity() {
                 if (intent.action == Intent.ACTION_VIEW && intent.categories?.contains(Intent.CATEGORY_BROWSABLE) == true) {
                     navController.handleDeepLink(intent)
                 } else {
-                    val data = if (intent.action == Intent.ACTION_VIEW) {
+                    val uri = if (intent.action == Intent.ACTION_VIEW) {
                         intent.data!!
                     } else {
                         intent.clipData!!.getItemAt(0).uri
                     }
-                    val workspace = runCatching { cacheManager.readFromUriIntoCache(data) }.getOrNull()
-                    navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, workspace?.uuid))
+                    try {
+                        val storage = appContext.storageController.activeStorage.value as AndroidStorage
+                        val workspaceRef = storage.createWorkspace()
+                        storage.readFromUri(uri, workspaceRef)
+                        navController.navigate(Routes.Ext.Import(ExtensionImportScreenType.EXT_ANY, workspaceRef.pathName))
+                    } catch (e: Throwable) {
+                        interactionController.showLongToast("Failed to read uri from intent: ${e.message}")
+                    }
                 }
             }
             intentToBeHandled = null

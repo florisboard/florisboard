@@ -18,9 +18,9 @@ package dev.patrickgold.florisboard.ime.nlp
 
 import android.icu.text.BreakIterator
 import dev.patrickgold.florisboard.ime.core.Subtype
-import dev.patrickgold.florisboard.ime.editor.EditorContent
-import dev.patrickgold.florisboard.ime.editor.EditorRange
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
+import org.k3lp.runtime.K3Content
+import org.k3lp.runtime.K3TextRange
 
 /**
  * Base interface for any NLP provider implementation. NLP providers maintain their own internal state and only receive
@@ -136,7 +136,7 @@ interface SuggestionProvider : NlpProvider {
      */
     suspend fun suggest(
         subtype: Subtype,
-        content: EditorContent,
+        content: K3Content,
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
@@ -211,7 +211,7 @@ interface SuggestionProvider : NlpProvider {
         textBeforeSelection: CharSequence,
         breakIterators: BreakIteratorGroup,
         localLastCommitPosition: Int,
-    ): EditorRange {
+    ): K3TextRange {
         return breakIterators.word(subtype.primaryLocale) {
             it.setText(textBeforeSelection.toString())
             val end = it.last()
@@ -224,9 +224,9 @@ interface SuggestionProvider : NlpProvider {
                         textBeforeSelection.getOrNull(updatedPos) == EmojiSuggestionType.LEADING_COLON.prefix.first()
                     } ?: pos
                 }
-                EditorRange(start, end)
+                K3TextRange(start, end)
             } else {
-                EditorRange.Unspecified
+                K3TextRange.Zero
             }
         }
     }
@@ -263,7 +263,7 @@ object FallbackNlpProvider : SpellingProvider, SuggestionProvider {
 
     override suspend fun suggest(
         subtype: Subtype,
-        content: EditorContent,
+        content: K3Content,
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,

@@ -10,7 +10,7 @@
 
    Before running this script, make sure that exactly one device is connected and that FlorisBoard Debug (0.4.0-alpha1
    or newer) is installed. Then go to Settings > Devtools > System locales and tap the save icon in the top right
-   corner. This creates a tsv file with all the devices in the interal app storage, which this script can now read.
+   corner. This creates a tsv file with all the devices in the internal app storage, which this script can now read.
 """
 
 from datetime import datetime

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,19 +17,12 @@
 package dev.patrickgold.florisboard.app.settings.keyboard
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
-import dev.patrickgold.florisboard.ime.input.HapticVibrationMode
-import dev.patrickgold.florisboard.ime.input.InputFeedbackActivationMode
 import dev.patrickgold.florisboard.lib.compose.FlorisScreen
 import dev.patrickgold.jetpref.datastore.ui.DialogSliderPreference
 import dev.patrickgold.jetpref.datastore.ui.ExperimentalJetPrefDatastoreUi
-import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
 import dev.patrickgold.jetpref.datastore.ui.SwitchPreference
-import org.florisboard.lib.android.systemVibratorOrNull
-import org.florisboard.lib.android.vibrate
 import org.florisboard.lib.compose.stringRes
 
 @OptIn(ExperimentalJetPrefDatastoreUi::class)
@@ -39,17 +32,13 @@ fun InputFeedbackScreen() = FlorisScreen {
     previewFieldVisible = true
     iconSpaceReserved = false
 
-    val context = LocalContext.current
-    val vibrator = context.systemVibratorOrNull()
-
     content {
         PreferenceGroup(title = stringRes(R.string.pref__input_feedback__group_audio__label)) {
-            ListPreference(
-                listPref = prefs.inputFeedback.audioActivationMode,
-                switchPref = prefs.inputFeedback.audioEnabled,
+            SwitchPreference(
+                prefs.inputFeedback.audioEnabled,
                 title = stringRes(R.string.pref__input_feedback__audio_enabled__label),
-                summarySwitchDisabled = stringRes(R.string.pref__input_feedback__audio_enabled__summary_disabled),
-                entries = enumDisplayEntriesOf(InputFeedbackActivationMode::class, "audio"),
+                summaryOn = stringRes(R.string.enum__input_feedback_activation_mode__audio_respect_system_settings),
+                summaryOff = stringRes(R.string.pref__input_feedback__audio_enabled__summary_disabled),
             )
             DialogSliderPreference(
                 prefs.inputFeedback.audioVolume,
@@ -93,69 +82,11 @@ fun InputFeedbackScreen() = FlorisScreen {
         }
 
         PreferenceGroup(title = stringRes(R.string.pref__input_feedback__group_haptic__label)) {
-            ListPreference(
-                listPref = prefs.inputFeedback.hapticActivationMode,
-                switchPref = prefs.inputFeedback.hapticEnabled,
+            SwitchPreference(
+                prefs.inputFeedback.hapticEnabled,
                 title = stringRes(R.string.pref__input_feedback__haptic_enabled__label),
-                summarySwitchDisabled = stringRes(R.string.pref__input_feedback__haptic_enabled__summary_disabled),
-                entries = enumDisplayEntriesOf(InputFeedbackActivationMode::class, "haptic")
-            )
-            ListPreference(
-                prefs.inputFeedback.hapticVibrationMode,
-                title = stringRes(R.string.pref__input_feedback__haptic_vibration_mode__label),
-                enabledIf = { prefs.inputFeedback.hapticEnabled isEqualTo true },
-                entries = enumDisplayEntriesOf(HapticVibrationMode::class),
-            )
-            DialogSliderPreference(
-                prefs.inputFeedback.hapticVibrationDuration,
-                title = stringRes(R.string.pref__input_feedback__haptic_vibration_duration__label),
-                valueLabel = { stringRes(R.string.unit__milliseconds__symbol, "v" to it) },
-                summary = {
-                    if (vibrator == null || !vibrator.hasVibrator()) {
-                        stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_vibrator)
-                    } else {
-                        stringRes(R.string.unit__milliseconds__symbol, "v" to it)
-                    }
-                },
-                min = 1,
-                max = 100,
-                stepIncrement = 1,
-                onPreviewSelectedValue = { duration ->
-                    val strength = prefs.inputFeedback.hapticVibrationStrength.get()
-                    vibrator?.vibrate(duration, strength)
-                },
-                enabledIf = {
-                    prefs.inputFeedback.hapticEnabled isEqualTo true &&
-                        prefs.inputFeedback.hapticVibrationMode isEqualTo HapticVibrationMode.USE_VIBRATOR_DIRECTLY &&
-                        vibrator != null && vibrator.hasVibrator()
-                },
-            )
-            DialogSliderPreference(
-                prefs.inputFeedback.hapticVibrationStrength,
-                title = stringRes(R.string.pref__input_feedback__haptic_vibration_strength__label),
-                valueLabel = { stringRes(R.string.unit__percent__symbol, "v" to it) },
-                summary = { strength ->
-                    if (vibrator == null || !vibrator.hasVibrator()) {
-                        stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_vibrator)
-                    } else if (!vibrator.hasAmplitudeControl()) {
-                        stringRes(R.string.pref__input_feedback__haptic_vibration_strength__summary_no_amplitude_ctrl)
-                    } else {
-                        stringRes(R.string.unit__percent__symbol, "v" to strength)
-                    }
-                },
-                min = 1,
-                max = 100,
-                stepIncrement = 1,
-                onPreviewSelectedValue = { strength ->
-                    val duration = prefs.inputFeedback.hapticVibrationDuration.get()
-                    vibrator?.vibrate(duration, strength)
-                },
-                enabledIf = {
-                    prefs.inputFeedback.hapticEnabled isEqualTo true &&
-                        prefs.inputFeedback.hapticVibrationMode isEqualTo HapticVibrationMode.USE_VIBRATOR_DIRECTLY &&
-                        vibrator != null && vibrator.hasVibrator() &&
-                        vibrator.hasAmplitudeControl()
-                },
+                summaryOn = stringRes(R.string.enum__input_feedback_activation_mode__haptic_respect_system_settings),
+                summaryOff = stringRes(R.string.pref__input_feedback__haptic_enabled__summary_disabled),
             )
             SwitchPreference(
                 prefs.inputFeedback.hapticFeatKeyPress,

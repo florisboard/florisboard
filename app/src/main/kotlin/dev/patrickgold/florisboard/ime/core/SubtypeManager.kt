@@ -18,14 +18,11 @@ package dev.patrickgold.florisboard.ime.core
 
 import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.keyboard.CurrencySet
-import dev.patrickgold.florisboard.keyboardManager
-import dev.patrickgold.florisboard.lib.FlorisLocale
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.florisboard.lib.kotlin.collectLatestIn
@@ -42,20 +39,19 @@ val SubtypeJsonConfig = Json {
  */
 class SubtypeManager(context: Context) {
     private val prefs by FlorisPreferenceStore
-    private val keyboardManager by context.keyboardManager()
     private val scope = CoroutineScope(Dispatchers.Default)
 
-    private val _subtypesFlow = MutableStateFlow(listOf<Subtype>())
-    val subtypesFlow = _subtypesFlow.asStateFlow()
+    val subtypesFlow: StateFlow<List<Subtype>>
+        field = MutableStateFlow(listOf())
     inline var subtypes
         get() = subtypesFlow.value
-        private set(v) { _subtypesFlow.value = v }
+        private set(v) { subtypesFlow.value = v }
 
-    private val _activeSubtypeFlow = MutableStateFlow(Subtype.DEFAULT)
-    val activeSubtypeFlow = _activeSubtypeFlow.asStateFlow()
+    val activeSubtypeFlow: StateFlow<Subtype>
+        field = MutableStateFlow(Subtype.DEFAULT)
     inline var activeSubtype
         get() = activeSubtypeFlow.value
-        private set(v) { _activeSubtypeFlow.value = v }
+        private set(v) { activeSubtypeFlow.value = v }
 
     init {
         prefs.localization.subtypes.asFlow().collectLatestIn(scope) { listRaw ->
@@ -110,16 +106,6 @@ class SubtypeManager(context: Context) {
     }
 
     /**
-     * Gets the currency set from the given subtype and returns it. Falls back to a default one if the subtype does not
-     * exist.
-     *
-     * @return The currency set or a fallback.
-     */
-    fun getCurrencySet(subtypeToSearch: Subtype): CurrencySet {
-        return keyboardManager.resources.currencySets.value?.get(subtypeToSearch.currencySet) ?: CurrencySet.Fallback
-    }
-
-    /**
      * Gets a subtype by the given [id].
      *
      * @param id The id of the subtype you want to get.
@@ -128,18 +114,6 @@ class SubtypeManager(context: Context) {
     fun getSubtypeById(id: Long): Subtype? {
         val subtypeList = subtypes
         return subtypeList.find { it.id == id }
-    }
-
-    /**
-     * Gets the default system subtype for a given [locale].
-     *
-     * @param locale The locale of the default system subtype to get.
-     * @return The default system locale or null, if no matching default system subtype could be
-     *  found.
-     */
-    fun getSubtypePresetForLocale(locale: FlorisLocale): SubtypePreset? {
-        val presets = keyboardManager.resources.subtypePresets.value
-        return presets?.find { it.locale == locale } ?: presets?.find { it.locale.language == locale.language }
     }
 
     /**

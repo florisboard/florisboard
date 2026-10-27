@@ -19,7 +19,6 @@ package dev.patrickgold.florisboard.lib.devtools
 import android.content.Context
 import android.util.Log
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.lib.devtools.Flog.OUTPUT_CONSOLE
 import dev.patrickgold.florisboard.lib.devtools.Flog.createTag
 import dev.patrickgold.florisboard.lib.devtools.Flog.getStacktraceElement
 import dev.patrickgold.florisboard.lib.devtools.Flog.log

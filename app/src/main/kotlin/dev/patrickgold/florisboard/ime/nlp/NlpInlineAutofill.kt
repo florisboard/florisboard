@@ -26,15 +26,16 @@ import android.widget.inline.InlineContentView
 import androidx.annotation.RequiresApi
 import dev.patrickgold.florisboard.lib.devtools.flogInfo
 import dev.patrickgold.florisboard.lib.devtools.flogWarning
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.atomic.AtomicInteger
 
 data class NlpInlineAutofillSuggestion(
     val info: InlineSuggestionInfo,
@@ -47,8 +48,9 @@ object NlpInlineAutofill {
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
     private val setterGuard = Mutex()
-    private val _suggestions = MutableStateFlow<List<NlpInlineAutofillSuggestion>>(emptyList())
-    val suggestions = _suggestions
+
+    val suggestions: StateFlow<List<NlpInlineAutofillSuggestion>>
+        field = MutableStateFlow(emptyList())
 
     var suggestionsChipHeightPx: Int = 0
 
@@ -80,13 +82,13 @@ object NlpInlineAutofill {
                 return@launch
             }
 
-            val suggestions = suggestionsArray.filterNotNull().sortedByDescending { it.info.isPinned }
+            val inflatedSuggestions = suggestionsArray.filterNotNull().sortedByDescending { it.info.isPinned }
             setterGuard.lock()
             flogInfo { "showInlineSuggestions: [${sequenceId}] successfully inflated " +
-                "${suggestions.count { it.view != null }} out of ${suggestions.size} suggestions" }
+                "${inflatedSuggestions.count { it.view != null }} out of ${inflatedSuggestions.size} suggestions" }
             if (currentSequenceId.get() == sequenceId) {
                 flogInfo { "showInlineSuggestions: [${sequenceId}] setting suggestions" }
-                _suggestions.value = suggestions
+                suggestions.value = inflatedSuggestions
             } else {
                 flogWarning { "showInlineSuggestions: [${sequenceId}] seqId != current, skip setting suggestions" }
             }
@@ -105,7 +107,7 @@ object NlpInlineAutofill {
         scope.launch {
             setterGuard.lock()
             flogInfo { "clearInlineSuggestions: [${sequenceId}] clearing suggestions" }
-            _suggestions.value = emptyList()
+            suggestions.value = emptyList()
             setterGuard.unlock()
         }
     }

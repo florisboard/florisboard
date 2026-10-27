@@ -64,6 +64,14 @@ fun Offset.toDp(): DpOffset {
     }
 }
 
+private const val MM_PER_INCH = 25.4f
+private const val BASELINE_DPI = 160f
+
+context(density: Density)
+fun Dp.toMm(): Float {
+    return (this.value * MM_PER_INCH) / (density.density * BASELINE_DPI)
+}
+
 object DpSizeSerializer : KSerializer<Dp> {
     override val descriptor = PrimitiveSerialDescriptor("DpSize", PrimitiveKind.FLOAT)
 

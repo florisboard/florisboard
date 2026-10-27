@@ -230,7 +230,6 @@
     <string name="pref__keyboard__font_size_multiplier__label" comment="Preference title">글꼴 크기 배율</string>
     <string name="pref__keyboard__group_layout__label" comment="Preference group title">레이아웃</string>
     <string name="pref__keyboard__landscape_input_ui_mode__label" comment="Preference value">가로 모드 전체 화면 입력</string>
-    <string name="pref__keyboard__key_spacing__label" comment="Preference title">키 간격</string>
     <string name="pref__keyboard__popup_enabled__label" comment="Preference title">팝업 표시</string>
     <string name="pref__keyboard__popup_enabled__summary" comment="Preference summary">키를 눌렀을 때 팝업 표시</string>
     <!-- Smartbar strings -->

@@ -1,7 +1,8 @@
+import com.android.build.api.dsl.LibraryExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,12 +19,8 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.library)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.serialization)
 }
-
-val projectMinSdk: String by project
-val projectCompileSdk: String by project
 
 kotlin {
     compilerOptions {
@@ -35,12 +32,12 @@ kotlin {
     }
 }
 
-android {
+configure<LibraryExtension> {
     namespace = "org.florisboard.lib.android"
-    compileSdk = projectCompileSdk.toInt()
+    compileSdk = providers.gradleProperty("projectCompileSdk").get().toInt()
 
     defaultConfig {
-        minSdk = projectMinSdk.toInt()
+        minSdk = providers.gradleProperty("projectMinSdk").get().toInt()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -65,6 +62,19 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    // FIXME: This is a workaround! Otherwise :lib:snygg:generateJsonSchema breakes.
+    //  Remove the lint block when we've migrated to the newDsl.
+    lint {
+        disable.addAll(
+            listOf(
+                "UElementAsPsi",
+                "ApplySharedPref",
+                "CommitTransaction",
+                "Recycle",
+                "CommitPrefEdits",
+            )
+        )
     }
 }
 
