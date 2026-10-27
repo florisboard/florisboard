@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,6 +45,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionCon
 import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -73,8 +75,8 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val displayMode by prefs.suggestion.displayMode.collectAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
     val timingOptions by interactionController.activeTimingOptions.collectAsState()
-    val keyboardState by keyboardManager.activeState.collectAsState()
-    val shiftState = keyboardState.inputShiftState
+    val imeState by imeController.activeState.collectAsState()
+    val shiftState by remember { derivedStateOf { imeState.flags.inputShiftState } }
     val locale = subtypeManager.activeSubtype.primaryLocale
 
     SnyggRow(
@@ -126,9 +128,15 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                     shiftState = shiftState,
                     locale = locale,
                     onClick = {
+                        // Can't use candidate directly
+                        val candidateItem = candidates[n]
+                        val casedItem = if (candidateItem is WordSuggestionCandidate) {
+                            candidateItem.copy(text = applyCaseToSuggestion(candidateItem.text.toString(), shiftState, locale))
+                        } else {
+                            candidateItem
+                        }
                         imeController.updateStateBlocking {
-                            // Can't use candidate directly
-                            emitCandidate(candidates[n])
+                            emitCandidate(casedItem)
                         }
                     },
                     onLongPress = {

@@ -47,7 +47,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     private val personalDictFile = File(appContext.filesDir, "personal_dict.json")
     private val contextMapFile = File(appContext.filesDir, "context_map.json")
 
-    private var latestEditorContent: EditorContent? = null
+    private var latestEditorContent: K3Content? = null
     private var isPrivateSession: Boolean = false
     private val loadedLanguages = mutableSetOf<String>()
     private var activeLanguages = listOf<String>()
@@ -146,14 +146,15 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     ): List<SuggestionCandidate> {
         latestEditorContent = content
         this.isPrivateSession = isPrivateSession
-        val prefix = content.composingText.trim()
+        val composingText = content.compositionText.orEmpty()
+        val prefix = composingText.trim()
         
         // Extract current context from text before cursor
         val extractedContext = extractContextWords(content, subtype)
         
         // Detect new input session: cursor at start with no/little text, or text field changed
         val currentSelectionEnd = content.selection.end
-        val textLength = content.textBeforeSelection.length + content.composingText.length
+        val textLength = content.surroundingText.textBefore.length + composingText.length
         
         if (textLength <= 1 && currentSelectionEnd <= 1) {
             if (contextBuffer.isNotEmpty()) {
@@ -248,8 +249,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
     }
 
-    private suspend fun extractContextWords(content: EditorContent, subtype: Subtype): List<String> {
-        val text = content.textBeforeSelection
+    private suspend fun extractContextWords(content: K3Content, subtype: Subtype): List<String> {
+        val text = content.surroundingText.textBefore
         return breakIterators.word(subtype.primaryLocale) { iterator ->
             iterator.setText(text)
             buildList {
