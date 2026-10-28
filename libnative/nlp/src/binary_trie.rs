@@ -332,6 +332,37 @@ impl BinaryTrie {
         }
     }
 
+    pub fn take_canonical_forms(&mut self) -> HashMap<String, String> {
+        std::mem::take(&mut self.canonical_forms)
+    }
+
+    pub fn frequency(&self, word: &str) -> Option<u8> {
+        let idx = self.search_prefix(word)?;
+        Some(self.nodes[idx as usize].frequency).filter(|&freq| freq > 0)
+    }
+
+    pub fn for_each_word(&self, max_len: usize, mut f: impl FnMut(&str, u8)) {
+        self.visit_words(0, 0, max_len, &mut String::new(), &mut f);
+    }
+
+    fn visit_words(&self, idx: u32, depth: usize, max_len: usize, word: &mut String, f: &mut impl FnMut(&str, u8)) {
+        let node = &self.nodes[idx as usize];
+        if node.frequency > 0 {
+            f(word, node.frequency);
+        }
+        if depth >= max_len {
+            return;
+        }
+        let mut child_idx = node.first_child;
+        while child_idx != 0 {
+            let child = &self.nodes[child_idx as usize];
+            word.push(char::from_u32(child.char_code as u32).unwrap_or('?'));
+            self.visit_words(child_idx, depth + 1, max_len, word, f);
+            word.pop();
+            child_idx = child.next_sibling;
+        }
+    }
+
     pub fn node_count(&self) -> usize {
         self.nodes.len()
     }
@@ -442,6 +473,22 @@ mod tests {
         assert_eq!(results.len(), 3);
     }
     
+    #[test]
+    fn test_frequency_and_for_each_word() {
+        let mut trie = BinaryTrie::new();
+        trie.insert("help", 150);
+        trie.insert("hello", 200);
+        trie.insert("helicopter", 100);
+
+        assert_eq!(trie.frequency("hello"), Some(200));
+        assert_eq!(trie.frequency("hell"), None);
+
+        let mut words = Vec::new();
+        trie.for_each_word(5, |word, freq| words.push((word.to_string(), freq)));
+        words.sort();
+        assert_eq!(words, vec![("hello".to_string(), 200), ("help".to_string(), 150)]);
+    }
+
     #[test]
     fn test_case_variants_keep_highest_frequency() {
         let trie = build_from_json_with_canonical(r#"{"add": 255, "ADD": 30}"#).unwrap();

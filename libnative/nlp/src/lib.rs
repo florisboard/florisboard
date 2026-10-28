@@ -107,6 +107,22 @@ impl Default for LanguageDictionary {
     }
 }
 
+impl LanguageDictionary {
+    fn frequency(&self, word: &str) -> Option<u32> {
+        match &self.binary_trie {
+            Some(trie) => trie.frequency(word).map(u32::from),
+            None => self.dict.get(word).copied(),
+        }
+    }
+
+    fn for_each_word(&self, max_len: usize, mut f: impl FnMut(&str, u32)) {
+        match &self.binary_trie {
+            Some(trie) => trie.for_each_word(max_len, |word, freq| f(word, freq.into())),
+            None => self.dict.iter().for_each(|(word, freq)| f(word, *freq)),
+        }
+    }
+}
+
 // Holds both read locks for as long as it lives. Taking another one in the same call
 // can deadlock while a writer is waiting.
 struct ActiveDicts<'a> {
@@ -120,15 +136,17 @@ impl ActiveDicts<'_> {
     }
 
     fn frequency(&self, word: &str) -> Option<u32> {
-        self.dicts().filter_map(|ld| ld.dict.get(word).copied()).max()
+        self.dicts().filter_map(|ld| ld.frequency(word)).max()
     }
 
     fn canonical(&self, key: &str) -> Option<&String> {
         self.dicts().filter_map(|ld| ld.canonical_forms.get(key)).last()
     }
 
-    fn words(&self) -> impl Iterator<Item = (&String, &u32)> {
-        self.dicts().flat_map(|ld| ld.dict.iter())
+    fn for_each_word(&self, max_len: usize, mut f: impl FnMut(&str, u32)) {
+        for ld in self.dicts() {
+            ld.for_each_word(max_len, &mut f);
+        }
     }
 }
 
@@ -200,18 +218,9 @@ impl NlpEngine {
     }
 
     pub fn load_dictionary_binary_for_language(&self, lang_code: &str, data: &[u8]) -> Result<(), String> {
-        let trie = BinaryTrie::deserialize(data).map_err(|e| e.to_string())?;
-        
-        let canonical_forms_from_trie = trie.canonical_forms().clone();
-        
-        let mut dict = HashMap::new();
-        let mut words = Vec::new();
-        trie.collect_words(0, "", &mut words, 100000);
-        for (word, freq) in words {
-            let lower = word.to_lowercase();
-            dict.insert(lower, freq as u32);
-        }
-        
+        let mut trie = BinaryTrie::deserialize(data).map_err(|e| e.to_string())?;
+        let canonical_forms_from_trie = trie.take_canonical_forms();
+
         let mut languages = self.languages.write().unwrap();
         let (existing_ngrams, existing_canonical) = languages.get(lang_code)
             .map(|ld| (ld.ngrams.clone(), ld.canonical_forms.clone()))
@@ -223,7 +232,7 @@ impl NlpEngine {
         languages.insert(lang_code.to_string(), LanguageDictionary {
             trie: TrieNode::default(),
             binary_trie: Some(trie),
-            dict,
+            dict: HashMap::new(),
             ngrams: existing_ngrams,
             canonical_forms: merged_canonical,
         });
@@ -347,13 +356,13 @@ impl NlpEngine {
             heap.push((10000000, canonical.clone()));
         }
 
-        for (candidate, freq) in active.words() {
+        active.for_each_word(word.chars().count() + MAX_EDIT_DISTANCE, |candidate, freq| {
             if let Some(dist) = edit_distance(word, candidate, MAX_EDIT_DISTANCE) {
-                let score = self.spelling_score(word, candidate, *freq, dist, 0.0, context);
+                let score = self.spelling_score(word, candidate, freq, dist, 0.0, context);
                 let display = format_with_canonical(candidate, word, &active);
                 heap.push(((score * 10000.0) as i64, display));
             }
-        }
+        });
 
         for (candidate, freq) in personal.iter() {
             if let Some(dist) = edit_distance(word, candidate, MAX_EDIT_DISTANCE) {
@@ -468,22 +477,22 @@ impl NlpEngine {
 
         let personal = self.personal_dict.read().unwrap();
 
-        for (candidate, freq) in active.words() {
+        active.for_each_word(normalized_input.chars().count() + MAX_EDIT_DISTANCE, |candidate, freq| {
             if candidate.starts_with(normalized_input) {
-                continue;
+                return;
             }
 
             if let Some(dist) = edit_distance(normalized_input, candidate, MAX_EDIT_DISTANCE).filter(|&dist| dist > 0) {
                 let display = format_with_canonical(candidate, original_input, active);
-                let conf = self.typo_correction_score(*freq, dist, context, candidate);
-                let auto_commit = conf >= 0.65 && *freq >= 100 && dist <= 1;
+                let conf = self.typo_correction_score(freq, dist, context, candidate);
+                let auto_commit = conf >= 0.65 && freq >= 100 && dist <= 1;
                 heap.push(Suggestion {
                     text: display,
                     confidence: conf,
                     is_eligible_for_auto_commit: auto_commit,
                 });
             }
-        }
+        });
 
         for (candidate, freq) in personal.iter() {
             if candidate.starts_with(normalized_input) {
@@ -1053,6 +1062,18 @@ mod tests {
         let suggestions = engine.suggest("don", &[], 5);
         let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
         assert!(texts.contains(&"don't"), "Expected don't in suggestions: {:?}", texts);
+    }
+
+    #[test]
+    fn test_binary_dictionary_lookups_and_typo_scan() {
+        let json = r#"{"cab": 190, "cub": 15, "cabinet": 200}"#;
+        let trie = crate::binary_trie::build_from_json_with_canonical(json).unwrap();
+        let engine = NlpEngine::new();
+        engine.load_dictionary_binary_for_language("en_US", &trie.serialize()).unwrap();
+
+        assert!(engine.spell_check("cab", &[], 2).is_valid);
+        assert_eq!(engine.spell_check("cxb", &[], 2).suggestions, vec!["cab", "cub"]);
+        assert_eq!(engine.get_frequency("cab"), engine.frequency_score(190));
     }
 
     #[test]
