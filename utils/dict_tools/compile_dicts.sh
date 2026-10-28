@@ -1,5 +1,5 @@
 #!/bin/bash
-# Compiles JSON dictionaries to binary trie format
+# Compiles the JSON dictionaries in this folder into binary trie files in the app's assets
 # Usage: compile_dicts.sh [--build-compiler]
 
 set -e
@@ -17,8 +17,8 @@ fi
 
 echo "Compiling dictionaries..."
 
-for json_file in "$DICT_DIR"/*.json; do
-    if [[ -f "$json_file" && "$json_file" != *.ngrams.json ]]; then
+for json_file in "$SCRIPT_DIR"/*.json; do
+    if [[ -f "$json_file" ]]; then
         base_name=$(basename "$json_file" .json)
         dict_file="$DICT_DIR/${base_name}.dict"
         

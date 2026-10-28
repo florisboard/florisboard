@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{BTreeMap, HashMap};
 use lz4_flex::{compress_prepend_size, decompress_size_prepended};
 
 const MAGIC: &[u8; 4] = b"FBTD"; // FlorisBoard Trie Dictionary
@@ -188,8 +188,9 @@ impl BinaryTrie {
         
         let compressed_nodes = compress_prepend_size(&node_data);
         
-        // Serialize canonical forms as JSON
-        let canonical_json = serde_json::to_string(&self.canonical_forms).unwrap_or_default();
+        // Serialize canonical forms as sorted JSON so the same input always produces the same file
+        let sorted_canonical: BTreeMap<_, _> = self.canonical_forms.iter().collect();
+        let canonical_json = serde_json::to_string(&sorted_canonical).unwrap_or_default();
         let canonical_bytes = canonical_json.as_bytes();
         let compressed_canonical = compress_prepend_size(canonical_bytes);
         
@@ -405,7 +406,8 @@ pub fn build_with_canonical(dict: HashMap<String, u8>) -> BinaryTrie {
     let mut canonical_forms = HashMap::new();
     
     let mut words: Vec<_> = dict.into_iter().collect();
-    words.sort_by(|a, b| b.1.cmp(&a.1));
+    // Ties go by word so every build inserts in the same order
+    words.sort_by(|a, b| b.1.cmp(&a.1).then_with(|| a.0.cmp(&b.0)));
     
     for (word, freq) in words {
         let trimmed = word.trim();
@@ -480,6 +482,15 @@ mod tests {
         trie.for_each_word(5, |word, freq| words.push((word.to_string(), freq)));
         words.sort();
         assert_eq!(words, vec![("hello".to_string(), 200), ("help".to_string(), 150)]);
+    }
+
+    #[test]
+    fn test_serialize_is_reproducible() {
+        let json = r#"{"alpha": 100, "beta": 100, "gamma": 100, "delta": 100, "I'm": 100, "USA": 100, "don't": 100}"#;
+        let first = build_from_json_with_canonical(json).unwrap().serialize();
+        for _ in 0..20 {
+            assert_eq!(build_from_json_with_canonical(json).unwrap().serialize(), first);
+        }
     }
 
     #[test]
