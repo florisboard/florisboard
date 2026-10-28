@@ -348,8 +348,7 @@ impl NlpEngine {
         }
 
         for (candidate, freq) in active.words() {
-            let dist = edit_distance(word, candidate);
-            if dist <= MAX_EDIT_DISTANCE {
+            if let Some(dist) = edit_distance(word, candidate, MAX_EDIT_DISTANCE) {
                 let score = self.spelling_score(word, candidate, *freq, dist, 0.0, context);
                 let display = format_with_canonical(candidate, word, &active);
                 heap.push(((score * 10000.0) as i64, display));
@@ -357,8 +356,7 @@ impl NlpEngine {
         }
 
         for (candidate, freq) in personal.iter() {
-            let dist = edit_distance(word, candidate);
-            if dist <= MAX_EDIT_DISTANCE {
+            if let Some(dist) = edit_distance(word, candidate, MAX_EDIT_DISTANCE) {
                 let score = self.spelling_score(word, candidate, *freq, dist, PERSONAL_BONUS, context);
                 heap.push(((score * 10000.0) as i64, candidate.clone()));
             }
@@ -475,8 +473,7 @@ impl NlpEngine {
                 continue;
             }
 
-            let dist = edit_distance(normalized_input, candidate);
-            if dist > 0 && dist <= MAX_EDIT_DISTANCE {
+            if let Some(dist) = edit_distance(normalized_input, candidate, MAX_EDIT_DISTANCE).filter(|&dist| dist > 0) {
                 let display = format_with_canonical(candidate, original_input, active);
                 let conf = self.typo_correction_score(*freq, dist, context, candidate);
                 let auto_commit = conf >= 0.65 && *freq >= 100 && dist <= 1;
@@ -493,8 +490,7 @@ impl NlpEngine {
                 continue;
             }
 
-            let dist = edit_distance(normalized_input, candidate);
-            if dist > 0 && dist <= MAX_EDIT_DISTANCE {
+            if let Some(dist) = edit_distance(normalized_input, candidate, MAX_EDIT_DISTANCE).filter(|&dist| dist > 0) {
                 let display = format_with_canonical(candidate, original_input, active);
                 let conf = self.typo_correction_score(*freq, dist, context, candidate) + PERSONAL_BONUS;
                 let auto_commit = conf >= 0.65 && *freq >= 50 && dist <= 1;
@@ -779,38 +775,35 @@ impl Default for NlpEngine {
     }
 }
 
-fn edit_distance(a: &str, b: &str) -> usize {
+// Returns the edit distance only when it's at most `max`. Once two consecutive rows are
+// both over `max`, no later row can come back under it, so the scan stops early.
+fn edit_distance(a: &str, b: &str, max: usize) -> Option<usize> {
+    if a.chars().count().abs_diff(b.chars().count()) > max {
+        return None;
+    }
     let a: Vec<char> = a.chars().collect();
     let b: Vec<char> = b.chars().collect();
-    let m = a.len();
     let n = b.len();
 
-    if m == 0 {
-        return n;
-    }
-    if n == 0 {
-        return m;
-    }
-
-    let mut dp = vec![vec![0usize; n + 1]; m + 1];
-    for i in 0..=m {
-        dp[i][0] = i;
-    }
-    for j in 0..=n {
-        dp[0][j] = j;
-    }
-
-    for i in 1..=m {
+    let mut before_prev = vec![0usize; n + 1];
+    let mut prev: Vec<usize> = (0..=n).collect();
+    let mut curr = vec![0usize; n + 1];
+    for i in 1..=a.len() {
+        curr[0] = i;
         for j in 1..=n {
             let cost = if a[i - 1] == b[j - 1] { 0 } else { 1 };
-            dp[i][j] = min(min(dp[i - 1][j] + 1, dp[i][j - 1] + 1), dp[i - 1][j - 1] + cost);
-            
+            curr[j] = min(min(prev[j] + 1, curr[j - 1] + 1), prev[j - 1] + cost);
             if i > 1 && j > 1 && a[i - 1] == b[j - 2] && a[i - 2] == b[j - 1] {
-                dp[i][j] = min(dp[i][j], dp[i - 2][j - 2] + 1);
+                curr[j] = min(curr[j], before_prev[j - 2] + 1);
             }
         }
+        if curr.iter().all(|&dist| dist > max) && prev.iter().all(|&dist| dist > max) {
+            return None;
+        }
+        std::mem::swap(&mut before_prev, &mut prev);
+        std::mem::swap(&mut prev, &mut curr);
     }
-    dp[m][n]
+    Some(prev[n]).filter(|&dist| dist <= max)
 }
 
 fn capitalize(s: &str) -> String {
@@ -854,9 +847,42 @@ mod tests {
 
     #[test]
     fn test_edit_distance() {
-        assert_eq!(edit_distance("kitten", "sitting"), 3);
-        assert_eq!(edit_distance("hello", "hello"), 0);
-        assert_eq!(edit_distance("", "abc"), 3);
+        assert_eq!(edit_distance("kitten", "sitting", 3), Some(3));
+        assert_eq!(edit_distance("kitten", "sitting", 2), None);
+        assert_eq!(edit_distance("hello", "hello", 2), Some(0));
+        assert_eq!(edit_distance("", "abc", 3), Some(3));
+        assert_eq!(edit_distance("teh", "the", 2), Some(1));
+    }
+
+    #[test]
+    fn test_edit_distance_matches_full_matrix() {
+        fn full(a: &str, b: &str) -> usize {
+            let (a, b): (Vec<char>, Vec<char>) = (a.chars().collect(), b.chars().collect());
+            let mut dp = vec![vec![0usize; b.len() + 1]; a.len() + 1];
+            for i in 0..=a.len() { dp[i][0] = i; }
+            for j in 0..=b.len() { dp[0][j] = j; }
+            for i in 1..=a.len() {
+                for j in 1..=b.len() {
+                    let cost = if a[i - 1] == b[j - 1] { 0 } else { 1 };
+                    dp[i][j] = min(min(dp[i - 1][j] + 1, dp[i][j - 1] + 1), dp[i - 1][j - 1] + cost);
+                    if i > 1 && j > 1 && a[i - 1] == b[j - 2] && a[i - 2] == b[j - 1] {
+                        dp[i][j] = min(dp[i][j], dp[i - 2][j - 2] + 1);
+                    }
+                }
+            }
+            dp[a.len()][b.len()]
+        }
+
+        let words = ["", "a", "ab", "ba", "the", "teh", "hte", "them", "then", "agian", "again", "asian",
+            "becuase", "because", "knowle", "knowledge", "abcdef", "badcfe", "café", "cafe", "xyz"];
+        for a in words {
+            for b in words {
+                for max in 0..=3 {
+                    let expected = Some(full(a, b)).filter(|&dist| dist <= max);
+                    assert_eq!(edit_distance(a, b, max), expected, "{a} vs {b} at max {max}");
+                }
+            }
+        }
     }
 
     #[test]
