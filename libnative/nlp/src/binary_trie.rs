@@ -132,7 +132,8 @@ impl BinaryTrie {
             current_idx = self.find_or_create_child(current_idx, char_code);
         }
 
-        self.nodes[current_idx as usize].frequency = frequency;
+        let node = &mut self.nodes[current_idx as usize];
+        node.frequency = node.frequency.max(frequency);
         self.words.push(word.to_string());
     }
 
@@ -441,6 +442,15 @@ mod tests {
         assert_eq!(results.len(), 3);
     }
     
+    #[test]
+    fn test_case_variants_keep_highest_frequency() {
+        let trie = build_from_json_with_canonical(r#"{"add": 255, "ADD": 30}"#).unwrap();
+        let idx = trie.search_prefix("add").unwrap();
+        let mut results = Vec::new();
+        trie.collect_words(idx, "add", &mut results, 1);
+        assert_eq!(results, vec![("add".to_string(), 255)]);
+    }
+
     #[test]
     fn test_build_with_canonical() {
         let json = r#"{"I'm": 200, "don't": 180, "USA": 150, "hello": 100}"#;
