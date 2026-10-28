@@ -545,7 +545,9 @@ impl NlpEngine {
     ) {
         if let Some(idx) = trie.search_prefix(normalized_prefix) {
             let mut words = Vec::new();
-            trie.collect_words(idx, normalized_prefix, &mut words, 100);
+            trie.collect_words(idx, normalized_prefix, &mut words, usize::MAX);
+            words.sort_by(|a, b| b.1.cmp(&a.1));
+            words.truncate(100);
 
             for (word, freq) in words {
                 let display = format_with_canonical(&word, original_prefix, canonical_forms);
@@ -914,6 +916,19 @@ mod tests {
 
         let personal = engine.personal_dict.read().unwrap();
         assert!(personal.contains_key("floris"));
+    }
+
+    #[test]
+    fn test_short_prefix_keeps_most_frequent_words() {
+        let mut dict: HashMap<String, u8> = (0..120).map(|i| (format!("the{i}"), 10)).collect();
+        dict.insert("the".to_string(), 255);
+        dict.insert("that".to_string(), 254);
+        let trie = crate::binary_trie::build_from_json_with_canonical(&serde_json::to_string(&dict).unwrap()).unwrap();
+        let engine = NlpEngine::new();
+        engine.load_dictionary_binary_for_language("en_US", &trie.serialize()).unwrap();
+
+        let texts: Vec<String> = engine.suggest("th", &[], 5).into_iter().map(|s| s.text).collect();
+        assert!(texts.contains(&"that".to_string()), "Expected that in suggestions: {:?}", texts);
     }
 
     #[test]
