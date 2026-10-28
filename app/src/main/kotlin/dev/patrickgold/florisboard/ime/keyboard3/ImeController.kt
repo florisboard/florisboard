@@ -392,6 +392,9 @@ class ImeController(
                             .withActionsOverflowVisible(!state.flags.isActionsOverflowVisible),
                     )
                 }
+                ImeActions.ToggleAutocorrect -> scope.launch {
+                    prefs.smartbar.autocorrect.let { it.set(!it.get()) }
+                }
                 ImeActions.ToggleCompactLayout -> windowController?.actions?.toggleCompactLayout()
                 ImeActions.ToggleFloatingWindow -> windowController?.actions?.toggleFloatingWindow()
                 ImeActions.ToggleResizeMode -> windowController?.editor?.toggleEnabled()

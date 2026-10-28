@@ -631,6 +631,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "smartbar__extended_actions_placement",
             default = ExtendedActionsPlacement.ABOVE_CANDIDATES,
         )
+        val autocorrect = boolean(
+            key = "smartbar__autocorrect",
+            default = true,
+        )
     }
 
     val spelling = Spelling()
@@ -657,7 +661,7 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
         )
         val enabled = boolean(
             key = "suggestion__enabled",
-            default = false,
+            default = true,
         )
         val displayMode = enum(
             key = "suggestion__display_mode",
