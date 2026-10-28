@@ -387,13 +387,7 @@ impl NlpEngine {
         bonus: f64,
         context: &[String],
     ) -> f64 {
-        let freq_score = match freq {
-            f if f >= 5000 => 1.0,
-            f if f >= 1000 => 0.9,
-            f if f >= 200 => 0.6,
-            f if f >= 10 => 0.3,
-            _ => 0.1,
-        };
+        let freq_score = self.frequency_score(freq);
         let dist_score = (MAX_EDIT_DISTANCE - dist) as f64 / MAX_EDIT_DISTANCE as f64;
         let prefix_bonus = if candidate.starts_with(input) { 0.2 } else { 0.0 };
         let ctx_score = self.context_score(candidate, context);
@@ -1040,6 +1034,15 @@ mod tests {
         let suggestions = engine.suggest("don", &[], 5);
         let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
         assert!(texts.contains(&"don't"), "Expected don't in suggestions: {:?}", texts);
+    }
+
+    #[test]
+    fn test_spell_check_prefers_more_frequent_correction() {
+        let engine = NlpEngine::new();
+        engine.load_dictionary(r#"{"cab": 190, "cub": 15}"#).unwrap();
+
+        let result = engine.spell_check("cxb", &[], 2);
+        assert_eq!(result.suggestions, vec!["cab", "cub"]);
     }
 
     #[test]
