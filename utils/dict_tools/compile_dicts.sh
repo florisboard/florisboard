@@ -18,7 +18,7 @@ fi
 echo "Compiling dictionaries..."
 
 for json_file in "$DICT_DIR"/*.json; do
-    if [[ -f "$json_file" ]]; then
+    if [[ -f "$json_file" && "$json_file" != *.ngrams.json ]]; then
         base_name=$(basename "$json_file" .json)
         dict_file="$DICT_DIR/${base_name}.dict"
         

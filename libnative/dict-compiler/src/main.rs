@@ -1,4 +1,4 @@
-use clap::Parser;
+use clap::{ArgAction, Parser};
 use nlp::binary_trie::build_from_json_with_canonical;
 use std::collections::HashMap;
 use std::fs;
@@ -18,11 +18,11 @@ struct Args {
     output: PathBuf,
 
     /// Verify output after writing
-    #[arg(short, long, default_value = "true")]
+    #[arg(short, long, default_value_t = true, action = ArgAction::Set)]
     verify: bool,
 
     /// Print statistics
-    #[arg(short, long, default_value = "true")]
+    #[arg(short, long, default_value_t = true, action = ArgAction::Set)]
     stats: bool,
 }
 
