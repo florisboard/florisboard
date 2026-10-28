@@ -4,7 +4,6 @@ use lz4_flex::{compress_prepend_size, decompress_size_prepended};
 const MAGIC: &[u8; 4] = b"FBTD"; // FlorisBoard Trie Dictionary
 const VERSION: u32 = 3; // v3: Added canonical forms section
 
-#[repr(C, packed)]
 pub struct FileHeader {
     pub magic: [u8; 4],
     pub version: u32,
@@ -64,7 +63,6 @@ impl FileHeader {
 }
 
 /// 12-byte node optimized for cache efficiency
-#[repr(C, packed)]
 #[derive(Clone, Copy, Default)]
 pub struct BinaryTrieNode {
     pub char_code: u16,       // Unicode char (BMP only for Latin)
@@ -101,7 +99,6 @@ impl BinaryTrieNode {
 #[derive(Clone)]
 pub struct BinaryTrie {
     nodes: Vec<BinaryTrieNode>,
-    words: Vec<String>,
     canonical_forms: HashMap<String, String>, // normalized_key -> original_form
 }
 
@@ -109,7 +106,6 @@ impl BinaryTrie {
     pub fn new() -> Self {
         let mut trie = Self {
             nodes: Vec::new(),
-            words: Vec::new(),
             canonical_forms: HashMap::new(),
         };
         trie.nodes.push(BinaryTrieNode::default());
@@ -134,7 +130,6 @@ impl BinaryTrie {
 
         let node = &mut self.nodes[current_idx as usize];
         node.frequency = node.frequency.max(frequency);
-        self.words.push(word.to_string());
     }
 
     fn find_or_create_child(&mut self, parent_idx: u32, char_code: u16) -> u32 {
@@ -180,7 +175,7 @@ impl BinaryTrie {
     pub fn serialize(&self) -> Vec<u8> {
         let checksum = self.calculate_checksum();
         let header = FileHeader::new(
-            self.words.len() as u32,
+            self.nodes.iter().filter(|node| node.frequency > 0).count() as u32,
             self.nodes.len() as u32,
             checksum,
             self.canonical_forms.len() as u32,
@@ -265,7 +260,6 @@ impl BinaryTrie {
 
         let trie = Self {
             nodes,
-            words: Vec::new(),
             canonical_forms,
         };
 
@@ -367,10 +361,6 @@ impl BinaryTrie {
         self.nodes.len()
     }
 
-    pub fn word_count(&self) -> usize {
-        self.words.len()
-    }
-    
     pub fn canonical_count(&self) -> usize {
         self.canonical_forms.len()
     }
@@ -407,7 +397,10 @@ pub fn normalize_for_lookup(word: &str) -> String {
 pub fn build_from_json_with_canonical(json_data: &str) -> Result<BinaryTrie, String> {
     let dict: HashMap<String, u8> = serde_json::from_str(json_data)
         .map_err(|e| format!("JSON parse error: {}", e))?;
-    
+    Ok(build_with_canonical(dict))
+}
+
+pub fn build_with_canonical(dict: HashMap<String, u8>) -> BinaryTrie {
     let mut trie = BinaryTrie::new();
     let mut canonical_forms = HashMap::new();
     
@@ -424,7 +417,7 @@ pub fn build_from_json_with_canonical(json_data: &str) -> Result<BinaryTrie, Str
     }
     
     trie.canonical_forms = canonical_forms;
-    Ok(trie)
+    trie
 }
 
 #[cfg(test)]

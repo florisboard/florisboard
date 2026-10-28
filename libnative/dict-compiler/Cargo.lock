@@ -103,9 +103,7 @@ name = "dict-compiler"
 version = "0.1.0"
 dependencies = [
  "clap",
- "lz4_flex",
  "nlp",
- "serde",
  "serde_json",
 ]
 

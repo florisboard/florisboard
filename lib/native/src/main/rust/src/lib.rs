@@ -1,12 +1,28 @@
 use dummy;
 use nlp::NlpEngine;
-use once_cell::sync::Lazy;
+use std::sync::LazyLock;
 
 use jni::objects::{JByteArray, JClass, JObjectArray, JString};
 use jni::sys::{jboolean, jdouble, jint, jstring, JNI_FALSE, JNI_TRUE};
 use jni::JNIEnv;
 
-static ENGINE: Lazy<NlpEngine> = Lazy::new(NlpEngine::new);
+static ENGINE: LazyLock<NlpEngine> = LazyLock::new(NlpEngine::new);
+
+fn read_context(env: &mut JNIEnv, context_json: &JString) -> Vec<String> {
+    match env.get_string(context_json) {
+        Ok(s) => {
+            let json: String = s.into();
+            serde_json::from_str(&json).unwrap_or_default()
+        }
+        Err(_) => vec![],
+    }
+}
+
+fn to_jstring(env: &JNIEnv, value: String) -> jstring {
+    env.new_string(value)
+        .map(|s| s.into_raw())
+        .unwrap_or(std::ptr::null_mut())
+}
 
 #[no_mangle]
 pub extern "system" fn Java_org_florisboard_libnative_TestKt_dummyAdd(
@@ -16,38 +32,6 @@ pub extern "system" fn Java_org_florisboard_libnative_TestKt_dummyAdd(
     b: jint,
 ) -> jint {
     dummy::addnumbers(a, b)
-}
-
-#[no_mangle]
-pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeLoadDictionary(
-    mut env: JNIEnv,
-    _class: JClass,
-    json_data: JString,
-) -> jboolean {
-    let json: String = match env.get_string(&json_data) {
-        Ok(s) => s.into(),
-        Err(_) => return JNI_FALSE,
-    };
-    match ENGINE.load_dictionary(&json) {
-        Ok(_) => JNI_TRUE,
-        Err(_) => JNI_FALSE,
-    }
-}
-
-#[no_mangle]
-pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeLoadDictionaryBinary(
-    mut env: JNIEnv,
-    _class: JClass,
-    data: JByteArray,
-) -> jboolean {
-    let bytes = match env.convert_byte_array(&data) {
-        Ok(b) => b,
-        Err(_) => return JNI_FALSE,
-    };
-    match ENGINE.load_dictionary_binary(&bytes) {
-        Ok(_) => JNI_TRUE,
-        Err(_) => JNI_FALSE,
-    }
 }
 
 #[no_mangle]
@@ -62,20 +46,10 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeSpellChe
         Ok(s) => s.into(),
         Err(_) => return std::ptr::null_mut(),
     };
-    let context: Vec<String> = match env.get_string(&context_json) {
-        Ok(s) => {
-            let json: String = s.into();
-            serde_json::from_str(&json).unwrap_or_default()
-        }
-        Err(_) => vec![],
-    };
+    let context = read_context(&mut env, &context_json);
 
     let result = ENGINE.spell_check(&word_str, &context, max_suggestions as usize);
-    let json = serde_json::to_string(&result).unwrap_or_default();
-
-    env.new_string(json)
-        .map(|s| s.into_raw())
-        .unwrap_or(std::ptr::null_mut())
+    to_jstring(&env, serde_json::to_string(&result).unwrap_or_default())
 }
 
 #[no_mangle]
@@ -90,20 +64,10 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeSuggest(
         Ok(s) => s.into(),
         Err(_) => return std::ptr::null_mut(),
     };
-    let context: Vec<String> = match env.get_string(&context_json) {
-        Ok(s) => {
-            let json: String = s.into();
-            serde_json::from_str(&json).unwrap_or_default()
-        }
-        Err(_) => vec![],
-    };
+    let context = read_context(&mut env, &context_json);
 
     let suggestions = ENGINE.suggest(&prefix_str, &context, max_count as usize);
-    let json = serde_json::to_string(&suggestions).unwrap_or_default();
-
-    env.new_string(json)
-        .map(|s| s.into_raw())
-        .unwrap_or(std::ptr::null_mut())
+    to_jstring(&env, serde_json::to_string(&suggestions).unwrap_or_default())
 }
 
 #[no_mangle]
@@ -117,13 +81,7 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeLearnWor
         Ok(s) => s.into(),
         Err(_) => return,
     };
-    let context: Vec<String> = match env.get_string(&context_json) {
-        Ok(s) => {
-            let json: String = s.into();
-            serde_json::from_str(&json).unwrap_or_default()
-        }
-        Err(_) => vec![],
-    };
+    let context = read_context(&mut env, &context_json);
     ENGINE.learn_word(&word_str, &context);
 }
 
@@ -178,10 +136,7 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeExportPe
     env: JNIEnv,
     _class: JClass,
 ) -> jstring {
-    let json = ENGINE.export_personal_dict();
-    env.new_string(json)
-        .map(|s| s.into_raw())
-        .unwrap_or(std::ptr::null_mut())
+    to_jstring(&env, ENGINE.export_personal_dict())
 }
 
 #[no_mangle]
@@ -197,18 +152,6 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeImportPe
     match ENGINE.import_personal_dict(&json) {
         Ok(_) => JNI_TRUE,
         Err(_) => JNI_FALSE,
-    }
-}
-
-#[no_mangle]
-pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeSetLanguage(
-    mut env: JNIEnv,
-    _class: JClass,
-    language: JString,
-) {
-    if let Ok(s) = env.get_string(&language) {
-        let lang: String = s.into();
-        ENGINE.set_language(&lang);
     }
 }
 
@@ -240,17 +183,6 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeSetLangu
 }
 
 #[no_mangle]
-pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeGetLanguage(
-    env: JNIEnv,
-    _class: JClass,
-) -> jstring {
-    let lang = ENGINE.get_language();
-    env.new_string(lang)
-        .map(|s| s.into_raw())
-        .unwrap_or(std::ptr::null_mut())
-}
-
-#[no_mangle]
 pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeLoadDictionaryBinaryForLanguage(
     mut env: JNIEnv,
     _class: JClass,
@@ -276,10 +208,7 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativeExportCo
     env: JNIEnv,
     _class: JClass,
 ) -> jstring {
-    let json = ENGINE.export_context_map();
-    env.new_string(json)
-        .map(|s| s.into_raw())
-        .unwrap_or(std::ptr::null_mut())
+    to_jstring(&env, ENGINE.export_context_map())
 }
 
 #[no_mangle]
@@ -334,18 +263,8 @@ pub extern "system" fn Java_org_florisboard_libnative_NlpBridgeKt_nativePredictN
     context_json: JString,
     max_count: jint,
 ) -> jstring {
-    let context: Vec<String> = match env.get_string(&context_json) {
-        Ok(s) => {
-            let json: String = s.into();
-            serde_json::from_str(&json).unwrap_or_default()
-        }
-        Err(_) => vec![],
-    };
+    let context = read_context(&mut env, &context_json);
 
     let predictions = ENGINE.predict_next_word(&context, max_count as usize);
-    let json = serde_json::to_string(&predictions).unwrap_or_default();
-
-    env.new_string(json)
-        .map(|s| s.into_raw())
-        .unwrap_or(std::ptr::null_mut())
+    to_jstring(&env, serde_json::to_string(&predictions).unwrap_or_default())
 }

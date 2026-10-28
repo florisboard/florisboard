@@ -1,6 +1,6 @@
 pub mod binary_trie;
 
-use binary_trie::{BinaryTrie, is_contraction, is_acronym, normalize_for_lookup, should_preserve_canonical};
+use binary_trie::{BinaryTrie, is_contraction, is_acronym, normalize_for_lookup};
 use serde::{Deserialize, Serialize};
 use std::cmp::{min, Ordering};
 use std::collections::{BinaryHeap, HashMap};
@@ -14,44 +14,6 @@ const CONTEXT_BONUS: f64 = 0.15;
 const EXACT_MATCH_BONUS: f64 = 1.0;
 const DECAY_FACTOR: f64 = 0.95;
 const MAX_PERSONAL_FREQ: u32 = 255;
-
-#[derive(Default)]
-struct TrieNode {
-    children: HashMap<char, TrieNode>,
-    frequency: Option<u32>,
-    word: Option<String>,
-}
-
-impl TrieNode {
-    fn insert(&mut self, word: &str, freq: u32) {
-        let mut node = self;
-        for ch in word.chars() {
-            node = node.children.entry(ch).or_default();
-        }
-        node.frequency = Some(freq);
-        node.word = Some(word.to_string());
-    }
-
-    fn search_prefix(&self, prefix: &str) -> Option<&TrieNode> {
-        let mut node = self;
-        for ch in prefix.chars() {
-            node = node.children.get(&ch)?;
-        }
-        Some(node)
-    }
-
-    fn collect_words(&self, results: &mut Vec<(String, u32)>, limit: usize) {
-        if results.len() >= limit {
-            return;
-        }
-        if let (Some(word), Some(freq)) = (&self.word, self.frequency) {
-            results.push((word.clone(), freq));
-        }
-        for (_, child) in &self.children {
-            child.collect_words(results, limit);
-        }
-    }
-}
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct Suggestion {
@@ -87,38 +49,21 @@ pub struct SpellCheckResult {
     pub suggestions: Vec<String>,
 }
 
+#[derive(Default)]
 pub struct LanguageDictionary {
-    trie: TrieNode,
     binary_trie: Option<BinaryTrie>,
-    dict: HashMap<String, u32>,
     ngrams: HashMap<String, HashMap<String, u32>>,
     canonical_forms: HashMap<String, String>,
 }
 
-impl Default for LanguageDictionary {
-    fn default() -> Self {
-        Self {
-            trie: TrieNode::default(),
-            binary_trie: None,
-            dict: HashMap::new(),
-            ngrams: HashMap::new(),
-            canonical_forms: HashMap::new(),
-        }
-    }
-}
-
 impl LanguageDictionary {
     fn frequency(&self, word: &str) -> Option<u32> {
-        match &self.binary_trie {
-            Some(trie) => trie.frequency(word).map(u32::from),
-            None => self.dict.get(word).copied(),
-        }
+        self.binary_trie.as_ref()?.frequency(word).map(u32::from)
     }
 
     fn for_each_word(&self, max_len: usize, mut f: impl FnMut(&str, u32)) {
-        match &self.binary_trie {
-            Some(trie) => trie.for_each_word(max_len, |word, freq| f(word, freq.into())),
-            None => self.dict.iter().for_each(|(word, freq)| f(word, *freq)),
+        if let Some(trie) = &self.binary_trie {
+            trie.for_each_word(max_len, |word, freq| f(word, freq.into()));
         }
     }
 }
@@ -167,20 +112,8 @@ impl NlpEngine {
         }
     }
 
-    pub fn set_language(&self, lang_code: &str) {
-        *self.active_languages.write().unwrap() = vec![lang_code.to_string()];
-    }
-
     pub fn set_languages(&self, lang_codes: &[&str]) {
         *self.active_languages.write().unwrap() = lang_codes.iter().map(|s| s.to_string()).collect();
-    }
-
-    pub fn get_language(&self) -> String {
-        self.active_languages.read().unwrap().first().cloned().unwrap_or_default()
-    }
-
-    pub fn get_languages(&self) -> Vec<String> {
-        self.active_languages.read().unwrap().clone()
     }
 
     pub fn get_canonical_form(&self, word: &str) -> Option<String> {
@@ -213,10 +146,6 @@ impl NlpEngine {
         merged
     }
 
-    pub fn load_dictionary_binary(&self, data: &[u8]) -> Result<(), String> {
-        self.load_dictionary_binary_for_language("en_US", data)
-    }
-
     pub fn load_dictionary_binary_for_language(&self, lang_code: &str, data: &[u8]) -> Result<(), String> {
         let mut trie = BinaryTrie::deserialize(data).map_err(|e| e.to_string())?;
         let canonical_forms_from_trie = trie.take_canonical_forms();
@@ -230,52 +159,7 @@ impl NlpEngine {
         merged_canonical.extend(canonical_forms_from_trie);
         
         languages.insert(lang_code.to_string(), LanguageDictionary {
-            trie: TrieNode::default(),
             binary_trie: Some(trie),
-            dict: HashMap::new(),
-            ngrams: existing_ngrams,
-            canonical_forms: merged_canonical,
-        });
-        Ok(())
-    }
-
-    pub fn load_dictionary(&self, json_data: &str) -> Result<(), String> {
-        self.load_dictionary_for_language("en_US", json_data)
-    }
-
-    pub fn load_dictionary_for_language(&self, lang_code: &str, json_data: &str) -> Result<(), String> {
-        let dict: HashMap<String, u32> =
-            serde_json::from_str(json_data).map_err(|e| e.to_string())?;
-
-        let mut trie = TrieNode::default();
-        let mut dict_copy = HashMap::new();
-        let mut canonical_forms = HashMap::new();
-
-        for (word, freq) in dict {
-            let trimmed = word.trim().to_string();
-            if !trimmed.is_empty() {
-                let lower = trimmed.to_lowercase();
-                trie.insert(&lower, freq);
-                dict_copy.insert(lower.clone(), freq);
-                if should_preserve_canonical(&trimmed) {
-                    let normalized_key = normalize_for_lookup(&trimmed);
-                    canonical_forms.insert(normalized_key, trimmed);
-                }
-            }
-        }
-
-        let mut languages = self.languages.write().unwrap();
-        let (existing_ngrams, existing_canonical) = languages.get(lang_code)
-            .map(|ld| (ld.ngrams.clone(), ld.canonical_forms.clone()))
-            .unwrap_or_default();
-        
-        let mut merged_canonical = existing_canonical;
-        merged_canonical.extend(canonical_forms);
-        
-        languages.insert(lang_code.to_string(), LanguageDictionary {
-            trie,
-            binary_trie: None,
-            dict: dict_copy,
             ngrams: existing_ngrams,
             canonical_forms: merged_canonical,
         });
@@ -333,16 +217,7 @@ impl NlpEngine {
     }
 
     fn is_known_word(&self, word: &str) -> bool {
-        let active = self.active_dicts();
-        let personal = self.personal_dict.read().unwrap();
-
-        let variants = [
-            word.to_string(),
-            capitalize(word),
-            word.to_uppercase(),
-        ];
-
-        variants.iter().any(|v| active.frequency(v).is_some() || personal.contains_key(v))
+        self.active_dicts().frequency(word).is_some() || self.personal_dict.read().unwrap().contains_key(word)
     }
 
     fn suggest_corrections(&self, word: &str, context: &[String], max: usize) -> Vec<String> {
@@ -435,16 +310,8 @@ impl NlpEngine {
             .collect();
         self.collect_prefix_matches(personal_matches, prefix, context, PERSONAL_BONUS, typed_is_valid_word, &active, &mut suggestions);
 
-        if active.dicts().any(|ld| ld.binary_trie.is_some()) {
-            for bt in active.dicts().filter_map(|ld| ld.binary_trie.as_ref()) {
-                self.collect_from_binary_trie(bt, &normalized, prefix, context, typed_is_valid_word, &active, &mut suggestions);
-            }
-        } else {
-            for node in active.dicts().filter_map(|ld| ld.trie.search_prefix(&normalized)) {
-                let mut words = Vec::new();
-                node.collect_words(&mut words, 100);
-                self.collect_prefix_matches(words, prefix, context, 0.0, typed_is_valid_word, &active, &mut suggestions);
-            }
+        for bt in active.dicts().filter_map(|ld| ld.binary_trie.as_ref()) {
+            self.collect_from_binary_trie(bt, &normalized, prefix, context, typed_is_valid_word, &active, &mut suggestions);
         }
 
         if !typed_is_valid_word {
@@ -477,48 +344,33 @@ impl NlpEngine {
 
         let personal = self.personal_dict.read().unwrap();
 
-        active.for_each_word(normalized_input.chars().count() + MAX_EDIT_DISTANCE, |candidate, freq| {
+        let mut consider = |candidate: &str, freq: u32, bonus: f64, min_auto_commit_freq: u32| {
             if candidate.starts_with(normalized_input) {
                 return;
             }
 
             if let Some(dist) = edit_distance(normalized_input, candidate, MAX_EDIT_DISTANCE).filter(|&dist| dist > 0) {
                 let display = format_with_canonical(candidate, original_input, active);
-                let conf = self.typo_correction_score(freq, dist, context, candidate);
-                let auto_commit = conf >= 0.65 && freq >= 100 && dist <= 1;
+                let conf = self.typo_correction_score(freq, dist, context, candidate) + bonus;
+                let auto_commit = conf >= 0.65 && freq >= min_auto_commit_freq && dist <= 1;
                 heap.push(Suggestion {
                     text: display,
                     confidence: conf,
                     is_eligible_for_auto_commit: auto_commit,
                 });
             }
-        });
+        };
 
+        let max_len = normalized_input.chars().count() + MAX_EDIT_DISTANCE;
+        active.for_each_word(max_len, |candidate, freq| consider(candidate, freq, 0.0, 100));
         for (candidate, freq) in personal.iter() {
-            if candidate.starts_with(normalized_input) {
-                continue;
-            }
-
-            if let Some(dist) = edit_distance(normalized_input, candidate, MAX_EDIT_DISTANCE).filter(|&dist| dist > 0) {
-                let display = format_with_canonical(candidate, original_input, active);
-                let conf = self.typo_correction_score(*freq, dist, context, candidate) + PERSONAL_BONUS;
-                let auto_commit = conf >= 0.65 && *freq >= 50 && dist <= 1;
-                heap.push(Suggestion {
-                    text: display,
-                    confidence: conf,
-                    is_eligible_for_auto_commit: auto_commit,
-                });
-            }
+            consider(candidate, *freq, PERSONAL_BONUS, 50);
         }
     }
 
     fn typo_correction_score(&self, freq: u32, dist: usize, context: &[String], word: &str) -> f64 {
         let freq_score = self.frequency_score(freq);
-        let dist_penalty = match dist {
-            1 => 0.0,
-            2 => 0.2,
-            _ => 0.4,
-        };
+        let dist_penalty = if dist == 1 { 0.0 } else { 0.2 };
         let ctx_score = self.context_score(word, context);
         
         // Higher weight on frequency, lower threshold for common words
@@ -540,25 +392,8 @@ impl NlpEngine {
             trie.collect_words(idx, normalized_prefix, &mut words, usize::MAX);
             words.sort_by(|a, b| b.1.cmp(&a.1));
             words.truncate(100);
-
-            for (word, freq) in words {
-                let display = format_with_canonical(&word, original_prefix, active);
-                let is_exact_match = word.eq_ignore_ascii_case(original_prefix);
-
-                let prefix_bonus = 0.3;
-                let mut conf = self.frequency_score(freq as u32) * 0.6 + self.context_score(&word, context) * 0.2 + prefix_bonus;
-                if is_exact_match {
-                    conf += EXACT_MATCH_BONUS;
-                }
-
-                let auto_commit = !typed_is_valid_word && !is_exact_match && conf >= 0.7 && freq >= 100;
-
-                heap.push(Suggestion {
-                    text: display,
-                    confidence: conf,
-                    is_eligible_for_auto_commit: auto_commit,
-                });
-            }
+            let words = words.into_iter().map(|(word, freq)| (word, u32::from(freq))).collect();
+            self.collect_prefix_matches(words, original_prefix, context, 0.0, typed_is_valid_word, active, heap);
         }
     }
 
@@ -852,7 +687,12 @@ fn format_with_canonical(word: &str, reference: &str, active: &ActiveDicts) -> S
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::binary_trie::is_proper_noun;
+    use crate::binary_trie::{build_from_json_with_canonical, is_proper_noun};
+
+    fn load_json(engine: &NlpEngine, lang: &str, json: &str) {
+        let trie = build_from_json_with_canonical(json).unwrap();
+        engine.load_dictionary_binary_for_language(lang, &trie.serialize()).unwrap();
+    }
 
     #[test]
     fn test_edit_distance() {
@@ -894,23 +734,12 @@ mod tests {
         }
     }
 
-    #[test]
-    fn test_trie_insert_and_search() {
-        let mut trie = TrieNode::default();
-        trie.insert("hello", 100);
-        trie.insert("help", 50);
-        trie.insert("world", 75);
-
-        assert!(trie.search_prefix("hel").is_some());
-        assert!(trie.search_prefix("wor").is_some());
-        assert!(trie.search_prefix("xyz").is_none());
-    }
 
     #[test]
     fn test_engine_load_and_suggest() {
         let engine = NlpEngine::new();
-        let json = r#"{"hello": 1000, "help": 500, "world": 750}"#;
-        engine.load_dictionary(json).unwrap();
+        let json = r#"{"hello": 250, "help": 200, "world": 220}"#;
+        load_json(&engine, "en_US", json);
 
         let suggestions = engine.suggest("hel", &[], 5);
         assert!(!suggestions.is_empty());
@@ -920,8 +749,8 @@ mod tests {
     #[test]
     fn test_spell_check() {
         let engine = NlpEngine::new();
-        let json = r#"{"hello": 1000, "world": 750}"#;
-        engine.load_dictionary(json).unwrap();
+        let json = r#"{"hello": 250, "world": 220}"#;
+        load_json(&engine, "en_US", json);
 
         let result = engine.spell_check("hello", &[], 3);
         assert!(result.is_valid);
@@ -945,9 +774,8 @@ mod tests {
         let mut dict: HashMap<String, u8> = (0..120).map(|i| (format!("the{i}"), 10)).collect();
         dict.insert("the".to_string(), 255);
         dict.insert("that".to_string(), 254);
-        let trie = crate::binary_trie::build_from_json_with_canonical(&serde_json::to_string(&dict).unwrap()).unwrap();
         let engine = NlpEngine::new();
-        engine.load_dictionary_binary_for_language("en_US", &trie.serialize()).unwrap();
+        load_json(&engine, "en_US", &serde_json::to_string(&dict).unwrap());
 
         let texts: Vec<String> = engine.suggest("th", &[], 5).into_iter().map(|s| s.text).collect();
         assert!(texts.contains(&"that".to_string()), "Expected that in suggestions: {:?}", texts);
@@ -986,7 +814,6 @@ mod tests {
         let engine = NlpEngine::new();
         let ngrams = r#"{"how": {"are": 100, "is": 90}, "good": {"morning": 80, "night": 70}}"#;
         engine.load_ngrams_for_language("en_US", ngrams).unwrap();
-        engine.set_language("en_US");
 
         let predictions = engine.predict_next_word(&["how".to_string()], 5);
         assert!(!predictions.is_empty());
@@ -1001,7 +828,6 @@ mod tests {
         let engine = NlpEngine::new();
         let ngrams = r#"{"how": {"is": 10}}"#;
         engine.load_ngrams_for_language("en_US", ngrams).unwrap();
-        engine.set_language("en_US");
 
         for _ in 0..5 {
             engine.learn_word("are", &["how".to_string()]);
@@ -1031,7 +857,7 @@ mod tests {
     fn test_canonical_form_storage() {
         let engine = NlpEngine::new();
         let json = r#"{"I'm": 200, "don't": 180, "USA": 150, "hello": 100}"#;
-        engine.load_dictionary(json).unwrap();
+        load_json(&engine, "en_US", json);
 
         assert_eq!(engine.get_canonical_form("im"), Some("I'm".to_string()));
         assert_eq!(engine.get_canonical_form("dont"), Some("don't".to_string()));
@@ -1043,7 +869,7 @@ mod tests {
     fn test_suggest_returns_canonical_forms() {
         let engine = NlpEngine::new();
         let json = r#"{"I'm": 200, "don't": 180, "USA": 150, "us": 160, "hello": 100, "image": 90}"#;
-        engine.load_dictionary(json).unwrap();
+        load_json(&engine, "en_US", json);
 
         let suggestions = engine.suggest("im", &[], 5);
         let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
@@ -1065,11 +891,9 @@ mod tests {
     }
 
     #[test]
-    fn test_binary_dictionary_lookups_and_typo_scan() {
-        let json = r#"{"cab": 190, "cub": 15, "cabinet": 200}"#;
-        let trie = crate::binary_trie::build_from_json_with_canonical(json).unwrap();
+    fn test_frequency_lookup_and_typo_scan() {
         let engine = NlpEngine::new();
-        engine.load_dictionary_binary_for_language("en_US", &trie.serialize()).unwrap();
+        load_json(&engine, "en_US", r#"{"cab": 190, "cub": 15, "cabinet": 200}"#);
 
         assert!(engine.spell_check("cab", &[], 2).is_valid);
         assert_eq!(engine.spell_check("cxb", &[], 2).suggestions, vec!["cab", "cub"]);
@@ -1079,7 +903,7 @@ mod tests {
     #[test]
     fn test_spell_check_prefers_more_frequent_correction() {
         let engine = NlpEngine::new();
-        engine.load_dictionary(r#"{"cab": 190, "cub": 15}"#).unwrap();
+        load_json(&engine, "en_US", r#"{"cab": 190, "cub": 15}"#);
 
         let result = engine.spell_check("cxb", &[], 2);
         assert_eq!(result.suggestions, vec!["cab", "cub"]);
@@ -1089,7 +913,7 @@ mod tests {
     fn test_spell_check_contractions() {
         let engine = NlpEngine::new();
         let json = r#"{"I'm": 200, "don't": 180, "USA": 150, "hello": 100}"#;
-        engine.load_dictionary(json).unwrap();
+        load_json(&engine, "en_US", json);
 
         // "im" should suggest "I'm"
         let result = engine.spell_check("im", &[], 3);
@@ -1117,13 +941,12 @@ mod tests {
         let engine = NlpEngine::new();
         
         let en_json = r#"{"hello": 200, "world": 180, "computer": 150}"#;
-        engine.load_dictionary_for_language("en_US", en_json).unwrap();
+        load_json(&engine, "en_US", en_json);
         
         let de_json = r#"{"hallo": 200, "welt": 180, "computer": 140}"#;
-        engine.load_dictionary_for_language("de_DE", de_json).unwrap();
+        load_json(&engine, "de_DE", de_json);
         
         engine.set_languages(&["en_US", "de_DE"]);
-        assert_eq!(engine.get_languages(), vec!["en_US", "de_DE"]);
         
         let suggestions = engine.suggest("hal", &[], 5);
         let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();

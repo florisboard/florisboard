@@ -111,17 +111,6 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
     }
 
-    fun preloadSubtypes(subtypes: List<Subtype>) {
-        val langCodes = subtypes.mapNotNull { subtype ->
-            val code = getLanguageCode(subtype)
-            if (code in loadedLanguages) code else null
-        }
-        if (langCodes.isNotEmpty() && langCodes != activeLanguages) {
-            activeLanguages = langCodes
-            NlpBridge.setLanguages(langCodes.toTypedArray())
-        }
-    }
-
     private fun updateActiveLanguages() {
         if (loadedLanguages.isNotEmpty() && loadedLanguages.toList() != activeLanguages) {
             activeLanguages = loadedLanguages.toList()

@@ -1,5 +1,5 @@
 use clap::{ArgAction, Parser};
-use nlp::binary_trie::build_from_json_with_canonical;
+use nlp::binary_trie::build_with_canonical;
 use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
@@ -42,10 +42,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let dict: HashMap<String, u8> = serde_json::from_str(&json_data)?;
     let word_count = dict.len();
     println!("  Loaded {} words", word_count);
+    let spot_check_words: Vec<&str> = ["the", "hello", "world", "test"]
+        .into_iter()
+        .filter(|word| dict.contains_key(*word))
+        .collect();
 
     // Build trie with canonical forms
     println!("Building trie with canonical forms...");
-    let trie = build_from_json_with_canonical(&json_data)?;
+    let trie = build_with_canonical(dict);
     let node_count = trie.node_count();
     let canonical_count = trie.canonical_count();
     println!("  Created {} nodes", node_count);
@@ -84,12 +88,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
         
         // Spot check some words
-        let test_words = ["the", "hello", "world", "test"];
-        for word in test_words {
-            if dict.contains_key(word) {
-                if loaded.search_prefix(word).is_none() {
-                    return Err(format!("Verification failed: '{}' not found in trie", word).into());
-                }
+        for word in spot_check_words {
+            if loaded.search_prefix(word).is_none() {
+                return Err(format!("Verification failed: '{}' not found in trie", word).into());
             }
         }
         println!("  Verification passed");
