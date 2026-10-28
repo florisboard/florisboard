@@ -16,6 +16,7 @@
 
 package org.florisboard.libnative
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -24,14 +25,17 @@ import kotlinx.serialization.json.Json
 data class NativeSuggestion(
     val text: String,
     val confidence: Double,
-    val is_eligible_for_auto_commit: Boolean
+    @SerialName("is_eligible_for_auto_commit")
+    val isEligibleForAutoCommit: Boolean,
 )
 
 @Serializable
 data class NativeSpellCheckResult(
-    val is_valid: Boolean,
-    val is_typo: Boolean,
-    val suggestions: List<String>
+    @SerialName("is_valid")
+    val isValid: Boolean,
+    @SerialName("is_typo")
+    val isTypo: Boolean,
+    val suggestions: List<String>,
 )
 
 private external fun nativeSetLanguages(languages: Array<String>)

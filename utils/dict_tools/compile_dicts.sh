@@ -21,7 +21,7 @@ for json_file in "$SCRIPT_DIR"/*.json; do
     if [[ -f "$json_file" ]]; then
         base_name=$(basename "$json_file" .json)
         dict_file="$DICT_DIR/${base_name}.dict"
-        
+
         echo "  $base_name.json -> $base_name.dict"
         "$COMPILER" --input "$json_file" --output "$dict_file" --stats false
     fi

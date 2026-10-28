@@ -68,8 +68,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     private var activeLanguages = listOf<String>()
     @Volatile
     private var offensiveWords = emptySet<String>()
-    
-    // Context buffer to maintain word history reliably
+
     private val contextBuffer = mutableListOf<String>()
     private var lastSelectionEnd: Int = 0
 
@@ -79,7 +78,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     override suspend fun preload(subtype: Subtype) = withContext(Dispatchers.IO) {
         val langCode = getLanguageCode(subtype)
-        
+
         if (langCode !in loadedLanguages) {
             val binaryLoaded = try {
                 appContext.assets.open("ime/dict/$langCode.dict").use { inputStream ->
@@ -141,8 +140,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             ?: return SpellingResult.unspecified()
 
         return when {
-            result.is_valid -> SpellingResult.validWord()
-            result.is_typo -> {
+            result.isValid -> SpellingResult.validWord()
+            result.isTypo -> {
                 val suggestions = result.suggestions.filterNot { isBlocked(it, allowPossiblyOffensive) }
                 SpellingResult.typo(
                     suggestions.toTypedArray(),
@@ -164,25 +163,23 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         this.isPrivateSession = isPrivateSession
         val composingText = content.compositionText.orEmpty()
         val prefix = composingText.trim()
-        
-        // Extract current context from text before cursor
+
         val extractedContext = extractContextWords(content, subtype)
-        
-        // Detect new input session: cursor at start with no/little text, or text field changed
+
+        // Start the context over when the field is nearly empty or the cursor jumps back
         val currentSelectionEnd = content.selection.end
         val textLength = content.surroundingText.textBefore.length + composingText.length
-        
+
         if (textLength <= 1 && currentSelectionEnd <= 1) {
             if (contextBuffer.isNotEmpty()) {
                 contextBuffer.clear()
             }
         } else if (currentSelectionEnd < lastSelectionEnd - 1) {
-            // Cursor jumped backwards significantly - reset context buffer
             contextBuffer.clear()
             contextBuffer.addAll(extractedContext)
         }
         lastSelectionEnd = currentSelectionEnd
-        
+
         val context = if (extractedContext.size >= 2) {
             extractedContext
         } else if (extractedContext.isNotEmpty() && contextBuffer.isNotEmpty()) {
@@ -206,16 +203,13 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             } else {
                 emptyList()
             }
-            
-            // Learn word association (what word follows previous words)
+
             if (precedingContext.isNotEmpty()) {
                 NlpBridge.learnWord(lastWord, precedingContext)
             }
-            // Also boost the word itself in personal dictionary
             NlpBridge.learnWord(lastWord, emptyList())
             scheduleSave()
 
-            // Update context buffer with the new word
             if (contextBuffer.lastOrNull() != lastWord) {
                 contextBuffer.add(lastWord)
                 if (contextBuffer.size > MAX_CONTEXT_BUFFER) {
@@ -234,7 +228,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
             WordSuggestionCandidate(
                 text = suggestion.text,
                 confidence = suggestion.confidence,
-                isEligibleForAutoCommit = suggestion.is_eligible_for_auto_commit,
+                isEligibleForAutoCommit = suggestion.isEligibleForAutoCommit,
                 sourceProvider = this
             )
         }
@@ -259,7 +253,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     private fun predictNextWord(context: List<String>, maxCount: Int): List<SuggestionCandidate> {
         if (context.isEmpty()) return emptyList()
-        
+
         return NlpBridge.predictNextWord(context, maxCount).map { suggestion ->
             WordSuggestionCandidate(
                 text = suggestion.text,
@@ -289,7 +283,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     override suspend fun notifySuggestionAccepted(subtype: Subtype, candidate: SuggestionCandidate) {
         if (isPrivateSession) return
-        
+
         val word = candidate.text.toString().lowercase().trim()
         if (word.length < 2) return
 
@@ -300,7 +294,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
     override suspend fun notifySuggestionReverted(subtype: Subtype, candidate: SuggestionCandidate) {
         if (isPrivateSession) return
-        
+
         val word = candidate.text.toString().lowercase().trim()
         NlpBridge.penalizeWord(word)
         scheduleSave()

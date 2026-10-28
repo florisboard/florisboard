@@ -36,7 +36,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let start = Instant::now();
 
-    // Read JSON
     println!("Reading JSON...");
     let json_data = fs::read_to_string(&args.input)?;
     let dict: HashMap<String, u8> = serde_json::from_str(&json_data)?;
@@ -47,7 +46,6 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .filter(|word| dict.contains_key(*word))
         .collect();
 
-    // Build trie with canonical forms
     println!("Building trie with canonical forms...");
     let trie = build_with_canonical(dict);
     let node_count = trie.node_count();
@@ -55,22 +53,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("  Created {} nodes", node_count);
     println!("  Extracted {} canonical forms (contractions/acronyms)", canonical_count);
 
-    // Serialize
     println!("Serializing...");
     let binary_data = trie.serialize();
     let binary_size = binary_data.len();
 
-    // Write output
     println!("Writing binary file...");
     fs::write(&args.output, &binary_data)?;
 
-    // Verify
     if args.verify {
         println!("Verifying...");
         let read_back = fs::read(&args.output)?;
         let loaded = nlp::binary_trie::BinaryTrie::deserialize(&read_back)
             .map_err(|e| format!("Verification failed: {}", e))?;
-        
+
         if loaded.node_count() != node_count {
             return Err(format!(
                 "Node count mismatch: expected {}, got {}",
@@ -78,7 +73,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 loaded.node_count()
             ).into());
         }
-        
+
         if loaded.canonical_count() != canonical_count {
             return Err(format!(
                 "Canonical count mismatch: expected {}, got {}",
@@ -86,8 +81,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 loaded.canonical_count()
             ).into());
         }
-        
-        // Spot check some words
+
         for word in spot_check_words {
             if loaded.search_prefix(word).is_none() {
                 return Err(format!("Verification failed: '{}' not found in trie", word).into());

@@ -154,10 +154,10 @@ impl NlpEngine {
         let (existing_ngrams, existing_canonical) = languages.get(lang_code)
             .map(|ld| (ld.ngrams.clone(), ld.canonical_forms.clone()))
             .unwrap_or_default();
-        
+
         let mut merged_canonical = existing_canonical;
         merged_canonical.extend(canonical_forms_from_trie);
-        
+
         languages.insert(lang_code.to_string(), LanguageDictionary {
             binary_trie: Some(trie),
             ngrams: existing_ngrams,
@@ -372,8 +372,7 @@ impl NlpEngine {
         let freq_score = self.frequency_score(freq);
         let dist_penalty = if dist == 1 { 0.0 } else { 0.2 };
         let ctx_score = self.context_score(word, context);
-        
-        // Higher weight on frequency, lower threshold for common words
+
         freq_score * 0.7 + ctx_score * 0.2 - dist_penalty
     }
 
@@ -428,15 +427,15 @@ impl NlpEngine {
     }
 
     fn frequency_score(&self, freq: u32) -> f64 {
-        // Our dictionary uses 0-255 range after normalization
+        // Dictionary frequencies run from 1 to 255
         match freq {
-            f if f >= 250 => 1.0,    // Top-tier words (the, and, is, etc.)
-            f if f >= 200 => 0.9,    // Very common words
-            f if f >= 150 => 0.8,    // Common words
-            f if f >= 100 => 0.7,    // Moderately common
-            f if f >= 50 => 0.5,     // Less common
-            f if f >= 10 => 0.3,     // Rare
-            _ => 0.1,                // Very rare
+            f if f >= 250 => 1.0,
+            f if f >= 200 => 0.9,
+            f if f >= 150 => 0.8,
+            f if f >= 100 => 0.7,
+            f if f >= 50 => 0.5,
+            f if f >= 10 => 0.3,
+            _ => 0.1,
         }
     }
 
@@ -484,13 +483,13 @@ impl NlpEngine {
         for (i, prev_word) in context.iter().rev().enumerate() {
             let weight = (context.len() - i) as u32;
             let prev_lower = prev_word.to_lowercase();
-            
+
             if let Some(following_words) = ctx_map.get(&prev_lower) {
                 for (word, freq) in following_words {
                     add_candidate(&mut candidates, word, freq * weight * 10, &context_set, &active);
                 }
             }
-            
+
             if let Some(following_words) = ngrams.get(&prev_lower) {
                 for (word, freq) in following_words {
                     add_candidate(&mut candidates, word, freq * weight, &context_set, &active);
@@ -671,12 +670,10 @@ fn format_case(word: &str, reference: &str) -> String {
 fn format_with_canonical(word: &str, reference: &str, active: &ActiveDicts) -> String {
     let normalized_key = normalize_for_lookup(word);
     if let Some(canonical) = active.canonical(&normalized_key) {
-        // Always preserve contractions (e.g., "don't", "I'm")
         if is_contraction(canonical) {
             return canonical.clone();
         }
-        // Only preserve acronym capitalization if user typed in uppercase
-        // This prevents "us" from becoming "US" while allowing "US" -> "US"
+        // Acronyms keep their capitals only when typed in uppercase, so "us" doesn't turn into "US"
         if is_acronym(canonical) && reference.chars().all(|c| c.is_uppercase()) {
             return canonical.clone();
         }
@@ -843,11 +840,11 @@ mod tests {
         assert!(is_contraction("I'm"));
         assert!(is_contraction("don't"));
         assert!(!is_contraction("hello"));
-        
+
         assert!(is_acronym("USA"));
         assert!(is_acronym("NASA"));
         assert!(!is_acronym("Hello"));
-        
+
         assert!(is_proper_noun("Europe"));
         assert!(!is_proper_noun("hello"));
         assert!(!is_proper_noun("USA"));
@@ -880,7 +877,7 @@ mod tests {
         let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
         assert!(texts.contains(&"us"), "Expected us in suggestions: {:?}", texts);
 
-        // Typing "US" (uppercase) SHOULD give "USA"
+        // Typing "US" in uppercase should give "USA"
         let suggestions = engine.suggest("US", &[], 5);
         let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
         assert!(texts.contains(&"USA"), "Expected USA in suggestions: {:?}", texts);
@@ -915,23 +912,20 @@ mod tests {
         let json = r#"{"I'm": 200, "don't": 180, "USA": 150, "hello": 100}"#;
         load_json(&engine, "en_US", json);
 
-        // "im" should suggest "I'm"
         let result = engine.spell_check("im", &[], 3);
         assert!(result.is_typo, "im should be typo");
-        assert!(result.suggestions.contains(&"I'm".to_string()), 
+        assert!(result.suggestions.contains(&"I'm".to_string()),
             "Expected I'm in suggestions: {:?}", result.suggestions);
 
-        // "dont" should suggest "don't"
         let result = engine.spell_check("dont", &[], 3);
         assert!(result.is_typo, "dont should be typo");
         assert!(result.suggestions.contains(&"don't".to_string()),
             "Expected don't in suggestions: {:?}", result.suggestions);
 
-        // "usa" is valid (maps to USA via uppercase check) - suggest() handles formatting
+        // "usa" is valid because the dictionary stores every word in lowercase
         let result = engine.spell_check("usa", &[], 3);
         assert!(result.is_valid, "usa should be valid (maps to USA)");
 
-        // "hello" should be valid
         let result = engine.spell_check("hello", &[], 3);
         assert!(result.is_valid);
     }
@@ -939,23 +933,23 @@ mod tests {
     #[test]
     fn test_multi_language_support() {
         let engine = NlpEngine::new();
-        
+
         let en_json = r#"{"hello": 200, "world": 180, "computer": 150}"#;
         load_json(&engine, "en_US", en_json);
-        
+
         let de_json = r#"{"hallo": 200, "welt": 180, "computer": 140}"#;
         load_json(&engine, "de_DE", de_json);
-        
+
         engine.set_languages(&["en_US", "de_DE"]);
-        
+
         let suggestions = engine.suggest("hal", &[], 5);
         let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
         assert!(texts.contains(&"hallo"), "Expected hallo from de_DE: {:?}", texts);
-        
+
         let suggestions = engine.suggest("hel", &[], 5);
         let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
         assert!(texts.contains(&"hello"), "Expected hello from en_US: {:?}", texts);
-        
+
         let suggestions = engine.suggest("comp", &[], 5);
         let texts: Vec<&str> = suggestions.iter().map(|s| s.text.as_str()).collect();
         assert!(texts.contains(&"computer"), "Expected computer (shared): {:?}", texts);
