@@ -66,6 +66,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
     private var isPrivateSession: Boolean = false
     private val loadedLanguages = mutableSetOf<String>()
     private var activeLanguages = listOf<String>()
+    @Volatile
+    private var offensiveWords = emptySet<String>()
     
     // Context buffer to maintain word history reliably
     private val contextBuffer = mutableListOf<String>()
@@ -95,7 +97,14 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
                         NlpBridge.loadNgramsForLanguage(langCode, jsonData)
                     }
                 } catch (_: Exception) { }
-                
+                try {
+                    appContext.assets.open("ime/dict/$langCode.offensive.txt").use { inputStream ->
+                        offensiveWords = offensiveWords + inputStream.bufferedReader().readLines()
+                            .filter { it.isNotBlank() && !it.startsWith("#") }
+                            .map { it.trim().lowercase() }
+                    }
+                } catch (_: Exception) { }
+
                 loadedLanguages.add(langCode)
                 updateActiveLanguages()
             }
@@ -144,10 +153,13 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
 
         return when {
             result.is_valid -> SpellingResult.validWord()
-            result.is_typo -> SpellingResult.typo(
-                result.suggestions.toTypedArray(),
-                isHighConfidenceResult = result.suggestions.size >= 2
-            )
+            result.is_typo -> {
+                val suggestions = result.suggestions.filterNot { isBlocked(it, allowPossiblyOffensive) }
+                SpellingResult.typo(
+                    suggestions.toTypedArray(),
+                    isHighConfidenceResult = suggestions.size >= 2
+                )
+            }
             else -> SpellingResult.unspecified()
         }
     }
@@ -224,12 +236,12 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         }
 
         if (prefix.length < 2) {
-            return predictNextWord(context, maxCandidateCount)
+            return predictNextWord(context, maxCandidateCount).filterNot { isBlocked(it.text, allowPossiblyOffensive) }
         }
 
         val suggestions = NlpBridge.suggest(prefix, context, maxCandidateCount - 1)
 
-        val candidates = suggestions.map { suggestion ->
+        val candidates = suggestions.filterNot { isBlocked(it.text, allowPossiblyOffensive) }.map { suggestion ->
             WordSuggestionCandidate(
                 text = suggestion.text,
                 confidence = suggestion.confidence,
@@ -250,6 +262,10 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         } else {
             candidates
         }
+    }
+
+    private fun isBlocked(word: CharSequence, allowPossiblyOffensive: Boolean): Boolean {
+        return !allowPossiblyOffensive && word.toString().lowercase() in offensiveWords
     }
 
     private fun predictNextWord(context: List<String>, maxCount: Int): List<SuggestionCandidate> {
@@ -353,6 +369,7 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         NlpBridge.clear()
         loadedLanguages.clear()
         activeLanguages = emptyList()
+        offensiveWords = emptySet()
         contextBuffer.clear()
         lastSelectionEnd = 0
     }
