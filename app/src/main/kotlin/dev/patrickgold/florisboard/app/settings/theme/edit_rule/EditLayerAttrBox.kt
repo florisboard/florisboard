@@ -76,7 +76,7 @@ fun EditLayerAttrBox(
             }
             if (values.isEmpty()) {
                 Text(
-                    text = stringRes(R.string.settings__theme_editor__no_codes_defined),
+                    text = stringRes(R.string.settings__theme_editor__no_values_defined),
                     fontStyle = FontStyle.Italic,
                 )
             }
