@@ -189,9 +189,6 @@
     <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
     <string name="settings__theme_editor__rule_already_exists">This stylesheet rule is already defined.</string>
     <string name="settings__theme_editor__rule_name">Element / annotation</string>
-    <string name="settings__theme_editor__rule_codes">Target key codes</string>
-    <string name="settings__theme_editor__rule_groups">Groups</string>
-    <string name="settings__theme_editor__rule_modes">Target modes (layers)</string>
     <string name="settings__theme_editor__rule_shift_states">Target shift states</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
     <string name="settings__theme_editor__add_code">Add key code</string>
@@ -610,30 +607,42 @@
     <string name="about__third_party_licenses__summary" comment="Preference summary">Licenses of the third-party libraries included in this app</string>
 
     <!-- Setup UI strings -->
-    <string name="setup__title" comment="Title of Setup">Welcome!</string>
-    <string name="setup__intro_message" comment="Short intro message welcoming new users">Thanks for using {app_name}! This quick setup guides you through the required steps to use {app_name} on your device.</string>
-    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privacy policy</string>
-    <string name="setup__footer__repository" comment="Repository label for URL">Repository</string>
+    <string name="setup__welcome__title" comment="Title of Setup">Welcome!</string>
+    <string name="setup__welcome__summary">Thanks for using {app_name}! This quick setup guides you through the setup of {app_name}.</string>
+    <string name="setup__welcome__get_started_btn">Get started</string>
+    <string name="setup__welcome__restore_btn">I have a backup</string>
 
     <string name="setup__enable_ime__title">Enable {app_name}</string>
+    <string name="setup__enable_ime__summary">Enable it in your system settings.</string>
     <string name="setup__enable_ime__description">Android requires that every custom keyboard is separately enabled before you can use it. Open the System <i>Language &amp; Input</i> Settings, there enable "{app_name}".</string>
     <string name="setup__enable_ime__open_settings_btn">Open system settings</string>
 
     <string name="setup__select_ime__title">Select {app_name}</string>
+    <string name="setup__select_ime__summary">Choose it as your active keyboard.</string>
     <string name="setup__select_ime__description">{app_name} is now enabled in your system. To actively use it, switch to {app_name} by selecting it in the input selector dialog!</string>
     <string name="setup__select_ime__switch_keyboard_btn">Switch keyboard</string>
 
     <string name="setup__grant_notification_permission__title">Permit crash report notifications</string>
+    <string name="setup__grant_notification_permission__summary">Only used on app crashes.</string>
     <string name="setup__grant_notification_permission__description">As of Android 13+, apps must ask for permission to
         send notifications. In Florisboard, this is only used to open a crash report screen in the event of a crash.
         This permission can be changed at any time in the system settings.
     </string>
     <string name="setup__grant_notification_permission__btn">Grant permission</string>
+    <string name="setup__grant_notification_permission__skip_btn">Skip for now</string>
 
     <string name="setup__finish_up__title">Finish up</string>
     <string name="setup__finish_up__description_p1">{app_name} is now enabled in the system and ready to be customized by you.</string>
     <string name="setup__finish_up__description_p2">If you encounter any issues, bugs, crashes or just want to make a suggestion, check out the project repository from the about screen!</string>
+    <string name="setup__finish_up__summary">Initial setup completed. You can now start customizing your experience in the settings app.</string>
     <string name="setup__finish_up__finish_btn">Start customizing</string>
+
+    <string name="setup__info__label">More info</string>
+    <string name="setup__info__got_it">Got it</string>
+    <string name="setup__step_required_hint__label">You need to finish this step to use {app_name}. The setup will move on automatically once ready.</string>
+
+    <string name="setup__footer__privacy_policy" comment="Privacy policy label for URL">Privacy policy</string>
+    <string name="setup__footer__source_code" comment="Source code label for URL">Source code</string>
 
     <!-- Physical keyboard -->
     <string name="physical_keyboard__title">Physical keyboard</string>
@@ -669,6 +678,7 @@
     <string name="backup_and_restore__restore__metadata_warn_different_vendor">This backup archive was generated in a third-party app, which is generally not supported. Data losses may occur, restore at your own risk!</string>
     <string name="backup_and_restore__restore__metadata_error_invalid_metadata">This backup archive contains invalid metadata. Either it has been corrupted or poorly modified. Restoring from this archive is not possible, please select another one.</string>
     <string name="backup_and_restore__restore__metadata_error_nothing_to_restore">This backup archive does not contain any files to restore, please select another one.</string>
+    <string name="backup_and_restore__restore__file_name_query_error">An error occurred while querying the selected file\'s name.</string>
     <string name="backup_and_restore__restore__mode">Restore mode</string>
     <string name="backup_and_restore__restore__mode_merge">Merge with current data</string>
     <string name="backup_and_restore__restore__mode_erase_and_overwrite">Erase and overwrite current data</string>
@@ -793,10 +803,6 @@
 
 
     <!-- Extension strings -->
-    <string name="ext__home__title">Addons and extensions</string>
-    <string name="ext__list__ext_theme">Theme extensions</string>
-    <string name="ext__list__ext_keyboard">Keyboard extensions</string>
-    <string name="ext__list__ext_languagepack">Language pack extensions</string>
     <string name="ext__meta__authors">Authors</string>
     <string name="ext__meta__components">Bundled components</string>
     <string name="ext__meta__components_theme">Bundled themes</string>
@@ -810,15 +816,12 @@
     <string name="ext__meta__label">Label</string>
     <string name="ext__meta__license">License</string>
     <string name="ext__meta__maintainers">Maintainers</string>
-    <string name="ext__meta__maintainers_by">By: {maintainers}</string>
     <string name="ext__meta__title">Title</string>
     <string name="ext__meta__version">Version</string>
     <string name="ext__error__not_found_title">Extension not found</string>
     <string name="ext__error__not_found_description">No extension with ID "{id}" could be found.</string>
-    <string name="ext__editor__title_create_any">Create extension</string>
     <string name="ext__editor__title_create_keyboard">Create keyboard extension</string>
     <string name="ext__editor__title_create_theme">Create theme extension</string>
-    <string name="ext__editor__title_edit_any">Edit extension</string>
     <string name="ext__editor__title_edit_keyboard">Edit keyboard extension</string>
     <string name="ext__editor__title_edit_theme">Edit theme extension</string>
     <string name="ext__editor__metadata__title">Manage meta data</string>
@@ -850,7 +853,6 @@
     <string name="ext__import__file_skip_ext_incorrect_type" comment="Reason string when file is of incorrect extension serial type">Expected an extension archive of serial type \"{expected_serial_type}\" but was \"{actual_serial_type}\".</string>
     <string name="ext__import__file_skip_ext_not_supported" comment="Reason string when file is loaded in incorrect context">Expected a media file (image, audio, font, etc.) but found an extension archive.</string>
     <string name="ext__import__file_skip_media_not_supported" comment="Reason string when file is loaded in incorrect context">Expected an extension archive but found a media file (image, audio, font, etc.).</string>
-    <string name="ext__import__error_unexpected_exception" comment="Label when an error occurred during import. The error message will be appended below this text view">An unexpected error occurred during import. The following details were provided:</string>
     <string name="ext__validation__enter_package_name">Please enter a package name</string>
     <string name="ext__validation__error_package_name">Package name does not match regex {id_regex}</string>
     <string name="ext__validation__enter_version">Please enter a version</string>
@@ -876,20 +878,16 @@
     <string name="ext__validation__hint_value_above_50_percent">Any value above 50% will behave as if you set 50%, consider lowering your percent size</string>
     <string name="ext__update_box__internet_permission_hint">Since this app does not have Internet permission, updates for installed extensions must be checked manually.</string>
     <string name="ext__update_box__search_for_updates">Search for updates</string>
-    <string name="ext__addon_management_box__managing_placeholder">Managing {extensions}</string>
-    <string name="ext__addon_management_box__addon_manager_info">All tasks related to importing, exporting, creating, customizing, and removing extensions can be handled through the centralized addon manager.</string>
-    <string name="ext__addon_management_box__go_to_page">Go to {ext_home_title}</string>
-    <string name="ext__home__info">You can download and install extensions from the FlorisBoard Addons Store or import any extension file you have downloaded from the internet.</string>
-    <string name="ext__home__visit_store">Visit Addons Store</string>
-    <string name="ext__home__manage_extensions">Manage installed extensions</string>
-    <string name="ext__list__view_details">View details</string>
     <string name="ext__check_updates__title">Check for updates</string>
 
     <!-- Action strings -->
     <string name="action__add">Add</string>
     <string name="action__apply">Apply</string>
+    <string name="action__back">Back</string>
     <string name="action__back_up">Back up</string>
     <string name="action__cancel">Cancel</string>
+    <string name="action__change">Change</string>
+    <string name="action__continue">Continue</string>
     <string name="action__create">Create</string>
     <string name="action__default">Default</string>
     <string name="action__delete">Delete</string>
@@ -929,7 +927,6 @@
 
     <!-- General strings -->
     <string name="general__example_given" comment="This string is used where an example will be inserted in the {example} block. When translating, use the abbreviation used in your language for 'example given'.">e.g. {example}</string>
-    <string name="general__no_browser_app_found_for_url">No browser app found for handling URL {url}</string>
     <string name="general__select_dropdown_value_placeholder">&#45; select &#45;</string>
     <string name="general__unlimited">Unlimited</string>
     <string name="general__file_name">File name</string>

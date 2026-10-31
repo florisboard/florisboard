@@ -17,7 +17,6 @@
 package org.florisboard.lib.compose
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -33,10 +32,8 @@ import androidx.compose.material3.IconButtonColors
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -64,38 +61,6 @@ fun FlorisButton(
     colors: ButtonColors = ButtonDefaults.buttonColors(),
 ) {
     Button(
-        modifier = modifier,
-        enabled = enabled,
-        shape = shape,
-        colors = colors,
-        contentPadding = contentPadding,
-        onClick = onClick,
-    ) {
-        if (icon != null) {
-            Icon(
-                modifier = Modifier
-                    .padding(end = ButtonDefaults.IconSpacing)
-                    .size(ButtonDefaults.IconSize),
-                imageVector = icon,
-                contentDescription = null,
-            )
-        }
-        Text(text = text)
-    }
-}
-
-@Composable
-fun FlorisOutlinedButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    icon: ImageVector? = null,
-    text: String,
-    enabled: Boolean = true,
-    shape: Shape = MaterialTheme.shapes.small,
-    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
-    colors: ButtonColors = ButtonDefaults.outlinedButtonColors(),
-) {
-    OutlinedButton(
         modifier = modifier,
         enabled = enabled,
         shape = shape,

@@ -32,11 +32,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showLongToast
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showShortToast
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.FlorisIconButton
@@ -46,52 +47,54 @@ import org.florisboard.lib.kotlin.io.subFile
 import java.util.*
 
 @Composable
-fun AndroidLocalesScreen() = FlorisScreen {
-    title = stringRes(R.string.devtools__android_locales__title)
-    scrollable = false
-
+fun AndroidLocalesScreen() {
+    val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val interactionController = LocalInteractionController.current
     val scope = rememberCoroutineScope()
     val availableLocales = remember { Locale.getAvailableLocales().sortedBy { it.toLanguageTag() } }
 
-    actions {
-        val snackbarMsg = stringRes(R.string.error__snackbar_message_template)
-        FlorisIconButton(
-            onClick = {
-                scope.launch {
-                    try {
-                        val devtoolsDir = context.noBackupFilesDir.subDir("devtools")
-                        devtoolsDir.mkdirs()
-                        val txtFile = devtoolsDir.subFile("system_locales.tsv")
-                        txtFile.bufferedWriter().use { out ->
-                            for (locale in availableLocales) {
-                                out.append(locale.toLanguageTag())
-                                out.append('\t')
-                                out.append(locale.getDisplayName(Locale.ENGLISH))
-                                out.append('\t')
-                                out.append(locale.getDisplayName(locale))
-                                out.appendLine()
+    FlorisScreenNg(
+        title = stringRes(R.string.devtools__android_locales__title),
+        previewFieldVisible = false,
+        actions = {
+            val snackbarMsg = stringRes(R.string.error__snackbar_message_template)
+            FlorisIconButton(
+                onClick = {
+                    scope.launch {
+                        try {
+                            val devtoolsDir = context.noBackupFilesDir.subDir("devtools")
+                            devtoolsDir.mkdirs()
+                            val txtFile = devtoolsDir.subFile("system_locales.tsv")
+                            txtFile.bufferedWriter().use { out ->
+                                for (locale in availableLocales) {
+                                    out.append(locale.toLanguageTag())
+                                    out.append('\t')
+                                    out.append(locale.getDisplayName(Locale.ENGLISH))
+                                    out.append('\t')
+                                    out.append(locale.getDisplayName(locale))
+                                    out.appendLine()
+                                }
                             }
+                            interactionController.showShortToast("Exported available system locales to \"${txtFile.path}\"")
+                        } catch (e: Exception) {
+                            interactionController.showLongToast(
+                                snackbarMsg,
+                                "error_message" to e.message.toString(),
+                            )
                         }
-                        interactionController.showShortToast("Exported available system locales to \"${txtFile.path}\"")
-                    } catch (e: Exception) {
-                        interactionController.showLongToast(
-                            snackbarMsg,
-                            "error_message" to e.message.toString(),
-                        )
                     }
-                }
-            },
-            icon = Icons.Default.Save,
-        )
-    }
-
-    content {
+                },
+                icon = Icons.Default.Save,
+            )
+        },
+    ) { contentPadding ->
         val displayLanguageNamesIn by prefs.localization.displayLanguageNamesIn.collectAsState()
 
         SelectionContainer(modifier = Modifier.fillMaxWidth()) {
-            LazyColumn {
+            LazyColumn(
+                contentPadding = contentPadding,
+            ) {
                 items(availableLocales) { locale ->
                     Row {
                         Text(

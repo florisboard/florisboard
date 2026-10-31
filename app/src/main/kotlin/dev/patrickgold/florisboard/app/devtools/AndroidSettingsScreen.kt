@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,13 @@
 
 package dev.patrickgold.florisboard.app.devtools
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.plus
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.selection.SelectionContainer
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,22 +31,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.app.apptheme.ScreenHorizontalPadding
+import dev.patrickgold.florisboard.app.apptheme.SegmentedListColumnVerticalPadding
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import org.florisboard.lib.android.AndroidSettings
 import org.florisboard.lib.compose.stringRes
 
 @Composable
-fun AndroidSettingsScreen(name: String?) = FlorisScreen {
-    title = when (name) {
-        AndroidSettings.Global.groupId -> stringRes(R.string.devtools__android_settings_global__title)
-        AndroidSettings.Secure.groupId -> stringRes(R.string.devtools__android_settings_secure__title)
-        AndroidSettings.System.groupId -> stringRes(R.string.devtools__android_settings_system__title)
-        else -> "invalid"
-    }
-    scrollable = false
-
+fun AndroidSettingsScreen(name: String?) {
     val context = LocalContext.current
 
     val settingsGroup = when (name) {
@@ -54,29 +52,45 @@ fun AndroidSettingsScreen(name: String?) = FlorisScreen {
     val nameValueTable = remember(name) { settingsGroup.getAllKeys().toList() }
     var dialogKey by remember { mutableStateOf<String?>(null) }
 
-    content {
-        LazyColumn {
-            items(nameValueTable) { (fieldName, key) ->
+    FlorisScreenNg(
+        title = when (name) {
+            AndroidSettings.Global.groupId -> stringRes(R.string.devtools__android_settings_global__title)
+            AndroidSettings.Secure.groupId -> stringRes(R.string.devtools__android_settings_secure__title)
+            AndroidSettings.System.groupId -> stringRes(R.string.devtools__android_settings_system__title)
+            else -> "invalid"
+        },
+        previewFieldVisible = false,
+    ) { contentPadding ->
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(ListItemDefaults.SegmentedGap),
+            contentPadding = contentPadding + PaddingValues(
+                horizontal = ScreenHorizontalPadding,
+                vertical = SegmentedListColumnVerticalPadding,
+            ),
+        ) {
+            val count = nameValueTable.size
+            itemsIndexed(nameValueTable) { index, (fieldName, key) ->
                 Preference(
+                    onClick = { dialogKey = key },
+                    shapes = ListItemDefaults.segmentedShapes(index, count),
                     title = fieldName,
                     summary = key,
-                    onClick = { dialogKey = key },
                 )
             }
         }
+    }
 
-        if (dialogKey != null) {
-            JetPrefAlertDialog(
-                title = dialogKey!!,
-                onDismiss = { dialogKey = null },
-            ) {
-                SelectionContainer {
-                    Text(
-                        text = remember {
-                            (settingsGroup.getString(context, dialogKey!!) ?: "(null)").ifBlank { "(blank)" }
-                        },
-                    )
-                }
+    if (dialogKey != null) {
+        JetPrefAlertDialog(
+            title = dialogKey!!,
+            onDismiss = { dialogKey = null },
+        ) {
+            SelectionContainer {
+                Text(
+                    text = remember {
+                        (settingsGroup.getString(context, dialogKey!!) ?: "(null)").ifBlank { "(blank)" }
+                    },
+                )
             }
         }
     }

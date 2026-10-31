@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,840 +22,492 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.LibraryBooks
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Code
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItemDefaults
+import androidx.compose.material3.LoadingIndicator
+import androidx.compose.material3.SegmentedListItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSerializable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.LocalNavController
-import dev.patrickgold.florisboard.app.settings.theme.DialogProperty
-import dev.patrickgold.florisboard.app.settings.theme.PrettyPrintConfig
+import dev.patrickgold.florisboard.app.components.ScrollableScreenColumn
+import dev.patrickgold.florisboard.app.components.SegmentedListColumn
+import dev.patrickgold.florisboard.app.settings.theme.ThemeEditorScreen
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponent
-import dev.patrickgold.florisboard.ime.theme.ThemeExtension
-import dev.patrickgold.florisboard.lib.ValidationResult
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
-import dev.patrickgold.florisboard.lib.compose.FlorisUnsavedChangesDialog
-import dev.patrickgold.florisboard.lib.compose.Validation
-import dev.patrickgold.florisboard.lib.rememberValidationResult
-import dev.patrickgold.jetpref.datastore.ui.Preference
+import dev.patrickgold.florisboard.ime.extension.ExtensionController
+import dev.patrickgold.florisboard.ime.extension.ExtensionDefaults
+import dev.patrickgold.florisboard.ime.extension.ExtensionDependencyDecl
+import dev.patrickgold.florisboard.ime.extension.ExtensionMaintainer
+import dev.patrickgold.florisboard.ime.extension.ExtensionMeta
+import dev.patrickgold.florisboard.ime.extension.ExtensionType
+import dev.patrickgold.florisboard.ime.extension.Keyboard3Extension
+import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
+import dev.patrickgold.florisboard.ime.extension.ThemeExtension
+import dev.patrickgold.florisboard.ime.extension.isValid
+import dev.patrickgold.florisboard.ime.io.FlorisRef
+import dev.patrickgold.florisboard.ime.io.LocalStorageController
+import dev.patrickgold.florisboard.ime.io.createWorkspace
+import dev.patrickgold.florisboard.ime.io.writeJson
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
+import dev.patrickgold.florisboard.app.components.FlorisUnsavedChangesDialog
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
-import dev.patrickgold.jetpref.material.ui.JetPrefTextField
-import java.util.*
-import org.florisboard.lib.compose.FlorisButtonBar
-import org.florisboard.lib.compose.FlorisIconButton
-import org.florisboard.lib.compose.FlorisInfoCard
-import org.florisboard.lib.compose.FlorisOutlinedBox
-import org.florisboard.lib.compose.defaultFlorisOutlinedBox
+import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
+import okio.IOException
+import dev.patrickgold.florisboard.app.components.FlorisBottomBarPrimaryButton
+import dev.patrickgold.florisboard.app.components.FlorisBottomBarSecondaryButton
+import dev.patrickgold.florisboard.app.components.FlorisBottomBar
 import org.florisboard.lib.compose.stringRes
-import org.florisboard.lib.kotlin.io.deleteContentsRecursively
-import org.florisboard.lib.kotlin.io.subDir
-import org.florisboard.lib.kotlin.io.subFile
-import org.florisboard.lib.kotlin.io.writeJson
+import org.florisboard.lib.kotlin.tryOrNull
 import kotlin.reflect.KClass
-
-private val TextFieldVerticalPadding = 8.dp
-private val MetaDataContentPadding = PaddingValues(vertical = 8.dp, horizontal = 16.dp)
 
 private const val AnimationDuration = 300
 
 private val ActionScreenEnterTransition = fadeIn(tween(AnimationDuration))
 private val ActionScreenExitTransition = fadeOut(tween(AnimationDuration))
 
+@Serializable
 sealed class EditorAction {
-    object ManageMetaData : EditorAction()
+    @Serializable
+    data object None : EditorAction()
 
-    object ManageDependencies : EditorAction()
+    @Serializable
+    data object ManageMetaData : EditorAction()
 
-    object ManageFiles : EditorAction()
+    @Serializable
+    data object ManageDependencies : EditorAction()
 
-    data class CreateComponent<T : ExtensionComponent>(val type: KClass<T>) : EditorAction()
+    @Serializable
+    data object ManageFiles : EditorAction()
 
-    data class ManageComponent(val editor: ExtensionComponent) : EditorAction()
+    @Serializable
+    data class CreateComponent(
+        val components: List<ExtensionComponent>,
+        val componentKlass: KClass<*>,
+    ) : EditorAction()
+
+    @Serializable
+    data class ManageComponent(
+        val component: ExtensionComponent,
+    ) : EditorAction()
 }
 
-@Composable
-fun ExtensionEditScreen(id: String, createSerialType: String?) {
-    /*
-    val context = LocalContext.current
-    val cacheManager by context.cacheManager()
-    val extensionManager by context.extensionManager()
+@Serializable
+sealed interface EditorState {
+    @Serializable
+    data object Loading : EditorState
 
-    @Suppress("unchecked_cast")
-    fun <W : CacheManager.ExtEditorWorkspace<T>, T : ExtensionEditor> getOrCreateWorkspace(
-        uuid: String,
-        container: CacheManager.WorkspacesContainer<W>,
-        ext: Extension,
-    ): W {
-        val workspace = container.getWorkspaceByUuid(uuid)
-        return workspace ?: container.new(uuid).also { newWorkspace ->
-            val sourceRef = ext.sourceRef
-            if (createSerialType == null) {
-                checkNotNull(sourceRef) { "Extension source ref must not be null" }
-                ZipUtils.unzip(context, sourceRef, newWorkspace.extDir)
-            }
-            newWorkspace.ext = ext
-            newWorkspace.editor = ext.edit() as? T
-        }
-    }
+    @Serializable
+    data class Workspace(
+        val workspaceRef: FlorisRef,
+        val meta: ExtensionMeta,
+        val dependencies: ExtensionDependencyDecl,
+        val components: EditorStateComponents,
+    ) : EditorState
 
-    val ext = extensionManager.getExtensionById(id) ?: remember {
-        val meta = ExtensionMeta(
-            id = ExtensionDefaults.createLocalId("themes", System.currentTimeMillis().toString()),
-            version = "0.0.0",
-            title = "My themes",
-            maintainers = listOf(ExtensionMaintainer(name = "Local")),
-            license = "(none specified)",
-        )
-        when (createSerialType) {
-            ThemeExtension.SERIAL_TYPE -> ThemeExtension(meta, null, emptyList())
-            else -> null
-        }
-    }
-    if (ext != null) {
-        val uuid = rememberSaveable { UUID.randomUUID().toString() }
-        val cacheWorkspace = remember {
-            runCatching {
-                when (ext) {
-                    is ThemeExtension -> {
-                        getOrCreateWorkspace(uuid, cacheManager.themeExtEditor, ext)
-                    }
-                    else -> null
-                }
-            }
-        }
-        cacheWorkspace.onSuccess { workspace ->
-            if (workspace?.editor != null) {
-                ExtensionEditScreenSheetSwitcher(workspace, isCreateExt = createSerialType != null)
-            } else {
-                ExtensionNotFoundScreen(id = id)
-            }
-        }.onFailure { error ->
-            Text(text = remember(error) { error.stackTraceToString() })
-        }
-    } else {
-        ExtensionNotFoundScreen(id)
-    }
-     */
+    @Serializable
+    data class Error(
+        val error: String,
+    ) : EditorState
 }
 
-/*
-@Composable
-private fun ExtensionEditScreenSheetSwitcher(
-    workspace: CacheManager.ExtEditorWorkspace<*>,
-    isCreateExt: Boolean,
-) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        EditScreen(workspace, isCreateExt)
-        AnimatedVisibility(
-            visible = workspace.currentAction != null,
-            enter = ActionScreenEnterTransition,
-            exit = ActionScreenExitTransition,
-        ) {
-            when (val action = workspace.currentAction) {
-                is EditorAction.ManageMetaData -> {
-                    ManageMetaDataScreen(workspace, isCreateExt)
-                }
-                is EditorAction.ManageDependencies -> {
-                    ManageDependenciesScreen(workspace)
-                }
-                is EditorAction.ManageFiles -> {
-                    ExtensionEditFilesScreen(workspace)
-                }
-                is EditorAction.CreateComponent<*> -> {
-                    CreateComponentScreen(workspace, action.type)
-                }
-                is EditorAction.ManageComponent -> when (action.editor) {
-                    is ThemeExtensionComponentEditor -> {
-                        ThemeEditorScreen(workspace, action.editor)
-                    }
-                    else -> {
-                        // Render nothing
-                    }
-                }
-                else -> {
-                    // Render nothing
-                    Box(modifier = Modifier.fillMaxSize())
-                }
-            }
-        }
-    }
-}
+@Serializable
+data class EditorStateComponents(
+    val themeStylesheets: List<ThemeExtension.ThemeComponent> = emptyList(),
+    val k3Imports: List<Keyboard3Extension.ImportComponent> = emptyList(),
+    val k3Keyboards: List<Keyboard3Extension.KeyboardComponent> = emptyList(),
+    val k3Tests: List<Keyboard3Extension.TestComponent> = emptyList(),
+)
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun EditScreen(
-    workspace: CacheManager.ExtEditorWorkspace<*>,
-    isCreateExt: Boolean,
-) = FlorisScreen {
-    title = stringRes(if (isCreateExt) {
-        when (workspace.ext) {
-            is KeyboardExtension -> R.string.ext__editor__title_create_keyboard
-            is ThemeExtension -> R.string.ext__editor__title_create_theme
-            else -> R.string.ext__editor__title_create_any
-        }
-    } else {
-        when (workspace.ext) {
-            is KeyboardExtension -> R.string.ext__editor__title_edit_keyboard
-            is ThemeExtension -> R.string.ext__editor__title_edit_theme
-            else -> R.string.ext__editor__title_edit_any
-        }
-    })
-
-    val context = LocalContext.current
+fun ExtensionEditScreen(extensionId: String?, type: ExtensionType) {
+    val extensionController = LocalExtensionController.current
     val navController = LocalNavController.current
+    val storageController = LocalStorageController.current
 
-    val extEditor = workspace.editor ?: return@FlorisScreen
+    val scope = rememberCoroutineScope()
+    val storage by storageController.activeStorage.collectAsState()
+    val extensionIndex by extensionController.activeIndex.collectAsState()
+
+    var editorState by rememberSerializable { mutableStateOf<EditorState>(EditorState.Loading) }
+    var editorAction by rememberSerializable { mutableStateOf<EditorAction>(EditorAction.None) }
     var showUnsavedChangesDialog by remember { mutableStateOf(false) }
     var showInvalidMetadataDialog by remember { mutableStateOf(false) }
+    val isCreateExt = extensionId == null
 
-    fun handleBackPress() {
-        if (workspace.isModified) {
-            showUnsavedChangesDialog = true
+    LaunchedEffect(extensionId, type, storage) {
+        // no key for extensionIndex, else we have an unintended re-copy during save!
+        editorState = EditorState.Loading
+        val workspaceRef = try {
+            storage.createWorkspace()
+        } catch (e: IOException) {
+            editorState = EditorState.Error("failed to create workspace: ${e.message}")
+            return@LaunchedEffect
+        }
+        if (isCreateExt) {
+            editorState = EditorState.Workspace(
+                workspaceRef = workspaceRef,
+                meta = ExtensionMeta(
+                    id = ExtensionDefaults.createLocalId("themes", System.currentTimeMillis().toString()),
+                    version = "0.0.0",
+                    title = "My themes",
+                    maintainers = listOf(ExtensionMaintainer(name = "Local")),
+                    license = "(none specified)",
+                ),
+                dependencies = emptyMap(),
+                components = EditorStateComponents(),
+            )
         } else {
-            workspace.close()
-            navController.popBackStack()
+            val extension = extensionIndex.extensions[extensionId]
+            if (extension == null) {
+                editorState = EditorState.Error("no such extension '$extensionId'")
+                tryOrNull { storage.deleteRecursively(workspaceRef) }
+                return@LaunchedEffect
+            }
+            if (extension.type != type) {
+                editorState = EditorState.Error("expected type '$type', but got '${extension.type}'")
+                tryOrNull { storage.deleteRecursively(workspaceRef) }
+                return@LaunchedEffect
+            }
+            try {
+                storage.copyRecursively(extension.sourceRef, workspaceRef)
+            } catch (e: IOException) {
+                editorState = EditorState.Error("failed to copy extension into workspace: ${e.message}")
+                tryOrNull { storage.deleteRecursively(workspaceRef) }
+                return@LaunchedEffect
+            }
+            editorState = EditorState.Workspace(
+                workspaceRef = workspaceRef,
+                meta = extension.manifest.meta,
+                dependencies = extension.manifest.dependencies,
+                components = EditorStateComponents(
+                    themeStylesheets = if (extension is ThemeExtension) {
+                        extension.manifest.themes
+                    } else emptyList(),
+                    k3Imports = if (extension is Keyboard3Extension) {
+                        extension.manifest.imports
+                    } else emptyList(),
+                    k3Keyboards = if (extension is Keyboard3Extension) {
+                        extension.manifest.keyboards
+                    } else emptyList(),
+                    k3Tests = if (extension is Keyboard3Extension) {
+                        extension.manifest.tests
+                    } else emptyList(),
+                )
+            )
         }
     }
 
     fun handleSave() {
-        if (!extEditor.meta.validate()) {
+        val state = editorState
+        if (state !is EditorState.Workspace) {
+            return
+        }
+        if (!state.meta.isValid()) {
             showUnsavedChangesDialog = false
             showInvalidMetadataDialog = true
             return
         }
-        val manifest = extEditor.build()
-        workspace.saverDir.deleteContentsRecursively()
-        val manifestFile = workspace.saverDir.subFile(ExtensionDefaults.MANIFEST_FILE_NAME)
-        manifestFile.writeJson(manifest, ExtensionJsonConfig)
-        when (extEditor) {
-            is ThemeExtensionEditor -> {
-                // TODO: this is hacky
-                val fonts = workspace.extDir.subDir("fonts")
-                if (fonts.exists()) {
-                    fonts.copyRecursively(workspace.saverDir.subDir("fonts"), overwrite = true)
+        val manifest = when (type) {
+            ExtensionType.THEME -> ThemeExtension.Manifest(
+                meta = state.meta,
+                dependencies = state.dependencies,
+                themes = state.components.themeStylesheets,
+            )
+            ExtensionType.KEYBOARD3 -> Keyboard3Extension.Manifest(
+                meta = state.meta,
+                dependencies = state.dependencies,
+                imports = state.components.k3Imports,
+                keyboards = state.components.k3Keyboards,
+                tests = state.components.k3Tests,
+            )
+        }
+        check(extensionId == null || extensionId == manifest.meta.id)
+        scope.launch {
+            val manifestRef = state.workspaceRef.subRef(ExtensionDefaults.MANIFEST_FILE_NAME)
+            storage.writeJson(manifestRef, manifest, ExtensionController.ExtensionJson)
+            extensionController.import(state.workspaceRef)
+            storage.deleteRecursively(state.workspaceRef)
+            navController.popBackStack()
+        }
+    }
+
+    fun handleBackPress() {
+        showUnsavedChangesDialog = true
+    }
+
+    BackHandler {
+        handleBackPress()
+    }
+
+    val state = editorState
+    val action = editorAction
+    Box(modifier = Modifier.fillMaxSize()) {
+        FlorisScreenNg(
+            title = stringRes(if (isCreateExt) {
+                when (type) {
+                    ExtensionType.THEME -> R.string.ext__editor__title_create_theme
+                    ExtensionType.KEYBOARD3 -> R.string.ext__editor__title_create_keyboard
                 }
-                val images = workspace.extDir.subDir("images")
-                if (images.exists()) {
-                    images.copyRecursively(workspace.saverDir.subDir("images"), overwrite = true)
+            } else {
+                when (type) {
+                    ExtensionType.THEME -> R.string.ext__editor__title_edit_theme
+                    ExtensionType.KEYBOARD3 -> R.string.ext__editor__title_edit_keyboard
                 }
-                for (theme in extEditor.themes) {
-                    val stylesheetFile = workspace.saverDir.subFile(theme.stylesheetPath())
-                    stylesheetFile.parentFile?.mkdirs()
-                    val stylesheetEditor = theme.stylesheetEditor
-                    if (stylesheetEditor != null) {
-                        runCatching {
-                            val stylesheet = stylesheetEditor.build().toJson(PrettyPrintConfig).getOrThrow()
-                            stylesheetFile.writeText(stylesheet)
-                        }.onFailure {
-                            // TODO: better error handling
-                            context.showLongToastSync(it.message.toString())
-                            return
+            }),
+            previewFieldVisible = false,
+            navigationIconOnClick = { handleBackPress() },
+            bottomBar = {
+                FlorisBottomBar {
+                    Spacer(modifier = Modifier.weight(1f))
+                    FlorisBottomBarSecondaryButton(text = stringRes(R.string.action__cancel)) {
+                        handleBackPress()
+                    }
+                    FlorisBottomBarPrimaryButton(text = stringRes(R.string.action__save), enabled = state is EditorState.Workspace) {
+                        handleSave()
+                    }
+                }
+            },
+        ) { contentPadding ->
+            ScrollableScreenColumn(contentPadding) {
+                SegmentedListColumn {
+                    val count = 3
+                    SegmentedListItem(
+                        onClick = { editorAction = EditorAction.ManageMetaData },
+                        shapes = ListItemDefaults.segmentedShapes(0, count),
+                        leadingContent = { Icon(Icons.Default.Code, null) },
+                        content = { Text(stringRes(R.string.ext__editor__metadata__title)) },
+                    )
+                    SegmentedListItem(
+                        onClick = { editorAction = EditorAction.ManageDependencies },
+                        shapes = ListItemDefaults.segmentedShapes(1, count),
+                        leadingContent = { Icon(Icons.AutoMirrored.Outlined.LibraryBooks, null) },
+                        content = { Text(stringRes(R.string.ext__editor__dependencies__title)) },
+                    )
+                    SegmentedListItem(
+                        onClick = { editorAction = EditorAction.ManageFiles },
+                        shapes = ListItemDefaults.segmentedShapes(2, count),
+                        leadingContent = { Icon(ImageVector.vectorResource(R.drawable.ic_file_blank), null) },
+                        content = { Text(stringRes(R.string.ext__editor__files__title)) },
+                    )
+                }
+
+                when (state) {
+                    is EditorState.Loading -> {
+                        LoadingIndicator()
+                    }
+                    is EditorState.Workspace -> when (type) {
+                        ExtensionType.THEME -> {
+                            ExtensionComponentListColumn(
+                                title = stringRes(R.string.ext__meta__components_theme),
+                                components = state.components.themeStylesheets,
+                                onCreateComponent = {
+                                    editorAction = EditorAction.CreateComponent(
+                                        components = state.components.themeStylesheets,
+                                        componentKlass = ThemeExtension.ThemeComponent::class,
+                                    )
+                                },
+                                onEditComponent = { component ->
+                                    editorAction = EditorAction.ManageComponent(component)
+                                },
+                                onDeleteComponent = { component ->
+                                    // TODO also delete stylesheet json??
+                                    editorState = state.copy(
+                                        components = state.components.copy(
+                                            themeStylesheets = state.components.themeStylesheets
+                                                .filter { it.id != component.id },
+                                        )
+                                    )
+                                },
+                            )
                         }
-                    } else {
-                        val unmodifiedStylesheetFile = workspace.extDir.subFile(theme.stylesheetPath())
-                        if (unmodifiedStylesheetFile.exists()) {
-                            unmodifiedStylesheetFile.copyTo(stylesheetFile, overwrite = true)
+                        ExtensionType.KEYBOARD3 -> {
+                            //
                         }
+                    }
+                    is EditorState.Error -> {
+                        Text(state.error)
                     }
                 }
             }
-            else -> { }
         }
-        val flexArchiveName = ExtensionDefaults.createFlexName(extEditor.meta.id)
-        val flexArchiveFile = workspace.dir.subFile(flexArchiveName)
-        ZipUtils.zip(workspace.saverDir, flexArchiveFile)
-        val sourceRef = if (isCreateExt) {
-            FlorisRef.internal(ExtensionManager.IME_THEME_PATH).subRef(flexArchiveName)
-        } else {
-            workspace.ext!!.sourceRef!!
-        }
-        flexArchiveFile.copyTo(sourceRef.absoluteFile(context), overwrite = true)
-        workspace.close()
-        navController.popBackStack()
-    }
 
-    navigationIcon {
-        FlorisIconButton(
-            onClick = { handleBackPress() },
-            icon = Icons.AutoMirrored.Filled.ArrowBack,
-        )
-    }
-
-    bottomBar {
-        FlorisButtonBar {
-            ButtonBarSpacer()
-            ButtonBarTextButton(text = stringRes(R.string.action__cancel)) {
-                handleBackPress()
+        if (state is EditorState.Workspace) {
+            AnimatedVisibility(
+                visible = action != EditorAction.None,
+                enter = ActionScreenEnterTransition,
+                exit = ActionScreenExitTransition,
+            ) {
+                when (action) {
+                    is EditorAction.ManageMetaData -> {
+                        ExtensionEditMetaOverlay(
+                            meta = state.meta,
+                            isCreateExt = isCreateExt,
+                            onConfirm = { newMeta ->
+                                editorState = state.copy(meta = newMeta)
+                                editorAction = EditorAction.None
+                            },
+                            onDismiss = {
+                                editorAction = EditorAction.None
+                            },
+                        )
+                    }
+                    is EditorAction.ManageDependencies -> {
+                        ExtensionEditDependenciesOverlay(
+                            dependencies = state.dependencies,
+                            onConfirm = { newDependencies ->
+                                editorState = state.copy(dependencies = newDependencies)
+                                editorAction = EditorAction.None
+                            },
+                            onDismiss = {
+                                editorAction = EditorAction.None
+                            },
+                        )
+                    }
+                    is EditorAction.ManageFiles -> {
+                        ExtensionEditFilesOverlay(
+                            storage = storage,
+                            workspaceRef = state.workspaceRef,
+                            type = type,
+                            onDismiss = {
+                                editorAction = EditorAction.None
+                            },
+                        )
+                    }
+                    is EditorAction.CreateComponent -> {
+                        ExtensionCreateComponentOverlay(
+                            storage = storage,
+                            workspaceRef = state.workspaceRef,
+                            extensionId = extensionId,
+                            extensionIndex = extensionIndex,
+                            components = action.components,
+                            componentKlass = action.componentKlass,
+                            onCreate = { newComponent ->
+                                editorState = when (newComponent) {
+                                    is ThemeExtension.ThemeComponent -> {
+                                        state.copy(
+                                            components = state.components.copy(
+                                                themeStylesheets = state.components.themeStylesheets.plus(newComponent),
+                                            ),
+                                        )
+                                    }
+                                    is Keyboard3Extension.ImportComponent -> {
+                                        state.copy(
+                                            components = state.components.copy(
+                                                k3Imports = state.components.k3Imports.plus(newComponent),
+                                            ),
+                                        )
+                                    }
+                                    is Keyboard3Extension.KeyboardComponent -> {
+                                        state.copy(
+                                            components = state.components.copy(
+                                                k3Keyboards = state.components.k3Keyboards.plus(newComponent),
+                                            ),
+                                        )
+                                    }
+                                    is Keyboard3Extension.TestComponent -> {
+                                        state.copy(
+                                            components = state.components.copy(
+                                                k3Tests = state.components.k3Tests.plus(newComponent),
+                                            ),
+                                        )
+                                    }
+                                }
+                                editorAction = EditorAction.None
+                            },
+                            onDismiss = {
+                                editorAction = EditorAction.None
+                            },
+                        )
+                    }
+                    is EditorAction.ManageComponent -> when (action.component) {
+                        is ThemeExtension.ThemeComponent -> {
+                            ThemeEditorScreen(
+                                storage = storage,
+                                workspaceRef = state.workspaceRef,
+                                initialComponent = action.component,
+                                checkIdAlreadyUsed = { componentId ->
+                                    state.components.themeStylesheets.any { it.id == componentId }
+                                },
+                                onUpdate = { updatedComponent ->
+                                    editorState = state.copy(
+                                        components = state.components.copy(
+                                            themeStylesheets = state.components.themeStylesheets.map { component ->
+                                                if (component.id == updatedComponent.id) {
+                                                    updatedComponent
+                                                } else {
+                                                    component
+                                                }
+                                            },
+                                        ),
+                                    )
+                                    editorAction = EditorAction.None
+                                },
+                                onDismiss = {
+                                    editorAction = EditorAction.None
+                                },
+                            )
+                            // TODO ThemeEditorScreen(workspace, action.editor)
+                        }
+                        else -> {
+                            // Render nothing
+                        }
+                    }
+                    else -> {
+                        // Render nothing
+                        Box(modifier = Modifier.fillMaxSize())
+                    }
+                }
             }
-            ButtonBarButton(text = stringRes(R.string.action__save)) {
+        }
+    }
+
+    if (showUnsavedChangesDialog) {
+        FlorisUnsavedChangesDialog(
+            onSave = {
                 handleSave()
-            }
-        }
-    }
-
-    content {
-        BackHandler {
-            handleBackPress()
-        }
-
-        FlorisOutlinedBox(
-            modifier = Modifier.defaultFlorisOutlinedBox(),
-        ) {
-            Preference(
-                onClick = { workspace.currentAction = EditorAction.ManageMetaData },
-                icon = Icons.Default.Code,
-                title = stringRes(R.string.ext__editor__metadata__title),
-            )
-            Preference(
-                onClick = { workspace.currentAction = EditorAction.ManageDependencies },
-                icon = Icons.AutoMirrored.Outlined.LibraryBooks,
-                title = stringRes(R.string.ext__editor__dependencies__title),
-            )
-            Preference(
-                onClick = { workspace.currentAction = EditorAction.ManageFiles },
-                icon = ImageVector.vectorResource(R.drawable.ic_file_blank),
-                title = stringRes(R.string.ext__editor__files__title),
-            )
-        }
-
-        when (extEditor) {
-            is ThemeExtensionEditor -> {
-                ExtensionComponentListView(
-                    title = stringRes(R.string.ext__meta__components_theme),
-                    components = extEditor.themes,
-                    onCreateBtnClick = {
-                        workspace.currentAction = EditorAction.CreateComponent(ThemeExtensionComponent::class)
-                    },
-                ) { component ->
-                    ExtensionComponentView(
-                        modifier = Modifier.defaultFlorisOutlinedBox(),
-                        meta = extEditor.meta,
-                        component = component,
-                        onDeleteBtnClick = { workspace.update { extEditor.themes.remove(component) } },
-                        onEditBtnClick = { workspace.currentAction = EditorAction.ManageComponent(component) },
-                    )
-                }
-            }
-            else -> {
-                // Render nothing
-            }
-        }
-
-        if (showUnsavedChangesDialog) {
-            FlorisUnsavedChangesDialog(
-                onSave = {
-                    handleSave()
-                },
-                onDiscard = {
-                    navController.popBackStack()
-                    showUnsavedChangesDialog = false
-                },
-                onDismiss = {
-                    showUnsavedChangesDialog = false
-                },
-            )
-        }
-
-        if (showInvalidMetadataDialog) {
-            JetPrefAlertDialog(
-                title = stringRes(R.string.ext__editor__metadata__title_invalid),
-                confirmLabel = stringRes(R.string.action__ok),
-                onConfirm = {
-                    showInvalidMetadataDialog = false
-                },
-                onDismiss = {
-                    showInvalidMetadataDialog = false
-                },
-                content = {
-                    Text(text = stringRes(R.string.ext__editor__metadata__message_invalid))
-                },
-            )
-        }
-    }
-}
-
-@Composable
-private fun ManageMetaDataScreen(
-    workspace: CacheManager.ExtEditorWorkspace<*>,
-    isCreateExt: Boolean,
-) = FlorisScreen {
-    title = stringRes(R.string.ext__editor__metadata__title)
-
-    val meta = workspace.editor?.meta ?: return@FlorisScreen
-    var showValidationErrors by rememberSaveable { mutableStateOf(false) }
-
-    var id by rememberSaveable { mutableStateOf(meta.id) }
-    val idValidation = rememberValidationResult(ExtensionValidation.MetaId, id)
-    var version by rememberSaveable { mutableStateOf(meta.version) }
-    val versionValidation = rememberValidationResult(ExtensionValidation.MetaVersion, version)
-    var title by rememberSaveable { mutableStateOf(meta.title) }
-    val titleValidation = rememberValidationResult(ExtensionValidation.MetaTitle, title)
-    var description by rememberSaveable { mutableStateOf(meta.description ?: "") }
-    var keywords by rememberSaveable { mutableStateOf(meta.keywords?.joinToString("\n") ?: "") }
-    var homepage by rememberSaveable { mutableStateOf(meta.homepage ?: "") }
-    var issueTracker by rememberSaveable { mutableStateOf(meta.issueTracker ?: "") }
-    var maintainers by rememberSaveable { mutableStateOf(meta.maintainers.joinToString("\n")) }
-    val maintainersValidation = rememberValidationResult(ExtensionValidation.MetaMaintainers, maintainers)
-    var license by rememberSaveable { mutableStateOf(meta.license) }
-    val licenseValidation = rememberValidationResult(ExtensionValidation.MetaLicense, license)
-
-    fun handleBackPress() {
-        workspace.currentAction = null
-    }
-
-    fun handleApply() {
-        val invalid = idValidation.isInvalid() ||
-            versionValidation.isInvalid() ||
-            titleValidation.isInvalid() ||
-            maintainersValidation.isInvalid() ||
-            licenseValidation.isInvalid()
-        if (invalid) {
-            showValidationErrors = true
-        } else {
-            workspace.update {
-                workspace.editor?.meta = ExtensionMeta(
-                    id = id.trim(),
-                    version = version.trim(),
-                    title = title.trim(),
-                    description = description.trim().takeIf { it.isNotBlank() },
-                    keywords = keywords.lines().map { it.trim() }.filter { it.isNotBlank() }.takeIf { it.isNotEmpty() },
-                    homepage = homepage.trim().takeIf { it.isNotBlank() },
-                    issueTracker = issueTracker.trim().takeIf { it.isNotBlank() },
-                    maintainers = maintainers.lines().map { it.trim() }.filter { it.isNotBlank() }
-                        .map { ExtensionMaintainer.fromOrTakeRaw(it) },
-                    license = license.trim(),
-                )
-            }
-            workspace.currentAction = null
-        }
-    }
-
-    navigationIcon {
-        FlorisIconButton(
-            onClick = { handleBackPress() },
-            icon = Icons.Default.Close,
+            },
+            onDiscard = {
+                navController.popBackStack()
+                showUnsavedChangesDialog = false
+            },
+            onDismiss = {
+                showUnsavedChangesDialog = false
+            },
         )
     }
 
-    bottomBar {
-        FlorisButtonBar {
-            ButtonBarSpacer()
-            ButtonBarTextButton(text = stringRes(R.string.action__cancel)) {
-                handleBackPress()
-            }
-            ButtonBarButton(text = stringRes(R.string.action__apply)) {
-                handleApply()
-            }
-        }
-    }
-
-    content {
-        BackHandler {
-            handleBackPress()
-        }
-
-        Column(modifier = Modifier.padding(MetaDataContentPadding)) {
-            EditorSheetTextField(
-                enabled = isCreateExt,
-                isRequired = true,
-                value = id,
-                onValueChange = { id = it },
-                label = stringRes(R.string.ext__meta__id),
-                showValidationError = showValidationErrors,
-                validationResult = idValidation,
-            )
-            EditorSheetTextField(
-                isRequired = true,
-                value = version,
-                onValueChange = { version = it },
-                label = stringRes(R.string.ext__meta__version),
-                showValidationError = showValidationErrors,
-                validationResult = versionValidation,
-            )
-            EditorSheetTextField(
-                isRequired = true,
-                value = title,
-                onValueChange = { title = it },
-                label = stringRes(R.string.ext__meta__title),
-                showValidationError = showValidationErrors,
-                validationResult = titleValidation,
-            )
-            EditorSheetTextField(
-                value = description,
-                onValueChange = { description = it },
-                label = stringRes(R.string.ext__meta__description),
-            )
-            EditorSheetTextField(
-                value = keywords,
-                onValueChange = { keywords = it },
-                label = stringRes(R.string.ext__meta__keywords),
-                singleLine = false,
-            )
-            EditorSheetTextField(
-                value = homepage,
-                onValueChange = { homepage = it },
-                label = stringRes(R.string.ext__meta__homepage),
-            )
-            EditorSheetTextField(
-                value = issueTracker,
-                onValueChange = { issueTracker = it },
-                label = stringRes(R.string.ext__meta__issue_tracker),
-            )
-            EditorSheetTextField(
-                isRequired = true,
-                value = maintainers,
-                onValueChange = { maintainers = it },
-                label = stringRes(R.string.ext__meta__maintainers),
-                singleLine = false,
-                showValidationError = showValidationErrors,
-                validationResult = maintainersValidation,
-            )
-            EditorSheetTextField(
-                isRequired = true,
-                value = license,
-                onValueChange = { license = it },
-                label = stringRes(R.string.ext__meta__license),
-                showValidationError = showValidationErrors,
-                validationResult = licenseValidation,
-            )
-        }
-    }
-}
-
-@Composable
-private fun ManageDependenciesScreen(workspace: CacheManager.ExtEditorWorkspace<*>) = FlorisScreen {
-    title = stringRes(R.string.ext__editor__dependencies__title)
-
-    val dependencyList = workspace.editor?.dependencies ?: return@FlorisScreen
-
-    fun handleBackPress() {
-        workspace.currentAction = null
-    }
-
-    navigationIcon {
-        FlorisIconButton(
-            onClick = { handleBackPress() },
-            icon = Icons.Default.Close,
+    if (showInvalidMetadataDialog) {
+        JetPrefAlertDialog(
+            title = stringRes(R.string.ext__editor__metadata__title_invalid),
+            confirmLabel = stringRes(R.string.action__ok),
+            onConfirm = {
+                showInvalidMetadataDialog = false
+            },
+            onDismiss = {
+                showInvalidMetadataDialog = false
+            },
+            content = {
+                Text(text = stringRes(R.string.ext__editor__metadata__message_invalid))
+            },
         )
     }
-
-    content {
-        BackHandler {
-            handleBackPress()
-        }
-
-        FlorisInfoCard(
-            modifier = Modifier.padding(all = 8.dp),
-            text = """
-                Dependencies are currently not implemented, but are already somewhat
-                integrated as a placeholder for the future.
-                """.trimIndent().replace('\n', ' '),
-        )
-        if (dependencyList.isEmpty()) {
-            Text(text = "no deps found")
-        } else {
-            for (dependency in dependencyList) {
-                Text(text = dependency)
-            }
-        }
-    }
 }
-
-private enum class CreateFrom {
-    EMPTY,
-    EXISTING;
-}
-
-@Composable
-private fun <T : ExtensionComponent> CreateComponentScreen(
-    workspace: CacheManager.ExtEditorWorkspace<*>,
-    type: KClass<T>,
-) = FlorisScreen {
-    title = stringRes(when (type) {
-        ThemeExtensionComponent::class -> R.string.ext__editor__create_component__title_theme
-        else -> R.string.ext__editor__create_component__title
-    })
-
-    val context = LocalContext.current
-    val extensionManager by context.extensionManager()
-    val themeManager by context.themeManager()
-
-    var createFrom by rememberSaveable { mutableStateOf(CreateFrom.EXISTING) }
-    val extId = workspace.editor?.meta?.id ?: "null"
-    val components = remember<Map<ExtensionComponentName, ExtensionComponent>> {
-        when (val editor = workspace.editor) {
-            is ThemeExtensionEditor -> buildMap {
-                for (theme in editor.themes) {
-                    put(ExtensionComponentName(extId, theme.id), theme)
-                }
-                for ((componentName, theme) in themeManager.indexedThemeConfigs.value.first) {
-                    if (componentName.extensionId != extId) {
-                        put(componentName, theme)
-                    }
-                }
-            }
-            else -> {
-                emptyMap()
-            }
-        }
-    }
-    var selectedComponentName by rememberSaveable(stateSaver = ExtensionComponentName.Saver) {
-        mutableStateOf(null)
-    }
-    var showValidationErrors by rememberSaveable { mutableStateOf(false) }
-
-    var newId by rememberSaveable { mutableStateOf("") }
-    val newIdValidation = rememberValidationResult(ExtensionValidation.ComponentId, newId)
-    var newLabel by rememberSaveable { mutableStateOf("") }
-    val newLabelValidation = rememberValidationResult(ExtensionValidation.ComponentLabel, newLabel)
-    var newAuthors by rememberSaveable { mutableStateOf("") }
-    val newAuthorsValidation = rememberValidationResult(ExtensionValidation.ComponentAuthors, newAuthors)
-
-    fun handleBackPress() {
-        workspace.currentAction = null
-    }
-
-    fun handleCreate() {
-        val invalid = createFrom == CreateFrom.EMPTY && (newIdValidation.isInvalid() ||
-            newLabelValidation.isInvalid() || newAuthorsValidation.isInvalid())
-        if (invalid) {
-            showValidationErrors = true
-        } else {
-            when (val editor = workspace.editor) {
-                is ThemeExtensionEditor -> {
-                    when (createFrom) {
-                        CreateFrom.EMPTY -> {
-                            if (editor.themes.any { it.id == newId.trim() }) {
-                                context.showLongToastSync("A theme with this ID already exists!")
-                            } else {
-                                val componentEditor = ThemeExtensionComponentEditor(
-                                    id = newId.trim(),
-                                    label = newLabel.trim(),
-                                    authors = newAuthors.lines().map { it.trim() }.filter { it.isNotBlank() },
-                                )
-                                editor.themes.add(componentEditor)
-                                workspace.currentAction = null
-                            }
-                        }
-                        CreateFrom.EXISTING -> {
-                            val componentName = selectedComponentName ?: return
-                            val componentId = if (editor.themes.any { it.id == componentName.componentId }) {
-                                var suffix = 1
-                                var tempId: String
-                                do {
-                                    tempId = "${componentName.componentId}_${suffix++}"
-                                } while (editor.themes.any { it.id == tempId })
-                                tempId
-                            } else {
-                                componentName.componentId
-                            }
-                            if (componentName.extensionId == extId) {
-                                val component = editor.themes.find { it.id == componentName.componentId } ?: return
-                                val componentEditor = component.let { c ->
-                                    ThemeExtensionComponentEditor(
-                                        componentId, c.label, c.authors, c.isNightTheme, stylesheetPath = "",
-                                    ).also { it.stylesheetEditor = c.stylesheetEditor }
-                                }
-                                if (componentEditor.stylesheetEditor != null) {
-                                    val stylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
-                                    stylesheetFile.parentFile?.mkdirs()
-                                    val stylesheet = componentEditor.stylesheetEditor!!.build().toJson(PrettyPrintConfig).getOrThrow()
-                                    stylesheetFile.writeText(stylesheet)
-                                    componentEditor.stylesheetEditor = null
-                                } else {
-                                    val srcStylesheetFile = workspace.extDir.subFile(component.stylesheetPath())
-                                    val dstStylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
-                                    dstStylesheetFile.parentFile?.mkdirs()
-                                    srcStylesheetFile.copyTo(dstStylesheetFile, overwrite = true)
-                                }
-                                editor.themes.add(componentEditor)
-                            } else {
-                                val component = themeManager.indexedThemeConfigs.value.first.get(componentName) ?: return
-                                val componentEditor = (component as? ThemeExtensionComponentImpl)?.edit() ?: return
-                                componentEditor.id = componentId
-                                componentEditor.stylesheetPath = ""
-                                val externalExt = extensionManager.getExtensionById(componentName.extensionId) ?: return
-                                val stylesheetJson = ZipUtils.readFileFromArchive(
-                                    context, externalExt.sourceRef!!, component.stylesheetPath()
-                                ).getOrNull() ?: return
-                                val dstStylesheetFile = workspace.extDir.subFile(componentEditor.stylesheetPath())
-                                dstStylesheetFile.parentFile?.mkdirs()
-                                dstStylesheetFile.writeText(stylesheetJson)
-                                editor.themes.add(componentEditor)
-                            }
-                            workspace.currentAction = null
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    fun hasSufficientInfoForCreating(): Boolean {
-        return when (createFrom) {
-            CreateFrom.EMPTY -> newId.isNotBlank() && newLabel.isNotBlank() && newAuthors.isNotBlank()
-            CreateFrom.EXISTING -> components.containsKey(selectedComponentName)
-        }
-    }
-
-    navigationIcon {
-        FlorisIconButton(
-            onClick = { handleBackPress() },
-            icon = Icons.Default.Close,
-        )
-    }
-
-    bottomBar {
-        FlorisButtonBar {
-            ButtonBarSpacer()
-            ButtonBarTextButton(text = stringRes(R.string.action__cancel)) {
-                handleBackPress()
-            }
-            ButtonBarButton(
-                text = stringRes(R.string.action__create),
-                enabled = hasSufficientInfoForCreating(),
-            ) {
-                handleCreate()
-            }
-        }
-    }
-
-    content {
-        BackHandler {
-            handleBackPress()
-        }
-
-        FlorisOutlinedBox(
-            modifier = Modifier.defaultFlorisOutlinedBox(),
-        ) {
-            RadioListItem(
-                onClick = { createFrom = CreateFrom.EXISTING },
-                selected = createFrom == CreateFrom.EXISTING,
-                text = stringRes(R.string.ext__editor__create_component__from_existing),
-            )
-            RadioListItem(
-                onClick = { createFrom = CreateFrom.EMPTY },
-                selected = createFrom == CreateFrom.EMPTY,
-                text = stringRes(R.string.ext__editor__create_component__from_empty),
-            )
-        }
-
-        if (createFrom == CreateFrom.EXISTING) {
-            FlorisOutlinedBox(
-                modifier = Modifier.defaultFlorisOutlinedBox(),
-            ) {
-                for ((componentName, component) in components) {
-                    RadioListItem(
-                        onClick = { selectedComponentName = componentName },
-                        selected = selectedComponentName == componentName,
-                        text = component.label,
-                        secondaryText = componentName.toString(),
-                    )
-                }
-            }
-        } else if (createFrom == CreateFrom.EMPTY) {
-            FlorisInfoCard(
-                modifier = Modifier.defaultFlorisOutlinedBox(),
-                text = stringRes(R.string.ext__editor__create_component__from_empty_warning),
-            )
-            DialogProperty(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                text = stringRes(R.string.ext__meta__id),
-            ) {
-                JetPrefTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = newId,
-                    onValueChange = { newId = it },
-                    singleLine = true,
-                )
-                Validation(showValidationErrors, newIdValidation)
-            }
-            DialogProperty(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                text = stringRes(R.string.ext__meta__label),
-            ) {
-                JetPrefTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = newLabel,
-                    onValueChange = { newLabel = it },
-                    singleLine = true,
-                )
-                Validation(showValidationErrors, newLabelValidation)
-
-            }
-            DialogProperty(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                text = stringRes(R.string.ext__meta__authors),
-            ) {
-                JetPrefTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = newAuthors,
-                    onValueChange = { newAuthors = it },
-                )
-                Validation(showValidationErrors, newAuthorsValidation)
-            }
-        }
-    }
-}
-
-@Composable
-private fun EditorSheetTextField(
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    isRequired: Boolean = false,
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    singleLine: Boolean = true,
-    showValidationError: Boolean = false,
-    validationResult: ValidationResult? = null,
-) {
-    Column(modifier = Modifier.padding(vertical = TextFieldVerticalPadding)) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = TextFieldVerticalPadding),
-        ) {
-            Text(
-                text = label,
-                style = MaterialTheme.typography.titleSmall,
-            )
-            if (isRequired) {
-                Text(
-                    modifier = Modifier.padding(start = 2.dp),
-                    text = "*",
-                    style = MaterialTheme.typography.titleSmall,
-                    color = MaterialTheme.colorScheme.error,
-                )
-            }
-        }
-        JetPrefTextField(
-            modifier = modifier.fillMaxWidth(),
-            enabled = enabled,
-            value = value,
-            onValueChange = onValueChange,
-            singleLine = singleLine,
-        )
-        Validation(showValidationError, validationResult)
-    }
-}
- */

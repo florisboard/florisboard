@@ -21,7 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.app.components.FlorisScreen
 import org.florisboard.lib.compose.stringRes
 
 @Composable
