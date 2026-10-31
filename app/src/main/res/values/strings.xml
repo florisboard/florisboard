@@ -189,9 +189,6 @@
     <string name="settings__theme_editor__no_rules_defined">This stylesheet has no rules defined. Add a rule to start customizing this stylesheet.</string>
     <string name="settings__theme_editor__rule_already_exists">This stylesheet rule is already defined.</string>
     <string name="settings__theme_editor__rule_name">Element / annotation</string>
-    <string name="settings__theme_editor__rule_codes">Target key codes</string>
-    <string name="settings__theme_editor__rule_groups">Groups</string>
-    <string name="settings__theme_editor__rule_modes">Target modes (layers)</string>
     <string name="settings__theme_editor__rule_shift_states">Target shift states</string>
     <string name="settings__theme_editor__rule_selectors">Selectors</string>
     <string name="settings__theme_editor__add_code">Add key code</string>
