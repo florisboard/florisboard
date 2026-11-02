@@ -123,7 +123,7 @@ class FlorisAppActivity : ComponentActivity() {
         appContext.preferenceStoreLoaded.collectIn(lifecycleScope) { loaded ->
             if (!loaded || isModelLoaded.getAndSet(true)) return@collectIn
             // Check if android 13+ is running and the NotificationPermission is not set
-            if (AndroidVersion.ATLEAST_API33_T && noBackupPrefs.notificationPermissionScreenSeen.get()) {
+            if (AndroidVersion.ATLEAST_API33_T && !noBackupPrefs.notificationPermissionScreenSeen.get()) {
                 // update pref value to show the setup screen again
                 noBackupPrefs.isImeSetUp.set(false)
             }
