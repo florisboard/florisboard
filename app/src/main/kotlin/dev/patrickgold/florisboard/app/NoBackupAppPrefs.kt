@@ -16,11 +16,12 @@
 
 package dev.patrickgold.florisboard.app
 
-import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.lib.util.VersionName
 import dev.patrickgold.jetpref.datastore.annotations.Preferences
 import dev.patrickgold.jetpref.datastore.jetprefDataStoreOf
+import dev.patrickgold.jetpref.datastore.model.PreferenceMigrationEntry
 import dev.patrickgold.jetpref.datastore.model.PreferenceModel
+import dev.patrickgold.jetpref.datastore.model.PreferenceType
 
 val NoBackupPreferenceStore = jetprefDataStoreOf(NoBackupPreferenceModel::class)
 
@@ -50,8 +51,8 @@ abstract class NoBackupPreferenceModel : PreferenceModel() {
         key = "internal__version_last_changelog",
         default = VersionName.DEFAULT_RAW,
     )
-    val notificationPermissionState = enum(
-        key = "internal__notification_permission_state",
-        default = NotificationPermissionState.NOT_SET,
+    val notificationPermissionScreenSeen = boolean(
+        key = "internal__notification_permission_screen_seen",
+        default = false,
     )
 }

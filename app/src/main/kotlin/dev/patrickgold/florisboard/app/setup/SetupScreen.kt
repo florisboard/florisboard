@@ -92,18 +92,12 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
     val isFlorisBoardEnabled by InputMethodUtils.observeIsFlorisboardEnabled()
     val isFlorisBoardSelected by InputMethodUtils.observeIsFlorisboardSelected()
 
-    val notificationState by noBackupPrefs.notificationPermissionState.collectAsState()
+    val notificationPermissionScreenSeen by noBackupPrefs.notificationPermissionScreenSeen.collectAsState()
 
     val requestNotification =
-        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) {
             scope.launch {
-                noBackupPrefs.notificationPermissionState.set(
-                    if (isGranted) {
-                        NotificationPermissionState.GRANTED
-                    } else {
-                        NotificationPermissionState.DENIED
-                    }
-                )
+                noBackupPrefs.notificationPermissionScreenSeen.set(true)
             }
         }
 
@@ -112,7 +106,6 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
     }
 
     var welcomeSeen by rememberSaveable { mutableStateOf(hasRestoredBackup) }
-    var notificationsSkipped by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         InputMethodUtils.observeIsFlorisboardEnabledFlow(context)
@@ -124,7 +117,12 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
         }
     }
 
-    val steps = remember(welcomeSeen, isFlorisBoardEnabled, isFlorisBoardSelected, notificationState, notificationsSkipped) {
+    val steps = remember(
+        welcomeSeen,
+        isFlorisBoardEnabled,
+        isFlorisBoardSelected,
+        notificationPermissionScreenSeen,
+    ) {
         listOfNotNull(
             SetupStep(
                 id = Steps.Welcome.id,
@@ -174,7 +172,7 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
                 SetupStep(
                     id = Steps.NotificationPermission.id,
                     required = false,
-                    satisfied = notificationState != NotificationPermissionState.NOT_SET || notificationsSkipped,
+                    satisfied = notificationPermissionScreenSeen,
                     icon = Icons.Default.Notifications,
                     shape = SetupShapes.Notifications,
                     title = { stringRes(R.string.setup__grant_notification_permission__title) },
@@ -183,13 +181,15 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
                     primaryLabel = { stringRes(R.string.setup__grant_notification_permission__btn) },
                     onPrimary = {
                         scope.launch {
-                            noBackupPrefs.notificationPermissionState.set(NotificationPermissionState.NOT_SET)
+                            noBackupPrefs.notificationPermissionScreenSeen.set(true)
                         }
                         requestNotification.launch(Manifest.permission.POST_NOTIFICATIONS)
                     },
                     secondaryLabel = { stringRes(R.string.setup__grant_notification_permission__skip_btn) },
                     onSecondary = {
-                        notificationsSkipped = true
+                        scope.launch {
+                            noBackupPrefs.notificationPermissionScreenSeen.set(true)
+                        }
                         next()
                     },
                 )

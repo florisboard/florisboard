@@ -45,7 +45,6 @@ import androidx.navigation.compose.rememberNavController
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.apptheme.FlorisAppTheme
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
-import dev.patrickgold.florisboard.app.setup.NotificationPermissionState
 import dev.patrickgold.florisboard.ime.extension.LocalExtensionController
 import dev.patrickgold.florisboard.ime.io.LocalStorageController
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
@@ -124,9 +123,7 @@ class FlorisAppActivity : ComponentActivity() {
         appContext.preferenceStoreLoaded.collectIn(lifecycleScope) { loaded ->
             if (!loaded || isModelLoaded.getAndSet(true)) return@collectIn
             // Check if android 13+ is running and the NotificationPermission is not set
-            if (AndroidVersion.ATLEAST_API33_T &&
-                noBackupPrefs.notificationPermissionState.get() == NotificationPermissionState.NOT_SET
-            ) {
+            if (AndroidVersion.ATLEAST_API33_T && noBackupPrefs.notificationPermissionScreenSeen.get()) {
                 // update pref value to show the setup screen again
                 noBackupPrefs.isImeSetUp.set(false)
             }
