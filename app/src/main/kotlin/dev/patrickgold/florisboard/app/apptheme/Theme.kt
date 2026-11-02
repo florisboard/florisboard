@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.materialkolor.PaletteStyle
@@ -41,6 +42,7 @@ fun getColorScheme(
     val accentColor by prefs.other.accentColor.collectAsState()
     val seedColor = systemAccentOrDefault(accentColor)
     val isDark = theme.isDark || theme.isAuto && isSystemInDarkTheme()
+    val isAmoled = theme.isAmoled && isDark
 
     return neutralDynamicColorScheme(
         primary = seedColor,
@@ -50,7 +52,12 @@ fun getColorScheme(
         specVersion = ColorSpec.SpecVersion.SPEC_2025,
         modifyColorScheme = { scheme ->
             scheme.copy(
+                surfaceContainer = when {
+                    isAmoled -> Color.Black
+                    else -> scheme.surfaceContainer
+                },
                 surface = when {
+                    isAmoled -> scheme.surfaceContainer
                     isDark -> scheme.surfaceContainerHighest
                     else -> scheme.surface
                 },
