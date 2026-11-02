@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,8 +42,10 @@ import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
+import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
@@ -72,6 +75,9 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val displayMode by prefs.suggestion.displayMode.collectAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
     val timingOptions by interactionController.activeTimingOptions.collectAsState()
+    val imeState by imeController.activeState.collectAsState()
+    val shiftState by remember { derivedStateOf { imeState.flags.inputShiftState } }
+    val locale = subtypeManager.activeSubtype.primaryLocale
 
     SnyggRow(
         elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
@@ -119,10 +125,18 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                     modifier = candidateModifier,
                     candidate = candidate,
                     displayMode = displayMode,
+                    shiftState = shiftState,
+                    locale = locale,
                     onClick = {
+                        // Can't use candidate directly
+                        val candidateItem = candidates[n]
+                        val casedItem = if (candidateItem is WordSuggestionCandidate) {
+                            candidateItem.copy(text = applyCaseToSuggestion(candidateItem.text.toString(), shiftState, locale))
+                        } else {
+                            candidateItem
+                        }
                         imeController.updateStateBlocking {
-                            // Can't use candidate directly
-                            emitCandidate(candidates[n])
+                            emitCandidate(casedItem)
                         }
                     },
                     onLongPress = {
@@ -145,6 +159,8 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
 private fun CandidateItem(
     candidate: SuggestionCandidate,
     displayMode: CandidatesDisplayMode,
+    shiftState: InputShiftState,
+    locale: dev.patrickgold.florisboard.lib.FlorisLocale,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = { },
     onLongPress: () -> Boolean = { false },
@@ -205,11 +221,12 @@ private fun CandidateItem(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            val displayText = applyCaseToSuggestion(candidate.text.toString(), shiftState, locale)
             SnyggText(
                 elementName = "$elementName-text",
                 attributes = attributes,
                 selector = selector,
-                text = candidate.text.toString(),
+                text = displayText,
             )
             if (candidate.secondaryText != null) {
                 SnyggText(
@@ -220,5 +237,16 @@ private fun CandidateItem(
                 )
             }
         }
+    }
+}
+
+private fun applyCaseToSuggestion(text: String, shiftState: InputShiftState, locale: dev.patrickgold.florisboard.lib.FlorisLocale): String {
+    val javaLocale = locale.base
+    return when (shiftState) {
+        InputShiftState.CAPS_LOCK -> text.uppercase(javaLocale)
+        InputShiftState.SHIFTED_MANUAL, InputShiftState.SHIFTED_AUTOMATIC -> text.replaceFirstChar {
+            if (it.isLowerCase()) it.titlecase(javaLocale) else it.toString()
+        }
+        else -> text
     }
 }
