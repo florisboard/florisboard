@@ -161,13 +161,12 @@ fun ExtensionImportScreen(
     val storageController = LocalStorageController.current
 
     val scope = rememberCoroutineScope()
-    val extensionIndex by extensionController.activeIndex.collectAsState()
     val storage by storageController.activeStorage.collectAsState()
 
     val idBase = AtomicInt(0)
     val importFiles = remember { mutableStateMapOf<Int, ImportFile>() }
     val importBtnEnabled by remember {
-        derivedStateOf { importFiles.isNotEmpty() && importFiles.all { (_, v) -> v !is ImportFile.Processing } }
+        derivedStateOf { importFiles.isNotEmpty() && importFiles.all { (_, v) -> v is ImportFile.Success } }
     }
 
     fun launchImportJob(uri: Uri) = scope.launch {
