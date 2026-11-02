@@ -80,7 +80,8 @@
     { "id": "uk", "authors": [ "williamtheaker", "33kk", "honsiorovskyi" ] },
     { "id": "uk-cyr-ext", "authors": [ "williamtheaker", "33kk", "honsiorovskyi" ] },
     { "id": "ur-PK", "authors": [ "mubashir-rehman", "mirfatif" ] },
-    { "id": "vi-VN", "authors": [ "patrickgold", "Hayleia" ] }
+    { "id": "vi-VN", "authors": [ "patrickgold", "Hayleia" ] },
+    { "id": "xdq", "authors": [ "alkaitagi" ] }
   ],
   "subtypePresets": [
     {
@@ -449,6 +450,15 @@
       "popupMapping": "org.florisboard.localization:ru",
       "preferred": {
         "characters": "org.florisboard.layouts:jcuken_russian"
+      }
+    },
+    {
+      "languageTag": "xdq",
+      "composer": "org.florisboard.composers:appender",
+      "currencySet": "org.florisboard.currencysets:russian_ruble",
+      "popupMapping": "org.florisboard.localization:xdq",
+      "preferred": {
+        "characters": "org.florisboard.layouts:kaitag_jcuken"
       }
     },
     {
