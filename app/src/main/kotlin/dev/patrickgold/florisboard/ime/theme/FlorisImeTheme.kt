@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,11 +50,15 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
     val windowSpec by windowController.activeWindowSpec.collectAsState()
     val fontScale by remember { derivedStateOf { windowSpec.fontScale } }
 
-//    val imeState by imeController.activeState.collectAsState()
-//    val attributes = mapOf(
-//        FlorisImeUi.Attr.Mode to imeState.flags.keyboardMode.toString(),
-//        FlorisImeUi.Attr.ShiftState to imeState.flags.inputShiftState.toString(),
-//    )
+    val imeState by imeController.activeState.collectAsState()
+    val touchLayerId by remember { derivedStateOf { imeState.touchLayerId } }
+    val inputShiftState by remember { derivedStateOf { imeState.flags.inputShiftState } }
+    val attributes = remember(touchLayerId, inputShiftState) {
+        mapOf(
+            ImeUiAttrs.Layer.eq(touchLayerId),
+            ImeUiAttrs.ShiftState.eq(inputShiftState),
+        )
+    }
 
     MaterialTheme {
         CompositionLocalProvider(
@@ -65,7 +69,7 @@ fun FlorisImeTheme(content: @Composable () -> Unit) {
                 dynamicAccentColor = accentColor,
                 fontSizeMultiplier = fontScale,
                 assetResolver = assetResolver,
-                rootAttributes = emptyMap(),
+                rootAttributes = attributes,
                 content = content,
                 materialYouFlags = activeTheme.config.materialYouFlags
             )

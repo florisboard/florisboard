@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022-2025 The FlorisBoard Contributors
+ * Copyright (C) 2022-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,13 +17,14 @@
 package dev.patrickgold.florisboard.app.settings.theme
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
+import dev.patrickgold.florisboard.app.components.SegmentedListColumn
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
-import dev.patrickgold.jetpref.datastore.ui.PreferenceLayout
 import dev.patrickgold.jetpref.material.ui.ColorRepresentation
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import org.florisboard.lib.compose.stringRes
@@ -32,24 +33,30 @@ private val FineTuneContentPadding = PaddingValues(horizontal = 8.dp)
 
 @Composable
 fun FineTuneDialog(onDismiss: () -> Unit) {
+    val prefs by FlorisPreferenceStore
+
     JetPrefAlertDialog(
         title = stringRes(R.string.settings__theme_editor__fine_tune__title),
         onDismiss = onDismiss,
         contentPadding = FineTuneContentPadding,
     ) {
-        PreferenceLayout(FlorisPreferenceStore, iconSpaceReserved = false) {
+        SegmentedListColumn {
+            val count = 3
             ListPreference(
                 listPref = prefs.theme.editorLevel,
+                shapes = ListItemDefaults.segmentedShapes(0, count),
                 title = stringRes(R.string.settings__theme_editor__fine_tune__level),
                 entries = enumDisplayEntriesOf(SnyggLevel::class),
             )
             ListPreference(
                 listPref = prefs.theme.editorColorRepresentation,
+                shapes = ListItemDefaults.segmentedShapes(1, count),
                 title = stringRes(R.string.settings__theme_editor__fine_tune__color_representation),
                 entries = enumDisplayEntriesOf(ColorRepresentation::class),
             )
             ListPreference(
                 listPref = prefs.theme.editorDisplayKbdAfterDialogs,
+                shapes = ListItemDefaults.segmentedShapes(2, count),
                 title = stringRes(R.string.settings__theme_editor__fine_tune__display_kbd_after_dialogs),
                 entries = enumDisplayEntriesOf(DisplayKbdAfterDialogs::class),
             )

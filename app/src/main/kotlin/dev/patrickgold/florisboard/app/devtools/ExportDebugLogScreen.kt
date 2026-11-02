@@ -43,20 +43,18 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LocalInteractionController
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.showShortToast
-import dev.patrickgold.florisboard.lib.compose.FlorisScreen
+import dev.patrickgold.florisboard.app.components.FlorisScreenNg
 import dev.patrickgold.florisboard.lib.devtools.Devtools
 import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.FlorisButton
+import dev.patrickgold.florisboard.app.components.FlorisBottomBar
 import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.compose.florisScrollbar
 import org.florisboard.lib.compose.stringRes
 
 // TODO: This screen is just a quick thrown-together thing and needs further enhancing in the UI
 @Composable
-fun ExportDebugLogScreen() = FlorisScreen {
-    title = stringRes(R.string.devtools__debuglog__title)
-    scrollable = false
-
+fun ExportDebugLogScreen() {
     val prefs by FlorisPreferenceStore
     val context = LocalContext.current
     val clipboardManager by context.clipboardManager()
@@ -71,37 +69,41 @@ fun ExportDebugLogScreen() = FlorisScreen {
         formattedDebugLog = Devtools.generateDebugLogForGithub(context, prefs, includeLogcat = true).lines()
     }
 
-    bottomBar {
-        Row(
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            val copyToClipboardMsg = stringRes(R.string.devtools__debuglog__copied_to_clipboard)
-            FlorisButton(
-                onClick = {
-                    scope.launch {
-                        clipboardManager.addNewPlaintext(debugLog!!.joinToString("\n"))
-                        interactionController.showShortToast(copyToClipboardMsg)
-                    }
-                },
-                modifier = Modifier,
-                text = stringRes(R.string.devtools__debuglog__copy_log),
-                enabled = debugLog != null,
-            )
-            FlorisButton(
-                onClick = {
-                    scope.launch {
-                        clipboardManager.addNewPlaintext(formattedDebugLog!!.joinToString("\n"))
-                        interactionController.showShortToast(copyToClipboardMsg)
-                    }
-                },
-                text = stringRes(R.string.devtools__debuglog__copy_for_github),
-                enabled = debugLog != null,
-            )
-        }
-    }
-
-    content {
+    FlorisScreenNg(
+        title = stringRes(R.string.devtools__debuglog__title),
+        previewFieldVisible = false,
+        bottomBar = {
+            FlorisBottomBar {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                ) {
+                    val copyToClipboardMsg = stringRes(R.string.devtools__debuglog__copied_to_clipboard)
+                    FlorisButton(
+                        onClick = {
+                            scope.launch {
+                                clipboardManager.addNewPlaintext(debugLog!!.joinToString("\n"))
+                                interactionController.showShortToast(copyToClipboardMsg)
+                            }
+                        },
+                        modifier = Modifier,
+                        text = stringRes(R.string.devtools__debuglog__copy_log),
+                        enabled = debugLog != null,
+                    )
+                    FlorisButton(
+                        onClick = {
+                            scope.launch {
+                                clipboardManager.addNewPlaintext(formattedDebugLog!!.joinToString("\n"))
+                                interactionController.showShortToast(copyToClipboardMsg)
+                            }
+                        },
+                        text = stringRes(R.string.devtools__debuglog__copy_for_github),
+                        enabled = debugLog != null,
+                    )
+                }
+            }
+        },
+    ) { contentPadding ->
         // Forcing LTR because text displayed is a debug log
         CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Ltr) {
             val lazyListState = rememberLazyListState()
@@ -110,6 +112,7 @@ fun ExportDebugLogScreen() = FlorisScreen {
                     .fillMaxSize()
                     .florisScrollbar(lazyListState, isVertical = true)
                     .florisHorizontalScroll(),
+                contentPadding = contentPadding,
                 state = lazyListState,
             ) {
                 val log = debugLog

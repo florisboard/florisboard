@@ -20,11 +20,9 @@ import androidx.compose.ui.graphics.Color
 import dev.patrickgold.jetpref.datastore.model.PreferenceSerializer
 
 object ColorPreferenceSerializer : PreferenceSerializer<Color> {
-    @OptIn(ExperimentalStdlibApi::class)
     override fun deserialize(value: String): Color {
         return Color(value.hexToULong())
     }
 
-    @OptIn(ExperimentalStdlibApi::class)
     override fun serialize(value: Color): String = value.value.toHexString()
 }
