@@ -62,6 +62,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.ime.keyboard3.ImeIcons
 import dev.patrickgold.florisboard.ime.keyboard3.ImeLayerIds
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.isTextLayer
 import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.mozc.MozcEngine
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
@@ -130,10 +131,10 @@ fun Icon3(
             }
             // TODO incognito mode???
             // TODO char width/kata/hira icons???
-            ImeIcons.Alpha -> when (layerId) {
-                ImeLayerIds.Alpha -> context.vectorResource(R.drawable.ic_key_ja_bi_state_alphabet)
-                ImeLayerIds.Shift -> context.vectorResource(R.drawable.ic_key_ja_bi_state_alphabet)
-                ImeLayerIds.Base -> context.vectorResource(R.drawable.ic_key_ja_bi_state_hiragana)
+            ImeIcons.Kana -> when {
+                // use isTextLayer() as that is every alphabet layer
+                layerId.isTextLayer() -> context.vectorResource(R.drawable.ic_key_ja_bi_state_alphabet)
+                layerId == ImeLayerIds.Kana -> context.vectorResource(R.drawable.ic_key_ja_bi_state_hiragana)
                 else -> null // kana key shouldn't be in any other layouts
             }
             else -> staticIcon3(value, context)

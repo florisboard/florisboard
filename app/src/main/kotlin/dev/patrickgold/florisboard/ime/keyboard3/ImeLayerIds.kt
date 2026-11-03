@@ -30,9 +30,12 @@ object ImeLayerIds {
     val Telpad = K3LayerId("telpad")
 
     val Numrow = K3LayerId("numrow")
-    val Alpha = K3LayerId("alpha")
+    // Japanese specific kana layout for mozc, could rename it to something like 'base-alt' or 'base-non-latin' to make it more generic, falls back to base if not found
+    // completely optional, this is just defined in the code because mozc needs it, non mozc keyboards don't need this layer
+    val Kana = K3LayerId("kana")
 }
 
+// realistically, this is every Latin text layer, not every text layer
 fun K3LayerId.isTextLayer(): Boolean {
-    return this == ImeLayerIds.Base || this == ImeLayerIds.Shift || this == ImeLayerIds.Caps || this == ImeLayerIds.Alpha
+    return this == ImeLayerIds.Base || this == ImeLayerIds.Shift || this == ImeLayerIds.Caps
 }

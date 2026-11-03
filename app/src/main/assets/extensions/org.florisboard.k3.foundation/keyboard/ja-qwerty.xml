@@ -3,30 +3,58 @@
 
     <displays>
         <display keyId="base" display="${base_display}" />
-        <display keyId="alpha" display="@fl:icon/alpha" />
-        <display keyId="alpha-base" display="@fl:icon/alpha" />
-        <display keyId="alpha-shift-base" display="${base_display}" />
-        <display keyId="shift" display="${shift_display}" />
+        <display keyId="kana" display="@fl:icon/kana" />
+        <display keyId="kana-base" display="@fl:icon/kana" />
+        <display keyId="base-to-shift" display="@fl:icon/shift" />
+        <display keyId="shift-to-base" display="@fl:icon/shift" />
         <display keyId="symbol-1" display="${symbol_1_display}" />
         <display keyId="symbol-2" display="${symbol_2_display}" />
         <display keyId="numeric" display="${numeric_display}" />
         <display keyId="base-numeric" display="${base_display}" />
         <display keyId="symbols-numeric" display="${symbol_1_display}" />
         <display keyId="space-numeric" display="@fl:icon/space_bar" />
+        <display keyId="a-kana" display="${a_kana_display}" />
+        <display keyId="b-kana" display="${b_kana_display}" />
+        <display keyId="c-kana" display="${c_kana_display}" />
+        <display keyId="d-kana" display="${d_kana_display}" />
+        <display keyId="e-kana" display="${e_kana_display}" />
+        <display keyId="f-kana" display="${f_kana_display}" />
+        <display keyId="g-kana" display="${g_kana_display}" />
+        <display keyId="h-kana" display="${h_kana_display}" />
+        <display keyId="i-kana" display="${i_kana_display}" />
+        <display keyId="j-kana" display="${j_kana_display}" />
+        <display keyId="k-kana" display="${k_kana_display}" />
+        <display keyId="l-kana" display="${l_kana_display}" />
+        <display keyId="m-kana" display="${m_kana_display}" />
+        <display keyId="n-kana" display="${n_kana_display}" />
+        <display keyId="o-kana" display="${o_kana_display}" />
+        <display keyId="p-kana" display="${p_kana_display}" />
+        <display keyId="q-kana" display="${q_kana_display}" />
+        <display keyId="r-kana" display="${r_kana_display}" />
+        <display keyId="s-kana" display="${s_kana_display}" />
+        <display keyId="t-kana" display="${t_kana_display}" />
+        <display keyId="u-kana" display="${u_kana_display}" />
+        <display keyId="v-kana" display="${v_kana_display}" />
+        <display keyId="w-kana" display="${w_kana_display}" />
+        <display keyId="x-kana" display="${x_kana_display}" />
+        <display keyId="y-kana" display="${y_kana_display}" />
+        <display keyId="z-kana" display="${z_kana_display}" />
+        <display keyId="touten" display="${touten_display}" />
+        <display keyId="kuten" display="${kuten_display}" />
     </displays>
 
     <keys>
         <import base="cldr" path="45/keys-Zyyy-punctuation.xml" />
         <import base="cldr" path="45/keys-Zyyy-currency.xml" />
 
-        <key id="shift" layerId="shift" width="1.5" />
+        <key id="base" layerId="base" width="1.5" />
+        <key id="base-to-shift" layerId="shift" width="1.5" />
+        <key id="shift-to-base" layerId="base" width="1.5" />
         <key id="numeric" layerId="numeric" />
         <key id="symbol-1" layerId="symbol-1" width="1.5" />
         <key id="symbol-2" layerId="symbol-2" width="1.5" />
-        <key id="base" layerId="base" width="1.5" />
-        <key id="alpha" layerId="alpha" width="1.5" />
-        <key id="alpha-base" layerId="base" width="1.5" />
-        <key id="alpha-shift-base" layerId="alpha" width="1.5" />
+        <key id="kana" layerId="kana" width="1.5" />
+        <key id="kana-base" layerId="base" width="1.5" />
 
         <key id="bksp" output="@k3:action/backspace" stretch="true" />
         <key id="enter" output="@k3:action/enter" width="1.6" />
@@ -125,7 +153,6 @@
         <key id="Y-tilde" output="Ỹ" />
         <key id="Y-charon" output="Ȳ" />
         <key id="Z" output="Z" />
-        <key id="long-vowel" output="ー"/>
 
         <!-- Lowercase keys -->
         <key id="a" output="a"
@@ -207,6 +234,37 @@
         <key id="y-tilde" output="ỹ" />
         <key id="y-charon" output="ȳ" />
         <key id="z" output="z" />
+
+        <!-- Kana mode keys -->
+        <key id="a-kana" output="a" longPressKeyIds="at" />
+        <key id="b-kana" output="b" longPressKeyIds="bang" />
+        <key id="c-kana" output="c" longPressKeyIds="double-quote" />
+        <key id="d-kana" output="d" longPressKeyIds="plus" />
+        <key id="e-kana" output="e" longPressKeyIds="3" />
+        <key id="f-kana" output="f" longPressKeyIds="hyphen" />
+        <key id="g-kana" output="g" longPressKeyIds="equal" />
+        <key id="h-kana" output="h" longPressKeyIds="slash" />
+        <key id="i-kana" output="i" longPressKeyIds="8" />
+        <key id="j-kana" output="j" longPressKeyIds="hash" />
+        <key id="k-kana" output="k" longPressKeyIds="open-paren" />
+        <key id="l-kana" output="l" longPressKeyIds="close-paren" />
+        <key id="m-kana" output="m" />
+        <key id="n-kana" output="n" longPressKeyIds="tilde" />
+        <key id="o-kana" output="o" longPressKeyIds="9" />
+        <key id="p-kana" output="p" longPressKeyIds="0" />
+        <key id="q-kana" output="q" longPressKeyIds="1" />
+        <key id="r-kana" output="r" longPressKeyIds="4" />
+        <key id="s-kana" output="s" longPressKeyIds="asterisk" />
+        <key id="t-kana" output="t" longPressKeyIds="5" />
+        <key id="u-kana" output="u" longPressKeyIds="7" />
+        <key id="v-kana" output="v" longPressKeyIds="question" />
+        <key id="w-kana" output="w" longPressKeyIds="2" />
+        <key id="x-kana" output="x" longPressKeyIds="colon" />
+        <key id="y-kana" output="y" longPressKeyIds="6" />
+        <key id="z-kana" output="z" longPressKeyIds="apos" />
+        <key id="touten" output="," />
+        <key id="kuten" output="." />
+        <key id="long-vowel" output="ー" longPressKeyIds="amp" />
         <!-- extra chars -->
         <key id="numero-sign" output="\u{2116}" />
         <key id="permille" output="\u{2030}" />
@@ -277,25 +335,25 @@
     <layers formId="touch" minDeviceWidth="1">
         <import path="flex://org.florisboard.k3.foundation/layers-touch.xml" />
 
-        <layer id="base">
-            <row keys="q w e r t y u i o p" />
-            <row keys="a s d f g h j k l long-vowel" />
-            <row keys="alpha z x c v b n m bksp" />
-            <row keys="symbol-1 comma fn-key space period enter" />
+        <layer id="kana">
+            <row keys="q-kana w-kana e-kana r-kana t-kana y-kana u-kana i-kana o-kana p-kana" />
+            <row keys="a-kana s-kana d-kana f-kana g-kana h-kana j-kana k-kana l-kana long-vowel" />
+            <row keys="kana-base z-kana x-kana c-kana v-kana b-kana n-kana m-kana bksp" />
+            <row keys="symbol-1 touten fn-key space kuten enter" />
         </layer>
 
-        <layer id="alpha">
+        <layer id="base">
             <row keys="q w e r t y u i o p" />
             <row keys="a s d f g h j k l" />
-            <row keys="alpha-base z x c v b n m bksp" />
-            <row keys="symbol-1 comma shift fn-key space period enter" />
+            <row keys="kana z x c v b n m bksp" />
+            <row keys="symbol-1 comma base-to-shift fn-key space period enter" />
         </layer>
 
         <layer id="shift">
             <row keys="Q W E R T Y U I O P" />
             <row keys="A S D F G H J K L" />
-            <row keys="alpha-base Z X C V B N M bksp" />
-            <row keys="symbol-1 comma alpha-shift-base fn-key space period enter" />
+            <row keys="kana Z X C V B N M bksp" />
+            <row keys="symbol-1 comma shift-to-base fn-key space period enter" />
         </layer>
 
         <layer id="symbol-1">
@@ -323,9 +381,36 @@
 
     <variables>
         <string id="base_display" value="ABC" />
-        <string id="shift_display" value="\u{21EA}" />
         <string id="numeric_display" value="1 2&#10;3 4" />
         <string id="symbol_1_display" value="?123" />
         <string id="symbol_2_display" value="\u{003D 005C 003C}" />
+        <string id="a_kana_display" value="A" />
+        <string id="b_kana_display" value="B" />
+        <string id="c_kana_display" value="C" />
+        <string id="d_kana_display" value="D" />
+        <string id="e_kana_display" value="E" />
+        <string id="f_kana_display" value="F" />
+        <string id="g_kana_display" value="G" />
+        <string id="h_kana_display" value="H" />
+        <string id="i_kana_display" value="I" />
+        <string id="j_kana_display" value="J" />
+        <string id="k_kana_display" value="K" />
+        <string id="l_kana_display" value="L" />
+        <string id="m_kana_display" value="M" />
+        <string id="n_kana_display" value="N" />
+        <string id="o_kana_display" value="O" />
+        <string id="p_kana_display" value="P" />
+        <string id="q_kana_display" value="Q" />
+        <string id="r_kana_display" value="R" />
+        <string id="s_kana_display" value="S" />
+        <string id="t_kana_display" value="T" />
+        <string id="u_kana_display" value="U" />
+        <string id="v_kana_display" value="V" />
+        <string id="w_kana_display" value="W" />
+        <string id="x_kana_display" value="X" />
+        <string id="y_kana_display" value="Y" />
+        <string id="z_kana_display" value="Z" />
+        <string id="touten_display" value="、" />
+        <string id="kuten_display" value="。" />
     </variables>
 </keyboard3>

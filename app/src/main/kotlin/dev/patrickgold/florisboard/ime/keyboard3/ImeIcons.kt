@@ -54,7 +54,7 @@ object ImeIcons {
     val ToggleResizeMode = flIcon("toggle_resize_mode")
     val Undo = flIcon("undo")
     val Voice = flIcon("voice")
-    val Alpha = flIcon("alpha")
+    val Kana = flIcon("kana")
     val Dakuten  = flIcon("dakuten")
 
     private fun flIcon(name: String): K3Descriptor {

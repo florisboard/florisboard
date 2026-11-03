@@ -218,7 +218,7 @@ private fun computeTouchKeyboard(
                 continue
             }
             val rows = buildList {
-                if (numberRow != null && (layer.id == ImeLayerIds.Base || layer.id == ImeLayerIds.Shift || layer.id == ImeLayerIds.Alpha)) {
+                if (numberRow != null && (layer.id == ImeLayerIds.Base || layer.id == ImeLayerIds.Shift || layer.id == ImeLayerIds.Kana)) {
                     add(numberRow)
                 }
                 layer.rows.forEach { row ->
@@ -350,7 +350,6 @@ private fun computeTouchKeyboard(
                             ImeLayerIds.Base -> key.layerId == ImeLayerIds.Shift || key.layerId == ImeLayerIds.Caps
                             ImeLayerIds.Shift -> key.layerId == ImeLayerIds.Base || key.layerId == ImeLayerIds.Caps
                             ImeLayerIds.Caps -> key.layerId == ImeLayerIds.Base || key.layerId == ImeLayerIds.Shift
-                            ImeLayerIds.Alpha -> key.layerId == ImeLayerIds.Shift || key.layerId == ImeLayerIds.Caps
                             else -> false
                         },
                         isRepeatable = attrs.output?.isRepeatable() ?: false,

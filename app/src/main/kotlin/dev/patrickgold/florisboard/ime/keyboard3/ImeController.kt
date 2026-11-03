@@ -20,6 +20,7 @@ import android.icu.text.BreakIterator
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
+import androidx.compose.runtime.key
 import androidx.compose.runtime.staticCompositionLocalOf
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -258,6 +259,7 @@ class ImeController(
                 editor = ImeEditor(ic, info),
                 touchLayerId = when {
                     rememberCapsLockState && newTouchLayerId.isTextLayer() -> ImeLayerIds.Caps
+                    state.model.info.indicator?.contains("mozcJa") ?: false && keyVariation == KeyVariation.NORMAL -> ImeLayerIds.Kana
                     else -> newTouchLayerId
                 },
                 flags = state.flags
@@ -343,16 +345,16 @@ class ImeController(
                     state.touchLayerId == ImeLayerIds.Telpad ->
                     MozcKeyboardSpec.SYMBOL_NUMBER
 
-                state.touchLayerId == ImeLayerIds.Base && state.model.info.layout == "QWERTY" ->
+                state.touchLayerId == ImeLayerIds.Kana && state.model.info.layout == "QWERTY" ->
                     MozcKeyboardSpec.QWERTY_KANA
 
-                state.touchLayerId == ImeLayerIds.Alpha && state.model.info.layout == "QWERTY" ->
+                state.touchLayerId.isTextLayer() && state.model.info.layout == "QWERTY" ->
                     MozcKeyboardSpec.QWERTY_ALPHABET
 
-                state.touchLayerId == ImeLayerIds.Base && state.model.info.layout == "Flick" ->
+                state.touchLayerId == ImeLayerIds.Kana && state.model.info.layout == "Flick" ->
                     MozcKeyboardSpec.TWELVE_KEY_FLICK_KANA
 
-                state.touchLayerId == ImeLayerIds.Alpha && state.model.info.layout == "Flick" ->
+                state.touchLayerId.isTextLayer() && state.model.info.layout == "Flick" ->
                     MozcKeyboardSpec.TWELVE_KEY_FLICK_ALPHABET
 
                 else -> MozcKeyboardSpec.TWELVE_KEY_FLICK_KANA
@@ -381,7 +383,7 @@ class ImeController(
         }
 
         override fun emitText(value: K3String) {
-            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Alpha || state.touchLayerId == ImeLayerIds.Base) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) { // assume false if null
+            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) { // assume false if null
                 for (key in value.toText()) {
                     if (key == ' ') {
                         // for some reason, k3lp hardcodes space to output a space, so we replace it with the space keycode and send it to mozc
@@ -457,8 +459,8 @@ class ImeController(
         override fun switchModel(newModel: K3Model) {
             super.switchModel(newModel)
             if (state.model.info.indicator?.contains("mozcJa") ?: false) {
-                if (state.flags.keyVariation != KeyVariation.NORMAL) {
-                    state = state.copy(touchLayerId = ImeLayerIds.Alpha)
+                if (state.flags.keyVariation == KeyVariation.NORMAL) {
+                    state = state.copy(touchLayerId = ImeLayerIds.Kana)
                 }
                 updateConfig()
             }
@@ -602,12 +604,14 @@ class ImeController(
         }
 
         override fun emitBackspace() {
-            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Alpha || state.touchLayerId == ImeLayerIds.Base) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
+            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
                 if (MozcEngine.instance.preedit.value.isNotEmpty()) {
                     MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.BACKSPACE)
                     sendPreedit(MozcEngine.instance.preedit.value)
                 } else {
-                    super.emitBackspace()
+                    // send hardware keycode instead of using k3lp because k3lp reselects the text before and that breaks mozc by overriding what user already wrote when user presses a key
+                    //super.emitBackspace()
+                    sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
                 }
             } else {
                 super.emitBackspace()
@@ -616,7 +620,7 @@ class ImeController(
         }
 
         override fun emitEnter() {
-            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Alpha || state.touchLayerId == ImeLayerIds.Base) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
+            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
                 if (MozcEngine.instance.preedit.value.isNotEmpty()) {
                     MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.ENTER)
                     state = state.copy(
@@ -649,7 +653,7 @@ class ImeController(
         fun emitEnterKey() {
             val info = state.editor.info
             if (info.isRawInputEditor) {
-                state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER)
+                sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER)
             } else {
                 emitText(NEWLINE_SEQ)
             }
@@ -765,7 +769,11 @@ class ImeController(
 
         override fun switchTouchLayer(newTouchLayerId: K3LayerId) {
             if (state.model.info.indicator?.contains("mozcJa") ?: false) { // assume false if null
-                super.switchTouchLayer(newTouchLayerId)
+                if (newTouchLayerId.isTextLayer()) {
+                    super.switchTouchLayer(state.flags.inputShiftState.correspondingLayerId)
+                } else {
+                    super.switchTouchLayer(newTouchLayerId)
+                }
                 updateConfig()
                 if (MozcEngine.instance.preedit.value.isNotEmpty()) {
                     MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.ENTER)
@@ -839,7 +847,12 @@ class ImeController(
         }
 
         override fun resetContent(newSelection: K3TextRange, newSurrounding: K3SurroundingText) {
-            super.resetContent(newSelection, newSurrounding)
+            val realSurrounding = if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
+                K3SurroundingText.Empty
+            } else {
+                newSurrounding
+            }
+            super.resetContent(newSelection, realSurrounding)
             reevaluateInputShiftState()
         }
 
