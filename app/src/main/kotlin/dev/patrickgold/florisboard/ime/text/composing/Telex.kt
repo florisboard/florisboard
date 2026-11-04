@@ -22,7 +22,7 @@ import kotlinx.serialization.Serializable
 // Constants for list of consonants and vowels
 object Letters {
     const val CONSONANTS =  "bcdđghklmnpqrstvx"
-    const val VOWELS = mapOf(
+    val VOWELS = mapOf(
         'a' to "aáàảãạ",
         'ă' to "ăắằẳẵặ",
         'â' to "âấầẩẫậ",
@@ -36,7 +36,7 @@ object Letters {
         'ư' to "ưứừửữự",
         'y' to "yýỳỷỹỵ",
     )
-    const val BARE_VOWELS = mapOf(
+    val BARE_VOWELS = mapOf(
         'ă' to 'a',
         'â' to 'a',
         'ê' to 'e',
