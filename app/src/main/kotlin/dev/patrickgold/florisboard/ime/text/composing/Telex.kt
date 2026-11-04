@@ -113,20 +113,6 @@ class Syllable {
         return word
     }
 
-    // Returns a copy
-    fun copy(): Syllable {
-        return Syllable(
-            start=this.start,
-            u=this.u,
-            y=this.y,
-            v1=this.v1,
-            v2=this.v2,
-            end=this.end,
-            tone=this.tone,
-            toneIndex=this.toneIndex,
-        )
-    }
-
     companion object Factory {
         // Parse words from existing text
         // Return null if syllable is invalid
