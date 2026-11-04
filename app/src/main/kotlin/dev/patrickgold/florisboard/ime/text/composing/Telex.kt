@@ -92,7 +92,6 @@ class Syllable {
     var v2: Char? = null
     var end: String = ""
     var tone: Int = 0
-    var toneIndex: Int = 0
 
     // Serialize the syllable to String
     override fun toString(): String {
@@ -163,7 +162,6 @@ class Syllable {
                 }
             }
 
-            syllable.toneIndex = initialGroup.length
             when (middleGroup.length) {
                 0 -> return syllable // unfinished word without vowels
                 1 -> {
@@ -192,7 +190,6 @@ class Syllable {
                         syllable.tone = tone1
                     else if (tone2 > 0) {
                         syllable.tone = tone2
-                        syllable.toneIndex += 1
                     }
                     when (bare1) {
                         'a', 'e' -> {
@@ -266,10 +263,8 @@ class Syllable {
                     if (tone1 > 0) {
                         return null
                     } else if (tone2 > 0 && tone3 == 0) {
-                        syllable.toneIndex += 1
                         syllable.tone = tone2
                     } else if (tone3 > 0 && tone 2 == 0) {
-                        syllable.toneIndex += 2
                         syllable.tone = tone3
                     } 
                     when (base1) {
