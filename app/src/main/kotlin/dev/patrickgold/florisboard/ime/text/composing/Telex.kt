@@ -99,10 +99,11 @@ class Syllable {
             if (start != null) append(start)
             if (u != null) append(u)
             if (y != null) append(y)
-            if (v1 != null) {
-                var letter = Letters.VOWELS[v1.lowercaseChar()]
+            val lowerV1 = v1?.lowercaseChar()
+            if (lowerV1 != null) {
+                var tonedLetter = Letters.VOWELS[lowerV1]
                 if (v1.isUpperCase()) {
-                    letter = letter.uppercaseChar()
+                    tonedLetter = tonedLetter.uppercaseChar()
                 }
                 append(letter)
             }
