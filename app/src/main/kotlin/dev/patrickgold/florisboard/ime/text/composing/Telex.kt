@@ -101,7 +101,7 @@ class Syllable {
             if (u != null) append(u)
             if (y != null) append(y)
             if (v1 != null) {
-                letter = Letters.VOWELS[v1.lowercase()]
+                var letter = Letters.VOWELS[v1.lowercase()]
                 if (v1.isUpperCase()) {
                     letter = letter.uppercase()
                 }
