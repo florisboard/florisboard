@@ -147,11 +147,6 @@ class Syllable {
             if (initialGroup == "q" && middleGroup.length > 0 && middleGroup[0] != 'u') {
                 return null
             }
-            // There must be at most 1 vowel with diacritics
-            // except for ư as in ương rhyme
-            if (middleGroup.count({ it in middleLetters }) - middleGroup.count({ it in "aeiouyư" }) > 1) {
-                return null
-            }
             // reverse tone map
             val reversed = mutableMapOf<Char, Char>()
             for ((vowel, toned) in Letters.VOWELS) {
@@ -174,12 +169,12 @@ class Syllable {
                     val v2 = middleGroup[1]
                     val lowerV1 = v1.lowercaseChar()
                     val lowerV2 = v2.lowercaseChar()
-                    val base1 = reversed[lowerV1]
-                    val base2 = reversed[lowerV2]
-                    val bare1 = Letters.BARE_VOWELS[base1]
-                    val bare2 = Letters.BARE_VOWELS[base2]
-                    val tone1 = Letters.VOWELS[base1].indexOf(lowerV1)
-                    val tone2 = Letters.VOWELS[base2].indexOf(lowerV2)
+                    val base1 = reversed[lowerV1]!!
+                    val base2 = reversed[lowerV2]!!
+                    val bare1 = Letters.BARE_VOWELS[base1]!!
+                    val bare2 = Letters.BARE_VOWELS[base2]!!
+                    val tone1 = Letters.VOWELS[base1]!!.indexOf(lowerV1)!!
+                    val tone2 = Letters.VOWELS[base2]!!.indexOf(lowerV2)!!
                     // can't be more than 2 tones
                     if (tone1 > 0 && tone2 > 0) {
                         return null
@@ -251,15 +246,15 @@ class Syllable {
                     val lowerV1 = v1.lowercaseChar()
                     val lowerV2 = v2.lowercaseChar()
                     val lowerV3 = v3.lowercaseChar()
-                    val base1 = reversed[lowerV1]
-                    val base2 = reversed[lowerV2]
-                    val base3 = reversed[lowerV3]
-                    val bare1 = Letters.BARE_VOWELS[base1]
-                    val bare2 = Letters.BARE_VOWELS[base2]
-                    val bare3 = Letters.BARE_VOWELS[base3]
-                    val tone1 = Letters.VOWELS[base1].indexOf(lowerV1)
-                    val tone2 = Letters.VOWELS[base2].indexOf(lowerV2)
-                    val tone3 = Letters.VOWELS[base3].indexOf(lowerV3)
+                    val base1 = reversed[lowerV1]!!
+                    val base2 = reversed[lowerV2]!!
+                    val base3 = reversed[lowerV3]!!
+                    val bare1 = Letters.BARE_VOWELS[base1]!!
+                    val bare2 = Letters.BARE_VOWELS[base2]!!
+                    val bare3 = Letters.BARE_VOWELS[base3]!!
+                    val tone1 = Letters.VOWELS[base1]!!.indexOf(lowerV1)!!
+                    val tone2 = Letters.VOWELS[base2]!!.indexOf(lowerV2)!!
+                    val tone3 = Letters.VOWELS[base3]!!.indexOf(lowerV3)!!
                     // tone must be on 2nd (oải) or 3rd (tuyết) vowel letter
                     if (tone1 > 0) {
                         return null
@@ -398,8 +393,8 @@ fun handleVowel(syllable: Syllable, newLetter: Char, letterPairs: Map<Char, Pair
     val isV1UpperCase = syllable.v1?.isUpperCase() ?: false
     val lowerV1 = syllable.v1?.lowercaseChar()
     val bareLetter = Letters.BARE_VOWELS[lowerV1]
-    val fromLetters = letterPairs[bareLetter].first
-    val toLetter = letterPairs[bareLetter].second
+    val fromLetters = letterPairs[bareLetter]!!.first
+    val toLetter = letterPairs[bareLetter]!!.second
 
     if (lowerV1 in fromLetters) {
         if (isV1UpperCase) {
