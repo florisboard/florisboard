@@ -39,6 +39,7 @@
         <display keyId="x-kana" display="${x_kana_display}" />
         <display keyId="y-kana" display="${y_kana_display}" />
         <display keyId="z-kana" display="${z_kana_display}" />
+        <display keyId="long-vowel" display="${long_vowel_display}" />
         <display keyId="touten" display="${touten_display}" />
         <display keyId="kuten" display="${kuten_display}" />
     </displays>
@@ -264,7 +265,7 @@
         <key id="z-kana" output="z" longPressKeyIds="apos" />
         <key id="touten" output="," />
         <key id="kuten" output="." />
-        <key id="long-vowel" output="ー" longPressKeyIds="amp" />
+        <key id="long-vowel" output="-" longPressKeyIds="amp" />
         <!-- extra chars -->
         <key id="numero-sign" output="\u{2116}" />
         <key id="permille" output="\u{2030}" />
@@ -410,6 +411,7 @@
         <string id="x_kana_display" value="X" />
         <string id="y_kana_display" value="Y" />
         <string id="z_kana_display" value="Z" />
+        <string id="long_vowel_display" value="ー" />
         <string id="touten_display" value="、" />
         <string id="kuten_display" value="。" />
     </variables>
