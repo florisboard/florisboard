@@ -95,7 +95,7 @@ class Syllable {
     var toneIndex: Int = 0
 
     // Serialize the syllable to String
-    fun toString(): String {
+    override fun toString(): String {
         val word = buildString {
             if (this.start != null) append(this.start)
             if (this.u != null) append(this.u)
