@@ -90,7 +90,7 @@ class Syllable {
     var y: Char? = null
     var v1: Char? = null
     var v2: Char? = null
-    var end: String? = null
+    var end: String = ""
     var tone: Int = 0
     var toneIndex: Int = 0
 
@@ -360,6 +360,97 @@ class Syllable {
     }
 }
 
+// Returns the number of characters to delete and the string to replace
+fun compare(fromText: String, toText: String): Pair<Int, String> {
+    val length = fromText.length
+    for (i in 0..<length) {
+        if (fromText[i] != toText[i]) {
+            return Pair(length - i, toText.substring(i, length))
+        }
+    }
+    return Pair(0, toText.substring(0, toText.length - length))
+}
+
+// If not same tone, change tone
+// else, remove tone and append letter
+fun handleTone(syllable: Syllable, letter: Char, tone: Int): String {
+    if (syllable.tone != tone) {
+        syllable.tone = tone
+        return syllable.toString()
+    } else {
+        syllable.tone = 0
+        return syllable.toString() + letter
+    }
+}
+
+// Handle d + d -> đ
+fun handleD(syllable: Syllable): String {
+    if (syllable.start == 'd') {
+        syllable.start = 'đ'
+        return syllable.toString()
+    } else if (syllable.start == 'đ') {
+        syllable.start = 'd'
+    }
+    return syllable.toString() + letter
+}
+
+// Handle vowel diacritics
+// letterPairs is a map from base letters to pair of fromLetters and toLetter
+// e.g.
+// newLetter = 'a'
+// letterPairs = mapOf('a' to ("aă" to 'a'))
+// => fromLetters = "aă"
+//    toLetter = 'â'
+// then
+// a + a -> â
+// ă + a -> â
+// â + a -> aa
+// i + a -> ia
+fun handleVowel(syllable: Syllable, newLetter: Char, letterPairs: Map<Char, Pair<String, Char>>): String {
+    val lowerV1 = syllable.v1?.lowercase()
+    val bareLetter = Letters.BARE_VOWELS[lowerV1]
+    val fromLetters = letterPairs[bareLetter].first
+    val toLetter = letterPairs[bareLetter].second
+
+    if (lowerV1 in fromLetters) {
+        if (syllable.v1.isUpperCase()) {
+            syllable.v1 = toLetter.uppercase()
+        } else {
+            syllable.v1 = toLetter
+        }
+    } else if (lowerV1 == toLetter) {
+        if (syllable.v1.isUpperCase()) {
+            syllable.v1 = bareLetter.uppercase()
+        } else {
+            syllable.v1 = bareLetter
+        }
+    }
+    // TODO: Handle lazy w -> ư
+
+    // Special case for o and w:
+    // these needs final consonant or v2 (to allows huơ)
+    // uon + w -> ươn
+    // uôn + w -> ươn
+    // these doesn't need final consonant
+    // ươ + w ->
+    // ươn + w -> uôn
+    val mid = syllable.u.lowercase().toString() + bareLetter
+    if (newLetter == 'w' && mid == "uo" && (syllable.v2 == 'i' || syllable.end !== "")) {
+        if (syllable.u.isUpperCase() {
+            syllable.u = 'Ư'
+        } else {
+            syllable.u = 'ư'
+        }
+    } else if (newLetter == 'o' && mid == "ưo") {
+        if (syllable.u.isUpperCase() {
+            syllable.u = 'U'
+        } else {
+            syllable.u = 'u'
+        }
+    }
+    return syllable.toString() + newLetter
+}
+
 @Serializable
 @SerialName("telex-v2")
 class Telex : Composer {
@@ -393,14 +484,25 @@ class Telex : Composer {
             return 0 to toInsert
         }
         // logic for telex below
-        when (char.lowercase()) {
-            'a' -> {
-                val lowerV1 = syllable.v1.lowercase()
-                if (lowerV1 == 'a' || lowerV1 == 'ă') {
-                    syllable.v1
-            }
+        val newText = when (char.lowercase()) {
+            'd' -> handleD(syllable)
+            'a' -> handleVowel(syllable, 'a', mapOf('a' to ("aă" to 'â')))
+            'e' -> handleVowel(syllable, 'e', mapOf('e' to ("e" to 'ê')))
+            'o' -> handleVowel(syllable, 'o', mapOf('o' to ("oơ" to 'ô')))
+            'w' -> handleVowel(syllable, 'w', mapOf(
+                'a' to ("aâ" to 'ă'),
+                'o' to ("oô" to 'ơ'),
+                'u' to ("u" to 'ư'),
+            )
+            'z' -> handleTone(syllable, 'z', 0)
+            's' -> handleTone(syllable, 's', 1)
+            'f' -> handleTone(syllable, 'f', 2)
+            'r' -> handleTone(syllable, 'r', 3)
+            'x' -> handleTone(syllable, 'x', 4)
+            'j' -> handleTone(syllable, 'j', 5)
             // default to append
-            else -> return 0 to toInsert
+            else -> precedingText + char
         }
+        return compare(precedingText, newText)
     }
 }
