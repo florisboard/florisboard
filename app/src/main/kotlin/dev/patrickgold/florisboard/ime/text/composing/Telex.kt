@@ -367,14 +367,14 @@ fun handleTone(syllable: Syllable, letter: Char, tone: Int): String {
 }
 
 // Handle d + d -> đ
-fun handleD(syllable: Syllable): String {
+fun handleD(syllable: Syllable, newLetter: Char): String {
     if (syllable.start == 'd') {
         syllable.start = 'đ'
         return syllable.toString()
     } else if (syllable.start == 'đ') {
         syllable.start = 'd'
     }
-    return syllable.toString() + letter
+    return syllable.toString() + newLetter
 }
 
 // Handle vowel diacritics
@@ -458,8 +458,8 @@ class Telex : Composer {
         if (precedingText.isEmpty() || c == null) {
             return 0 to toInsert
         }
-        val code = toInsert.toInt()
-        // if inserted letter isn't ASCII, fallback to appender
+        val code = char.toInt()
+        // if inserted letter isn't alphabetic, fallback to appender
         if (code < 65 || code > 122) {
             return 0 to toInsert
         }
@@ -470,7 +470,7 @@ class Telex : Composer {
         }
         // logic for telex below
         val newText = when (char.lowercaseChar()) {
-            'd' -> handleD(syllable)
+            'd' -> handleD(syllable, 'd')
             'a' -> handleVowel(syllable, 'a', mapOf('a' to ("aă" to 'â')))
             'e' -> handleVowel(syllable, 'e', mapOf('e' to ("e" to 'ê')))
             'o' -> handleVowel(syllable, 'o', mapOf('o' to ("oơ" to 'ô')))
