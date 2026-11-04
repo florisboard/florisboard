@@ -36,6 +36,14 @@ object Letters {
         'ư' to "ưứừửữự",
         'y' to "yýỳỷỹỵ",
     )
+    const val BARE_VOWELS = mapOf(
+        'ă' to 'a',
+        'â' to 'a',
+        'ê' to 'e',
+        'ô' to 'o',
+        'ơ' to 'o',
+        'ư' to 'u',
+    )
 }
 
 /* Vietnamese syllable structure:
@@ -84,6 +92,7 @@ class Syllable {
     var v2: Char? = null
     var end: String? = null
     var tone: Int = 0
+    var toneIndex: Int = 0
 
     // Serialize the syllable to String
     fun toString(): String {
@@ -102,6 +111,20 @@ class Syllable {
             if (this.end != null) append(this.end)
         }
         return word
+    }
+
+    // Returns a copy
+    fun copy(): Syllable {
+        return Syllable(
+            start=this.start,
+            u=this.u,
+            y=this.y,
+            v1=this.v1,
+            v2=this.v2,
+            end=this.end,
+            tone=this.tone,
+            toneIndex=this.toneIndex,
+        )
     }
 
     companion object Factory {
@@ -153,83 +176,110 @@ class Syllable {
                     reversed[c] = vowel
                 }
             }
+
+            syllable.toneIndex = initialGroup.length
             when (middleGroup.length) {
                 0 -> return syllable // unfinished word without vowels
                 1 -> syllable.v1 = middleGroup[0]
                 2 -> {
-                    val v1 = middleGroup[0].lowercase()
-                    val v2 = middleGroup[1].lowercase()
-                    val base1 = reversed[v1]
-                    val base2 = reversed[v2]
-                    val tone1 = Letters.VOWELS[base1]
-                    val tone2 = Letters.VOWELS[base2]
+                    val v1 = middleGroup[0]
+                    val v2 = middleGroup[1]
+                    val lowerV1 = v1.lowercase()
+                    val lowerV2 = v2.lowercase()
+                    val base1 = reversed[lowerV1]
+                    val base2 = reversed[lowerV2]
+                    val bare1 = Letters.BARE_VOWELS[base1]
+                    val bare2 = Letters.BARE_VOWELS[base2]
+                    val tone1 = Letters.VOWELS[base1].indexOf(lowerV1)
+                    val tone2 = Letters.VOWELS[base2].indexOf(lowerV2)
                     // can't be more than 2 tones
                     if (tone1 > 0 && tone2 > 0) {
                         return null
                     }
-                    syllable.tone = tone1 + tone2
-                    when {
-                        // Use new oà oè uỳ by default, old tone placing should manually modify this
-                        "$base1$base2" in listOf("oa", "oe", "uê", "uy", "oă", "uâ", "uo", "uô", "uơ", "ươ") -> {
-                            syllable.u = middleGroup[0]
-                            syllable.v1 = middleGroup[1]
+                    if (tone1 > 0) {
+                        syllable.tone = tone1
+                    else if (tone2 > 0) {
+                        syllable.tone = tone2
+                        syllable.toneIndex += 1
+                    }
+                    when (bare1) {
+                        'a', 'e' -> {
+                            syllable.v1 = v1
+                            syllable.v2 = v2
                         }
-                        base1 == 'i' -> {
+                        'i' -> {
                             // allow giặt gịa
                             if (syllable.start.lowercase() == "g" && middleGroup.lowercase() != "ịa" && base2 != 'ê') {
-                                syllable.start += middleGroup[0]
-                                syllable.v1 = middleGroup[1]
+                                syllable.start += v1
+                                syllable.v1 = v2
                             } else if (base2 == 'ê') {
-                                syllable.y = middleGroup[0]
-                                syllable.v1 = middleGroup[1]
+                                syllable.y = v1
+                                syllable.v1 = v2
                             } else {
-                                syllable.v1 = middleGroup[0]
-                                syllable.v2 = middleGroup[1]
+                                syllable.v1 = v1
+                                syllable.v2 = v2
                             }
                         }
-                        base1 == 'y' -> {
+                        'y' -> {
                             // allow giặt gỵa
-                            if (syllable.start.lowercase() == "g" && tone1 == 5) {
-                                syllable.start += middleGroup[0]
-                                syllable.v1 = middleGroup[1]
+                            if (syllable.start.lowercase() == "g") {
+                                syllable.start += v1
+                                syllable.v1 = v2
                             } else if (syllable.start == "") {
-                                syllable.y = middleGroup[0]
-                                syllable.v1 = middleGroup[1]
+                                syllable.y = v1
+                                syllable.v1 = v2
                             } else {
                                 // y cannot goes in middle e.g. yên, yêt
                                 return null
                             }
                         }
-                        base1 == 'u' -> {
-                            if (syllable.start.lowercase() == "q") {
-                                syllable.u = middleGroup[0]
-                                syllable.v1 = middleGroup[1]
+                        'o' -> {
+                            if (bare1 == 'i') {
+                                syllable.v1 = v1
+                                syllable.v2 = v2
                             } else {
-                                syllable.v1 = middleGroup[0]
-                                syllable.v2 = middleGroup[1]
+                                syllable.u = v1
+                                syllable.v1 = v2
                             }
                         }
-                        else -> {
-                            syllable.v1 = middleGroup[0]
-                            syllable.v2 = middleGroup[1]
+                        'u' -> {
+                            if (syllable.start.lowercase() == "q" || finalGroup != "") {
+                                syllable.u = v1
+                                syllable.v1 = v2
+                            } else {
+                                syllable.v1 = v1
+                                syllable.v2 = v2
+                            }
                         }
+                        else -> return null
                     }
                 }
                 3 -> {
-                    val v1 = middleGroup[0].lowercase()
-                    val v2 = middleGroup[1].lowercase()
-                    val v3 = middleGroup[2].lowercase()
-                    val base1 = reversed[v1]
-                    val base2 = reversed[v2]
-                    val base3 = reversed[v3]
-                    val tone1 = Letters.VOWELS[base1]
-                    val tone2 = Letters.VOWELS[base2]
-                    val tone3 = Letters.VOWELS[base3]
+                    val v1 = middleGroup[0]
+                    val v2 = middleGroup[1]
+                    val v3 = middleGroup[2]
+                    val lowerV1 = v1.lowercase()
+                    val lowerV2 = v2.lowercase()
+                    val lowerV3 = v3.lowercase()
+                    val base1 = reversed[lowerV1]
+                    val base2 = reversed[lowerV2]
+                    val base3 = reversed[lowerV3]
+                    val bare1 = Letters.BARE_VOWELS[base1]
+                    val bare2 = Letters.BARE_VOWELS[base2]
+                    val bare3 = Letters.BARE_VOWELS[base3]
+                    val tone1 = Letters.VOWELS[base1].indexOf(lowerV1)
+                    val tone2 = Letters.VOWELS[base2].indexOf(lowerV2)
+                    val tone3 = Letters.VOWELS[base3].indexOf(lowerV3)
                     // tone must be on 2nd (oải) or 3rd (tuyết) vowel letter
-                    if (tone1 > 0 || (tone2 > 0 && tone3 > 0)) {
+                    if (tone1 > 0) {
                         return null
-                    }
-                    syllable.tone = tone1 + tone2 + tone3
+                    } else if (tone2 > 0 && tone3 == 0) {
+                        syllable.toneIndex += 1
+                        syllable.tone = tone2
+                    } else if (tone3 > 0 && tone 2 == 0) {
+                        syllable.toneIndex += 2
+                        syllable.tone = tone3
+                    } 
                     when (base1) {
                         'o' -> {
                             // allowed: oai, oay, oeo
@@ -246,7 +296,7 @@ class Syllable {
                             // if uyê, allows final
                             // first 3 only follows q
                             syllable.u = middleGroup[0]
-                            when ("$base2$base3") {
+                            when ("$bare2$bare3") {
                                 "ai", "ay", "eo" -> {
                                     if (syllable.start != "q" || finalGroup.length > 0) {
                                         return null
@@ -254,14 +304,14 @@ class Syllable {
                                     syllable.v1 = middleGroup[1]
                                     syllable.v2 = middleGroup[2]
                                 }
-                                "ây", "ya", "yu", "ôi" -> {
+                                "ay", "ya", "yu", "oi", "ou" -> {
                                     if (finalGroup.length > 0) {
                                         return null
                                     }
                                     syllable.v1 = middleGroup[1]
                                     syllable.v2 = middleGroup[2]
                                 }
-                                "yê" -> {
+                                "ye" -> {
                                     syllable.y = middleGroup[1]
                                     syllable.v1 = middleGroup[2]
                                 }
@@ -270,7 +320,7 @@ class Syllable {
                         }
                         'ư' -> {
                             // allows: ươi, ươu
-                            if ("$base2$base3" in listOf("ơi", "ơu") && finalGroup.length == 0) {
+                            if ("$bare2$bare3" in listOf("oi", "ou") && finalGroup.length == 0) {
                                 syllable.u = middleGroup[0]
                                 syllable.v1 = middleGroup[1]
                                 syllable.v2 = middleGroup[2]
@@ -280,7 +330,7 @@ class Syllable {
                         }
                         // allowed: yêu, iêu
                         'i', 'y' -> {
-                            if ("$base2$base3" not in listOf("eu", "êu") || finalGroup.length > 0) {
+                            if ("$bare2$bare3" != "eu" || finalGroup.length > 0) {
                                 return null
                             }
                             if (initialGroup == "" && base1 == "i") {
@@ -327,6 +377,11 @@ class Telex : Composer {
     //val newOaOeUy: Boolean = true
 
     fun getActions(precedingText: String, toInsert: String): Pair<Int, String> {
+        val char = toInsert.firstOrNull()
+        // precedingText is "at least the last 1 character of what's currently here"
+        if (precedingText.isEmpty() || c == null) {
+            return 0 to toInsert
+        }
         val code = toInsert.toInt()
         // if inserted letter isn't ASCII, fallback to appender
         if (code < 65 || code > 122) {
@@ -338,5 +393,14 @@ class Telex : Composer {
             return 0 to toInsert
         }
         // logic for telex below
+        when (char.lowercase()) {
+            'a' -> {
+                val lowerV1 = syllable.v1.lowercase()
+                if (lowerV1 == 'a' || lowerV1 == 'ă') {
+                    syllable.v1
+            }
+            // default to append
+            else -> return 0 to toInsert
+        }
     }
 }
