@@ -97,18 +97,18 @@ class Syllable {
     // Serialize the syllable to String
     override fun toString(): String {
         val word = buildString {
-            if (this.start != null) append(this.start)
-            if (this.u != null) append(this.u)
-            if (this.y != null) append(this.y)
-            if (this.v1 != null) {
-                letter = Letters.VOWELS[this.v1.lowercase()]
-                if (this.v1.isUpperCase()) {
+            if (start != null) append(start)
+            if (u != null) append(u)
+            if (y != null) append(y)
+            if (v1 != null) {
+                letter = Letters.VOWELS[v1.lowercase()]
+                if (v1.isUpperCase()) {
                     letter = letter.uppercase()
                 }
                 append(letter)
             }
-            if (this.v2 != null) append(this.v2)
-            if (this.end != null) append(this.end)
+            if (v2 != null) append(v2)
+            append(end)
         }
         return word
     }
