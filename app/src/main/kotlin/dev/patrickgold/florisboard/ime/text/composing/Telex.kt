@@ -100,9 +100,10 @@ class Syllable {
             if (u != null) append(u)
             if (y != null) append(y)
             val lowerV1 = v1?.lowercaseChar()
+            val isV1UpperCase = v1?.isUpperCase() ?: false
             if (lowerV1 != null) {
                 var tonedLetter = Letters.VOWELS[lowerV1]
-                if (v1.isUpperCase()) {
+                if (isV1UpperCase) {
                     tonedLetter = tonedLetter.uppercaseChar()
                 }
                 append(letter)
@@ -225,9 +226,12 @@ class Syllable {
                         }
                         'o' -> {
                             if (bare1 == 'i') {
+                                // e.g. hỏi
                                 syllable.v1 = v1
                                 syllable.v2 = v2
                             } else {
+                                // e.g. hoá, toé (new tone placement)
+                                // voọc, coóc-xê (rare oong/ooc)
                                 syllable.u = v1
                                 syllable.v1 = v2
                             }
@@ -395,19 +399,20 @@ fun handleD(syllable: Syllable): String {
 // â + a -> aa
 // i + a -> ia
 fun handleVowel(syllable: Syllable, newLetter: Char, letterPairs: Map<Char, Pair<String, Char>>): String {
+    val isV1UpperCase = syllable.v1?.isUpperCase() ?: false
     val lowerV1 = syllable.v1?.lowercaseChar()
     val bareLetter = Letters.BARE_VOWELS[lowerV1]
     val fromLetters = letterPairs[bareLetter].first
     val toLetter = letterPairs[bareLetter].second
 
     if (lowerV1 in fromLetters) {
-        if (syllable.v1.isUpperCase()) {
+        if (isV1UpperCase) {
             syllable.v1 = toLetter.uppercaseChar()
         } else {
             syllable.v1 = toLetter
         }
     } else if (lowerV1 == toLetter) {
-        if (syllable.v1.isUpperCase()) {
+        if (isV1UpperCase) {
             syllable.v1 = bareLetter.uppercaseChar()
         } else {
             syllable.v1 = bareLetter
@@ -422,15 +427,16 @@ fun handleVowel(syllable: Syllable, newLetter: Char, letterPairs: Map<Char, Pair
     // these doesn't need final consonant
     // ươ + w ->
     // ươn + w -> uôn
+    val isUUpperCase = syllable.u?.isUpperCase() ?: false
     val mid = syllable.u.lowercaseChar().toString() + bareLetter
     if (newLetter == 'w' && mid == "uo" && (syllable.v2 == 'i' || syllable.end !== "") && syllable.start != "q") {
-        if (syllable.u.isUpperCase() {
+        if (isUUpperCase) {
             syllable.u = 'Ư'
         } else {
             syllable.u = 'ư'
         }
     } else if (newLetter == 'o' && mid == "ưo") {
-        if (syllable.u.isUpperCase() {
+        if (isUUpperCase) {
             syllable.u = 'U'
         } else {
             syllable.u = 'u'
