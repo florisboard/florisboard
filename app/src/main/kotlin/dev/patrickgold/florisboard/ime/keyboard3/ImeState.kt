@@ -26,6 +26,8 @@ class ImeState(
     editor: ImeEditor = ImeEditor.Disconnected,
     content: K3Content = K3Content.Empty,
     touchLayerId: K3LayerId = ImeLayerIds.Base,
+    val subtypes: List<Subtype> = emptyList(),
+    val activeSubtype: Subtype = Subtype.DEFAULT,
     val effRowCount: Int = 4,
     val flags: ImeStateFlags = ImeStateFlags(),
 ) : K3InputMethodState<ImeState, ImeEditor>(
@@ -36,14 +38,16 @@ class ImeState(
         editor: ImeEditor,
         content: K3Content,
         touchLayerId: K3LayerId,
-    ) = ImeState(model, editor, content, touchLayerId, this.effRowCount, this.flags)
+    ) = ImeState(model, editor, content, touchLayerId, this.subtypes, this.activeSubtype, this.effRowCount, this.flags)
 
     fun copy(
         model: K3Model = this.model,
         editor: ImeEditor = this.editor,
         content: K3Content = this.content,
         touchLayerId: K3LayerId = this.touchLayerId,
+        subtypes: List<Subtype> = this.subtypes,
+        activeSubtype: Subtype = this.activeSubtype,
         effRowCount: Int = this.effRowCount,
         flags: ImeStateFlags = this.flags,
-    ) = ImeState(model, editor, content, touchLayerId, effRowCount, flags)
+    ) = ImeState(model, editor, content, touchLayerId, subtypes, activeSubtype, effRowCount, flags)
 }

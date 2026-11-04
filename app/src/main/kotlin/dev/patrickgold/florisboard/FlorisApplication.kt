@@ -31,7 +31,6 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.app.NoBackupPreferenceModel
 import dev.patrickgold.florisboard.app.NoBackupPreferenceStore
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardManager
-import dev.patrickgold.florisboard.ime.core.SubtypeManager
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
 import dev.patrickgold.florisboard.ime.extension.ExtensionController
 import dev.patrickgold.florisboard.ime.io.AndroidStorageController
@@ -88,7 +87,6 @@ class FlorisApplication : Application() {
     val clipboardManager = lazy { ClipboardManager(this) }
     val glideTypingManager = lazy { GlideTypingManager(this) }
     val nlpManager = lazy { NlpManager(this) }
-    val subtypeManager = lazy { SubtypeManager(this) }
 
     override fun onCreate() {
         super.onCreate()
@@ -197,5 +195,3 @@ fun Context.clipboardManager() = this.inferFlorisApplication().clipboardManager
 fun Context.glideTypingManager() = this.inferFlorisApplication().glideTypingManager
 
 fun Context.nlpManager() = this.inferFlorisApplication().nlpManager
-
-fun Context.subtypeManager() = this.inferFlorisApplication().subtypeManager

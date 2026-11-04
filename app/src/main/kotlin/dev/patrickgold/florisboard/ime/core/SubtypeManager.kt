@@ -16,6 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.core
 
+/*
 import android.content.Context
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
@@ -27,66 +28,11 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import org.florisboard.lib.kotlin.collectLatestIn
 
-val SubtypeJsonConfig = Json {
-    encodeDefaults = true
-    ignoreUnknownKeys = true
-    isLenient = false
-}
-
 /**
  * Class which acts as a high level helper for the raw implementation of subtypes in the prefs. Additionally provides
  * helper methods for the in-keyboard language switch process.
  */
-class SubtypeManager(context: Context) {
-    private val prefs by FlorisPreferenceStore
-    private val scope = CoroutineScope(Dispatchers.Default)
-
-    val subtypesFlow: StateFlow<List<Subtype>>
-        field = MutableStateFlow(listOf())
-    inline var subtypes
-        get() = subtypesFlow.value
-        private set(v) { subtypesFlow.value = v }
-
-    val activeSubtypeFlow: StateFlow<Subtype>
-        field = MutableStateFlow(Subtype.DEFAULT)
-    inline var activeSubtype
-        get() = activeSubtypeFlow.value
-        private set(v) { activeSubtypeFlow.value = v }
-
-    init {
-        prefs.localization.subtypes.asFlow().collectLatestIn(scope) { listRaw ->
-            flogDebug { listRaw }
-            val list = if (listRaw.isNotBlank()) {
-                SubtypeJsonConfig.decodeFromString<List<Subtype>>(listRaw)
-            } else {
-                emptyList()
-            }
-            subtypes = list
-            evaluateActiveSubtype(list)
-        }
-    }
-
-    private fun persistNewSubtypeList(list: List<Subtype>) = scope.launch {
-        val listRaw = SubtypeJsonConfig.encodeToString(list)
-        prefs.localization.subtypes.set(listRaw)
-    }
-
-    /**
-     * Gets the active subtype and returns it. If the activeSubtypeId points to a non-existent
-     * subtype, this method tries to determine a new active subtype.
-     *
-     * @return The active subtype or null, if the subtype list is empty or no new active subtype
-     *  could be determined.
-     */
-    private fun evaluateActiveSubtype(list: List<Subtype>) = scope.launch {
-        val activeSubtypeId = prefs.localization.activeSubtypeId.get()
-        val subtype = list.find { it.id == activeSubtypeId } ?: list.firstOrNull() ?: Subtype.DEFAULT
-        if (subtype.id != activeSubtypeId) {
-            prefs.localization.activeSubtypeId.set(subtype.id)
-        }
-        activeSubtype = subtype
-    }
-
+class SubtypeManager {
     /**
      * Adds a given [subtype] to the subtype list, if it does not exist.
      *
@@ -103,17 +49,6 @@ class SubtypeManager(context: Context) {
         val newSubtypeList = subtypeList + subtypeToAdd
         persistNewSubtypeList(newSubtypeList)
         return true
-    }
-
-    /**
-     * Gets a subtype by the given [id].
-     *
-     * @param id The id of the subtype you want to get.
-     * @return The subtype or null, if no matching subtype could be found.
-     */
-    fun getSubtypeById(id: Long): Subtype? {
-        val subtypeList = subtypes
-        return subtypeList.find { it.id == id }
     }
 
     /**
@@ -158,57 +93,5 @@ class SubtypeManager(context: Context) {
             evaluateActiveSubtype(newSubtypeList)
         }
     }
-
-    /**
-     * Switch to the previous subtype in the subtype list if possible.
-     */
-    fun switchToPrevSubtype() = scope.launch {
-        val subtypeList = subtypes
-        val cachedActiveSubtype = activeSubtype
-        var triggerNextSubtype = false
-        var newActiveSubtype: Subtype = Subtype.DEFAULT
-        for (subtype in subtypeList.asReversed()) {
-            if (triggerNextSubtype) {
-                triggerNextSubtype = false
-                newActiveSubtype = subtype
-            } else if (subtype == cachedActiveSubtype) {
-                triggerNextSubtype = true
-            }
-        }
-        if (triggerNextSubtype) {
-            newActiveSubtype = subtypeList.last()
-        }
-        prefs.localization.activeSubtypeId.set(newActiveSubtype.id)
-        activeSubtype = newActiveSubtype
-    }
-
-    /**
-     * Switch to the next subtype in the subtype list if possible.
-     */
-    fun switchToNextSubtype() = scope.launch {
-        val subtypeList = subtypes
-        val cachedActiveSubtype = activeSubtype
-        var triggerNextSubtype = false
-        var newActiveSubtype: Subtype = Subtype.DEFAULT
-        for (subtype in subtypeList) {
-            if (triggerNextSubtype) {
-                triggerNextSubtype = false
-                newActiveSubtype = subtype
-            } else if (subtype == cachedActiveSubtype) {
-                triggerNextSubtype = true
-            }
-        }
-        if (triggerNextSubtype) {
-            newActiveSubtype = subtypeList.first()
-        }
-        prefs.localization.activeSubtypeId.set(newActiveSubtype.id)
-        activeSubtype = newActiveSubtype
-    }
-
-    fun switchToSubtypeById(id: Long) = scope.launch {
-        if (subtypes.any { it.id == id }) {
-            activeSubtype = getSubtypeById(id)!!
-            prefs.localization.activeSubtypeId.set(id)
-        }
-    }
 }
+ */

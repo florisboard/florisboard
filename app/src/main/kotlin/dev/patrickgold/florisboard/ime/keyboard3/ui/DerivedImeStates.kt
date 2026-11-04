@@ -27,7 +27,6 @@ import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
-import dev.patrickgold.florisboard.subtypeManager
 import org.florisboard.lib.android.AndroidKeyguardManager
 import org.florisboard.lib.android.systemService
 import org.k3lp.lib.text.K3Descriptor
@@ -46,9 +45,6 @@ fun rememberDerivedEnabledState(
     val imeController = LocalImeController.current
     val imeState by imeController.activeState.collectAsState()
 
-    val subtypeManager by context.subtypeManager()
-    val subtypes by subtypeManager.subtypesFlow.collectAsState()
-
     val androidKeyguardManager = remember {
         context.systemService(AndroidKeyguardManager::class)
     }
@@ -60,7 +56,7 @@ fun rememberDerivedEnabledState(
             val isSelectionCollapsed = imeState.content.selection.isCollapsed()
             val isPrimaryClipPastable = clipboardManager.canBePasted(primaryClip)
             val isRichInputEditor = imeState.editor.info.isRichInputEditor
-            val isMultiLingual = subtypes.size > 1
+            val isMultiLingual = imeState.subtypes.size > 1
             val isDeviceLocked = isDeviceLocked
             when (output) {
                 is K3Descriptor -> when (output.name) {

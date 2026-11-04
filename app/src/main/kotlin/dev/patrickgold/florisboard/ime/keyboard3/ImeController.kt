@@ -54,6 +54,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -121,6 +122,22 @@ class ImeController(
 
     init {
         combine(
+            prefs.localization.subtypes.asFlow(),
+            prefs.localization.activeSubtypeId.asFlow(),
+        ) { subtypes, activeSubtypeId ->
+            val activeSubtype = subtypes.find { it.id == activeSubtypeId } ?: subtypes.firstOrNull() ?: Subtype.DEFAULT
+            subtypes to activeSubtype
+        }.distinctUntilChanged().collectIn(scope) { (subtypes, activeSubtype) ->
+            updateState {
+                state = state.copy(
+                    subtypes = subtypes,
+                    activeSubtype = activeSubtype,
+                )
+            }
+            prefs.localization.activeSubtypeId.set(activeSubtype.id)
+        }
+
+        combine(
             prefs.devtools.enabled.asFlow(),
             prefs.devtools.showDragAndDropHelpers.asFlow(),
         ) { devtoolsEnabled, showDragAndDropHelpers ->
@@ -173,6 +190,33 @@ class ImeController(
             // TODO KeyEvent.KEYCODE_SHIFT_LEFT, KeyEvent.KEYCODE_SHIFT_RIGHT
             else -> false
         }
+    }
+
+    /**
+     * Switch to the previous subtype in the subtype list if possible.
+     */
+    suspend fun switchToPrevSubtype() = rotateActiveSubtype(-1)
+
+    /**
+     * Switch to the next subtype in the subtype list if possible.
+     */
+    suspend fun switchToNextSubtype() = rotateActiveSubtype(1)
+
+    private suspend fun rotateActiveSubtype(offset: Int) {
+        val state = snapshotState()
+        val subtypes = state.subtypes
+        val activeSubtype = state.activeSubtype
+        val currIndex = subtypes.indexOf(activeSubtype)
+        if (currIndex == -1) {
+            return
+        }
+        val nextIndex = (currIndex + offset) % subtypes.size
+        val nextSubtype = subtypes[nextIndex]
+        prefs.localization.activeSubtypeId.set(nextSubtype.id)
+    }
+
+    suspend fun switchToSubtypeById(id: Long) {
+        prefs.localization.activeSubtypeId.set(id)
     }
 
     fun setEmitInterceptor(interceptor: EmitInterceptor?) {

@@ -45,7 +45,6 @@ import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
 import dev.patrickgold.florisboard.nlpManager
-import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.compose.conditional
 import org.florisboard.lib.compose.florisHorizontalScroll
@@ -67,7 +66,6 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val interactionController = LocalInteractionController.current
     val context = LocalContext.current
     val nlpManager by context.nlpManager()
-    val subtypeManager by context.subtypeManager()
 
     val displayMode by prefs.suggestion.displayMode.collectAsState()
     val candidates by nlpManager.activeCandidatesFlow.collectAsState()
@@ -129,7 +127,7 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
                         // Can't use candidate directly
                         val candidateItem = candidates[n]
                         if (candidateItem.isEligibleForUserRemoval) {
-                            nlpManager.removeSuggestion(subtypeManager.activeSubtype, candidateItem)
+                            nlpManager.removeSuggestion(imeController.snapshotState().activeSubtype, candidateItem)
                         } else {
                             false
                         }

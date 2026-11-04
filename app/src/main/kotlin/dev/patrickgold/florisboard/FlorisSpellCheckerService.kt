@@ -21,8 +21,8 @@ import android.view.textservice.SentenceSuggestionsInfo
 import android.view.textservice.SuggestionsInfo
 import android.view.textservice.TextInfo
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.dictionary.DictionaryManager
+import dev.patrickgold.florisboard.ime.keyboard3.Subtype
 import dev.patrickgold.florisboard.ime.nlp.SpellingLanguageMode
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.lib.FlorisLocale
@@ -36,7 +36,6 @@ class FlorisSpellCheckerService : SpellCheckerService() {
     private val prefs by FlorisPreferenceStore
     private val dictionaryManager get() = DictionaryManager.default()
     private val nlpManager by nlpManager()
-    private val subtypeManager by subtypeManager()
 
     override fun onCreate() {
         flogInfo(LogTopic.SPELL_EVENTS)
@@ -69,7 +68,7 @@ class FlorisSpellCheckerService : SpellCheckerService() {
         private fun setupSpellingIfNecessary() {
             val evaluatedSubtype = when (prefs.spelling.languageMode.get()) {
                 SpellingLanguageMode.USE_KEYBOARD_SUBTYPES -> {
-                    subtypeManager.activeSubtype
+                    Subtype.DEFAULT // TODO subtypeManager.activeSubtype
                 }
                 else -> {
                     Subtype.DEFAULT.copy(primaryLocale = FlorisLocale.default())

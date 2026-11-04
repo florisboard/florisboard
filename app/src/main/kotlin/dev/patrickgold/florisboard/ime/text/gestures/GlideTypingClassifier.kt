@@ -16,7 +16,7 @@
 
 package dev.patrickgold.florisboard.ime.text.gestures
 
-import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.keyboard3.Subtype
 
 /**
  * Inherit this to be able to handle gesture typing. Takes in raw pointer data, and

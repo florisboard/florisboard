@@ -20,7 +20,6 @@ import android.content.Context
 import androidx.collection.LruCache
 import androidx.collection.SparseArrayCompat
 import androidx.collection.set
-import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.keyboard.KeyData
 import dev.patrickgold.florisboard.ime.text.key.KeyCode
 import dev.patrickgold.florisboard.nlpManager

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,13 +27,16 @@ import androidx.compose.material.icons.filled.RadioButtonChecked
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import dev.patrickgold.florisboard.R
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
-import dev.patrickgold.florisboard.subtypeManager
+import kotlinx.coroutines.launch
 import org.florisboard.lib.compose.stringRes
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
@@ -43,13 +46,14 @@ import org.florisboard.lib.snygg.ui.SnyggText
 
 @Composable
 fun SelectSubtypePanel(modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-    val subtypeManager by context.subtypeManager()
+    val imeController = LocalImeController.current
 
+    val imeState by imeController.activeState.collectAsState()
+    val subtypes by remember { derivedStateOf { imeState.subtypes } }
+    val activeSubtype by remember { derivedStateOf { imeState.activeSubtype } }
+
+    val scope = rememberCoroutineScope()
     val listState = rememberLazyListState()
-    val subtypes by subtypeManager.subtypesFlow.collectAsState()
-
-    val currentlySelected = subtypeManager.activeSubtype.id
 
     SnyggColumn(FlorisImeUi.SubtypePanel.elementName, modifier = modifier.safeDrawingPadding()) {
         SnyggRow(
@@ -78,11 +82,17 @@ fun SelectSubtypePanel(modifier: Modifier = Modifier) {
                     SnyggListItem(
                         elementName = FlorisImeUi.SubtypePanelListItem.elementName,
                         onClick = {
-                            subtypeManager.switchToSubtypeById(it.id)
-                            // TODO keyboardManager.activeState.isSubtypeSelectionVisible = false
+                            scope.launch {
+                                imeController.switchToSubtypeById(it.id)
+                                imeController.updateState {
+                                    state = state.copy(
+                                        flags = state.flags.withSubtypeSelectionVisible(false),
+                                    )
+                                }
+                            }
                         },
                         leadingImageVector = when {
-                            currentlySelected == it.id -> Icons.Default.RadioButtonChecked
+                            activeSubtype.id == it.id -> Icons.Default.RadioButtonChecked
                             else -> Icons.Default.RadioButtonUnchecked
                         },
                         text = it.primaryLocale.displayName(),

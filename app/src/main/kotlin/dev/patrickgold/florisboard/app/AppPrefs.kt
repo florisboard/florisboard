@@ -25,12 +25,12 @@ import dev.patrickgold.florisboard.app.settings.theme.SnyggLevel
 import dev.patrickgold.florisboard.ime.clipboard.CLIPBOARD_HISTORY_NUM_GRID_COLUMNS_AUTO
 import dev.patrickgold.florisboard.ime.clipboard.ClipboardSyncBehavior
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
 import dev.patrickgold.florisboard.ime.extension.extCoreTheme
 import dev.patrickgold.florisboard.ime.keyboard.IncognitoMode
 import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.ImeActions
+import dev.patrickgold.florisboard.ime.keyboard3.Subtype
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.InteractionTimingOptions
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyAction
 import dev.patrickgold.florisboard.ime.keyboard3.touch.FnKeyArrangement
@@ -530,9 +530,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "localization__active_subtype_id",
             default = Subtype.DEFAULT.id,
         )
-        val subtypes = string(
+        val subtypes = custom(
             key = "localization__subtypes",
-            default = "[]",
+            default = emptyList(),
+            serializer = Subtype.ListSerializer,
         )
     }
 

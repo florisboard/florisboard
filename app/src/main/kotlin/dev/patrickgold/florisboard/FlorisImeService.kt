@@ -66,6 +66,8 @@ import dev.patrickgold.florisboard.lib.util.debugSummarize
 import dev.patrickgold.florisboard.lib.util.launchActivity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import org.florisboard.lib.android.AndroidInternalR
 import org.florisboard.lib.android.AndroidVersion
 import org.florisboard.lib.android.systemServiceOrNull
@@ -260,7 +262,6 @@ class FlorisImeService : LifecycleInputMethodService() {
     val themeController = appContext.themeController
 
     private val nlpManager by nlpManager()
-    private val subtypeManager by subtypeManager()
 
     val windowController = ImeWindowController(prefs, lifecycleScope)
 
@@ -287,7 +288,7 @@ class FlorisImeService : LifecycleInputMethodService() {
 
         combine(
             systemLocalesFlow,
-            subtypeManager.activeSubtypeFlow,
+            imeController.activeState.map { it.activeSubtype }.distinctUntilChanged(),
             prefs.localization.displayKeyboardLabelsInSubtypeLanguage.asFlow(),
         ) { systemLocales, subtype, shouldUseSubtypeLanguage ->
             systemLocales to (if (shouldUseSubtypeLanguage) subtype.primaryLocale else null)

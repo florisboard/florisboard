@@ -26,8 +26,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -39,9 +41,9 @@ import dev.patrickgold.florisboard.app.LocalNavController
 import dev.patrickgold.florisboard.app.Routes
 import dev.patrickgold.florisboard.app.enumDisplayEntriesOf
 import dev.patrickgold.florisboard.ime.core.DisplayLanguageNamesIn
-import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.app.components.FlorisScreen
-import dev.patrickgold.florisboard.subtypeManager
+import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.Subtype
 import dev.patrickgold.jetpref.datastore.ui.ListPreference
 import dev.patrickgold.jetpref.datastore.ui.Preference
 import dev.patrickgold.jetpref.datastore.ui.PreferenceGroup
@@ -66,9 +68,11 @@ fun LocalizationScreen() = FlorisScreen {
     previewFieldVisible = true
     iconSpaceReserved = false
 
+    val imeController = LocalImeController.current
     val navController = LocalNavController.current
-    val context = LocalContext.current
-    val subtypeManager by context.subtypeManager()
+
+    val imeState by imeController.activeState.collectAsState()
+    val subtypes by remember { derivedStateOf { imeState.subtypes } }
     var chosenSubtypeToDelete: Subtype? by rememberSaveable(saver = SubtypeSaver) { mutableStateOf(null) }
 
     floatingActionButton {
@@ -107,7 +111,6 @@ fun LocalizationScreen() = FlorisScreen {
             },
         )
         PreferenceGroup(title = stringRes(R.string.settings__localization__group_subtypes__label)) {
-            val subtypes by subtypeManager.subtypesFlow.collectAsState()
             if (subtypes.isEmpty()) {
                 FlorisWarningCard(
                     modifier = Modifier.padding(all = 8.dp),
@@ -157,7 +160,7 @@ fun LocalizationScreen() = FlorisScreen {
             chosenSubtypeToDelete = null
         },
         onConfirm = {
-            chosenSubtypeToDelete?.let { subtypeManager.removeSubtype(subtypeToRemove = it) }
+            // TODO chosenSubtypeToDelete?.let { subtypeManager.removeSubtype(subtypeToRemove = it) }
             chosenSubtypeToDelete = null
         }
     )

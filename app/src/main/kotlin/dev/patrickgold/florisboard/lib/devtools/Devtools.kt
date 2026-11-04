@@ -26,7 +26,6 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceModel
 import dev.patrickgold.florisboard.lib.titlecase
 import dev.patrickgold.florisboard.lib.util.TimeUtils
 import dev.patrickgold.florisboard.lib.util.UnitUtils
-import dev.patrickgold.florisboard.subtypeManager
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -136,6 +135,7 @@ object Devtools {
     fun generateActiveSubtypeConfigLog(context: Context, withTitle: Boolean = true): String {
         return buildString {
             if (withTitle) appendLine("======= ACTIVE SUBTYPE CONFIG =======")
+            /*
             context.subtypeManager().value.let { subtypeManager ->
                 appendLine("Active Subtype      : ")
                 append("    ")
@@ -145,6 +145,7 @@ object Devtools {
                     append("    ").appendLine(subtype.toShortString())
                 }
             }
+            */
 
         }
     }

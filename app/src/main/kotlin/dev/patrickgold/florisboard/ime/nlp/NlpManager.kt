@@ -23,24 +23,26 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.clipboard.provider.ClipboardItem
 import dev.patrickgold.florisboard.ime.clipboard.provider.ItemType
-import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.keyboard3.Subtype
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.latin.LatinLanguageProvider
 import dev.patrickgold.florisboard.inferFlorisApplication
 import dev.patrickgold.florisboard.lib.util.NetworkUtils
-import dev.patrickgold.florisboard.subtypeManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import org.florisboard.lib.kotlin.guardedByLock
+import org.florisboard.lib.kotlin.collectIn
 import org.florisboard.lib.kotlin.collectLatestIn
+import org.florisboard.lib.kotlin.guardedByLock
 import org.k3lp.runtime.K3Content
 import org.k3lp.runtime.K3TextRange
 import java.util.concurrent.atomic.AtomicBoolean
@@ -55,7 +57,6 @@ class NlpManager(context: Context) {
     val appContext = context.inferFlorisApplication()
     val imeController = appContext.imeController
     private val clipboardManager by context.clipboardManager()
-    private val subtypeManager by context.subtypeManager()
 
     private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val clipboardSuggestionProvider = ClipboardSuggestionProvider(context)
@@ -85,6 +86,9 @@ class NlpManager(context: Context) {
     val debugOverlaySuggestionsInfos = LruCache<Long, Pair<String, SpellingResult>>(10)
     var debugOverlayVersion = MutableStateFlow(0)
 
+    private val activeSubtypeHack
+        get() = imeController.snapshotState().activeSubtype
+
     init {
         clipboardManager.primaryClipFlow.collectLatestIn(scope) {
             assembleCandidates()
@@ -98,9 +102,11 @@ class NlpManager(context: Context) {
         prefs.emoji.suggestionEnabled.asFlow().collectLatestIn(scope) {
             assembleCandidates()
         }
-        subtypeManager.activeSubtypeFlow.collectLatestIn(scope) { subtype ->
-            preload(subtype)
-        }
+        imeController.activeState.map { it.activeSubtype }
+            .distinctUntilChanged()
+            .collectIn(scope) { subtype ->
+                preload(subtype)
+            }
     }
 
     /**
@@ -110,7 +116,7 @@ class NlpManager(context: Context) {
      * @return The punctuation rule or a fallback.
      */
     fun getActivePunctuationRule(): PunctuationRule {
-        return getPunctuationRule(subtypeManager.activeSubtype)
+        return getPunctuationRule(activeSubtypeHack)
     }
 
     /**
@@ -172,8 +178,8 @@ class NlpManager(context: Context) {
     suspend fun determineLocalComposing(
         textBeforeSelection: CharSequence, breakIterators: BreakIteratorGroup, localLastCommitPosition: Int
     ): K3TextRange {
-        return getSuggestionProvider(subtypeManager.activeSubtype).determineLocalComposing(
-            subtypeManager.activeSubtype, textBeforeSelection, breakIterators, localLastCommitPosition
+        return getSuggestionProvider(activeSubtypeHack).determineLocalComposing(
+            activeSubtypeHack, textBeforeSelection, breakIterators, localLastCommitPosition
         )
     }
 
@@ -189,7 +195,7 @@ class NlpManager(context: Context) {
     fun isSuggestionOn(): Boolean =
         prefs.suggestion.enabled.get()
             || prefs.emoji.suggestionEnabled.get()
-            || providerForcesSuggestionOn(subtypeManager.activeSubtype)
+            || providerForcesSuggestionOn(activeSubtypeHack)
 
     fun suggest(subtype: Subtype, content: K3Content) {
         val reqTime = SystemClock.uptimeMillis()
@@ -257,7 +263,7 @@ class NlpManager(context: Context) {
                     if (candidate is ClipboardSuggestionCandidate) {
                         assembleCandidates()
                     } else {
-                        suggest(subtypeManager.activeSubtype, imeController.snapshotState().content)
+                        suggest(activeSubtypeHack, imeController.snapshotState().content)
                     }
                 }
             }

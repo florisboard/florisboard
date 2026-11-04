@@ -17,7 +17,7 @@
 package dev.patrickgold.florisboard.ime.nlp
 
 import android.icu.text.BreakIterator
-import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.keyboard3.Subtype
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import org.k3lp.runtime.K3Content
 import org.k3lp.runtime.K3TextRange

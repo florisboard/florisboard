@@ -51,14 +51,14 @@ suspend fun loadFoundationKeyboard(imeController: ImeController, storage: Storag
         return sourceFile
     }
     val importResolver = K3ImportResolver { path, _ ->
-        val relPath = "import/" + runCatching { Uri.parse(path).path?.removePrefix("/") ?: "" }.getOrDefault(path)
+        val relPath = "imports/" + runCatching { Uri.parse(path).path?.removePrefix("/") ?: "" }.getOrDefault(path)
         loadAssetFile(relPath)
     }
     val impliedImports = K3ImpliedImports(
         displays = listOf("flex://org.florisboard.k3.foundation/displays-implied.xml"),
         keys = listOf("flex://org.florisboard.k3.foundation/keys-implied.xml"),
     )
-    val file = loadAssetFile("keyboard/qwertz.xml")
+    val file = loadAssetFile("keyboards/qwertz.xml")
     val result = file.compileToModel(importResolver, impliedImports)
     for (report in result.reports) {
         flogError { report.cause?.stackTraceToString() ?: "" }

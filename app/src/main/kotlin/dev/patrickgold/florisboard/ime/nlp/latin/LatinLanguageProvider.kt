@@ -18,7 +18,7 @@ package dev.patrickgold.florisboard.ime.nlp.latin
 
 import android.content.Context
 import dev.patrickgold.florisboard.appContext
-import dev.patrickgold.florisboard.ime.core.Subtype
+import dev.patrickgold.florisboard.ime.keyboard3.Subtype
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
