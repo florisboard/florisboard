@@ -133,10 +133,6 @@ class Syllable {
             }
             val (_, initialGroup, middleGroup, finalGroup) = matchResults.groupValues
 
-            if (initialGroup.length > 3 || middleGroup.length > 3 || finalGroup.length > 2) {
-                return null
-            }
-
             val syllable = Syllable()
             // Parse the first group
             when (initialGroup.length) {
