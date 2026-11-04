@@ -166,7 +166,13 @@ class Syllable {
             syllable.toneIndex = initialGroup.length
             when (middleGroup.length) {
                 0 -> return syllable // unfinished word without vowels
-                1 -> syllable.v1 = middleGroup[0]
+                1 -> {
+                    if (syllable.start == "q" && middleGroup[0].lowercase() == 'u') {
+                        syllable.u = middleGroup[0]
+                    } else {
+                        syllable.v1 = middleGroup[0]
+                    }
+                }
                 2 -> {
                     val v1 = middleGroup[0]
                     val v2 = middleGroup[1]
@@ -421,7 +427,7 @@ fun handleVowel(syllable: Syllable, newLetter: Char, letterPairs: Map<Char, Pair
     // ươ + w ->
     // ươn + w -> uôn
     val mid = syllable.u.lowercase().toString() + bareLetter
-    if (newLetter == 'w' && mid == "uo" && (syllable.v2 == 'i' || syllable.end !== "")) {
+    if (newLetter == 'w' && mid == "uo" && (syllable.v2 == 'i' || syllable.end !== "") && syllable.start != "q") {
         if (syllable.u.isUpperCase() {
             syllable.u = 'Ư'
         } else {
