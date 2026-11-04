@@ -180,9 +180,6 @@ fun SetupScreen(hasRestoredBackup: Boolean) {
                     description = { stringRes(R.string.setup__grant_notification_permission__description) },
                     primaryLabel = { stringRes(R.string.setup__grant_notification_permission__btn) },
                     onPrimary = {
-                        scope.launch {
-                            noBackupPrefs.notificationPermissionScreenSeen.set(true)
-                        }
                         requestNotification.launch(Manifest.permission.POST_NOTIFICATIONS)
                     },
                     secondaryLabel = { stringRes(R.string.setup__grant_notification_permission__skip_btn) },
