@@ -22,7 +22,7 @@ import kotlinx.serialization.Serializable
 // Constants for list of consonants and vowels
 object Letters {
     const val CONSONANTS =  "bcdđghklmnpqrstvx"
-    val VOWELS = mapOf(
+    val VOWELS: Map<Char, String> = mapOf(
         'a' to "aáàảãạ",
         'ă' to "ăắằẳẵặ",
         'â' to "âấầẩẫậ",
@@ -36,7 +36,7 @@ object Letters {
         'ư' to "ưứừửữự",
         'y' to "yýỳỷỹỵ",
     )
-    val BARE_VOWELS = mapOf(
+    val BARE_VOWELS: Map<Char, Char> = mapOf(
         'ă' to 'a',
         'â' to 'a',
         'ê' to 'e',
@@ -101,9 +101,9 @@ class Syllable {
             if (u != null) append(u)
             if (y != null) append(y)
             if (v1 != null) {
-                var letter = Letters.VOWELS[v1.lowercase()]
+                var letter = Letters.VOWELS[v1.lowercaseChar()]
                 if (v1.isUpperCase()) {
-                    letter = letter.uppercase()
+                    letter = letter.uppercaseChar()
                 }
                 append(letter)
             }
@@ -167,7 +167,7 @@ class Syllable {
             when (middleGroup.length) {
                 0 -> return syllable // unfinished word without vowels
                 1 -> {
-                    if (syllable.start == "q" && middleGroup[0].lowercase() == 'u') {
+                    if (syllable.start == "q" && middleGroup[0].lowercaseChar() == 'u') {
                         syllable.u = middleGroup[0]
                     } else {
                         syllable.v1 = middleGroup[0]
@@ -176,8 +176,8 @@ class Syllable {
                 2 -> {
                     val v1 = middleGroup[0]
                     val v2 = middleGroup[1]
-                    val lowerV1 = v1.lowercase()
-                    val lowerV2 = v2.lowercase()
+                    val lowerV1 = v1.lowercaseChar()
+                    val lowerV2 = v2.lowercaseChar()
                     val base1 = reversed[lowerV1]
                     val base2 = reversed[lowerV2]
                     val bare1 = Letters.BARE_VOWELS[base1]
@@ -250,9 +250,9 @@ class Syllable {
                     val v1 = middleGroup[0]
                     val v2 = middleGroup[1]
                     val v3 = middleGroup[2]
-                    val lowerV1 = v1.lowercase()
-                    val lowerV2 = v2.lowercase()
-                    val lowerV3 = v3.lowercase()
+                    val lowerV1 = v1.lowercaseChar()
+                    val lowerV2 = v2.lowercaseChar()
+                    val lowerV3 = v3.lowercaseChar()
                     val base1 = reversed[lowerV1]
                     val base2 = reversed[lowerV2]
                     val base3 = reversed[lowerV3]
@@ -399,20 +399,20 @@ fun handleD(syllable: Syllable): String {
 // â + a -> aa
 // i + a -> ia
 fun handleVowel(syllable: Syllable, newLetter: Char, letterPairs: Map<Char, Pair<String, Char>>): String {
-    val lowerV1 = syllable.v1?.lowercase()
+    val lowerV1 = syllable.v1?.lowercaseChar()
     val bareLetter = Letters.BARE_VOWELS[lowerV1]
     val fromLetters = letterPairs[bareLetter].first
     val toLetter = letterPairs[bareLetter].second
 
     if (lowerV1 in fromLetters) {
         if (syllable.v1.isUpperCase()) {
-            syllable.v1 = toLetter.uppercase()
+            syllable.v1 = toLetter.uppercaseChar()
         } else {
             syllable.v1 = toLetter
         }
     } else if (lowerV1 == toLetter) {
         if (syllable.v1.isUpperCase()) {
-            syllable.v1 = bareLetter.uppercase()
+            syllable.v1 = bareLetter.uppercaseChar()
         } else {
             syllable.v1 = bareLetter
         }
@@ -426,7 +426,7 @@ fun handleVowel(syllable: Syllable, newLetter: Char, letterPairs: Map<Char, Pair
     // these doesn't need final consonant
     // ươ + w ->
     // ươn + w -> uôn
-    val mid = syllable.u.lowercase().toString() + bareLetter
+    val mid = syllable.u.lowercaseChar().toString() + bareLetter
     if (newLetter == 'w' && mid == "uo" && (syllable.v2 == 'i' || syllable.end !== "") && syllable.start != "q") {
         if (syllable.u.isUpperCase() {
             syllable.u = 'Ư'
@@ -476,7 +476,7 @@ class Telex : Composer {
             return 0 to toInsert
         }
         // logic for telex below
-        val newText = when (char.lowercase()) {
+        val newText = when (char.lowercaseChar()) {
             'd' -> handleD(syllable)
             'a' -> handleVowel(syllable, 'a', mapOf('a' to ("aă" to 'â')))
             'e' -> handleVowel(syllable, 'e', mapOf('e' to ("e" to 'ê')))
