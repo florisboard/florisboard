@@ -325,7 +325,7 @@ class Syllable {
                             if ("$bare2$bare3" != "eu" || finalGroup.length > 0) {
                                 return null
                             }
-                            if (initialGroup == "" && base1 == "i") {
+                            if (initialGroup != "" && bare1 == 'y') {
                                 return null
                             }
                             syllable.y = middleGroup[0]
