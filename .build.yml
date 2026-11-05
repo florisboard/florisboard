@@ -13,7 +13,7 @@ artifacts:
   - florisboard/app/build/outputs/apk/debug/app-debug.apk
 tasks:
   - build: |
-    cd florisboard
-    source setup.sh
-    ./gradlew clean
-    ./gradlew assembleDebug
+      cd florisboard
+      source setup.sh
+      ./gradlew clean
+      ./gradlew assembleDebug
