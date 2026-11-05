@@ -247,9 +247,9 @@
         <key id="h-kana" output="h" longPressKeyIds="slash" />
         <key id="i-kana" output="i" longPressKeyIds="8" />
         <key id="j-kana" output="j" longPressKeyIds="hash" />
-        <key id="k-kana" output="k" longPressKeyIds="open-paren" />
-        <key id="l-kana" output="l" longPressKeyIds="close-paren" />
-        <key id="m-kana" output="m" />
+        <key id="k-kana" output="k" longPressKeyIds="open-paren open-corner-paren" />
+        <key id="l-kana" output="l" longPressKeyIds="close-paren close-corner-paren" />
+        <key id="m-kana" output="m" longPressKeyIds="ellipsis underscore"/>
         <key id="n-kana" output="n" longPressKeyIds="tilde" />
         <key id="o-kana" output="o" longPressKeyIds="9" />
         <key id="p-kana" output="p" longPressKeyIds="0" />
@@ -266,6 +266,9 @@
         <key id="touten" output="," />
         <key id="kuten" output="." />
         <key id="long-vowel" output="-" longPressKeyIds="amp" />
+        <key id="open-corner-paren" output="「" />
+        <key id="close-corner-paren" output="」" />
+        <key id="ellipsis" output="…" />
         <!-- extra chars -->
         <key id="numero-sign" output="\u{2116}" />
         <key id="permille" output="\u{2030}" />
