@@ -8,7 +8,9 @@ export JDK_VERSION=17
 export NDK_VERSION=29.0.14206865
 export RUSTUP_VERSION=1.28.2
 export RUST_TOOLCHAIN_VERSION=1.93.0
-export PROJECT_COMPILE_SDK=37
+
+# For some reason SDK 37 can't be installed
+export PROJECT_COMPILE_SDK=36
 
 # Based on Dockerfile utils/repr_build/Dockerfile
 export JAVA_HOME=/usr/lib/jvm/java-${JDK_VERSION}-openjdk-amd64
