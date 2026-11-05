@@ -106,7 +106,7 @@ class Syllable {
                 if (isV1UpperCase) {
                     tonedLetter = tonedLetter!!.uppercaseChar()
                 }
-                append(letter)
+                append(tonedLetter)
             }
             if (v2 != null) append(v2)
             append(end)
