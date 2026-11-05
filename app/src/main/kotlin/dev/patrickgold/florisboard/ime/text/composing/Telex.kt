@@ -181,7 +181,7 @@ class Syllable {
                     }
                     if (tone1 > 0) {
                         syllable.tone = tone1
-                    else if (tone2 > 0) {
+                    } else if (tone2 > 0) {
                         syllable.tone = tone2
                     }
                     when (bare1) {
