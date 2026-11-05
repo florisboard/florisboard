@@ -96,7 +96,7 @@ class Syllable {
     // Serialize the syllable to String
     override fun toString(): String {
         val word = buildString {
-            if (start != null) append(start)
+            append(start)
             if (u != null) append(u)
             if (y != null) append(y)
             val lowerV1 = v1?.lowercaseChar()
@@ -104,7 +104,7 @@ class Syllable {
             if (lowerV1 != null) {
                 var tonedLetter = Letters.VOWELS[lowerV1]!![tone]
                 if (isV1UpperCase) {
-                    tonedLetter = tonedLetter!!.uppercaseChar()
+                    tonedLetter = tonedLetter.uppercaseChar()
                 }
                 append(tonedLetter)
             }
@@ -173,8 +173,8 @@ class Syllable {
                     val base2 = reversed[lowerV2]!!
                     val bare1 = Letters.BARE_VOWELS[base1]!!
                     val bare2 = Letters.BARE_VOWELS[base2]!!
-                    val tone1 = Letters.VOWELS[base1]!!.indexOf(lowerV1)!!
-                    val tone2 = Letters.VOWELS[base2]!!.indexOf(lowerV2)!!
+                    val tone1 = Letters.VOWELS[base1]!!.indexOf(lowerV1)
+                    val tone2 = Letters.VOWELS[base2]!!.indexOf(lowerV2)
                     // can't be more than 2 tones
                     if (tone1 > 0 && tone2 > 0) {
                         return null
@@ -252,9 +252,9 @@ class Syllable {
                     val bare1 = Letters.BARE_VOWELS[base1]!!
                     val bare2 = Letters.BARE_VOWELS[base2]!!
                     val bare3 = Letters.BARE_VOWELS[base3]!!
-                    val tone1 = Letters.VOWELS[base1]!!.indexOf(lowerV1)!!
-                    val tone2 = Letters.VOWELS[base2]!!.indexOf(lowerV2)!!
-                    val tone3 = Letters.VOWELS[base3]!!.indexOf(lowerV3)!!
+                    val tone1 = Letters.VOWELS[base1]!!.indexOf(lowerV1)
+                    val tone2 = Letters.VOWELS[base2]!!.indexOf(lowerV2)
+                    val tone3 = Letters.VOWELS[base3]!!.indexOf(lowerV3)
                     // tone must be on 2nd (oải) or 3rd (tuyết) vowel letter
                     if (tone1 > 0) {
                         return null
@@ -458,7 +458,7 @@ class Telex : Composer {
         if (precedingText.isEmpty() || char == null) {
             return 0 to toInsert
         }
-        val code = char.toInt()
+        val code = char.code
         // if inserted letter isn't alphabetic, fallback to appender
         if (code < 65 || code > 122) {
             return 0 to toInsert
