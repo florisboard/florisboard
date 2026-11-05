@@ -85,7 +85,7 @@ object Letters {
  */
 
 class Syllable {
-    var start: String? = null
+    var start: String = ""
     var u: Char? = null
     var y: Char? = null
     var v1: Char? = null
@@ -260,9 +260,9 @@ class Syllable {
                         return null
                     } else if (tone2 > 0 && tone3 == 0) {
                         syllable.tone = tone2
-                    } else if (tone3 > 0 && tone 2 == 0) {
+                    } else if (tone3 > 0 && tone2 == 0) {
                         syllable.tone = tone3
-                    } 
+                    }
                     when (base1) {
                         'o' -> {
                             // allowed: oai, oay, oeo
@@ -322,7 +322,7 @@ class Syllable {
                             syllable.y = middleGroup[0]
                             syllable.v1 = middleGroup[1]
                             syllable.v2 = middleGroup[2]
-                        },
+                        }
                         else -> return null
                     }
                 }
@@ -368,11 +368,11 @@ fun handleTone(syllable: Syllable, letter: Char, tone: Int): String {
 
 // Handle d + d -> đ
 fun handleD(syllable: Syllable, newLetter: Char): String {
-    if (syllable.start == 'd') {
-        syllable.start = 'đ'
+    if (syllable.start == "d") {
+        syllable.start = "đ"
         return syllable.toString()
-    } else if (syllable.start == 'đ') {
-        syllable.start = 'd'
+    } else if (syllable.start == "đ") {
+        syllable.start = "d"
     }
     return syllable.toString() + newLetter
 }
@@ -396,7 +396,7 @@ fun handleVowel(syllable: Syllable, newLetter: Char, letterPairs: Map<Char, Pair
     val fromLetters = letterPairs[bareLetter]!!.first
     val toLetter = letterPairs[bareLetter]!!.second
 
-    if (lowerV1 in fromLetters) {
+    if (lowerV1 != null && lowerV1 in fromLetters) {
         if (isV1UpperCase) {
             syllable.v1 = toLetter.uppercaseChar()
         } else {
@@ -404,7 +404,7 @@ fun handleVowel(syllable: Syllable, newLetter: Char, letterPairs: Map<Char, Pair
         }
     } else if (lowerV1 == toLetter) {
         if (isV1UpperCase) {
-            syllable.v1 = bareLetter.uppercaseChar()
+            syllable.v1 = bareLetter!!.uppercaseChar()
         } else {
             syllable.v1 = bareLetter
         }
@@ -419,7 +419,7 @@ fun handleVowel(syllable: Syllable, newLetter: Char, letterPairs: Map<Char, Pair
     // ươ + w ->
     // ươn + w -> uôn
     val isUUpperCase = syllable.u?.isUpperCase() ?: false
-    val mid = syllable.u.lowercaseChar().toString() + bareLetter
+    val mid = syllable.u?.lowercaseChar().toString() + bareLetter
     if (newLetter == 'w' && mid == "uo" && (syllable.v2 == 'i' || syllable.end !== "") && syllable.start != "q") {
         if (isUUpperCase) {
             syllable.u = 'Ư'
@@ -450,12 +450,12 @@ class Telex : Composer {
     //val wForUw: Boolean = true
     // Use oà oè uỳ instead of òa òe ùy
     // Note that it'll be always quỳ instead of qùy
-    //val newOaOeUy: Boolean = true
+    //val newTonePlacement: Boolean = true
 
-    fun getActions(precedingText: String, toInsert: String): Pair<Int, String> {
+    override fun getActions(precedingText: String, toInsert: String): Pair<Int, String> {
         val char = toInsert.firstOrNull()
         // precedingText is "at least the last 1 character of what's currently here"
-        if (precedingText.isEmpty() || c == null) {
+        if (precedingText.isEmpty() || char == null) {
             return 0 to toInsert
         }
         val code = char.toInt()
@@ -478,7 +478,7 @@ class Telex : Composer {
                 'a' to ("aâ" to 'ă'),
                 'o' to ("oô" to 'ơ'),
                 'u' to ("u" to 'ư'),
-            )
+            ))
             'z' -> handleTone(syllable, 'z', 0)
             's' -> handleTone(syllable, 's', 1)
             'f' -> handleTone(syllable, 'f', 2)
