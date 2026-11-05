@@ -203,6 +203,7 @@ class ImeController(
     inner class UpdateImeStateScope(
         state: ImeState,
     ) : UpdateStateScope<ImeState, ImeEditor>(state) {
+        var isHoldKey = false
         fun handleStartInputView(
             ic: WeakReference<InputConnection>,
             info: FlorisEditorInfo,
@@ -388,6 +389,9 @@ class ImeController(
                     if (key == ' ') {
                         // for some reason, k3lp hardcodes space to output a space, so we replace it with the space keycode and send it to mozc
                         MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.SPACE)
+                    } else if (isHoldKey) {
+                        // send hold keys as text
+                        MozcEngine.instance.sendKeyAsText(key.toString())
                     } else {
                         MozcEngine.instance.sendKey(key)
                     }

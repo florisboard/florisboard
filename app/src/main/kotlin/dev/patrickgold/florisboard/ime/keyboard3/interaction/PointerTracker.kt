@@ -328,12 +328,14 @@ class PointerTracker(
                 val output = when {
                     trackedPointer.downKey == trackedMultiTapSeq.value?.touchKey -> null
                     trackedPointer.longPress.shouldShowExtendedPopup() -> {
+                        isHoldKey = true
                         trackedPointer.longPress.extendedKeys.getOrNull(trackedPointer.longPress.extendedFocusedIndex)
                             ?.data?.output
                     }
                     else -> trackedPointer.downKey.attrs.output
                 }
                 output?.let { emit(it) }
+                isHoldKey = false
             }
             trackedPeekPointer.update { it?.copy(peekMustSwitchBack = true) }
             trackedOutputPointer.value = null

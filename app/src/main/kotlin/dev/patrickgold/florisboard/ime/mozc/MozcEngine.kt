@@ -158,6 +158,13 @@ class MozcEngine {
         _candidates.value = Pair(mutableListOf(), null)
     }
 
+    fun sendKeyAsText(str: String) {
+        val keyEvent: ProtoCommands.KeyEvent = ProtoCommands.KeyEvent.newBuilder()
+            .setKeyString(str)
+            .build()
+        sendKeyRequest(keyEvent)
+    }
+
     fun sendKey(ch: Char) {
         val keyEvent: ProtoCommands.KeyEvent = ProtoCommands.KeyEvent.newBuilder()
             .setKeyCode(ch.code)
