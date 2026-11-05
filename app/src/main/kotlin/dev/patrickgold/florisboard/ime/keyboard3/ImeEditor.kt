@@ -135,6 +135,13 @@ open class ImeEditor(
         ),), K3Content.Empty) // TODO: Link to actual content
     }
 
+    fun snapToPosition(
+        newSelection: K3TextRange,
+    ) {
+        val ic = ic.get() ?: return
+        ic.setSelection(newSelection.start, newSelection.end)
+    }
+
     fun deleteSurroundingText(charsBefore: Int, charsAfter: Int) {
         val ic = ic.get() ?: return
         ic.deleteSurroundingText(charsBefore, charsAfter)

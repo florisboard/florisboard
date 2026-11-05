@@ -224,6 +224,7 @@ dependencies {
     implementation(projects.lib.native)
     implementation(projects.lib.snygg)
     implementation("com.google.protobuf:protobuf-javalite:4.35.0")
+    implementation("com.google.guava:guava:33.4.8-android")
 
     testImplementation(libs.kotest.assertions.core)
     testImplementation(libs.kotest.property)

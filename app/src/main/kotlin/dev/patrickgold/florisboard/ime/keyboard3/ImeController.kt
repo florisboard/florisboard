@@ -20,7 +20,6 @@ import android.icu.text.BreakIterator
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.inputmethod.InputConnection
-import androidx.compose.runtime.key
 import androidx.compose.runtime.staticCompositionLocalOf
 import dev.patrickgold.florisboard.FlorisImeService
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
@@ -358,13 +357,20 @@ class ImeController(
                 state.touchLayerId.isTextLayer() && state.model.info.layout == "Flick" ->
                     MozcKeyboardSpec.TWELVE_KEY_FLICK_ALPHABET
 
-                else -> MozcKeyboardSpec.TWELVE_KEY_FLICK_KANA
+                else -> MozcEngine.instance.keyboardSpec // unknown layer or config, using last one
             }
 
             return keyboardSpecification
         }
 
         fun handleUpdateSelection(newSelection: K3TextRange) {
+            if (state.content.composition != null && state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
+                // TODO: properly pass cursor position into mozc
+                // TODO: look into porting SelectionTracker.java and related MOVE_CURSOR command from old mozc/グーグル日本語入力 app into kotlin and fitting it in here
+                flogDebug { "mozc does not allow the user to move the cursor or select during composition" }
+                state.editor.snapToPosition(state.content.selection)
+                return
+            }
             val content = expectedContentQueue.popUntilOrNull { it.selection == newSelection }
             if (content != null) {
                 flogDebug { "DEDUPLICATED!!1" }
@@ -372,6 +378,11 @@ class ImeController(
             }
             resetContent(newSelection, state.editor.getSurroundingText(50, 10))
             expectedContentQueue.push(state.content)
+        }
+
+        // leftover from previous idea, might need it if the above todos are done successfully
+        infix fun K3TextRange.notContains(other: K3TextRange): Boolean {
+            return other.min < this.min || other.max > this.max
         }
 
         override fun emit(value: K3StringOrDescriptor) {
@@ -384,7 +395,7 @@ class ImeController(
         }
 
         override fun emitText(value: K3String) {
-            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) { // assume false if null
+            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
                 for (key in value.toText()) {
                     if (key == ' ') {
                         // for some reason, k3lp hardcodes space to output a space, so we replace it with the space keycode and send it to mozc
@@ -467,6 +478,15 @@ class ImeController(
                     state = state.copy(touchLayerId = ImeLayerIds.Kana)
                 }
                 updateConfig()
+                if (MozcEngine.instance.preedit.value.isNotEmpty()) {
+                    MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.ENTER)
+                    state = state.copy(
+                        content = state.content.copy(
+                            composition = null,
+                        ),
+                    )
+                    state.editor.finishComposingMozc()
+                }
             }
         }
 
@@ -474,6 +494,7 @@ class ImeController(
             val windowController = FlorisImeService.windowControllerOrNull()
             when (descriptor) {
                 // TODO once k3lp supports this remove
+                // dot166: haha, don't, see comment in emitBackspace() and emitForwardDelete() as to why using a potential k3lp impl is a bad idea...
                 ImeActions.Delete -> emitForwardDelete()
                 // TODO evaluate use of modern cursor anchor API instead of sending raw key events
                 ImeActions.ArrowDown -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN)
@@ -672,21 +693,31 @@ class ImeController(
             if (state.content.selection.isNotCollapsed()) {
                 emitBackspace()
             } else {
-                val newSurroundingText = state.content.surroundingText.copy(
-                    textAfter = state.content.surroundingText.textAfter.let { text ->
-                        // TODO unicode
-                        if (text.isEmpty()) text else text.substring(1)
-                    },
-                )
-                state = state.copy(
-                    content = state.content.copy(
-                        surroundingText = newSurroundingText,
-                    ),
-                )
-                state.editor.deleteSurroundingText(
-                    charsBefore = 0,
-                    charsAfter = 1, // TODO
-                )
+                if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
+                    if (MozcEngine.instance.preedit.value.isNotEmpty()) {
+                        MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.DEL) // mozc has no dedicated forward delete call, but sending delete does what we need
+                        sendPreedit(MozcEngine.instance.preedit.value)
+                    } else {
+                        // send hardware keycode instead of using k3lp because k3lp reselects the text before and that breaks mozc by overriding what user already wrote when user presses a key
+                        sendDownUpKeyEvent(KeyEvent.KEYCODE_FORWARD_DEL)
+                    }
+                } else {
+                    val newSurroundingText = state.content.surroundingText.copy(
+                        textAfter = state.content.surroundingText.textAfter.let { text ->
+                            // TODO unicode
+                            if (text.isEmpty()) text else text.substring(1)
+                        },
+                    )
+                    state = state.copy(
+                        content = state.content.copy(
+                            surroundingText = newSurroundingText,
+                        ),
+                    )
+                    state.editor.deleteSurroundingText(
+                        charsBefore = 0,
+                        charsAfter = 1, // TODO
+                    )
+                }
             }
         }
 
@@ -772,7 +803,7 @@ class ImeController(
         }
 
         override fun switchTouchLayer(newTouchLayerId: K3LayerId) {
-            if (state.model.info.indicator?.contains("mozcJa") ?: false) { // assume false if null
+            if (state.model.info.indicator?.contains("mozcJa") ?: false) {
                 if (newTouchLayerId.isTextLayer()) {
                     super.switchTouchLayer(state.flags.inputShiftState.correspondingLayerId)
                 } else {
