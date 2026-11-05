@@ -1,17 +1,19 @@
-image: archlinux
+image: debian
 packages:
-  - android-sdk
-  - android-sdk-build-tools
-  - android-sdk-cmdline-tools-latest-22
-  - android-sdk-platform-tools
-  - clang
-  - jdk17-openjdk
-  - cmake
-  - ninja
-  - android-ndk 
+  - curl
+  - jq
+  - unzip
+  - wget
+  - git
+  - build-essential
+  - openjdk-17-jdk
 sources:
   - https://git.sr.ht/~huyngo/florisboard
 artifacts:
   - florisboard/app/build/outputs/apk/debug/app-debug.apk
 tasks:
-  - build: cd florisboard && ./gradlew clean && ./gradlew assembleDebug
+  - build: |
+    cd florisboard
+    source setup.sh
+    ./gradlew clean
+    ./gradlew assembleDebug
