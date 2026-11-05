@@ -1,4 +1,4 @@
-image: debian/stable
+image: debian/bookworm
 packages:
   - curl
   - jq
