@@ -117,7 +117,7 @@ class Syllable {
     companion object Factory {
         // Parse words from existing text
         // Return null if syllable is invalid
-        fun parse(text: String) Syllable? {
+        fun parse(text: String): Syllable? {
             // Use a regex to quickly validate syllable
             // Initial: bcdđghklmnpqrstvx (all consonants), max length 3 (ngh)
             // Middle: (all vowels), max length 3
