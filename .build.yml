@@ -15,5 +15,6 @@ tasks:
   - build: |
       cd florisboard
       source setup.sh
+      cd ~/florisboard
       ./gradlew clean
       ./gradlew assembleDebug
