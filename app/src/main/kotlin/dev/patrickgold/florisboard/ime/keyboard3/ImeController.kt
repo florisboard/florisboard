@@ -372,6 +372,12 @@ class ImeController(
                     //  appContext.showShortToastSync(R.string.clipboard__cleared_primary_clip)
                 }
                 ImeActions.SelectAll -> state.editor.performSelectAll()
+                ImeActions.Share -> {
+                    val text = state.content.surroundingText.textSelected
+                    if (text.isNotEmpty()) {
+                        state.editor.performTextShare()
+                    }
+                }
                 ImeActions.ShowImeWindow -> FlorisImeService.showUi()
                 ImeActions.HideImeWindow -> FlorisImeService.hideUi()
                 ImeActions.ShowTextPanel -> {
