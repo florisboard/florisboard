@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2025 The FlorisBoard Contributors
+ * Copyright (C) 2025-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,15 @@
 
 package org.florisboard.lib.snygg
 
+import androidx.compose.runtime.mutableIntStateOf
+
 class SnyggStylesheetEditor(
     private val schema: String,
     initRules: Map<SnyggRule, SnyggPropertySet>? = null,
     comparator: Comparator<SnyggRule>? = null,
 ) {
     val rules = sortedMapOf<SnyggRule, SnyggPropertySetEditor>(comparator ?: DefaultRuleComparator)
+    val version = mutableIntStateOf(0)
 
     init {
         if (initRules != null) {
@@ -29,6 +32,12 @@ class SnyggStylesheetEditor(
                 initRules.mapValues { (_, propertySet) -> propertySet.edit() }
             )
         }
+    }
+
+    inline fun <R> update(block: () -> R): R {
+        val ret = block()
+        version.intValue++
+        return ret
     }
 
     fun defines(propertySetBlock: SnyggSinglePropertySetEditor.() -> Unit) {

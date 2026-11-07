@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LongPress
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.theme.ImeUiAttrs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -92,7 +93,7 @@ fun LongPressBox(
                 val output = extendedKey.data.output
                 val attributes = remember(attributes, extendedKey) {
                     if (output != null) {
-                        attributes.plus(FlorisImeUi.Attr.Output to output.asAttrValue())
+                        attributes.plus(ImeUiAttrs.Output.eq(output))
                     } else {
                         attributes
                     }

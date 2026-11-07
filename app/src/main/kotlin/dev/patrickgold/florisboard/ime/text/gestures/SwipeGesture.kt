@@ -16,21 +16,10 @@
 
 package dev.patrickgold.florisboard.ime.text.gestures
 
-import android.view.MotionEvent
-import android.view.VelocityTracker
-import androidx.compose.ui.unit.dp
-import dev.patrickgold.florisboard.app.FlorisPreferenceStore
-import dev.patrickgold.florisboard.lib.Pointer
-import dev.patrickgold.florisboard.lib.PointerMap
-import dev.patrickgold.florisboard.lib.devtools.LogTopic
-import dev.patrickgold.florisboard.lib.devtools.flogDebug
-import dev.patrickgold.florisboard.lib.util.ViewUtils
-import kotlin.math.abs
-import kotlin.math.atan2
-
 /**
  * Wrapper class which holds all enums, interfaces and classes for detecting a swipe gesture.
  */
+/*
 abstract class SwipeGesture {
     /**
      * Class which detects swipes based on given [MotionEvent]s. Only supports single-finger swipes
@@ -249,4 +238,4 @@ abstract class SwipeGesture {
         TOUCH_UP,
         TOUCH_MOVE;
     }
-}
+}*/

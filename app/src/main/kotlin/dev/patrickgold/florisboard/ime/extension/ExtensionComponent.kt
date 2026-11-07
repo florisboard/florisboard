@@ -29,7 +29,8 @@ import org.florisboard.lib.kotlin.tryOrNull
 /**
  * An extension component, typically a layout, theme, file, etc. descriptor.
  */
-interface ExtensionComponent {
+@Serializable
+sealed interface ExtensionComponent {
     val id: String
     val name: String
     val authors: List<String>

@@ -20,6 +20,8 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.extension.ExtensionComponentName
 import dev.patrickgold.florisboard.ime.extension.ExtensionController
+import dev.patrickgold.florisboard.ime.extension.ThemeExtension
+import dev.patrickgold.florisboard.ime.extension.extCoreTheme
 import dev.patrickgold.florisboard.ime.io.FlorisRef
 import dev.patrickgold.florisboard.ime.io.Storage
 import dev.patrickgold.florisboard.ime.io.StorageController

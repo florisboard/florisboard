@@ -67,6 +67,7 @@ import dev.patrickgold.florisboard.ime.media.MediaInputLayout
 import dev.patrickgold.florisboard.ime.sheet.BottomSheetWindow
 import dev.patrickgold.florisboard.ime.text.TextInputLayout
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.theme.ImeUiAttrs
 import kotlinx.coroutines.delay
 import org.florisboard.lib.compose.ProvideActualLayoutDirection
 import org.florisboard.lib.compose.conditional
@@ -149,7 +150,7 @@ fun BoxScope.ImeWindow() {
 
     val attributes = remember(windowConfig.mode) {
         mapOf(
-            FlorisImeUi.Attr.WindowMode to windowConfig.mode.toString(),
+            ImeUiAttrs.WindowMode.eq(windowConfig.mode),
         )
     }
 
@@ -323,7 +324,7 @@ private fun BoxScope.OneHandedPanel(spec: ImeWindowSpec.Fixed) {
 
     val attributes = remember(windowConfig.mode) {
         mapOf(
-            FlorisImeUi.Attr.WindowMode to windowConfig.mode.toString()
+            ImeUiAttrs.WindowMode.eq(windowConfig.mode),
         )
     }
 

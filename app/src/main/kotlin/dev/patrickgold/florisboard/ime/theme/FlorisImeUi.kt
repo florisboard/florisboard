@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,14 +18,25 @@ package dev.patrickgold.florisboard.ime.theme
 
 import dev.patrickgold.florisboard.R
 
-enum class FlorisImeUi(val elementName: String, val resId: Int?) {
+enum class FlorisImeUi(
+    val elementName: String,
+    val resId: Int?,
+    val attributes: List<ImeUiAttr<*>> = emptyList(),
+) {
     Root(
         elementName = "root",
         resId = R.string.snygg__rule_element__root,
+        attributes = listOf(
+            ImeUiAttrs.Layer,
+            ImeUiAttrs.ShiftState,
+        ),
     ),
     Window(
         elementName = "window",
         resId = R.string.snygg__rule_element__window,
+        attributes = listOf(
+            ImeUiAttrs.WindowMode,
+        ),
     ),
     WindowInner(
         elementName = "window-inner",
@@ -34,14 +45,23 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
     WindowMoveHandle(
         elementName = "window-move-handle",
         resId = R.string.snygg__rule_element__window_move_handle,
+        attributes = listOf(
+            ImeUiAttrs.WindowMode,
+        ),
     ),
     WindowResizeAction(
         elementName = "window-resize-action",
         resId = R.string.snygg__rule_element__window_resize_action,
+        attributes = listOf(
+            ImeUiAttrs.WindowMode,
+        ),
     ),
     WindowResizeHandle(
         elementName = "window-resize-handle",
         resId = R.string.snygg__rule_element__window_resize_handle,
+        attributes = listOf(
+            ImeUiAttrs.WindowMode,
+        ),
     ),
     WindowResizeOverlayFixed(
         elementName = "window-resize-overlay-fixed",
@@ -55,6 +75,11 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
     Key(
         elementName = "key",
         resId = R.string.snygg__rule_element__key,
+        attributes = listOf(
+            ImeUiAttrs.Output,
+            ImeUiAttrs.ShiftState,
+            ImeUiAttrs.TargetLayer,
+        ),
     ),
     KeyHint(
         elementName = "key-hint",
@@ -63,14 +88,29 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
     KeyPopupBox(
         elementName = "key-popup-box",
         resId = R.string.snygg__rule_element__key_popup_box,
+        attributes = listOf(
+            ImeUiAttrs.Output,
+            ImeUiAttrs.ShiftState,
+            ImeUiAttrs.TargetLayer,
+        ),
     ),
     KeyPopupElement(
         elementName = "key-popup-element",
         resId = R.string.snygg__rule_element__key_popup_element,
+        attributes = listOf(
+            ImeUiAttrs.Output,
+            ImeUiAttrs.ShiftState,
+            ImeUiAttrs.TargetLayer,
+        ),
     ),
     KeyPopupExtendedIndicator(
         elementName = "key-popup-extended-indicator",
         resId = R.string.snygg__rule_element__key_popup_extended_indicator,
+        attributes = listOf(
+            ImeUiAttrs.Output,
+            ImeUiAttrs.ShiftState,
+            ImeUiAttrs.TargetLayer,
+        ),
     ),
 
     ClipboardHeader(
@@ -100,14 +140,26 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
     ClipboardFilterChip(
         elementName = "clipboard-filter-chip",
         resId = R.string.snygg__rule_element__clipboard_filter_chip,
+        attributes = listOf(
+            ImeUiAttrs.ClipboardFilterState,
+            ImeUiAttrs.ClipboardItemType,
+        ),
     ),
     ClipboardFilterChipIcon(
         elementName = "clipboard-filter-chip-icon",
         resId = R.string.snygg__rule_element__clipboard_filter_chip_icon,
+        attributes = listOf(
+            ImeUiAttrs.ClipboardFilterState,
+            ImeUiAttrs.ClipboardItemType,
+        ),
     ),
     ClipboardFilterChipText(
         elementName = "clipboard-filter-chip-text",
         resId = R.string.snygg__rule_element__clipboard_filter_chip_text,
+        attributes = listOf(
+            ImeUiAttrs.ClipboardFilterState,
+            ImeUiAttrs.ClipboardItemType,
+        ),
     ),
     ClipboardGrid(
         elementName = "clipboard-grid",
@@ -116,14 +168,23 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
     ClipboardItem(
         elementName = "clipboard-item",
         resId = R.string.snygg__rule_element__clipboard_item,
+        attributes = listOf(
+            ImeUiAttrs.ClipboardItemType,
+        ),
     ),
     ClipboardItemDescription(
         elementName = "clipboard-item-description",
         resId = R.string.snygg__rule_element__clipboard_item_description,
+        attributes = listOf(
+            ImeUiAttrs.ClipboardItemType,
+        ),
     ),
     ClipboardItemPopup(
         elementName = "clipboard-item-popup",
         resId = R.string.snygg__rule_element__clipboard_item_popup,
+        attributes = listOf(
+            ImeUiAttrs.ClipboardItemType,
+        ),
     ),
     ClipboardItemTimestamp(
         elementName = "clipboard-item-timestamp",
@@ -160,6 +221,9 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
     ClipboardClearAllDialogButton(
         elementName = "clipboard-clear-all-dialog-button",
         resId = R.string.snygg__rule_element__clipboard_clear_all_dialog_button,
+        attributes = listOf(
+            ImeUiAttrs.ClipboardDialogAction,
+        ),
     ),
     ClipboardHistoryDisabledTitle(
         elementName = "clipboard-history-disabled-title",
@@ -247,6 +311,11 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
     MediaBottomRowButton(
         elementName = "media-bottom-row-button",
         resId = R.string.snygg__rule_element__media_bottom_row_button,
+        attributes = listOf(
+            ImeUiAttrs.Output,
+            ImeUiAttrs.ShiftState,
+            ImeUiAttrs.TargetLayer,
+        ),
     ),
 
     OneHandedPanel(
@@ -256,6 +325,9 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
     OneHandedPanelButton(
         elementName = "one-handed-panel-button",
         resId = R.string.snygg__rule_element__one_handed_panel_button,
+        attributes = listOf(
+            ImeUiAttrs.WindowMode,
+        ),
     ),
 
     Smartbar(
@@ -281,11 +353,21 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
     SmartbarActionKey(
         elementName = "smartbar-action-key",
         resId = R.string.snygg__rule_element__smartbar_action_key,
+        attributes = listOf(
+            ImeUiAttrs.Output,
+            ImeUiAttrs.ShiftState,
+            ImeUiAttrs.TargetLayer,
+        ),
     ),
 
     SmartbarActionTile(
         elementName = "smartbar-action-tile",
         resId = R.string.snygg__rule_element__smartbar_action_tile,
+        attributes = listOf(
+            ImeUiAttrs.Output,
+            ImeUiAttrs.ShiftState,
+            ImeUiAttrs.TargetLayer,
+        ),
     ),
     SmartbarActionTileIcon(
         elementName = "smartbar-action-tile-icon",
@@ -327,6 +409,11 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
     SmartbarActionsEditorTile(
         elementName = "smartbar-actions-editor-tile",
         resId = R.string.snygg__rule_element__smartbar_actions_editor_tile,
+        attributes = listOf(
+            ImeUiAttrs.Output,
+            ImeUiAttrs.ShiftState,
+            ImeUiAttrs.TargetLayer,
+        ),
     ),
 
     SmartbarCandidatesRow(
@@ -409,13 +496,5 @@ enum class FlorisImeUi(val elementName: String, val resId: Int?) {
                 }
             }
         }
-    }
-
-    object Attr {
-        const val Code = "code"
-        const val Mode = "mode"
-        const val Output = "output"
-        const val ShiftState = "shiftstate"
-        const val WindowMode = "windowmode"
     }
 }

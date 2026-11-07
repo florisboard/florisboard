@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,11 +27,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.patrickgold.florisboard.ime.extension.ExtensionMaintainer
-import dev.patrickgold.florisboard.lib.util.launchUrl
 import dev.patrickgold.jetpref.material.ui.JetPrefAlertDialog
 import org.florisboard.lib.compose.FlorisChip
 
@@ -40,7 +39,7 @@ fun ExtensionMaintainerChip(
     maintainer: ExtensionMaintainer,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
+    val uriHandler = LocalUriHandler.current
     var showDialog by rememberSaveable { mutableStateOf(false) }
 
     FlorisChip(
@@ -68,7 +67,7 @@ fun ExtensionMaintainerChip(
             Column {
                 if (maintainer.email != null) {
                     FlorisChip(
-                        onClick = { context.launchUrl("mailto:${maintainer.email}") },
+                        onClick = { uriHandler.openUri("mailto:${maintainer.email}") },
                         text = maintainer.email,
                         leadingIcons = listOf(Icons.Outlined.Mail),
                         shape = RoundedCornerShape(4.dp),
@@ -76,7 +75,7 @@ fun ExtensionMaintainerChip(
                 }
                 if (maintainer.url != null) {
                     FlorisChip(
-                        onClick = { context.launchUrl(maintainer.url) },
+                        onClick = { uriHandler.openUri(maintainer.url) },
                         text = maintainer.url,
                         leadingIcons = listOf(Icons.Default.Link),
                         shape = RoundedCornerShape(4.dp),

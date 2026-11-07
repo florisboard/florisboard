@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,19 +50,6 @@ object FileRegistry {
             else -> givenMediaType
         }
     }
-
-    /*fun matchesFileFilter(fileInfo: CacheManager.FileInfo, filter: List<Entry>): Boolean {
-        val fileExt = fileInfo.file.extension
-        filter.forEach {
-            if (it.fileExt == fileExt ||
-                it.mediaType == fileInfo.mediaType ||
-                it.alternativeMediaTypes.contains(fileInfo.mediaType)
-            ) {
-                return true
-            }
-        }
-        return false
-    }*/
 
     data class Entry(
         val type: Type,

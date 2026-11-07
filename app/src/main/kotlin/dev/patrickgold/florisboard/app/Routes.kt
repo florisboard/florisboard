@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2025 The FlorisBoard Contributors
+ * Copyright (C) 2021-2026 The FlorisBoard Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.unit.IntOffset
+import androidx.core.net.toUri
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -41,14 +42,10 @@ import dev.patrickgold.florisboard.app.devtools.AndroidSettingsScreen
 import dev.patrickgold.florisboard.app.devtools.DevtoolsScreen
 import dev.patrickgold.florisboard.app.devtools.ExportDebugLogScreen
 import dev.patrickgold.florisboard.app.ext.CheckUpdatesScreen
+import dev.patrickgold.florisboard.app.ext.ExtensionDetailScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionEditScreen
-import dev.patrickgold.florisboard.app.ext.ExtensionExportScreen
-import dev.patrickgold.florisboard.app.ext.ExtensionHomeScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreen
 import dev.patrickgold.florisboard.app.ext.ExtensionImportScreenType
-import dev.patrickgold.florisboard.app.ext.ExtensionListScreen
-import dev.patrickgold.florisboard.app.ext.ExtensionListScreenType
-import dev.patrickgold.florisboard.app.ext.ExtensionViewScreen
 import dev.patrickgold.florisboard.app.settings.HomeScreen
 import dev.patrickgold.florisboard.app.settings.about.AboutScreen
 import dev.patrickgold.florisboard.app.settings.about.ProjectLicenseScreen
@@ -72,12 +69,12 @@ import dev.patrickgold.florisboard.app.settings.localization.SelectLocaleScreen
 import dev.patrickgold.florisboard.app.settings.localization.SubtypeEditorScreen
 import dev.patrickgold.florisboard.app.settings.media.MediaScreen
 import dev.patrickgold.florisboard.app.settings.smartbar.SmartbarScreen
-import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreen
-import dev.patrickgold.florisboard.app.settings.theme.ThemeManagerScreenAction
 import dev.patrickgold.florisboard.app.settings.theme.ThemeScreen
+import dev.patrickgold.florisboard.app.settings.theme.ThemeSelectionScreen
+import dev.patrickgold.florisboard.app.settings.theme.ThemeSelectionScreenAction
 import dev.patrickgold.florisboard.app.settings.typing.TypingScreen
 import dev.patrickgold.florisboard.app.setup.SetupScreen
-import kotlinx.serialization.SerialName
+import dev.patrickgold.florisboard.ime.extension.ExtensionType
 import kotlinx.serialization.Serializable
 import kotlin.reflect.KClass
 
@@ -101,7 +98,9 @@ inline fun <reified T : Any> NavGraphBuilder.composableWithDeepLink(
 object Routes {
     object Setup {
         @Serializable
-        object Screen
+        data class Screen(
+            val hasRestoredBackup: Boolean = false,
+        )
     }
 
     object Settings {
@@ -134,8 +133,8 @@ object Routes {
         object Theme
 
         @Serializable
-        @Deeplink("settings/theme/manage")
-        data class ThemeManager(val action: ThemeManagerScreenAction)
+        @Deeplink("settings/theme/selection")
+        data class ThemeSelection(val action: ThemeSelectionScreenAction)
 
         @Serializable
         @Deeplink("settings/keyboard")
@@ -191,7 +190,7 @@ object Routes {
 
         @Serializable
         @Deeplink("settings/other/restore")
-        object Restore
+        data class Restore(val isSetup: Boolean = false)
 
         @Serializable
         @Deeplink("settings/about")
@@ -226,28 +225,16 @@ object Routes {
 
     object Ext {
         @Serializable
-        @Deeplink("ext")
-        object Home
-
-        @Serializable
-        @Deeplink("ext/list")
-        data class List(val type: ExtensionListScreenType, val showUpdate: Boolean? = null)
+        @Deeplink("ext/detail")
+        data class Detail(val id: String)
 
         @Serializable
         @Deeplink("ext/edit")
-        data class Edit(val id: String, @SerialName("create") val serialType: String? = null)
-
-        @Serializable
-        @Deeplink("ext/export")
-        data class Export(val id: String)
+        data class Edit(val id: String?, val type: ExtensionType)
 
         @Serializable
         @Deeplink("ext/import")
-        data class Import(val type: ExtensionImportScreenType, val uuid: String? = null)
-
-        @Serializable
-        @Deeplink("ext/view")
-        data class View(val id: String)
+        data class Import(val type: ExtensionImportScreenType, val givenUriStr: String? = null)
 
         @Serializable
         @Deeplink("ext/check-updates")
@@ -270,15 +257,29 @@ object Routes {
             exitTransition = {
                 slideOut { IntOffset(-it.width, 0) } + fadeOut()
             },
-            popEnterTransition = { EnterTransition.None },
+            popEnterTransition = {
+                EnterTransition.None
+            } ,
             popExitTransition = {
                 scaleOut(
                     targetScale = 0.85F,
                     transformOrigin = TransformOrigin(pivotFractionX = 0.8f, pivotFractionY = 0.5f)
                 ) + fadeOut(spring(stiffness = Spring.StiffnessMedium))
             },
+            predictivePopEnterTransition = {
+                EnterTransition.None
+            },
+            predictivePopExitTransition = {
+                scaleOut(
+                    targetScale = 0.85F,
+                    transformOrigin = TransformOrigin(pivotFractionX = 0.8f, pivotFractionY = 0.5f)
+                ) + fadeOut(spring(stiffness = Spring.StiffnessMedium))
+            },
         ) {
-            composable<Setup.Screen> { SetupScreen() }
+            composable<Setup.Screen> { navBackStack ->
+                val payload = navBackStack.toRoute<Setup.Screen>()
+                SetupScreen(payload.hasRestoredBackup)
+            }
 
             composableWithDeepLink(Settings.Home::class) { HomeScreen() }
 
@@ -295,9 +296,9 @@ object Routes {
             }
 
             composableWithDeepLink(Settings.Theme::class) { ThemeScreen() }
-            composableWithDeepLink(Settings.ThemeManager::class) { navBackStack ->
-                val payload = navBackStack.toRoute<Settings.ThemeManager>()
-                ThemeManagerScreen(payload.action)
+            composableWithDeepLink(Settings.ThemeSelection::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Settings.ThemeSelection>()
+                ThemeSelectionScreen(payload.action)
             }
 
             composableWithDeepLink(Settings.Keyboard::class) { KeyboardScreen() }
@@ -323,7 +324,10 @@ object Routes {
             composableWithDeepLink(Settings.Other::class) { OtherScreen() }
             composableWithDeepLink(Settings.PhysicalKeyboard::class) { PhysicalKeyboardScreen() }
             composableWithDeepLink(Settings.Backup::class) { BackupScreen() }
-            composableWithDeepLink(Settings.Restore::class) { RestoreScreen() }
+            composableWithDeepLink(Settings.Restore::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Settings.Restore>()
+                RestoreScreen(payload.isSetup)
+            }
 
             composableWithDeepLink(Settings.About::class) { AboutScreen() }
             composableWithDeepLink(Settings.ProjectLicense::class) { ProjectLicenseScreen() }
@@ -337,35 +341,22 @@ object Routes {
             }
             composableWithDeepLink(Devtools.ExportDebugLog::class) { ExportDebugLogScreen() }
 
-            composableWithDeepLink(Ext.Home::class) { ExtensionHomeScreen() }
-            composableWithDeepLink(Ext.List::class) { navBackStack ->
-                val payload = navBackStack.toRoute<Ext.List>()
-                val showUpdate = payload.showUpdate != null && payload.showUpdate
-                ExtensionListScreen(payload.type, showUpdate)
+            composableWithDeepLink(Ext.Detail::class) { navBackStack ->
+                val payload = navBackStack.toRoute<Ext.Detail>()
+                ExtensionDetailScreen(payload.id)
             }
             composableWithDeepLink(Ext.Edit::class) { navBackStack ->
                 val payload = navBackStack.toRoute<Ext.Edit>()
                 val extensionId = payload.id
-                val serialType = payload.serialType
-                ExtensionEditScreen(
-                    id = extensionId,
-                    createSerialType = serialType.takeIf { !it.isNullOrBlank() },
-                )
-            }
-            composableWithDeepLink(Ext.Export::class) { navBackStack ->
-                val payload = navBackStack.toRoute<Ext.Export>()
-                val extensionId = payload.id
-                ExtensionExportScreen(id = extensionId)
+                val type = payload.type
+                ExtensionEditScreen(extensionId, type)
             }
             composableWithDeepLink(Ext.Import::class) { navBackStack ->
                 val payload = navBackStack.toRoute<Ext.Import>()
-                val uuid = payload.uuid
-                ExtensionImportScreen(payload.type, uuid)
-            }
-            composableWithDeepLink(Ext.View::class) { navBackStack ->
-                val payload = navBackStack.toRoute<Ext.View>()
-                val extensionId = payload.id
-                ExtensionViewScreen(id = extensionId)
+                val givenUriList = if (payload.givenUriStr != null) {
+                    listOf(payload.givenUriStr.toUri())
+                } else null
+                ExtensionImportScreen(payload.type, givenUriList)
             }
             composableWithDeepLink(Ext.CheckUpdates::class) {
                 CheckUpdatesScreen()

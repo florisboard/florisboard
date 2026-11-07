@@ -59,6 +59,7 @@ import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.ime.keyboard.FlorisImeSizing
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import dev.patrickgold.florisboard.ime.theme.ImeUiAttrs
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.delay
 import org.florisboard.lib.compose.conditional
@@ -146,7 +147,7 @@ private fun ImeWindowResizeHandle(
 
     val attributes = remember(windowConfig.mode) {
         mapOf(
-            FlorisImeUi.Attr.WindowMode to windowConfig.mode.toString(),
+            ImeUiAttrs.WindowMode.eq(windowConfig.mode),
         )
     }
 
@@ -205,7 +206,7 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
 
     val attributes = remember(windowConfig.mode) {
         mapOf(
-            FlorisImeUi.Attr.WindowMode to windowConfig.mode
+            ImeUiAttrs.WindowMode.eq(windowConfig.mode),
         )
     }
 
@@ -241,6 +242,7 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
             ) {
                 SnyggIcon(
                     elementName = FlorisImeUi.WindowResizeAction.elementName,
+                    attributes = attributes,
                     imageVector = drawableRes(R.drawable.ic_restart_alt),
                 )
             }
@@ -248,10 +250,11 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
             SnyggIconButton(
                 FlorisImeUi.WindowMoveHandle.elementName,
                 attributes = attributes,
-                onClick = {}
+                onClick = {},
             ) {
                 SnyggIcon(
                     elementName = FlorisImeUi.WindowMoveHandle.elementName,
+                    attributes = attributes,
                     imageVector = drawableRes(R.drawable.ic_drag_pan),
                     modifier = Modifier.imeWindowMoveHandle(windowController),
                 )
@@ -264,6 +267,7 @@ fun BoxScope.ImeWindowResizeHandlesFixed() {
             ) {
                 SnyggIcon(
                     elementName = FlorisImeUi.WindowResizeAction.elementName,
+                    attributes = attributes,
                     imageVector = drawableRes(R.drawable.ic_check),
                 )
             }
