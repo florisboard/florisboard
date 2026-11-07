@@ -17,7 +17,6 @@
 package dev.patrickgold.florisboard.ime.keyboard3.ui
 
 import android.content.Context
-import androidx.annotation.DrawableRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowRightAlt
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -46,6 +45,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.SelectAll
 import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.SpaceBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -55,7 +55,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.vectorResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
 import dev.patrickgold.florisboard.ime.keyboard3.ImeIcons
@@ -63,8 +62,8 @@ import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
+import dev.patrickgold.florisboard.lib.compose.vectorResource
 import org.florisboard.lib.compose.icons.ForwardDelete
-import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.k3lp.lib.text.K3Descriptor
 
@@ -73,7 +72,6 @@ fun Icon3(
     value: K3Descriptor,
     modifier: Modifier = Modifier,
     elementName: String? = null,
-    attributes: SnyggQueryAttributes = emptyMap(),
 ) {
     val context = LocalContext.current
     val imeController = LocalImeController.current
@@ -133,7 +131,6 @@ fun Icon3(
             imageVector = imageVector,
             modifier = modifier,
             elementName = elementName,
-            attributes = attributes,
         )
     }
 }
@@ -166,6 +163,7 @@ fun staticIcon3(value: K3Descriptor, context: Context): ImageVector? {
         ImeIcons.ShiftOn -> context.vectorResource(R.drawable.ic_shift_on)
         ImeIcons.ShowKeyboard -> Icons.Default.KeyboardDoubleArrowUp // TODO
         ImeIcons.SelectAll -> Icons.Default.SelectAll
+        ImeIcons.Share -> Icons.Default.Share
         ImeIcons.Settings -> Icons.Default.Settings
         ImeIcons.SpaceBar -> Icons.Default.SpaceBar
         ImeIcons.ToggleActionsOverflow -> Icons.Default.MoreHoriz
@@ -176,14 +174,5 @@ fun staticIcon3(value: K3Descriptor, context: Context): ImageVector? {
         ImeIcons.Undo -> Icons.AutoMirrored.Filled.Undo
         ImeIcons.Voice -> Icons.Default.KeyboardVoice
         else -> null
-    }
-}
-
-private fun Context.vectorResource(@DrawableRes id: Int): ImageVector? {
-    val theme = this.theme
-    return try {
-        ImageVector.vectorResource(theme = theme, resId = id, res = this.resources)
-    } catch (_: Exception) {
-        null
     }
 }
