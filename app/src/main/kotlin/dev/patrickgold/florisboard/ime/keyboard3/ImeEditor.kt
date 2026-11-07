@@ -133,9 +133,7 @@ open class ImeEditor(
     }
 
     fun performTextShare(): Boolean {
-        val ic = ic.get() ?: return false
-
-        val selectedText = ic.getSelectedText(0)?.toString()?: return false
+        val selectedText = getSurroundingText(0, 0).textSelected
 
         if (selectedText.isEmpty()) return false
 
