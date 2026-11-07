@@ -64,7 +64,6 @@ sealed class QuickAction {
                 KeyCode.CLIPBOARD_CUT -> InsertK3Descriptor(ImeActions.ClipboardCut)
                 KeyCode.CLIPBOARD_PASTE -> InsertK3Descriptor(ImeActions.ClipboardPaste)
                 KeyCode.CLIPBOARD_SELECT_ALL -> InsertK3Descriptor(ImeActions.SelectAll)
-                KeyCode.SHARE_SELECTED_TEXT -> InsertK3Descriptor(ImeActions.ShareSelectedText)
                 KeyCode.LANGUAGE_SWITCH -> InsertK3Descriptor(ImeActions.SwitchToNextSubtype)
                 KeyCode.FORWARD_DELETE -> InsertK3Descriptor(ImeActions.Delete)
                 KeyCode.IME_HIDE_UI -> InsertK3Descriptor(ImeActions.HideImeWindow)
