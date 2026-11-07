@@ -37,7 +37,7 @@ object ImeActions {
     val ClipboardClearFullHistory = flAction("clipboard_clear_full_history")
     val ClipboardClearPrimaryClip = flAction("clipboard_clear_primary_clip")
     val SelectAll = flAction("select_all")
-    val ShareSelectedText = flAction("share_selected_text")
+    val Share = flAction("share")
 
     val ShowImeWindow = flAction("show_ime_window")
     val HideImeWindow = flAction("hide_ime_window")
@@ -104,7 +104,7 @@ object ImeActions {
         ClipboardClearFullHistory,
         ClipboardClearPrimaryClip,
         SelectAll,
-        ShareSelectedText,
+        Share,
         ToggleFloatingWindow,
         ToggleCompactLayout,
         CompactLayoutToLeft,

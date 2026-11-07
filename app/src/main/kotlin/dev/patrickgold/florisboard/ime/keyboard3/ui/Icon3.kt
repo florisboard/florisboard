@@ -163,7 +163,7 @@ fun staticIcon3(value: K3Descriptor, context: Context): ImageVector? {
         ImeIcons.ShiftOn -> context.vectorResource(R.drawable.ic_shift_on)
         ImeIcons.ShowKeyboard -> Icons.Default.KeyboardDoubleArrowUp // TODO
         ImeIcons.SelectAll -> Icons.Default.SelectAll
-        ImeIcons.ShareSelectedText -> Icons.Default.Share
+        ImeIcons.Share -> Icons.Default.Share
         ImeIcons.Settings -> Icons.Default.Settings
         ImeIcons.SpaceBar -> Icons.Default.SpaceBar
         ImeIcons.ToggleActionsOverflow -> Icons.Default.MoreHoriz
