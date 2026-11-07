@@ -372,7 +372,7 @@ class ImeController(
                     //  appContext.showShortToastSync(R.string.clipboard__cleared_primary_clip)
                 }
                 ImeActions.SelectAll -> state.editor.performSelectAll()
-                ImeActions.ShareSelectedText -> {
+                ImeActions.Share -> {
                     val text = state.content.surroundingText.textSelected
                     if (text.isNotEmpty()) {
                         state.editor.performTextShare()
