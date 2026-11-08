@@ -43,6 +43,11 @@ import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.mozc.MozcEngine
 import dev.patrickgold.florisboard.ime.mozc.MozcKeyboardSpec
+import dev.patrickgold.florisboard.ime.mozc.SelectionTracker
+import dev.patrickgold.florisboard.ime.mozc.asK3String
+import dev.patrickgold.florisboard.ime.mozc.asString
+import dev.patrickgold.florisboard.ime.mozc.isNotEmpty
+import dev.patrickgold.florisboard.ime.mozc.length
 import dev.patrickgold.florisboard.ime.nlp.BreakIterators
 import dev.patrickgold.florisboard.ime.nlp.ClipboardSuggestionCandidate
 import dev.patrickgold.florisboard.ime.nlp.JapaneseWordSuggestionCandidate
@@ -124,6 +129,7 @@ class ImeController(
 
     // TODO check if we can implement this differently
     val activeSmartbarVisibleDynamicActionsCount = MutableStateFlow(0)
+    val selectionTracker = SelectionTracker()
 
     init {
         combine(
@@ -303,6 +309,14 @@ class ImeController(
             )
             if (state.model.info.indicator?.contains("mozcJa") ?: false) {
                 updateConfig()
+                var selStart = initialSelection.start
+                var selEnd = initialSelection.end
+                // Any non -1 negative value is invalid, safeguard against it
+                if(selStart < 0 || selEnd < 0) {
+                    selStart = -1
+                    selEnd = -1
+                }
+                selectionTracker.onStartInput(selStart, selEnd, false)
             }
             resetContent(initialSelection, initialSurrounding)
             expectedContentQueue.clear()
@@ -368,7 +382,7 @@ class ImeController(
                 // TODO: properly pass cursor position into mozc
                 // TODO: look into porting SelectionTracker.java and related MOVE_CURSOR command from old mozc/グーグル日本語入力 app into kotlin and fitting it in here
                 flogDebug { "mozc does not allow the user to move the cursor or select during composition" }
-                state.editor.snapToPosition(state.content.selection)
+                //state.editor.snapToPosition(state.content.selection)
                 return
             }
             val content = expectedContentQueue.popUntilOrNull { it.selection == newSelection }
@@ -417,15 +431,21 @@ class ImeController(
                     )
                     val newSelection = K3TextRange(state.content.selection.min + text.length)
                     val newComposition = evaluateCompositionOf(state.model, newSelection, newSurroundingText)
+                    val actualSelection = maybeChangeSelection(newSelection)
                     state = state.copy(
                         content = state.content.copy(
-                            selection = newSelection,
+                            selection = actualSelection,
                             composition = newComposition,
                             surroundingText = newSurroundingText,
                             inputContext = state.content.inputContext + value,
                         ),
                     )
-                    state.editor.composeMozcInput(range, text, newSelection, newComposition)
+                    state.editor.composeMozcInput(range, text, actualSelection, newComposition)
+                    selectionTracker.onRender(
+                        MozcEngine.instance.deletionRange.value,
+                        MozcEngine.instance.result.value?.value,
+                        MozcEngine.instance.preedit.value,
+                    )
                 } else {
                     sendPreedit(preedit)
                 }
@@ -436,7 +456,7 @@ class ImeController(
             reevaluateInputShiftState()
         }
 
-        fun sendPreedit(preedit: String) {
+        fun sendPreedit(preedit: ProtoCommands.Preedit?) {
             val oldComposition = state.content.composition
             val (oldStart, oldEnd) =
                 if (oldComposition != null) {
@@ -452,7 +472,7 @@ class ImeController(
             val text = preedit.asK3String().normalize(NormalizationForm.NFC).toText()
             val textBefore = state.content.surroundingText.textBefore
             val newSurroundingText = state.content.surroundingText.copy(
-                textBefore = textBefore.substring(0, localStart) + preedit + textBefore.substring(localEnd),
+                textBefore = textBefore.substring(0, localStart) + preedit.asString() + textBefore.substring(localEnd),
                 textSelected = "",
             )
             val newSelection = K3TextRange(state.content.offset + newSurroundingText.textBefore.length)
@@ -460,15 +480,82 @@ class ImeController(
                 newSelection.start - preedit.length,
                 newSelection.start
             )
+            val actualSelection = maybeChangeSelection(newSelection)
             state = state.copy(
                 content = state.content.copy(
-                    selection = newSelection,
+                    selection = actualSelection,
                     composition = newComposition,
                     surroundingText = newSurroundingText,
-                    inputContext = (state.content.inputContext.toText().substring(0, localStart) + preedit + state.content.inputContext.toText().substring(localEnd)).asK3String(),
+                    inputContext = (state.content.inputContext.toText().substring(0, localStart) + preedit.asString() + state.content.inputContext.toText().substring(localEnd)).asK3String(),
                 ),
             )
-            state.editor.composeMozcInput(range, text, newSelection, newComposition)
+            state.editor.composeMozcInput(range, text, actualSelection, newComposition)
+            selectionTracker.onRender(
+                MozcEngine.instance.deletionRange.value,
+                MozcEngine.instance.result.value?.value,
+                MozcEngine.instance.preedit.value,
+            )
+        }
+
+        private fun getPreeditLength(preedit: ProtoCommands.Preedit): Int {
+            var result = 0
+            for (i in 0 until preedit.segmentCount) {
+                result += preedit.getSegment(i).valueLength
+            }
+            return result
+        }
+
+        private fun maybeChangeSelection(selection: K3TextRange): K3TextRange {
+            val preedit = MozcEngine.instance.preedit.value ?: return selection
+            val cursor = preedit.cursor
+            if (cursor == 0 || cursor == getPreeditLength(preedit)) {
+                // The cursor is at the beginning/ending of the preedit. So we don't anything about the
+                // caret setting.
+                return selection
+            }
+            var caretPosition = selectionTracker.preeditStartPosition
+            val deletionRange = MozcEngine.instance.deletionRange.value
+            if (deletionRange != null) {
+                caretPosition += deletionRange.offset
+            }
+            val result = MozcEngine.instance.result.value
+            if (result != null) {
+                caretPosition += result.value.length
+            }
+            caretPosition += cursor
+            return K3TextRange(caretPosition, caretPosition)
+        }
+
+        fun onUpdateSelection(
+            oldSelStart: Int,
+            oldSelEnd: Int,
+            newSelStart: Int,
+            newSelEnd: Int,
+            composingSpanStart: Int,
+            composingSpanEnd: Int
+        ) {
+            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
+                val updateStatus = selectionTracker.onUpdateSelection(
+                    oldSelStart, oldSelEnd,
+                    newSelStart, newSelEnd,
+                    composingSpanStart, composingSpanEnd,
+                    false
+                )
+
+                flogDebug { "Update selection from $oldSelStart:$oldSelEnd to $newSelStart:$newSelEnd [$composingSpanStart:$composingSpanEnd]. Status $updateStatus" }
+
+                when(updateStatus) {
+                    SelectionTracker.DO_NOTHING -> {}
+                    SelectionTracker.RESET_CONTEXT -> {
+                        MozcEngine.instance.resetContext()
+                    }
+
+                    else -> {
+                        if(updateStatus < 0) throw IllegalStateException("Invalid updateStatus $updateStatus")
+                        MozcEngine.instance.moveCursor(updateStatus)
+                    }
+                }
+            }
         }
 
         override fun switchModel(newModel: K3Model) {
@@ -898,6 +985,9 @@ class ImeController(
 
         fun handleFinishInputView() {
             resetContent()
+            if (state.model.info.indicator?.contains("mozcJa") ?: false) {
+                selectionTracker.onFinishInput()
+            }
             state = state.copy(editor = ImeEditor.Disconnected)
             expectedContentQueue.clear()
         }

@@ -65,6 +65,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.isTextLayer
 import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.mozc.MozcEngine
+import dev.patrickgold.florisboard.ime.mozc.isNotEmpty
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import org.florisboard.lib.compose.icons.ForwardDelete
@@ -133,6 +134,7 @@ fun Icon3(
             // TODO char width/kata/hira icons???
             ImeIcons.Kana -> when {
                 // use isTextLayer() as that is every alphabet layer
+                // TODO: source proper icons before upstreaming, as i doubt upstream will accept the icons from decompiled グーグル日本語入力
                 layerId.isTextLayer() -> context.vectorResource(R.drawable.ic_key_ja_bi_state_alphabet)
                 layerId == ImeLayerIds.Kana -> context.vectorResource(R.drawable.ic_key_ja_bi_state_hiragana)
                 else -> null // kana key shouldn't be in any other layouts
@@ -163,6 +165,7 @@ fun staticIcon3(value: K3Descriptor, context: Context): ImageVector? {
         ImeIcons.ClipboardCut -> Icons.Default.ContentCut
         ImeIcons.ClipboardPaste -> Icons.Default.ContentPasteGo
         ImeIcons.Close -> Icons.Default.Close
+        // TODO: source proper icon before upstreaming, as i doubt upstream will accept the icons from decompiled グーグル日本語入力
         ImeIcons.Dakuten -> context.vectorResource(R.drawable.dakuten)
         ImeIcons.Delete -> Icons.AutoMirrored.Default.ForwardDelete
         ImeIcons.DragMarker -> Icons.Default.Close

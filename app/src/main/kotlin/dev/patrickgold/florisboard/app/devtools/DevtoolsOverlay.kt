@@ -43,6 +43,7 @@ import dev.patrickgold.florisboard.app.FlorisPreferenceStore
 import dev.patrickgold.florisboard.clipboardManager
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.mozc.MozcEngine
+import dev.patrickgold.florisboard.ime.mozc.asNullableString
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofill
 import dev.patrickgold.florisboard.ime.theme.LocalThemeController
 import dev.patrickgold.florisboard.ime.theme.ThemeController
@@ -208,7 +209,7 @@ private fun DevtoolsMozcOverlay() {
 
     DevtoolsOverlayBox(title = "Mozc overlay") {
         DevtoolsSubGroup(title = "MozcPreedit") {
-            DevtoolsText(text = "Preedit=${mozc.preedit.collectAsState().value}")
+            DevtoolsText(text = "Preedit=${mozc.preedit.collectAsState().value.asNullableString()}")
         }
         DevtoolsSubGroup(title = "MozcCandidates") {
             for (candidate in mozc.candidates.collectAsState().value.first) {
