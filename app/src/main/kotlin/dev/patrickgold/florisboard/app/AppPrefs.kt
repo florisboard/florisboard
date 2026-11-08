@@ -129,6 +129,10 @@ abstract class FlorisPreferenceModel : PreferenceModel() {
             key = "clipboard__history_auto_clean_sensitive_after",
             default = 20,
         )
+        val historyShowSensitiveEnabled = boolean(
+            key = "clipboard__history_show_sensitive_enabled",
+            default = false,
+        )
         val historySizeLimitEnabled = boolean(
             key = "clipboard__history_size_limit_enabled",
             default = true,
