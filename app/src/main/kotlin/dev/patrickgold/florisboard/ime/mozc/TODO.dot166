@@ -9,12 +9,13 @@ make default flick layout match the layout in グーグル日本語入力 (or gb
 fix bugs in flick when they crops up
 mark flick as completed in MozcEngine.kt
 wait for k3lp extension infra to be fully built
-add user dictionary and UT dictionary support
+add user dictionary and UT dictionary support (if community want it)
 // mark for review //
 // the following dont need to be done in initial PR, or need input from upstream //
 get proper icons made instead of 'borrowing' google`s icons
 ask patrickgold and lm41 if they want physical keyboard support now or later
 ask community and maintainers if they want the グーグル日本語入力 layout (as i had built) or the gboard layout, or something else
+ask community if they want (optional) UT dictionary support
 try to get the 'autocomplete' highlight working
 adapt candidate list hack to use proper infrastructure once it is available
 ask community and maintainers if they want the fn-key on the alphabet/base layer of QWERTY too instead of only on kana

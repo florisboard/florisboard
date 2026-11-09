@@ -383,6 +383,7 @@ class ImeController(
                             selection = newSelection,
                         ),
                     )
+                    state.editor.updateMozcCandidateList()
                 }
                 return
             }
@@ -471,7 +472,7 @@ class ImeController(
                 textSelected = "",
             )
             val newSelection = K3TextRange(state.content.offset + newSurroundingText.textBefore.length)
-            val newComposition = K3TextRange(
+            val newComposition = if (preedit.length == 0) null else K3TextRange(
                 newSelection.start - preedit.length,
                 newSelection.start
             )
@@ -529,7 +530,6 @@ class ImeController(
             val windowController = FlorisImeService.windowControllerOrNull()
             when (descriptor) {
                 // TODO once k3lp supports this remove
-                // dot166: haha, don't, see comment in emitBackspace() and emitForwardDelete() as to why using a potential k3lp impl is a bad idea...
                 ImeActions.Delete -> emitForwardDelete()
                 // TODO evaluate use of modern cursor anchor API instead of sending raw key events
                 ImeActions.ArrowDown -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN)
@@ -712,27 +712,24 @@ class ImeController(
                     if (MozcEngine.instance.preedit.value.isNotEmpty()) {
                         MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.DEL) // mozc has no dedicated forward delete call, but sending delete does what we need
                         sendPreedit(MozcEngine.instance.preedit.value)
-                    } else {
-                        // send hardware keycode instead of using k3lp because k3lp reselects the text before and that breaks mozc by overriding what user already wrote when user presses a key
-                        state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_FORWARD_DEL)
+                        return
                     }
-                } else {
-                    val newSurroundingText = state.content.surroundingText.copy(
-                        textAfter = state.content.surroundingText.textAfter.let { text ->
-                            // TODO unicode
-                            if (text.isEmpty()) text else text.substring(1)
-                        },
-                    )
-                    state = state.copy(
-                        content = state.content.copy(
-                            surroundingText = newSurroundingText,
-                        ),
-                    )
-                    state.editor.deleteSurroundingText(
-                        charsBefore = 0,
-                        charsAfter = 1, // TODO
-                    )
                 }
+                val newSurroundingText = state.content.surroundingText.copy(
+                    textAfter = state.content.surroundingText.textAfter.let { text ->
+                        // TODO unicode
+                        if (text.isEmpty()) text else text.substring(1)
+                    },
+                )
+                state = state.copy(
+                    content = state.content.copy(
+                        surroundingText = newSurroundingText,
+                    ),
+                )
+                state.editor.deleteSurroundingText(
+                    charsBefore = 0,
+                    charsAfter = 1, // TODO
+                )
             }
         }
 
@@ -897,12 +894,18 @@ class ImeController(
         }
 
         override fun resetContent(newSelection: K3TextRange, newSurrounding: K3SurroundingText) {
-            val realSurrounding = if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
-                K3SurroundingText.Empty
+            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
+                state = state.copy(
+                    content = K3Content(
+                        selection = newSelection,
+                        surroundingText = newSurrounding,
+                        inputContext = newSurrounding.textBefore
+                            .asK3String().normalize(NormalizationForm.NFD),
+                    ),
+                )
             } else {
-                newSurrounding
+                super.resetContent(newSelection, newSurrounding)
             }
-            super.resetContent(newSelection, realSurrounding)
             reevaluateInputShiftState()
         }
 
