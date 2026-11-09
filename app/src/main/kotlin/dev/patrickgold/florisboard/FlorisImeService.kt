@@ -409,20 +409,6 @@ class FlorisImeService : LifecycleInputMethodService() {
         }
     }
 
-    override fun onUpdateSelection(
-        oldSelStart: Int,
-        oldSelEnd: Int,
-        newSelStart: Int,
-        newSelEnd: Int,
-        candidatesStart: Int,
-        candidatesEnd: Int
-    ) {
-        super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd)
-        imeController.updateStateBlocking {
-            onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd, candidatesStart, candidatesEnd)
-        }
-    }
-
     override fun onFinishInput() {
         flogInfo { "(no args)" }
         super.onFinishInput()
