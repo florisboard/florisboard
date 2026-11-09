@@ -210,6 +210,7 @@ private fun DevtoolsMozcOverlay() {
     DevtoolsOverlayBox(title = "Mozc overlay") {
         DevtoolsSubGroup(title = "MozcPreedit") {
             DevtoolsText(text = "Preedit=${mozc.preedit.collectAsState().value.asNullableString()}")
+            DevtoolsText(text = "Cursor=${mozc.preedit.collectAsState().value?.cursor}")
         }
         DevtoolsSubGroup(title = "MozcCandidates") {
             for (candidate in mozc.candidates.collectAsState().value.first) {

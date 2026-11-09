@@ -29,10 +29,6 @@ class MozcEngine {
     private var sessionId: Long = 0L
     private val _preedit: MutableStateFlow<ProtoCommands.Preedit?> = MutableStateFlow(null)
     val preedit: StateFlow<ProtoCommands.Preedit?> = _preedit.asStateFlow()
-    private val _result: MutableStateFlow<ProtoCommands.Result?> = MutableStateFlow(null)
-    val result: StateFlow<ProtoCommands.Result?> = _result.asStateFlow()
-    private val _deletionRange: MutableStateFlow<ProtoCommands.DeletionRange?> = MutableStateFlow(null)
-    val deletionRange: StateFlow<ProtoCommands.DeletionRange?> = _deletionRange.asStateFlow()
     private val _candidates: MutableStateFlow<Pair<MutableList<ProtoCandidateWindow.CandidateWord>, Int?>> = MutableStateFlow(Pair(mutableListOf(), null))
     val candidates: StateFlow<Pair<MutableList<ProtoCandidateWindow.CandidateWord>, Int?>> = _candidates.asStateFlow()
     private var _keyboardSpec = MozcKeyboardSpec.TWELVE_KEY_FLICK_KANA
@@ -160,8 +156,6 @@ class MozcEngine {
 
         sessionId = 0L
         _preedit.value = null
-        _result.value = null
-        _deletionRange.value = null
         _candidates.value = Pair(mutableListOf(), null)
     }
 
@@ -263,6 +257,7 @@ class MozcEngine {
         flogDebug { "AAAAAAA$cursorPosition" }
         val input: ProtoCommands.Input.Builder? = ProtoCommands.Input.newBuilder()
             .setType(ProtoCommands.Input.CommandType.SEND_COMMAND)
+            .setId(sessionId)
             .setCommand(
                 SessionCommand.newBuilder()
                     .setType(SessionCommand.CommandType.MOVE_CURSOR)
@@ -271,20 +266,7 @@ class MozcEngine {
         val inCommand: ProtoCommands.Command = ProtoCommands.Command.newBuilder()
             .setInput(input)
             .build()
-        execute(inCommand)
-    }
-
-    fun resetContext() {
-        val input: ProtoCommands.Input.Builder? = ProtoCommands.Input.newBuilder()
-            .setType(ProtoCommands.Input.CommandType.SEND_COMMAND)
-            .setCommand(
-                SessionCommand.newBuilder()
-                    .setType(SessionCommand.CommandType.RESET_CONTEXT)
-            )
-        val inCommand: ProtoCommands.Command = ProtoCommands.Command.newBuilder()
-            .setInput(input)
-            .build()
-        execute(inCommand)
+        executeAndUpdate(inCommand)
     }
 
     private fun execute(request: ProtoCommands.Command): ByteArray? {
@@ -305,18 +287,6 @@ class MozcEngine {
             preedit = output.preedit
         }
         _preedit.value = preedit
-
-        var result: ProtoCommands.Result? = null
-        if (output.hasResult()) {
-            result = output.result
-        }
-        _result.value = result
-
-        var deletionRange: ProtoCommands.DeletionRange? = null
-        if (output.hasDeletionRange()) {
-            deletionRange = output.deletionRange
-        }
-        _deletionRange.value = deletionRange
 
         val candidateList = output.allCandidateWords.candidatesList
         val selectedIndex = if(output.hasCandidateWindow()) {

@@ -43,7 +43,6 @@ import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchModelOptions
 import dev.patrickgold.florisboard.ime.media.emoji.EmojiSuggestionType
 import dev.patrickgold.florisboard.ime.mozc.MozcEngine
 import dev.patrickgold.florisboard.ime.mozc.MozcKeyboardSpec
-import dev.patrickgold.florisboard.ime.mozc.SelectionTracker
 import dev.patrickgold.florisboard.ime.mozc.asK3String
 import dev.patrickgold.florisboard.ime.mozc.asString
 import dev.patrickgold.florisboard.ime.mozc.isNotEmpty
@@ -129,7 +128,6 @@ class ImeController(
 
     // TODO check if we can implement this differently
     val activeSmartbarVisibleDynamicActionsCount = MutableStateFlow(0)
-    val selectionTracker = SelectionTracker()
 
     init {
         combine(
@@ -309,13 +307,6 @@ class ImeController(
             )
             if (state.model.info.indicator?.contains("mozcJa") ?: false) {
                 updateConfig()
-                var selStart = initialSelection.start
-                var selEnd = initialSelection.end
-                // Any non -1 negative value is invalid, safeguard against it
-                if(selStart < 0 || selEnd < 0) {
-                    selStart = -1
-                    selEnd = -1
-                }
             }
             resetContent(initialSelection, initialSurrounding)
             expectedContentQueue.clear()
@@ -333,9 +324,6 @@ class ImeController(
                 historyLearningLevel = when {
                     state.flags.isIncognitoMode ->
                         ProtoConfig.Config.HistoryLearningLevel.READ_ONLY
-
-                    //BuildConfig.DEBUG ->
-                    //    ProtoConfig.Config.HistoryLearningLevel.READ_ONLY
 
                     else ->
                         ProtoConfig.Config.HistoryLearningLevel.DEFAULT_HISTORY
@@ -380,14 +368,25 @@ class ImeController(
             if (state.content.composition != null && state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
                 // TODO: properly pass cursor position into mozc
                 // TODO: look into porting SelectionTracker.java and related MOVE_CURSOR command from old mozc/グーグル日本語入力 app into kotlin and fitting it in here
+                val composition = state.content.composition!!
                 if (newSelection.isNotCollapsed()) {
-                    flogDebug { "mozc does not allow the user to select during composition, snapping to end of composition" }
+                    flogDebug { "mozc does not allow the user to select during composition, snapping to last accepted selection" }
                     state.editor.snapToPosition(state.content.selection)
+                } else if (composition.notContains(newSelection)) {
+                    flogDebug { "mozc does not allow the user to move cursor outwith its composition, snapping to last accepted selection" }
+                    state.editor.snapToPosition(state.content.selection)
+                } else if (newSelection == state.content.selection) {
+                    // just k3lp telling android what to do, ignore it
                 } else {
-                    flogDebug { "mozc does not allow the user to move the cursor during composition" }
-                    //state.editor.snapToPosition(state.content.selection)
-                    return
+                    val mozcPosition = newSelection.min - composition.min
+                    MozcEngine.instance.moveCursor(mozcPosition)
+                    state = state.copy(
+                        content = state.content.copy(
+                            selection = newSelection,
+                        ),
+                    )
                 }
+                return
             }
             val content = expectedContentQueue.popUntilOrNull { it.selection == newSelection }
             if (content != null) {
@@ -435,7 +434,7 @@ class ImeController(
                     )
                     val newSelection = K3TextRange(state.content.selection.min + text.length)
                     val newComposition = evaluateCompositionOf(state.model, newSelection, newSurroundingText)
-                    val actualSelection = maybeChangeSelection(newSelection)
+                    val actualSelection = maybeChangeSelection(newSelection, newComposition)
                     state = state.copy(
                         content = state.content.copy(
                             selection = actualSelection,
@@ -479,7 +478,7 @@ class ImeController(
                 newSelection.start - preedit.length,
                 newSelection.start
             )
-            val actualSelection = maybeChangeSelection(newSelection)
+            val actualSelection = maybeChangeSelection(newSelection, newComposition)
             state = state.copy(
                 content = state.content.copy(
                     selection = actualSelection,
@@ -499,58 +498,16 @@ class ImeController(
             return result
         }
 
-        private fun maybeChangeSelection(selection: K3TextRange): K3TextRange {
+        private fun maybeChangeSelection(selection: K3TextRange, composition: K3TextRange?): K3TextRange {
             val preedit = MozcEngine.instance.preedit.value ?: return selection
             val cursor = preedit.cursor
             if (cursor == 0 || cursor == getPreeditLength(preedit)) {
-                // The cursor is at the beginning/ending of the preedit. So we don't anything about the
-                // caret setting.
+                // The cursor is at the beginning/ending of the preedit. So we use the existing logic
                 return selection
             }
-            var caretPosition = selectionTracker.preeditStartPosition
-            val deletionRange = MozcEngine.instance.deletionRange.value
-            if (deletionRange != null) {
-                caretPosition += deletionRange.offset
-            }
-            val result = MozcEngine.instance.result.value
-            if (result != null) {
-                caretPosition += result.value.length
-            }
-            caretPosition += cursor
-            return K3TextRange(caretPosition, caretPosition)
+            val cursorPosition = (cursor + (composition?.min ?: (selection.min -1).coerceAtLeast(0)))
+            return K3TextRange(cursorPosition, cursorPosition)
         }
-
-//        fun onUpdateSelection(
-//            oldSelStart: Int,
-//            oldSelEnd: Int,
-//            newSelStart: Int,
-//            newSelEnd: Int,
-//            composingSpanStart: Int,
-//            composingSpanEnd: Int
-//        ) {
-//            if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
-//                val updateStatus = selectionTracker.onUpdateSelection(
-//                    oldSelStart, oldSelEnd,
-//                    newSelStart, newSelEnd,
-//                    composingSpanStart, composingSpanEnd,
-//                    false
-//                )
-//
-//                flogDebug { "Update selection from $oldSelStart:$oldSelEnd to $newSelStart:$newSelEnd [$composingSpanStart:$composingSpanEnd]. Status $updateStatus" }
-//
-//                when(updateStatus) {
-//                    SelectionTracker.DO_NOTHING -> {}
-//                    SelectionTracker.RESET_CONTEXT -> {
-//                        MozcEngine.instance.resetContext()
-//                    }
-//
-//                    else -> {
-//                        if(updateStatus < 0) throw IllegalStateException("Invalid updateStatus $updateStatus")
-//                        MozcEngine.instance.moveCursor(updateStatus)
-//                    }
-//                }
-//            }
-//        }
 
         override fun switchModel(newModel: K3Model) {
             super.switchModel(newModel)
@@ -578,10 +535,10 @@ class ImeController(
                 // dot166: haha, don't, see comment in emitBackspace() and emitForwardDelete() as to why using a potential k3lp impl is a bad idea...
                 ImeActions.Delete -> emitForwardDelete()
                 // TODO evaluate use of modern cursor anchor API instead of sending raw key events
-                ImeActions.ArrowDown -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN)
-                ImeActions.ArrowLeft -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT)
-                ImeActions.ArrowRight -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
-                ImeActions.ArrowUp -> sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP)
+                ImeActions.ArrowDown -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_DOWN)
+                ImeActions.ArrowLeft -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT)
+                ImeActions.ArrowRight -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
+                ImeActions.ArrowUp -> state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_UP)
                 // TODO clipboard manager needs a rewrite to match the new state paradigm
                 ImeActions.ClipboardCopy -> {
                     if (state.editor.info.isRichInputEditor) {
@@ -675,26 +632,6 @@ class ImeController(
             reevaluateInputShiftState()
         }
 
-        fun sendDownUpKeyEvent(keycode: Int) {
-            when (keycode) {
-                KeyEvent.KEYCODE_DPAD_LEFT -> {
-                    if (MozcEngine.instance.preedit.value.isNotEmpty()) {
-                        MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.LEFT)
-                    } else {
-                        state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_LEFT)
-                    }
-                }
-                KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                    if (MozcEngine.instance.preedit.value.isNotEmpty()) {
-                        MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.RIGHT)
-                    } else {
-                        state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DPAD_RIGHT)
-                    }
-                }
-                else -> state.editor.sendDownUpKeyEvent(keycode)
-            }
-        }
-
         fun commitMozcOnPanelChange() {
             if (state.model.info.indicator?.contains("mozcJa") ?: false) {
                 if (MozcEngine.instance.preedit.value.isNotEmpty()) {
@@ -717,7 +654,7 @@ class ImeController(
                 } else {
                     // send hardware keycode instead of using k3lp because k3lp reselects the text before and that breaks mozc by overriding what user already wrote when user presses a key
                     //super.emitBackspace()
-                    sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
+                    state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_DEL)
                 }
             } else {
                 super.emitBackspace()
@@ -759,7 +696,7 @@ class ImeController(
         fun emitEnterKey() {
             val info = state.editor.info
             if (info.isRawInputEditor) {
-                sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER)
+                state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_ENTER)
             } else {
                 emitText(NEWLINE_SEQ)
             }
@@ -780,7 +717,7 @@ class ImeController(
                         sendPreedit(MozcEngine.instance.preedit.value)
                     } else {
                         // send hardware keycode instead of using k3lp because k3lp reselects the text before and that breaks mozc by overriding what user already wrote when user presses a key
-                        sendDownUpKeyEvent(KeyEvent.KEYCODE_FORWARD_DEL)
+                        state.editor.sendDownUpKeyEvent(KeyEvent.KEYCODE_FORWARD_DEL)
                     }
                 } else {
                     val newSurroundingText = state.content.surroundingText.copy(
@@ -979,9 +916,6 @@ class ImeController(
 
         fun handleFinishInputView() {
             resetContent()
-            if (state.model.info.indicator?.contains("mozcJa") ?: false) {
-                selectionTracker.onFinishInput()
-            }
             state = state.copy(editor = ImeEditor.Disconnected)
             expectedContentQueue.clear()
         }
