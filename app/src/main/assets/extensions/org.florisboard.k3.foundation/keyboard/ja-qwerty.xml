@@ -8,6 +8,7 @@
         <display keyId="base-to-shift" display="@fl:icon/shift" />
         <display keyId="shift-to-base" display="@fl:icon/shift" />
         <display keyId="symbol-1" display="${symbol_1_display}" />
+        <display keyId="symbol-1-fit" display="${symbol_1_display}" />
         <display keyId="symbol-2" display="${symbol_2_display}" />
         <display keyId="numeric" display="${numeric_display}" />
         <display keyId="base-numeric" display="${base_display}" />
@@ -53,6 +54,7 @@
         <key id="shift-to-base" layerId="base" width="1.5" />
         <key id="numeric" layerId="numeric" />
         <key id="symbol-1" layerId="symbol-1" width="1.5" />
+        <key id="symbol-1-fit" layerId="symbol-1" />
         <key id="symbol-2" layerId="symbol-2" width="1.5" />
         <key id="kana" layerId="kana" width="1.5" />
         <key id="kana-base" layerId="base" width="1.5" />
@@ -274,6 +276,8 @@
         <key id="permille" output="\u{2030}" />
         <key id="care-of" output="\u{2105}" />
         <key id="acute" output="´" />
+        <key id="left-arrow" output="@fl:action/arrow_left" />
+        <key id="right-arrow" output="@fl:action/arrow_right" />
 
 
         <!-- numeric layout keys -->
@@ -342,22 +346,22 @@
         <layer id="kana">
             <row keys="q-kana w-kana e-kana r-kana t-kana y-kana u-kana i-kana o-kana p-kana" />
             <row keys="a-kana s-kana d-kana f-kana g-kana h-kana j-kana k-kana l-kana long-vowel" />
-            <row keys="kana-base z-kana x-kana c-kana v-kana b-kana n-kana m-kana bksp" />
-            <row keys="symbol-1 touten fn-key space kuten enter" />
+            <row keys="symbol-1 z-kana x-kana c-kana v-kana b-kana n-kana m-kana bksp" />
+            <row keys="kana-base touten fn-key space kuten left-arrow right-arrow enter" />
         </layer>
 
         <layer id="base">
             <row keys="q w e r t y u i o p" />
             <row keys="a s d f g h j k l" />
-            <row keys="kana z x c v b n m bksp" />
-            <row keys="symbol-1 comma base-to-shift fn-key space period enter" />
+            <row keys="base-to-shift z x c v b n m bksp" />
+            <row keys="kana symbol-1-fit comma space period left-arrow right-arrow enter" />
         </layer>
 
         <layer id="shift">
             <row keys="Q W E R T Y U I O P" />
             <row keys="A S D F G H J K L" />
-            <row keys="kana Z X C V B N M bksp" />
-            <row keys="symbol-1 comma shift-to-base fn-key space period enter" />
+            <row keys="shift-to-base Z X C V B N M bksp" />
+            <row keys="kana symbol-1-fit comma space period left-arrow right-arrow enter" />
         </layer>
 
         <layer id="symbol-1">

@@ -3,7 +3,7 @@
 make default QWERTY layout for mozc match the layout in グーグル日本語入力 (or gboard if that is wanted instead)
 final bugfixes for QWERTY
 // MAKE DRAFT PR ONCE QWERTY FULLY WORKS //
-wait for flick impl
+wait for flick impl or figure it out myself
 get flick working
 make default flick layout match the layout in グーグル日本語入力 (or gboard if that is wanted instead)
 fix bugs in flick when they crops up
@@ -17,3 +17,4 @@ ask patrickgold and lm41 if they want physical keyboard support now or later
 ask community and maintainers if they want the グーグル日本語入力 layout (as i had built) or the gboard layout, or something else
 try to get the 'autocomplete' highlight working
 adapt candidate list hack to use proper infrastructure once it is available
+ask community and maintainers if they want the fn-key on the alphabet/base layer of QWERTY too instead of only on kana
