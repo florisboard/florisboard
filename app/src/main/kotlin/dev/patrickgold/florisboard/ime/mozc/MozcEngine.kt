@@ -8,6 +8,7 @@ import dev.patrickgold.florisboard.FlorisApplication
 import dev.patrickgold.florisboard.appContext
 import dev.patrickgold.florisboard.ime.nlp.JapaneseWordSuggestionCandidate
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
+import dev.patrickgold.florisboard.lib.devtools.flogError
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -59,7 +60,7 @@ class MozcEngine {
         }
         check(MozcJni.onPostLoad(ctx.filesDir.absolutePath, outFile.absolutePath)) { "init failed" }
 
-        Log.d(TAG, MozcJni.dataVersion ?: "")
+        flogDebug { "dataVersion=${MozcJni.dataVersion}" }
 
         val createCommand: ProtoCommands.Command =
             ProtoCommands.Command.newBuilder()
@@ -86,7 +87,7 @@ class MozcEngine {
         set(value) {
             val request = getRequestBuilder(value, florisApplication!!.resources.configuration, 8) // use max latin spellcheck candidates for hardware keyboards
             setRequest(request)
-            val modeCommand: SessionCommand? = SessionCommand.newBuilder()
+            val modeCommand: SessionCommand = SessionCommand.newBuilder()
                 .setType(SessionCommand.CommandType.SWITCH_COMPOSITION_MODE)
                 .setCompositionMode(value.compositionMode)
                 .build()
@@ -229,7 +230,7 @@ class MozcEngine {
     private fun setRequest(builder: ProtoCommands.Request.Builder) {
         val inputBuilder: ProtoCommands.Input.Builder = ProtoCommands.Input.newBuilder()
             .setRequest(builder)
-        val input: ProtoCommands.Input? = inputBuilder
+        val input: ProtoCommands.Input = inputBuilder
             .setId(sessionId)
             .setType(ProtoCommands.Input.CommandType.SET_REQUEST)
             .setRequest(inputBuilder.request)
@@ -254,8 +255,7 @@ class MozcEngine {
     }
 
     fun moveCursor(cursorPosition: Int) {
-        flogDebug { "AAAAAAA$cursorPosition" }
-        val input: ProtoCommands.Input.Builder? = ProtoCommands.Input.newBuilder()
+        val input: ProtoCommands.Input.Builder = ProtoCommands.Input.newBuilder()
             .setType(ProtoCommands.Input.CommandType.SEND_COMMAND)
             .setId(sessionId)
             .setCommand(
@@ -276,7 +276,7 @@ class MozcEngine {
     private fun executeAndUpdate(request: ProtoCommands.Command) {
         val bytes = execute(request)
         if (bytes == null || bytes.isEmpty()) {
-            Log.e(TAG, "returned empty response")
+            flogError { "returned empty response" }
             return
         }
 
@@ -302,8 +302,6 @@ class MozcEngine {
     }
 
     companion object {
-        private const val TAG = "mozcDebug"
-
         private val sInstance = MozcEngine()
 
         val instance: MozcEngine
