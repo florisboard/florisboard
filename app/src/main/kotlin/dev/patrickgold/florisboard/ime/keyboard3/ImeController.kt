@@ -366,8 +366,6 @@ class ImeController(
 
         fun handleUpdateSelection(newSelection: K3TextRange) {
             if (state.content.composition != null && state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
-                // TODO: properly pass cursor position into mozc
-                // TODO: look into porting SelectionTracker.java and related MOVE_CURSOR command from old mozc/グーグル日本語入力 app into kotlin and fitting it in here
                 val composition = state.content.composition!!
                 if (newSelection.isNotCollapsed()) {
                     flogDebug { "mozc does not allow the user to select during composition, snapping to last accepted selection" }
@@ -397,7 +395,6 @@ class ImeController(
             expectedContentQueue.push(state.content)
         }
 
-        // leftover from previous idea, might need it if the above todos are done successfully
         infix fun K3TextRange.notContains(other: K3TextRange): Boolean {
             return other.min < this.min || other.max > this.max
         }

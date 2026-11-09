@@ -1,0 +1,19 @@
+// TODO File, complete all of the below before requesting review
+
+make default QWERTY layout for mozc match the layout in グーグル日本語入力 (or gboard if that is wanted instead)
+final bugfixes for QWERTY
+// MAKE DRAFT PR ONCE QWERTY FULLY WORKS //
+wait for flick impl
+get flick working
+make default flick layout match the layout in グーグル日本語入力 (or gboard if that is wanted instead)
+fix bugs in flick when they crops up
+mark flick as completed in MozcEngine.kt
+wait for k3lp extension infra to be fully built
+add user dictionary and UT dictionary support
+// mark for review //
+// the following dont need to be done in initial PR, or need input from upstream //
+get proper icons made instead of 'borrowing' google`s icons
+ask patrickgold and lm41 if they want physical keyboard support now or later
+ask community and maintainers if they want the グーグル日本語入力 layout (as i had built) or the gboard layout, or something else
+try to get the 'autocomplete' highlight working
+adapt candidate list hack to use proper infrastructure once it is available
