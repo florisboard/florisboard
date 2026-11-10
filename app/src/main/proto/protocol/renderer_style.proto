@@ -1,0 +1,124 @@
+// Copyright 2010-2021, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//     * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+// Protocol messages to be used for mozc renderer style setting.
+syntax = "proto2";
+
+package mozc.renderer;
+
+message RendererStyle {
+  message RGBAColor {
+    // RGB color range : [0 - 255]
+    optional double r = 1 [default = 0];
+    optional double g = 2 [default = 0];
+    optional double b = 3 [default = 0];
+    // Alpha value range : [0 - 1.0]
+    optional double a = 4 [default = 1.0];
+  }
+  message TextStyle {
+    optional double font_size = 1;
+    optional RGBAColor foreground_color = 2;
+    optional RGBAColor background_color = 3;
+    // Left padding size (pixel)
+    optional int32 left_padding = 4 [default = 0];
+    // Right padding size (pixel)
+    optional int32 right_padding = 5 [default = 0];
+    optional string font_name = 6;
+  }
+
+  message InfolistStyle {
+    optional string caption_string = 1;
+    optional int32 caption_height = 2;
+    optional int32 caption_padding = 3;
+    optional int32 window_border = 4;
+    optional int32 row_rect_padding = 5;
+    optional int32 window_width = 6;
+    optional TextStyle caption_style = 7;
+    optional TextStyle title_style = 8;
+    optional TextStyle description_style = 9;
+    optional RGBAColor border_color = 10;
+    optional RGBAColor caption_background_color = 11;
+    optional RGBAColor focused_background_color = 12;
+    optional RGBAColor focused_border_color = 13;
+  }
+
+  // Window border size (pixel)
+  optional int32 window_border = 1;
+  // Footer height (pixel)
+  optional int32 footer_height = 2;
+  // Row rect padding  (pixel)
+  optional int32 row_rect_padding = 3;
+  // Window border color
+  optional RGBAColor border_color = 4;
+
+  // We want to ensure that the candidate window is at least wide
+  // enough to render column_minimum_width_string as a candidate.
+  optional string column_minimum_width_string = 5;
+
+  // Note. It is safe to reuse field numbers and renumber fields in future,
+  // since this proto is not used as a binary format.
+  reserved 6;
+  reserved "text_styles";
+
+  // Candidate view text styles
+  optional TextStyle shortcut_style = 19;
+  optional TextStyle gap1_style = 20;
+  optional TextStyle candidate_style = 21;
+  optional TextStyle description_style = 22;
+
+  // Footer style
+  repeated RGBAColor footer_border_colors = 7;
+  // Footer label style
+  optional TextStyle footer_style = 8;
+  // Footer sub label style
+  // Sub label is used to show the build number (CHANNEL_DEV only)
+  optional TextStyle footer_sub_label_style = 9;
+
+  // Focused background color
+  optional RGBAColor focused_background_color = 10;
+  // Focused border color
+  optional RGBAColor focused_border_color = 11;
+
+  // Scrollbar background color
+  optional RGBAColor scrollbar_background_color = 12;
+  // Scrollbar indicator color
+  optional RGBAColor scrollbar_indicator_color = 13;
+  // Scrollbar width (pixel)
+  optional int32 scrollbar_width = 14;
+
+  // Footer background is gradation color from top to bottom
+  optional RGBAColor footer_top_color = 15;
+  optional RGBAColor footer_bottom_color = 16;
+
+  // Logo file name
+  optional string logo_file_name = 17;
+
+  // Infolist Style
+  optional InfolistStyle infolist_style = 18;
+}

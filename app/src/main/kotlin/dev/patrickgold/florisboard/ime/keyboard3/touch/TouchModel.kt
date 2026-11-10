@@ -218,7 +218,7 @@ private fun computeTouchKeyboard(
                 continue
             }
             val rows = buildList {
-                if (numberRow != null && (layer.id == ImeLayerIds.Base || layer.id == ImeLayerIds.Shift)) {
+                if (numberRow != null && (layer.id == ImeLayerIds.Base || layer.id == ImeLayerIds.Shift || layer.id == ImeLayerIds.Kana)) {
                     add(numberRow)
                 }
                 layer.rows.forEach { row ->
@@ -381,7 +381,7 @@ private fun computeTouchKeyboard(
     )
 }
 
-private fun computeKeyDisplay(model: K3Model, key: K3Key): K3StringOrDescriptor {
+internal fun computeKeyDisplay(model: K3Model, key: K3Key): K3StringOrDescriptor {
     val displayByKey = model.displays.byKeyId[key.id]
     if (displayByKey != null) {
         return displayByKey.display

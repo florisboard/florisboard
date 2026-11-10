@@ -1,0 +1,92 @@
+// Copyright 2010-2021, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//     * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+syntax = "proto2";
+
+package mozc;
+
+option java_outer_classname = "ProtoEngineBuilder";
+option java_package = "org.mozc.android.inputmethod.japanese.protobuf";
+
+message EngineReloadRequest {
+  reserved 1;  // Deprecated engine_type
+
+  // Path to the data file to be loaded in a new engine.
+  required string file_path = 2;
+
+  reserved 3;  // Deprecated install_location
+
+  // Explicitly specifies the magic number to be used for data validation.
+  // Since acceptable magic number is embedded in Mozc server, this option is
+  // unnecessary for normal cases.  However, this is required for some unit
+  // tests as test data has a different magic number.
+  optional string magic_number = 4;
+
+  // Priority of the request (smaller is more prioritized).
+  // The decoder keeps all the requests, and uses the most prioritized one.
+  // For the same priority request, later one overrides existing one.
+  // Effective only with CommandType.SEND_ENGINE_RELOAD_REQUEST.
+  optional int32 priority = 5;
+}
+
+message EngineReloadResponse {
+  enum Status {
+    // Reload command is accepted.
+    ACCEPTED = 0;
+
+    // New data is verified and ready.
+    RELOAD_READY = 1;
+
+    // Engine was replaced by a new instance.
+    RELOADED = 2;
+
+    // The following are errors.
+
+    // Failed to start reload because another reload job is currently running.
+    ALREADY_RUNNING = 3;
+
+    // Errors in data file.
+    ENGINE_VERSION_MISMATCH = 4;
+    DATA_MISSING = 5;
+    DATA_BROKEN = 6;
+
+    // File doesn't exist or underlying memory mapping failed.
+    MMAP_FAILURE = 7;
+
+    reserved "INSTALL_FAILURE";  // Deprecated INSTALL_FAILURE
+
+    UNKNOWN_ERROR = 9;
+  }
+  required Status status = 1;
+
+  // The original request is copied in response for convenience (the reload
+  // command runs asynchronously but client doesn't need to keep the original
+  // request).
+  optional EngineReloadRequest request = 2;
+}

@@ -19,6 +19,10 @@ package org.florisboard.lib.snygg.ui
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -70,6 +74,35 @@ fun SnyggRow(
                 .snyggPadding(style),
             horizontalArrangement = horizontalArrangement,
             verticalAlignment = verticalAlignment,
+            content = content,
+        )
+    }
+}
+
+@Composable
+fun SnyggLazyRow(
+    elementName: String? = null,
+    attributes: SnyggQueryAttributes = emptyMap(),
+    selector: SnyggSelector? = null,
+    modifier: Modifier = Modifier,
+    state: LazyListState = rememberLazyListState(),
+    clickAndSemanticsModifier: Modifier = Modifier,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
+    verticalAlignment: Alignment.Vertical = Alignment.Top,
+    content: LazyListScope.() -> Unit,
+) {
+    ProvideSnyggStyle(elementName, attributes, selector) { style ->
+        LazyRow(
+            modifier = modifier
+                .snyggMargin(style)
+                .snyggShadow(style)
+                .snyggBorder(style)
+                .snyggBackground(style)
+                .then(clickAndSemanticsModifier)
+                .snyggPadding(style),
+            horizontalArrangement = horizontalArrangement,
+            verticalAlignment = verticalAlignment,
+            state = state,
             content = content,
         )
     }

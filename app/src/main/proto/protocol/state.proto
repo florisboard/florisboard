@@ -1,0 +1,74 @@
+// Copyright 2010-2021, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//     * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+// Protocol messages for session state
+syntax = "proto2";
+
+package mozc.protocol;
+
+import "protocol/candidate_window.proto";
+import "protocol/commands.proto";
+
+message SessionState {
+  // session id
+  required uint64 id = 1 [jstype = JS_STRING];
+  // session created time
+  optional uint64 created_time = 2 [jstype = JS_STRING];
+
+  // whether session is just after commitment
+  optional bool committed = 3 [default = false];
+
+  reserved 4;
+  reserved "selected_indices";
+  reserved 5;
+  reserved "mode";
+
+  optional uint64 start_preedit_time = 10 [jstype = JS_STRING];
+  optional uint64 start_conversion_window_time = 11 [jstype = JS_STRING];
+  optional uint64 start_prediction_window_time = 12 [jstype = JS_STRING];
+  optional uint64 start_suggestion_window_time = 13 [jstype = JS_STRING];
+  optional uint64 start_infolist_window_time = 14 [jstype = JS_STRING];
+
+  // last preedit state
+  optional mozc.commands.Preedit preedit = 20;
+
+  // last candidate window state
+  optional mozc.commands.CandidateWindow candidate_window = 21;
+
+  reserved 22;
+  reserved "all_candidate_words";
+
+  // last candidates result
+  optional mozc.commands.Result result = 23;
+
+  // last request
+  optional mozc.commands.Request request = 24;
+
+  optional mozc.commands.Context.InputFieldType input_field_type = 25;
+}

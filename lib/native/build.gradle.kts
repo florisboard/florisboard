@@ -70,7 +70,6 @@ configure<LibraryExtension> {
 
     externalNativeBuild {
         cmake {
-            version = tools.versions.cmake.get()
             path("src/main/rust/CMakeLists.txt")
         }
     }
