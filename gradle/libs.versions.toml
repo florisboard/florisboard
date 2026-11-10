@@ -28,6 +28,8 @@ mikepenz-aboutlibraries = "15.2.0"
 okio = "3.18.2"
 patrickgold-compose-tooltip = "0.2.0-rc02"
 patrickgold-jetpref = "0.5.0-beta01"
+protobuf = "4.36.2"
+protobuf-plugin = "0.10.1"
 
 # Testing
 androidx-benchmark = "1.4.1"
@@ -93,6 +95,7 @@ kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest"
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlin-test-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5", version.ref = "kotlin" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 
@@ -109,6 +112,7 @@ kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.re
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 mikepenz-aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "mikepenz-aboutlibraries" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
 
 # Testing
 kotest = { id = "io.kotest", version.ref = "kotest" }

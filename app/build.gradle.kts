@@ -27,7 +27,7 @@ plugins {
     alias(libs.plugins.mikepenz.aboutlibraries)
     alias(libs.plugins.kotest)
     alias(libs.plugins.kotlinx.kover)
-    id("com.google.protobuf") version "0.10.0"
+    alias(libs.plugins.protobuf)
 }
 
 val projectVersionName = providers.gradleProperty("projectVersionName").get()
@@ -223,8 +223,7 @@ dependencies {
     implementation(projects.lib.kotlin)
     implementation(projects.lib.native)
     implementation(projects.lib.snygg)
-    implementation("com.google.protobuf:protobuf-javalite:4.35.0")
-    implementation("com.google.guava:guava:33.4.8-android")
+    implementation(libs.protobuf.javalite)
 
     testImplementation(libs.kotest.assertions.core)
     testImplementation(libs.kotest.property)
@@ -253,7 +252,7 @@ fun getGitCommitHash(short: Boolean = false): Provider<String> {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.35.0"
+        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.asProvider().get()}"
     }
 
     generateProtoTasks {
