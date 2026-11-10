@@ -413,8 +413,14 @@ class ImeController(
             if (state.model.info.indicator?.contains("mozcJa") ?: false && (state.touchLayerId == ImeLayerIds.Kana || state.touchLayerId.isTextLayer()) && state.flags.keyVariation != KeyVariation.PASSWORD && state.flags.imeUiMode == ImeUiMode.TEXT) {
                 for (key in value.toText()) {
                     if (key == ' ') {
-                        // for some reason, k3lp hardcodes space to output a space, so we replace it with the space keycode and send it to mozc
-                        MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.SPACE)
+                        if (state.touchLayerId == ImeLayerIds.Kana) {
+                            // for some reason, k3lp hardcodes space to output a space, so we replace it with the space keycode and send it to mozc
+                            MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.SPACE)
+                        } else {
+                            // in ascii/english/alphabet mode, send the enter key to dismiss composition then send char the normal way
+                            MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.ENTER)
+                            super.emitText(key.toString().asK3String())
+                        }
                     } else if (isHoldKey) {
                         // send hold keys as text
                         MozcEngine.instance.sendKeyAsText(key.toString())
@@ -815,12 +821,12 @@ class ImeController(
         }
 
         override fun switchTouchLayer(newTouchLayerId: K3LayerId) {
+            if (newTouchLayerId.isTextLayer()) {
+                super.switchTouchLayer(state.flags.inputShiftState.correspondingLayerId)
+            } else {
+                super.switchTouchLayer(newTouchLayerId)
+            }
             if (state.model.info.indicator?.contains("mozcJa") ?: false) {
-                if (newTouchLayerId.isTextLayer()) {
-                    super.switchTouchLayer(state.flags.inputShiftState.correspondingLayerId)
-                } else {
-                    super.switchTouchLayer(newTouchLayerId)
-                }
                 updateConfig()
                 if (MozcEngine.instance.preedit.value.isNotEmpty()) {
                     MozcEngine.instance.sendKey(ProtoCommands.KeyEvent.SpecialKey.ENTER)
@@ -830,12 +836,6 @@ class ImeController(
                         ),
                     )
                     state.editor.finishComposingMozc()
-                }
-            } else {
-                if (newTouchLayerId.isTextLayer()) {
-                    super.switchTouchLayer(state.flags.inputShiftState.correspondingLayerId)
-                } else {
-                    super.switchTouchLayer(newTouchLayerId)
                 }
             }
         }

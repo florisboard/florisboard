@@ -1,6 +1,5 @@
 // TODO File, complete all of the below before requesting review
 
-make default QWERTY layout for mozc match the layout in グーグル日本語入力 (or gboard if that is wanted instead)
 final bugfixes for QWERTY
 // MAKE DRAFT PR ONCE QWERTY FULLY WORKS //
 wait for flick impl or figure it out myself
