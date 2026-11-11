@@ -105,7 +105,7 @@ fun SnyggBox(
 }
 
 @Composable
-expect fun rememberImageRequest(imagePath: String): ImageRequest
+expect fun rememberImageRequest(data: Any, useFirstFrame: Boolean = false): ImageRequest
 
 @Preview
 @Composable
