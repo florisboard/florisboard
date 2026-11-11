@@ -21,13 +21,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import coil3.request.ImageRequest
 import coil3.request.allowHardware
+import coil3.video.VideoFrameDecoder
+import coil3.video.videoFrameMillis
 
 @Composable
-actual fun rememberImageRequest(imagePath: String): ImageRequest {
+actual fun rememberImageRequest(data: Any, useFirstFrame: Boolean): ImageRequest {
     val context = LocalContext.current
-    return remember(imagePath, context) {
+    return remember(data, useFirstFrame, context) {
         ImageRequest.Builder(context)
-            .data(imagePath)
+            .data(data)
+            .apply {
+                if (useFirstFrame) {
+                    decoderFactory(VideoFrameDecoder.Factory())
+                    videoFrameMillis(0)
+                }
+            }
             .allowHardware(false) // slower, but hey at least it doesn't crash out of the blue
             .build()
     }
