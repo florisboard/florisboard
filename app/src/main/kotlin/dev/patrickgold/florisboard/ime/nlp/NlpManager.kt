@@ -379,7 +379,14 @@ class NlpManager(context: Context) {
             return buildList {
                 val now = System.currentTimeMillis()
                 if ((now - currentItem.creationTimestampMs) < prefs.clipboard.suggestionTimeout.get() * 1000) {
-                    add(ClipboardSuggestionCandidate(currentItem, sourceProvider = this@ClipboardSuggestionProvider, context = context))
+                    add(
+                        ClipboardSuggestionCandidate(
+                            currentItem,
+                            sourceProvider = this@ClipboardSuggestionProvider,
+                            context = context,
+                            showSensitive = prefs.clipboard.historyShowSensitiveEnabled.get(),
+                        )
+                    )
                     if (currentItem.isSensitive) {
                         return@buildList
                     }

@@ -62,6 +62,8 @@ import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.ToggleOff
 import androidx.compose.material.icons.filled.ToggleOn
 import androidx.compose.material.icons.filled.Videocam
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.ContentPasteGo
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.PushPin
@@ -150,11 +152,14 @@ fun ClipboardInputLayout(
 
     val deviceLocked = androidKeyguardManager.let { it.isDeviceLocked || it.isKeyguardLocked }
     val historyEnabled by prefs.clipboard.historyEnabled.collectAsState()
+    val historyShowSensitiveEnabled by prefs.clipboard.historyShowSensitiveEnabled.collectAsState()
 
     var isFilterRowShown by remember { mutableStateOf(false) }
+    var isSensitiveRevealed by remember { mutableStateOf(false) }
     val activeFilterTypes = remember { mutableStateSetOf<ItemType>() }
 
     val unfilteredHistory by clipboardManager.historyFlow.collectAsState()
+    val hasSensitiveItems = unfilteredHistory.all.any { it.isSensitive }
     val filteredHistory = remember(unfilteredHistory, activeFilterTypes.toSet()) {
         if (activeFilterTypes.isEmpty()) {
             unfilteredHistory
@@ -175,6 +180,12 @@ fun ClipboardInputLayout(
         delay(AnimationDuration.milliseconds)
         if (!isFilterRowShown) {
             activeFilterTypes.clear()
+        }
+    }
+
+    LaunchedEffect(hasSensitiveItems) {
+        if (!hasSensitiveItems) {
+            isSensitiveRevealed = false
         }
     }
 
@@ -226,6 +237,22 @@ fun ClipboardInputLayout(
                         Icons.Default.ToggleOff
                     },
                 )
+            }
+            if (!historyShowSensitiveEnabled) {
+                SnyggIconButton(
+                    elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
+                    onClick = { isSensitiveRevealed = !isSensitiveRevealed },
+                    modifier = sizeModifier,
+                    enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive() && hasSensitiveItems,
+                ) {
+                    SnyggIcon(
+                        imageVector = if (isSensitiveRevealed) {
+                            Icons.Default.Visibility
+                        } else {
+                            Icons.Default.VisibilityOff
+                        },
+                    )
+                }
             }
             SnyggIconButton(
                 elementName = FlorisImeUi.ClipboardHeaderButton.elementName,
@@ -365,7 +392,7 @@ fun ClipboardInputLayout(
                         modifier = Modifier
                             .fillMaxWidth()
                             .run { if (contentScrollInsteadOfClip) this.florisVerticalScroll() else this },
-                        text = item.displayText(),
+                        text = item.displayText(showSensitive = historyShowSensitiveEnabled || isSensitiveRevealed),
                     )
                 }
             }

@@ -186,13 +186,14 @@ data class ClipboardItem(
     }
 
     @Composable
-    inline fun displayText(): String {
+    inline fun displayText(showSensitive: Boolean = false): String {
         val context = LocalContext.current
-        return remember(this) { displayText(context) }
+        return remember(this, showSensitive) { displayText(context, showSensitive) }
     }
 
-    fun displayText(context: Context): String {
-        return if (isSensitive) {
+    fun displayText(context: Context, showSensitive: Boolean = false): String {
+        val hideSensitive = !showSensitive
+        return if (isSensitive && hideSensitive) {
             context.stringRes(R.string.clipboard__sensitive_clip_content)
         } else {
             stringRepresentation()
