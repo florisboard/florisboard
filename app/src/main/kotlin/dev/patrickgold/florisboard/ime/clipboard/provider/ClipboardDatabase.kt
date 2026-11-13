@@ -192,7 +192,8 @@ data class ClipboardItem(
     }
 
     fun displayText(context: Context, showSensitive: Boolean = false): String {
-        return if (isSensitive && !showSensitive) {
+        val hideSensitive = !showSensitive
+        return if (isSensitive && hideSensitive) {
             context.stringRes(R.string.clipboard__sensitive_clip_content)
         } else {
             stringRepresentation()
