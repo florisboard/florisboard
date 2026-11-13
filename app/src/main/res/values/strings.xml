@@ -744,7 +744,7 @@
     <string name="pref__clipboard__auto_clean_sensitive__label">Auto clean sensitive items</string>
     <string name="pref__clipboard__auto_clean_sensitive_after__label">Auto clean sensitive items after</string>
     <string name="pref__clipboard__show_sensitive__label">Show sensitive clipboard items</string>
-    <string name="pref__clipboard__show_sensitive__summary">Always display sensitive clipboard contents. Unsafe for screenshare.</string>
+    <string name="pref__clipboard__show_sensitive__summary">Always display sensitive clipboard contents (unsafe for screenshare)</string>
     <string name="pref__clipboard__limit_history_size__label">Limit history size</string>
     <string name="pref__clipboard__max_history_size__label">Max history size</string>
     <string name="pref__clipboard__history_hide_on_paste__label">Hide history on paste</string>
