@@ -246,7 +246,7 @@ fun ClipboardInputLayout(
                     enabled = !deviceLocked && historyEnabled && !isPopupSurfaceActive() && hasSensitiveItems,
                 ) {
                     SnyggIcon(
-                        imageVector = if (!isSensitiveRevealed) {
+                        imageVector = if (isSensitiveRevealed) {
                             Icons.Default.Visibility
                         } else {
                             Icons.Default.VisibilityOff
