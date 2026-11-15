@@ -54,9 +54,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.graphics.ColorUtils
 import dev.patrickgold.florisboard.R
-import dev.patrickgold.florisboard.ime.keyboard3.ui.GlobalStateNumPopupsShowing
+import dev.patrickgold.florisboard.ime.keyboard3.ui.GlobalStateLongPressNumPopupsShowing
+import dev.patrickgold.florisboard.ime.keyboard3.ui.GlobalStateNumFlickPopupsShowing
 import dev.patrickgold.florisboard.ime.nlp.NlpInlineAutofillSuggestion
 import dev.patrickgold.florisboard.ime.theme.FlorisImeUi
+import kotlinx.coroutines.flow.combine
 import org.florisboard.lib.compose.florisHorizontalScroll
 import org.florisboard.lib.compose.toIntOffset
 import org.florisboard.lib.snygg.SnyggSinglePropertySet
@@ -150,7 +152,7 @@ fun InlineSuggestionsUi(
     modifier: Modifier = Modifier,
 ) {
     val scrollState = rememberScrollState()
-    val numPopupsShowing by GlobalStateNumPopupsShowing.collectAsState()
+    val numPopupsShowing by combine(GlobalStateLongPressNumPopupsShowing, GlobalStateNumFlickPopupsShowing) { a, b -> a + b }.collectAsState(0)
     val isZOrderedOnTop by remember { derivedStateOf { numPopupsShowing == 0 } }
 
     Row(

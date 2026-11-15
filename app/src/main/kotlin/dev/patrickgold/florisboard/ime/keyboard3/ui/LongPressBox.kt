@@ -37,7 +37,7 @@ import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.k3lp.lib.text.K3StringOrDescriptor
 
-val GlobalStateNumPopupsShowing: StateFlow<Int>
+val GlobalStateLongPressNumPopupsShowing: StateFlow<Int>
     field = MutableStateFlow(0)
 
 @Composable
@@ -50,9 +50,9 @@ fun LongPressBox(
     val isPopupShowing = longPress.shouldShowSimplePopup() || longPress.shouldShowExtendedPopup()
     DisposableEffect(isPopupShowing) {
         val delta = if (isPopupShowing) 1 else 0
-        GlobalStateNumPopupsShowing.update { it + delta }
+        GlobalStateLongPressNumPopupsShowing.update { it + delta }
         onDispose {
-            GlobalStateNumPopupsShowing.update { it - delta }
+            GlobalStateLongPressNumPopupsShowing.update { it - delta }
         }
     }
 
