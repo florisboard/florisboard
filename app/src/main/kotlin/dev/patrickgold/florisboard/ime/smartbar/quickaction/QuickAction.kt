@@ -96,6 +96,7 @@ fun QuickAction.computeDisplayName(imeState: ImeState): String {
             ImeActions.ClipboardCut -> R.string.quick_action__clipboard_cut
             ImeActions.ClipboardPaste -> R.string.quick_action__clipboard_paste
             ImeActions.SelectAll -> R.string.quick_action__clipboard_select_all
+            ImeActions.Share -> R.string.quick_action__share
             ImeActions.Settings -> R.string.quick_action__settings
             ImeActions.ShowMediaPanel -> R.string.quick_action__ime_ui_mode_media
             ImeActions.ShowClipboardPanel -> R.string.quick_action__ime_ui_mode_clipboard
@@ -136,6 +137,7 @@ fun QuickAction.computeTooltip(imeState: ImeState): String {
             ImeActions.ClipboardCut -> R.string.quick_action__clipboard_cut__tooltip
             ImeActions.ClipboardPaste -> R.string.quick_action__clipboard_paste__tooltip
             ImeActions.SelectAll -> R.string.quick_action__clipboard_select_all__tooltip
+            ImeActions.Share -> R.string.quick_action__share__tooltip
             ImeActions.Settings -> R.string.quick_action__settings__tooltip
             ImeActions.ShowMediaPanel -> R.string.quick_action__ime_ui_mode_media__tooltip
             ImeActions.ShowClipboardPanel -> R.string.quick_action__ime_ui_mode_clipboard__tooltip
