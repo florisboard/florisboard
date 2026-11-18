@@ -89,7 +89,7 @@ fun ClipboardScreen() {
             }
 
             SegmentedListColumn(title = stringRes(R.string.pref__clipboard__group_clipboard_history__label)) {
-                val countOffset = if (AndroidVersion.ATLEAST_API33_T) 2 else 0
+                val countOffset = if (AndroidVersion.ATLEAST_API33_T) 3 else 0
                 val count = 9 + countOffset
                 SwitchPreference(
                     prefs.clipboard.historyEnabled,
@@ -148,6 +148,13 @@ fun ClipboardScreen() {
                         max = 300,
                         stepIncrement = 10,
                         enabledIf = { prefs.clipboard.historyEnabled isEqualTo true && prefs.clipboard.historyAutoCleanSensitiveEnabled isEqualTo true },
+                    )
+                    SwitchPreference(
+                        prefs.clipboard.historyShowSensitiveEnabled,
+                        shapes = ListItemDefaults.segmentedShapes(6, count),
+                        title = stringRes(R.string.pref__clipboard__show_sensitive__label),
+                        summary = stringRes(R.string.pref__clipboard__show_sensitive__summary),
+                        enabledIf = { prefs.clipboard.historyEnabled isEqualTo true || prefs.clipboard.suggestionEnabled isEqualTo true },
                     )
                 }
                 SwitchPreference(

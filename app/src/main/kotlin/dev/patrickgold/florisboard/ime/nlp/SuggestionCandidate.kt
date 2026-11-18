@@ -125,8 +125,9 @@ data class ClipboardSuggestionCandidate(
     val clipboardItem: ClipboardItem,
     override val sourceProvider: SuggestionProvider?,
     val context: Context,
+    val showSensitive: Boolean = false,
 ) : SuggestionCandidate {
-    override val text: CharSequence = clipboardItem.displayText(context)
+    override val text: CharSequence = clipboardItem.displayText(context, showSensitive)
 
     override val secondaryText: CharSequence? = null
 
