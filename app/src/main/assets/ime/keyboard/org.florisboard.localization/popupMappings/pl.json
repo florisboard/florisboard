@@ -2,8 +2,7 @@
   "all": {
     "a": {
       "relevant": [
-        { "$": "auto_text_key", "code":  261, "label": "ą" },
-        { "$": "auto_text_key", "code":  224, "label": "à" }
+        { "$": "auto_text_key", "code":  261, "label": "ą" }
       ]
     },
     "c": {
