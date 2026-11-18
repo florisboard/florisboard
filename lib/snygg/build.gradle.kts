@@ -61,6 +61,7 @@ kotlin {
 
             implementation(libs.coil.compose)
             implementation(libs.coil.gif)
+            implementation(libs.coil.video)
             implementation(libs.kotlinx.serialization.json)
         }
 
