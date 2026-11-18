@@ -1,0 +1,20 @@
+image: debian/bookworm
+packages:
+  - curl
+  - jq
+  - unzip
+  - wget
+  - git
+  - build-essential
+  - openjdk-17-jdk
+sources:
+  - https://git.sr.ht/~huyngo/florisboard
+artifacts:
+  - florisboard/app/build/outputs/apk/debug/app-debug.apk
+tasks:
+  - build: |
+      cd florisboard
+      source setup.sh
+      cd ~/florisboard
+      ./gradlew clean
+      ./gradlew assembleDebug
