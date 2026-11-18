@@ -48,6 +48,7 @@ import dev.patrickgold.florisboard.ime.keyboard.SpaceBarMode
 import dev.patrickgold.florisboard.ime.keyboard3.ImeIcons
 import dev.patrickgold.florisboard.ime.keyboard3.ImeLayerIds
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.interaction.Flick
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.LongPress
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.rememberPointerTracker
 import dev.patrickgold.florisboard.ime.keyboard3.interaction.trackPointerInput
@@ -60,6 +61,7 @@ import dev.patrickgold.florisboard.ime.theme.ImeUiAttrs
 import dev.patrickgold.florisboard.ime.theme.putAttr
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import dev.patrickgold.florisboard.lib.FlorisLocale
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -153,7 +155,9 @@ fun ImeKeyboardBox(
         val trackedPeekPointer by pointerTracker.trackedPeekPointer.collectAsState()
         val trackedMultiTapSeq by pointerTracker.trackedMultiTapSeq.collectAsState()
 
-        val keyboardRowHeightDp = FlorisImeSizing.keyboardRowBaseHeight
+        val keyboardRowHeightDp = FlorisImeSizing.keyboardRowBaseHeight * if (activeTouchLayer.keys.any { it.flicks.isNotEmpty() }) {
+            1.15.toFloat() // this value ensures that the flick keys in the default Japanese 12-char flick input are close to square, I know it increases the size of the keyboard to take up half the screen (depending on how many rows are in the layout), however I couldn't figure out how to make the flick work reliably without making the keyboard massive, TODO: Test on other devices
+        } else 1.toFloat()
         val peekLineWidthPx = with(density) { 8.dp.toPx() }
 
         Box(
@@ -203,6 +207,11 @@ fun ImeKeyboardBox(
                         trackedOutputPointer?.takeIf { it.downKey == touchKey }?.longPress ?: LongPress.None
                     }
                 }
+                val flick by remember {
+                    derivedStateOf {
+                        trackedOutputPointer?.takeIf { it.downKey == touchKey }?.flick ?: Flick.None
+                    }
+                }
                 val multiTapIndex by remember {
                     derivedStateOf {
                         trackedMultiTapSeq?.takeIf { it.touchKey == touchKey }?.multiTapIndex ?: -1
@@ -216,6 +225,7 @@ fun ImeKeyboardBox(
                     },
                     isPressed = isPressed,
                     longPress = longPress,
+                    flick = flick,
                     multiTapIndex = multiTapIndex,
                     modifier = Modifier
                         .layout { measurable, constraints ->
@@ -256,6 +266,7 @@ private fun ImeKeyboardKeyBox(
     displayOverride: K3StringOrDescriptor?,
     isPressed: Boolean,
     longPress: LongPress,
+    flick: Flick,
     multiTapIndex: Int,
     inputShiftState: InputShiftState,
     modifier: Modifier = Modifier,
@@ -312,11 +323,34 @@ private fun ImeKeyboardKeyBox(
                 display = touchKey.longPressKeyHint,
             )
         }
-        // TODO flick hints
+        if (touchKey.flicks.isNotEmpty()) {
+            touchKey.flicks.forEach { flick ->
+                val output = flick.data.output
+                val attributes = remember(attributes, flick) {
+                    if (output != null) {
+                        attributes.plus(ImeUiAttrs.Output.eq(output))
+                    } else {
+                        attributes
+                    }
+                }
+                Display3(
+                    elementName = FlorisImeUi.KeyHint.elementName,
+                    attributes = attributes,
+                    display = flick.display,
+                    modifier = Modifier
+                        .align(Alignment.fromFlick(flick))
+                        .scaleToFitHorizontally(),
+                )
+            }
+        }
     }
     LongPressBox(
         longPress = longPress,
         longPressSimpleDisplayOverride = multiTapKeys.getOrNull(multiTapIndex)?.display,
+        attributes = attributes,
+    )
+    FlickBox(
+        flick = flick,
         attributes = attributes,
     )
 }

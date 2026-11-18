@@ -20,13 +20,19 @@ import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,11 +54,12 @@ import dev.patrickgold.florisboard.nlpManager
 import dev.patrickgold.florisboard.subtypeManager
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import org.florisboard.lib.compose.conditional
-import org.florisboard.lib.compose.florisHorizontalScroll
+import org.florisboard.lib.compose.florisScrollbar
 import org.florisboard.lib.snygg.SnyggSelector
 import org.florisboard.lib.snygg.ui.SnyggBox
 import org.florisboard.lib.snygg.ui.SnyggColumn
 import org.florisboard.lib.snygg.ui.SnyggIcon
+import org.florisboard.lib.snygg.ui.SnyggLazyRow
 import org.florisboard.lib.snygg.ui.SnyggRow
 import org.florisboard.lib.snygg.ui.SnyggSpacer
 import org.florisboard.lib.snygg.ui.SnyggText
@@ -70,74 +77,141 @@ fun CandidatesRow(modifier: Modifier = Modifier) {
     val subtypeManager by context.subtypeManager()
 
     val displayMode by prefs.suggestion.displayMode.collectAsState()
-    val candidates by nlpManager.activeCandidatesFlow.collectAsState()
+    val rawCandidates by nlpManager.activeCandidatesFlow.collectAsState()
+    val candidates by remember { derivedStateOf { rawCandidates.candidates } }
+    val selectedIndex by remember { derivedStateOf { rawCandidates.selectedIndex } }
     val timingOptions by interactionController.activeTimingOptions.collectAsState()
 
-    SnyggRow(
-        elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
-        modifier = modifier
-            .fillMaxSize()
-            .conditional(displayMode == CandidatesDisplayMode.DYNAMIC_SCROLLABLE && candidates.size > 1) {
-                florisHorizontalScroll(scrollbarHeight = CandidatesRowScrollbarHeight)
-            },
-        horizontalArrangement = if (candidates.size > 1) {
-            Arrangement.Start
+    val lazyListState = rememberLazyListState()
+
+    LaunchedEffect(rawCandidates, selectedIndex) {
+        if(selectedIndex != null) {
+            lazyListState.scrollToItem(selectedIndex!!)
         } else {
-            Arrangement.Center
-        },
-    ) {
-        if (candidates.isNotEmpty()) {
-            val candidateModifier = if (candidates.size == 1) {
-                Modifier
-                    .fillMaxHeight()
-                    .weight(1f, fill = false)
+            lazyListState.scrollToItem(0)
+        }
+    }
+
+    if (displayMode != CandidatesDisplayMode.DYNAMIC_SCROLLABLE) {
+        SnyggRow(
+            elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
+            modifier = modifier
+                .fillMaxSize(),
+            horizontalArrangement = if (candidates.size > 1) {
+                Arrangement.Start
             } else {
-                Modifier
-                    .fillMaxHeight()
-                    .conditional(displayMode == CandidatesDisplayMode.CLASSIC) {
-                        weight(1f)
+                Arrangement.Center
+            },
+        ) {
+            if (candidates.isNotEmpty()) {
+                val candidateModifier = if (candidates.size == 1) {
+                    Modifier
+                        .fillMaxHeight()
+                        .weight(1f, fill = false)
+                } else {
+                    Modifier
+                        .fillMaxHeight()
+                        .conditional(displayMode == CandidatesDisplayMode.CLASSIC) {
+                            weight(1f)
+                        }
+                        .conditional(displayMode != CandidatesDisplayMode.CLASSIC) {
+                            wrapContentWidth().widthIn(max = 160.dp)
+                        }
+                }
+                val list = when (displayMode) {
+                    CandidatesDisplayMode.CLASSIC -> candidates.subList(0, 3.coerceAtMost(candidates.size))
+                    else -> candidates.subList(0, 8.coerceAtMost(candidates.size)) // mozc provider does not respect maxCandidateCount, force it here when scrollable is disabled
+                }
+                for ((n, candidate) in list.withIndex()) {
+                    if (n > 0) {
+                        SnyggSpacer(
+                            elementName = FlorisImeUi.SmartbarCandidateSpacer.elementName,
+                            modifier = Modifier
+                                .width(1.dp)
+                                .fillMaxHeight(0.6f)
+                                .align(Alignment.CenterVertically),
+                        )
                     }
-                    .conditional(displayMode != CandidatesDisplayMode.CLASSIC) {
-                        wrapContentWidth().widthIn(max = 160.dp)
-                    }
-            }
-            val list = when (displayMode) {
-                CandidatesDisplayMode.CLASSIC -> candidates.subList(0, 3.coerceAtMost(candidates.size))
-                else -> candidates
-            }
-            for ((n, candidate) in list.withIndex()) {
-                if (n > 0) {
-                    SnyggSpacer(
-                        elementName = FlorisImeUi.SmartbarCandidateSpacer.elementName,
-                        modifier = Modifier
-                            .width(1.dp)
-                            .fillMaxHeight(0.6f)
-                            .align(Alignment.CenterVertically),
+                    CandidateItem(
+                        modifier = candidateModifier,
+                        candidate = candidate,
+                        displayMode = displayMode,
+                        onClick = {
+                            imeController.updateStateBlocking {
+                                // Can't use candidate directly
+                                emitCandidate(candidates[n])
+                            }
+                        },
+                        onLongPress = {
+                            // Can't use candidate directly
+                            val candidateItem = candidates[n]
+                            if (candidateItem.isEligibleForUserRemoval) {
+                                nlpManager.removeSuggestion(subtypeManager.activeSubtype, candidateItem)
+                            } else {
+                                false
+                            }
+                        },
+                        longPressTimeout = timingOptions.longPressTimeout,
                     )
                 }
-                CandidateItem(
-                    modifier = candidateModifier,
-                    candidate = candidate,
-                    displayMode = displayMode,
-                    onClick = {
-                        imeController.updateStateBlocking {
-                            // Can't use candidate directly
-                            emitCandidate(candidates[n])
-                        }
-                    },
-                    onLongPress = {
-                        // Can't use candidate directly
-                        val candidateItem = candidates[n]
-                        if (candidateItem.isEligibleForUserRemoval) {
-                            nlpManager.removeSuggestion(subtypeManager.activeSubtype, candidateItem)
-                        } else {
-                            false
-                        }
-                    },
-                    longPressTimeout = timingOptions.longPressTimeout,
-                )
             }
         }
+    } else {
+        SnyggLazyRow(
+            elementName = FlorisImeUi.SmartbarCandidatesRow.elementName,
+            modifier = modifier
+                .fillMaxSize()
+                .florisScrollbar(lazyListState, CandidatesRowScrollbarHeight, isVertical = false),
+            horizontalArrangement = if (candidates.size > 1) {
+                Arrangement.Start
+            } else {
+                Arrangement.Center
+            },
+            state = lazyListState,
+            content = {
+                if (candidates.isNotEmpty()) {
+                    val candidateModifier = if (candidates.size == 1) {
+                        Modifier.fillMaxHeight()
+                    } else {
+                        Modifier.fillMaxHeight().wrapContentWidth().widthIn(max = 160.dp)
+                    }
+                    itemsIndexed(candidates) { n, candidate ->
+                        if (n > 0) {
+                            Row(Modifier.fillMaxHeight().wrapContentWidth()) {
+                                SnyggSpacer(
+                                    elementName = FlorisImeUi.SmartbarCandidateSpacer.elementName,
+                                    modifier = Modifier
+                                        .width(1.dp)
+                                        .fillMaxHeight(0.6f)
+                                        .align(Alignment.CenterVertically),
+                                )
+                            }
+                        }
+                        CandidateItem(
+                            modifier = candidateModifier,
+                            candidate = candidate,
+                            displayMode = displayMode,
+                            onClick = {
+                                imeController.updateStateBlocking {
+                                    // Can't use candidate directly
+                                    emitCandidate(candidates[n])
+                                }
+                            },
+                            onLongPress = {
+                                // Can't use candidate directly
+                                val candidateItem = candidates[n]
+                                if (candidateItem.isEligibleForUserRemoval) {
+                                    nlpManager.removeSuggestion(subtypeManager.activeSubtype, candidateItem)
+                                } else {
+                                    false
+                                }
+                            },
+                            longPressTimeout = timingOptions.longPressTimeout,
+                        )
+                    }
+                }
+            }
+        )
     }
 }
 

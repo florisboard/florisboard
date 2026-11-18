@@ -37,6 +37,7 @@ import dev.patrickgold.florisboard.ime.extension.ExtensionController
 import dev.patrickgold.florisboard.ime.io.AndroidStorageController
 import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.ime.media.emoji.FlorisEmojiCompat
+import dev.patrickgold.florisboard.ime.mozc.MozcEngine
 import dev.patrickgold.florisboard.ime.nlp.NlpManager
 import dev.patrickgold.florisboard.ime.text.gestures.GlideTypingManager
 import dev.patrickgold.florisboard.ime.theme.SystemThemeMode
@@ -151,6 +152,7 @@ class FlorisApplication : Application() {
         }
         clipboardManager.value.initializeForContext(this)
         DictionaryManager.init(this)
+        MozcEngine.init(this)
     }
 
     private fun Configuration.determineSystemThemeMode(): SystemThemeMode {

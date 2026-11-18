@@ -1,0 +1,160 @@
+// Copyright 2010-2021, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//     * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+// Protocol messages to be used for mozc client/renderer communication.
+//
+// The RendererCommand message contains all the rendering informatioin
+// sent from client to renderer.  The messages structure of
+// RendererCommand and its child messages are here:
+
+syntax = "proto2";
+
+package mozc.commands;
+
+import "protocol/commands.proto";
+
+message RendererCommand {
+  message Rectangle {
+    optional int32 left = 1;
+    optional int32 top = 2;
+    optional int32 right = 3;
+    optional int32 bottom = 4;
+  }
+  message Point {
+    optional int32 x = 1;
+    optional int32 y = 2;
+  }
+
+  enum CommandType {
+    NOOP = 0;      // No operation
+    UPDATE = 1;    // Update the current window
+    SHUTDOWN = 2;  // shutdown renderer
+  }
+
+  optional CommandType type = 1 [default = NOOP];
+
+  // set visibility
+  // if visible is false, the content of output
+  // is basically ignored.
+  optional bool visible = 2 [default = false];
+
+  optional Output output = 3;
+
+  // Preedit rectangle
+  optional Rectangle preedit_rectangle = 4;
+
+  // An equivalent to IMECHARPOSITION in IMM32. (For Windows only)
+  // TODO(yukawa): make a common candidate form format for all platforms.
+  message CharacterPosition {
+    optional uint32 position = 1;
+    optional Point top_left = 2;
+    optional uint32 line_height = 3;
+    optional Rectangle document_area = 4;
+    // A quick solution for vertical writing support.
+    // Strictly speaking, this is not part of IMECHARPOSITION in IMM32.
+    optional bool vertical_writing = 5;
+  }
+
+  // Visual information about mode indicator.
+  message IndicatorInfo {
+    optional Status status = 1;
+  }
+
+  // Application information Mozc UI is attaching
+  message ApplicationInfo {
+    optional uint32 process_id = 1;
+    optional uint32 thread_id = 2;
+    // used in Windows:
+    // WHND of the message-only window:
+    optional uint32 receiver_handle = 3;
+    // used in Windows:
+    // HWND of the window where composition is displayed.
+    optional uint32 target_window_handle = 4;
+
+    reserved 5;
+    reserved "composition_font";
+
+    // Represents IM Framework used in the client.
+    // Currently only Windows IM frameworks are supported.
+    enum InputFrameworkType {
+      UNKNOWN_FRAMEWORK = 0;  // Default. For backward compatibility.
+      TSF = 1;
+      reserved 2;
+      reserved "IMM32";
+      IMKit = 3;
+      IBus = 4;
+    }
+    // Specifies which IM Framework is used in the client.
+    optional InputFrameworkType input_framework = 6
+        [default = UNKNOWN_FRAMEWORK];
+
+    reserved 7;
+    reserved "composition_form";
+
+    reserved 8;
+    reserved "candidate_form";
+
+    // used in Windows:
+    // Indicates if a UI element is expected to be displayed or not.  Note
+    // that |RendererCommand::visible| should be prior to these flags, that is,
+    // you should hide all UI elements if |RendererCommand::visible| is false
+    // regardless of the visibility specified in this field.
+    enum UIVisibility {
+      ShowUIDefault = 0;
+      reserved 1;
+      reserved "ShowCompositionWindow";
+      ShowCandidateWindow = 2;
+      ShowSuggestWindow = 4;
+    }
+    // used in Windows:
+    optional int32 ui_visibilities = 9 [default = 0];  // ShowUIDefault
+
+    // used in Windows:
+    // Specifies the target position in composition window.
+    optional CharacterPosition composition_target = 10;
+
+    reserved 11;
+    reserved "caret_info";
+
+    reserved 12;
+    reserved "message_sender_type";
+
+    // A string representation of PangoFontDescription
+    // http://developer.gnome.org/pango/stable/pango-Fonts.html#pango-font-description-from-string
+    // This field is not application specific information but temporaly locate
+    // here.
+    // TODO(nona): Make new message if necessary.
+    optional string pango_font_description = 13;
+
+    // used in Windows:
+    optional IndicatorInfo indicator_info = 14;
+  }
+
+  optional ApplicationInfo application_info = 5;
+}

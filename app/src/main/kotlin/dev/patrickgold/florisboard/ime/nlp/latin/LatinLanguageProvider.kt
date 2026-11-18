@@ -22,6 +22,7 @@ import dev.patrickgold.florisboard.ime.core.Subtype
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidates
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import kotlinx.coroutines.Dispatchers
@@ -104,8 +105,8 @@ class LatinLanguageProvider(context: Context) : SpellingProvider, SuggestionProv
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
-    ): List<SuggestionCandidate> {
-        return emptyList()
+    ): SuggestionCandidates {
+        return SuggestionCandidates.EMPTY
         /*val word = content.composingText.ifBlank { "next" }
         val suggestions = buildList {
             for (n in 0 until maxCandidateCount) {

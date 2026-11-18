@@ -1,0 +1,378 @@
+// Copyright 2010-2021, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//     * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+// Protocol messages to be used for mozc configuration.
+syntax = "proto2";
+
+package mozc.config;
+
+option java_outer_classname = "ProtoConfig";
+option java_package = "org.mozc.android.inputmethod.japanese.protobuf";
+
+message GeneralConfig {
+  //////////////////////////////////////////////////////////////
+  //
+  // General config (1-9)
+  //
+
+  // config version, corresponding to the suffix of config file
+  optional uint32 config_version = 1 [default = 0];
+
+  // The product version that wrote this config
+  optional string last_modified_product_version = 2 [default = "0.0.0.0"];
+
+  // last modified time in UTC second
+  optional uint64 last_modified_time = 3 [default = 0, jstype = JS_STRING];
+
+  // These fields are not used now
+  // platform of machine that wrote this config
+  optional string platform = 4 [default = ""];
+
+  // UI locale of machine that wrote this config
+  optional string ui_locale = 5 [default = ""];
+
+  // Whether to upload usage stats
+  // This flag is used only for Android.
+  optional bool upload_usage_stats = 6 [default = false];
+}
+
+message Config {
+  reserved 2 to 9;  // Moved to GeneralConfig
+
+  // General config and logging/debugging:
+  // We won't use 2-9 and 20-39 ids anymore for historical reasons.
+  optional GeneralConfig general_config = 1;
+
+  //////////////////////////////////////////////////////////////
+  //
+  // Logging/Debugging (10-19)
+  //
+
+  // set verbose level of logging library (FLAGS_v)
+  optional int32 verbose_level = 10 [default = 0];
+
+  reserved 11;
+  reserved "log_all_commands";
+
+  //////////////////////////////////////////////////////////////
+  //
+  // Misc fields (20-39)
+  //
+
+  // Incognito mode:
+  // Disable all mutable operation if incognito_mode is true
+  // Clients needs to check ConversionRequest::incognito_mode() instead
+  // of Config::incognito_mode(), as the incoginto mode can also set
+  // via Options.
+  optional bool incognito_mode = 20 [default = false];
+
+  reserved 21;
+  reserved "upload_usage_stats";
+
+  // whether to show the set default dialog on startup
+  optional bool check_default = 22 [default = true];
+
+  // Presentation mode:
+  // disable all suggestion temporally.
+  optional bool presentation_mode = 23 [default = false];
+
+  //////////////////////////////////////////////////////////////
+  //
+  // Basic features (40-79)
+  //
+  enum PreeditMethod {
+    ROMAN = 0;
+    KANA = 1;
+  }
+
+  // Roman/Kana
+  optional PreeditMethod preedit_method = 40 [default = ROMAN];
+
+  enum SessionKeymap {
+    // If NONE is selected, it will be replaced with MSIME or KOTOERI.
+    // NONE is used only for a placeholder, so a configuration program
+    // should not show NONE as one of selections.  NONE should be the
+    // last of the items due to the limitation of the Qt GUI's
+    // implementation. Note that keymap number should be correspoinding
+    // to the index of QComboBox in config dialog. Since NONE is not
+    // used, we set -1 here.
+    NONE = -1;
+    CUSTOM = 0;
+    ATOK = 1;
+    MSIME = 2;
+    KOTOERI = 3;
+    MOBILE = 4;
+    CHROMEOS = 5;
+    OVERLAY_HENKAN_MUHENKAN_TO_IME_ON_OFF = 100;
+    OVERLAY_FOR_TEST = 10000;
+  }
+  optional SessionKeymap session_keymap = 41 [default = NONE];
+
+  // custom keymap
+  // TODO(taku): replace it with repeated field
+  optional bytes custom_keymap_table = 42;
+
+  // custom roman table
+  optional bytes custom_roman_table = 43;
+
+  enum PunctuationMethod {
+    TOUTEN_KUTEN = 0;
+    COMMA_PERIOD = 1;
+    TOUTEN_PERIOD = 2;
+    COMMA_KUTEN = 3;
+  }
+  optional PunctuationMethod punctuation_method = 45 [default = TOUTEN_KUTEN];
+
+  enum SymbolMethod {
+    CORNER_BRACKET_MIDDLE_DOT = 0;
+    SQUARE_BRACKET_SLASH = 1;
+    CORNER_BRACKET_SLASH = 2;
+    SQUARE_BRACKET_MIDDLE_DOT = 3;
+  }
+  optional SymbolMethod symbol_method = 46
+      [default = CORNER_BRACKET_MIDDLE_DOT];
+
+  enum FundamentalCharacterForm {
+    FUNDAMENTAL_INPUT_MODE = 0;  // follow the input mode
+    FUNDAMENTAL_FULL_WIDTH = 1;  // always FullWidth
+    FUNDAMENTAL_HALF_WIDTH = 2;  // always HalfWidth
+  }
+  optional FundamentalCharacterForm space_character_form = 47
+      [default = FUNDAMENTAL_INPUT_MODE];
+
+  // If this flag is true, Mozc toggles preedit method with some predefined
+  // key events when IME is turned on.  Otherwise, Mozc ignores such kind of
+  // key events so that their preferred can be preserved even when the toggle
+  // key is pressed by accident.
+  // As for Mozc, only Windows client supports such kind of toggle so this flag
+  // is currently valid only on Windows.
+  //
+  // Background:
+  //   Traditional Japanese IMEs have used "Roma-Ji" key in Japanese 106/109
+  //   keyboard to toggle the preedit method between Roman and Kana style and
+  //   this behavior was finally adopted into JIS X 4064:2002 as a basic
+  //   functionality which is expected to support by a Japanese Input Method.
+  //   However, people who are not aware of this functionality have been
+  //   puzzled because the default key stroke is likely to be pressed
+  //   by accident.
+  optional bool use_keyboard_to_change_preedit_method = 48 [default = false];
+
+  // User history learning
+  enum HistoryLearningLevel {
+    DEFAULT_HISTORY = 0;
+    READ_ONLY = 1;
+    NO_HISTORY = 2;
+  }
+  optional HistoryLearningLevel history_learning_level = 50
+      [default = DEFAULT_HISTORY];
+
+  // The style of candidate selection shortcut.
+  // Note that if the current Request has SpecialRomajiTable (== the keyevent
+  // is from a virtual keyboard), shortcut is no-op.
+  enum SelectionShortcut {
+    NO_SHORTCUT = 0;
+    SHORTCUT_123456789 = 1;
+    SHORTCUT_ASDFGHJKL = 2;
+  }
+  optional SelectionShortcut selection_shortcut = 52
+      [default = SHORTCUT_123456789];
+
+  // character form (Halfwidth/Fullwidth
+  enum CharacterForm {
+    HALF_WIDTH = 0;
+    FULL_WIDTH = 1;
+    LAST_FORM = 2;
+    NO_CONVERSION = 3;
+  }
+  message CharacterFormRule {
+    optional string group = 1;
+    optional CharacterForm preedit_character_form = 2 [default = FULL_WIDTH];
+    optional CharacterForm conversion_character_form = 3 [default = FULL_WIDTH];
+  }
+  repeated CharacterFormRule character_form_rules = 54;
+
+  // Automatically switch composition mode.
+  optional bool auto_switch_composition_mode = 56 [default = true];
+
+  // Toggle to use cascanding window for debugging.
+  optional bool use_cascading_window = 58 [default = true];
+
+  // Shift key mode switch
+  enum ShiftKeyModeSwitch {
+    OFF = 0;                  // Case insensitive
+    ASCII_INPUT_MODE = 1;     // MSIME, ATOK behavior
+    KATAKANA_INPUT_MODE = 2;  // Kotoeri behavior
+  }
+  optional ShiftKeyModeSwitch shift_key_mode_switch = 59
+      [default = ASCII_INPUT_MODE];
+
+  enum NumpadCharacterForm {
+    NUMPAD_INPUT_MODE = 0;
+    NUMPAD_FULL_WIDTH = 1;
+    NUMPAD_HALF_WIDTH = 2;
+    NUMPAD_DIRECT_INPUT = 3;
+  }
+  optional NumpadCharacterForm numpad_character_form = 60
+      [default = NUMPAD_HALF_WIDTH];
+
+  enum AutoConversionKey {
+    AUTO_CONVERSION_OFF = 0;
+    AUTO_CONVERSION_KUTEN = 1;
+    AUTO_CONVERSION_TOUTEN = 2;
+    AUTO_CONVERSION_QUESTION_MARK = 4;
+    AUTO_CONVERSION_EXCLAMATION_MARK = 8;
+  }
+  optional bool use_auto_conversion = 61 [default = false];
+
+  // can't use AutoConversionKey as a type since
+  // undefined enum type is not correctly handled.
+  optional uint32 auto_conversion_key = 62 [default = 13];
+
+  // Mac only config items: yen_sign_character and use_japanese_layout.
+  enum YenSignCharacter {
+    YEN_SIGN = 0;
+    BACKSLASH = 1;
+  }
+  // Mac-original JIS key layout has "yen-sign" key which generates
+  // U+00A5 instead of U+005C and sometimes users get troubles with
+  // them because they expect backslashes which are rendered as
+  // yen-sign.  If this configuration is BACKSLASH, Mozc will
+  // interpret U+005C even when the original key event is U+00A5.
+  optional YenSignCharacter yen_sign_character = 63 [default = YEN_SIGN];
+
+  // Use Japanese keyboard layout even when the user uses other
+  // keyboard layouts.  In Mac OSX people can use several keyboard
+  // layouts such like French or Spanish but some people want to use
+  // Japanese layout for Japanese.  See http://b/2917320
+  optional bool use_japanese_layout = 64 [default = false];
+
+  // Use kana modifier insensitive conversion.
+  // e.g. かつこう -> 学校
+  // Note that Request message has the same field.
+  // - Request's one is controlled by the client. A user cannot control it.
+  //   On the other hand Config's is under a user's control.
+  // - Whether the feature is activated or not is decided by logical-AND
+  //   of Request's and Config's.
+  optional bool use_kana_modifier_insensitive_conversion = 65 [default = false];
+
+  // Use typing correction feature.
+  // e.g. sunkai -> 深海
+  optional bool use_typing_correction = 66 [default = false];
+
+  // The duration in millisecond to determine the timeout.
+  // If the duration between key inputs is more than this value,
+  // a SessionCommand::STOP_KEY_TOGGLING is prepended to the next key input.
+  // If the value is 0, STOP_KEY_TOGGLING is not sent.
+  optional int32 composing_timeout_threshold_msec = 67 [default = 0];
+
+  // The keymaps which are loaded on top of `session_keymap`.
+  // Overlay keymaps are prioritized over `session_keymap`.
+  // They are used to partially modify the session keymap, for example
+  // using Henkan key as IME_ON.
+  repeated SessionKeymap overlay_keymaps = 68 [packed = true];
+
+  //////////////////////////////////////////////////////////////
+  //
+  // Dictionary (80-99)
+  //
+  optional bool use_date_conversion = 80 [default = true];
+  optional bool use_single_kanji_conversion = 81 [default = true];
+  optional bool use_symbol_conversion = 82 [default = true];
+  optional bool use_number_conversion = 83 [default = true];
+  optional bool use_emoticon_conversion = 84 [default = true];
+  optional bool use_calculator = 85 [default = true];
+  optional bool use_t13n_conversion = 86 [default = true];
+  optional bool use_zip_code_conversion = 87 [default = true];
+  optional bool use_spelling_correction = 88 [default = true];
+
+  // If use_emoji_conversion is true, the user can input emoji characters
+  // by converting from a query string (e.g. "いぬ → 🐶" [U+1F436]).
+  // Even if it is false, users might be able to input emoji characters
+  // with other ways.
+  // Note: Some characters can be either of text and emoji.  It would be ideal
+  // to use the variation sequence to specify emoji presentation [U+FE0E],
+  // although it is not implemented yet.
+  // See: http://unicode.org/reports/tr51/#Presentation_Style
+  optional bool use_emoji_conversion = 89 [default = false];
+
+  message InformationListConfig {
+    optional bool use_local_usage_dictionary = 1 [default = true];
+    reserved 2;
+    reserved "use_web_usage_dictionary";
+    reserved 10;
+    reserved "web_service_entries";
+  }
+  optional InformationListConfig information_list_config = 90;
+
+  //////////////////////////////////////////////////////////////
+  //
+  // Suggest (100-119)
+  //
+  // Suggest is a feature of word suggestion with prefix search.
+  // When you type "あ", you may get "ありがとう", "朝" (あさ), "明日" (あした)
+  // as suggested words.
+  //
+  // Use history-based suggest feature.
+  // If this is true, your previously typed words are prioritized.
+  optional bool use_history_suggest = 100 [default = true];
+
+  // Use dictionary-based suggest feature.
+  // If this is true, words in the word dictionary are suggested even if
+  // you haven't typed before.
+  optional bool use_dictionary_suggest = 101 [default = true];
+
+  // Use realtime conversion feature.
+  optional bool use_realtime_conversion = 102 [default = true];
+
+  // Size of suggestions.
+  optional uint32 suggestions_size = 110 [default = 3];
+
+  //////////////////////////////////////////////////////////////
+  //
+  // Renderer (120-139)
+  //
+  // Use mode indicator feature.
+  optional bool use_mode_indicator = 120 [default = true];
+
+  //////////////////////////////////////////////////////////////
+  //
+  // Cloud (300-319)
+  //
+  // Configuration for cloud sync feature. This field is obsolete.
+  reserved 300;
+  reserved "sync_config";
+  reserved 301;
+  reserved "allow_cloud_handwriting";
+  reserved 996;
+  reserved "pinyin_config";
+  reserved 998;
+  reserved "hangul_config";
+  reserved 999;
+  reserved "chewing_config";
+}

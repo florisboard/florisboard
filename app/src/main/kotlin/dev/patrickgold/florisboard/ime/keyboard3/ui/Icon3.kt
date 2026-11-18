@@ -58,15 +58,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import dev.patrickgold.florisboard.R
 import dev.patrickgold.florisboard.ime.editor.ImeOptions
+import dev.patrickgold.florisboard.ime.keyboard3.ImeController
 import dev.patrickgold.florisboard.ime.keyboard3.ImeIcons
+import dev.patrickgold.florisboard.ime.keyboard3.ImeLayerIds
 import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
+import dev.patrickgold.florisboard.ime.keyboard3.isTextLayer
 import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
+import dev.patrickgold.florisboard.ime.mozc.MozcEngine
+import dev.patrickgold.florisboard.ime.mozc.isNotEmpty
 import dev.patrickgold.florisboard.ime.window.ImeWindowMode
 import dev.patrickgold.florisboard.ime.window.LocalWindowController
 import org.florisboard.lib.compose.icons.ForwardDelete
 import org.florisboard.lib.snygg.SnyggQueryAttributes
 import org.florisboard.lib.snygg.ui.SnyggIcon
 import org.k3lp.lib.text.K3Descriptor
+import org.k3lp.model.layer.K3LayerId
 
 @Composable
 fun Icon3(
@@ -86,17 +92,19 @@ fun Icon3(
     val debugShowDragAndDropHelpers by remember {
         derivedStateOf { imeState.flags.debugShowDragAndDropHelpers }
     }
+    val layerId by remember { derivedStateOf { imeState.touchLayerId } }
 
     val windowConfig by windowController.activeWindowConfig.collectAsState()
     val windowMode by remember { derivedStateOf { windowConfig.mode } }
 
-    val imageVector = remember(value, imeOptions, inputAttributes, inputShiftState, windowMode) {
+    val preedit by MozcEngine.instance.preedit.collectAsState()
+    val imageVector = remember(value, imeOptions, inputAttributes, inputShiftState, windowMode, preedit) {
         when (value) {
             ImeIcons.DragMarker -> {
                 if (debugShowDragAndDropHelpers) Icons.Default.Close else null
             }
             ImeIcons.Enter -> {
-                if (imeOptions.flagNoEnterAction || inputAttributes.flagTextMultiLine) {
+                if (imeOptions.flagNoEnterAction || inputAttributes.flagTextMultiLine || preedit.isNotEmpty()) {
                     Icons.AutoMirrored.Filled.KeyboardReturn
                 } else {
                     when (imeOptions.action) {
@@ -124,6 +132,13 @@ fun Icon3(
             }
             // TODO incognito mode???
             // TODO char width/kata/hira icons???
+            ImeIcons.Kana -> when {
+                // use isTextLayer() as that is every alphabet layer
+                // TODO: source proper icons before upstreaming, as i doubt upstream will accept the icons from decompiled グーグル日本語入力
+                layerId.isTextLayer() -> context.vectorResource(R.drawable.ic_key_ja_bi_state_alphabet)
+                layerId == ImeLayerIds.Kana -> context.vectorResource(R.drawable.ic_key_ja_bi_state_hiragana)
+                else -> null // kana key shouldn't be in any other layouts
+            }
             else -> staticIcon3(value, context)
         }
     }
@@ -150,6 +165,8 @@ fun staticIcon3(value: K3Descriptor, context: Context): ImageVector? {
         ImeIcons.ClipboardCut -> Icons.Default.ContentCut
         ImeIcons.ClipboardPaste -> Icons.Default.ContentPasteGo
         ImeIcons.Close -> Icons.Default.Close
+        // TODO: source proper icon before upstreaming, as i doubt upstream will accept the icons from decompiled グーグル日本語入力
+        ImeIcons.Dakuten -> context.vectorResource(R.drawable.dakuten)
         ImeIcons.Delete -> Icons.AutoMirrored.Default.ForwardDelete
         ImeIcons.DragMarker -> Icons.Default.Close
         ImeIcons.Enter -> Icons.AutoMirrored.Filled.KeyboardReturn

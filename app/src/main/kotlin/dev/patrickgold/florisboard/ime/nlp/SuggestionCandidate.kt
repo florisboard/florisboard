@@ -115,6 +115,18 @@ data class WordSuggestionCandidate(
     override val icon: ImageVector? = null
 }
 
+data class JapaneseWordSuggestionCandidate(
+    override val text: CharSequence,
+    val candidateId: Int,
+    override val secondaryText: CharSequence? = null,
+    override val confidence: Double = 0.0,
+    override val isEligibleForAutoCommit: Boolean = false,
+    override val isEligibleForUserRemoval: Boolean = true,
+    override val sourceProvider: SuggestionProvider? = null,
+) : SuggestionCandidate {
+    override val icon: ImageVector? = null
+}
+
 /**
  * Default implementation for a clipboard candidate. Should generally not be used by a suggestion provider, except by
  * the clipboard suggestion provider.

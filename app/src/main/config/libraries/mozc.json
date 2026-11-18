@@ -1,0 +1,14 @@
+{
+  "uniqueId": "mozc",
+  "name": "Mozc",
+  "developers": [
+    {
+      "name": "Google Open Source",
+      "organisationUrl": "https://github.com/google"
+    }
+  ],
+  "website": "https://github.com/google/mozc",
+  "licenses": [
+    "BSD-3-Clause"
+  ]
+}

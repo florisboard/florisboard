@@ -32,6 +32,7 @@ import org.k3lp.lib.text.K3StringOrDescriptor
 import org.k3lp.lib.text.asK3String
 import org.k3lp.model.K3Model
 import org.k3lp.model.flick.K3Flick
+import org.k3lp.model.flick.K3FlickDirection
 import org.k3lp.model.key.K3Key
 import org.k3lp.model.key.K3KeyId
 import org.k3lp.model.layer.K3LayerId
@@ -111,7 +112,7 @@ class TouchKey(
     val hitbox: Rect,
     val display: K3StringOrDescriptor,
     val attrs: K3Key,
-    val flick: K3Flick?,
+    val flicks: List<TouchFlickSegment>,
     val isShiftKey: Boolean,
     val isRepeatable: Boolean,
     val isSuitableForSpaceBarDisplayOverride: Boolean,
@@ -141,6 +142,12 @@ class TouchPopupKey(
         return TouchPopupKey(bounds, display, data)
     }
 }
+
+class TouchFlickSegment(
+    val display: K3StringOrDescriptor,
+    val data: K3Key,
+    val direction: K3FlickDirection,
+)
 
 class TouchMultiTapKey(
     val display: K3StringOrDescriptor,
@@ -218,7 +225,7 @@ private fun computeTouchKeyboard(
                 continue
             }
             val rows = buildList {
-                if (numberRow != null && (layer.id == ImeLayerIds.Base || layer.id == ImeLayerIds.Shift)) {
+                if (numberRow != null && (layer.id == ImeLayerIds.Base || layer.id == ImeLayerIds.Shift || layer.id == ImeLayerIds.Kana)) {
                     add(numberRow)
                 }
                 layer.rows.forEach { row ->
@@ -335,8 +342,23 @@ private fun computeTouchKeyboard(
                         } ?: emptyList()
                     }
                     val flicks = when {
-                        isFnKey -> null // TODO
-                        else -> key.flickId?.let { model.flicks.byFlickId[it] }
+                        isFnKey -> emptyList() // assuming upstream doesnt want flick on fnKey
+                        else -> key.flickId?.let { flickId ->
+                            buildList {
+                                val flick = model.flicks.byFlickId[flickId] ?: continue
+                                for (flickSegment in flick.segments) {
+                                    val flickKey = model.keys.byKeyId[flickSegment.keyId] ?: continue
+                                    val direction = flickSegment.directions.firstOrNull() ?: continue
+                                    add(
+                                        TouchFlickSegment(
+                                            display = computeKeyDisplay(model, flickKey),
+                                            data = flickKey,
+                                            direction = direction,
+                                        )
+                                    )
+                                }
+                            }
+                        } ?: emptyList()
                     }
                     val attrs = if (isFnKey) options.fnKeyArrangement.simpleAction.asK3Key() else key
                     val display = computeKeyDisplay(model, attrs)
@@ -345,7 +367,7 @@ private fun computeTouchKeyboard(
                         hitbox = hitbox,
                         display = display,
                         attrs = attrs,
-                        flick = flicks,
+                        flicks = flicks,
                         isShiftKey = key.isPureLayerSwitchKey() && when (layer.id) {
                             ImeLayerIds.Base -> key.layerId == ImeLayerIds.Shift || key.layerId == ImeLayerIds.Caps
                             ImeLayerIds.Shift -> key.layerId == ImeLayerIds.Base || key.layerId == ImeLayerIds.Caps
@@ -381,7 +403,7 @@ private fun computeTouchKeyboard(
     )
 }
 
-private fun computeKeyDisplay(model: K3Model, key: K3Key): K3StringOrDescriptor {
+internal fun computeKeyDisplay(model: K3Model, key: K3Key): K3StringOrDescriptor {
     val displayByKey = model.displays.byKeyId[key.id]
     if (displayByKey != null) {
         return displayByKey.display

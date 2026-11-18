@@ -25,6 +25,7 @@ import dev.patrickgold.florisboard.ime.nlp.BreakIteratorGroup
 import dev.patrickgold.florisboard.ime.nlp.SpellingProvider
 import dev.patrickgold.florisboard.ime.nlp.SpellingResult
 import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidate
+import dev.patrickgold.florisboard.ime.nlp.SuggestionCandidates
 import dev.patrickgold.florisboard.ime.nlp.SuggestionProvider
 import dev.patrickgold.florisboard.ime.nlp.WordSuggestionCandidate
 import dev.patrickgold.florisboard.lib.devtools.flogDebug
@@ -160,15 +161,15 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
         maxCandidateCount: Int,
         allowPossiblyOffensive: Boolean,
         isPrivateSession: Boolean,
-    ): List<SuggestionCandidate> {
+    ): SuggestionCandidates {
         if (__connectedActiveLanguagePacks != activeLanguagePacks) {
             // FIXME: hack for not able to observe extensionManager.languagePacks
             refreshLanguagePacks()
         }
         if (content.composingText.isEmpty()) {
-            return emptyList();
+            return SuggestionCandidates.EMPTY;
         }
-        val (languagePackItem, languagePackExtension) = getLanguagePack(subtype) ?: return emptyList();
+        val (languagePackItem, languagePackExtension) = getLanguagePack(subtype) ?: return SuggestionCandidates.EMPTY;
         val layout: String = languagePackItem.hanShapeBasedTable
         try {
             val database = languagePackExtension.hanShapeBasedSQLiteDatabase
@@ -191,13 +192,13 @@ class HanShapeBasedLanguageProvider(val context: Context) : SpellingProvider, Su
                     ))
                 }
             }
-            return suggestions
+            return SuggestionCandidates(suggestions)
         } catch (e: IllegalStateException) {
             flogError { "Invalid layout '${layout}' not found" }
-            return emptyList();
+            return SuggestionCandidates.EMPTY;
         } catch (e: SQLiteException) {
             flogError { "SQLiteException: layout=$layout, composing=${content.composingText}, error='${e}'" }
-            return emptyList();
+            return SuggestionCandidates.EMPTY;
         }
     }
 

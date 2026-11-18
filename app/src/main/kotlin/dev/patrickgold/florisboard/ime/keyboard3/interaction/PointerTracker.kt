@@ -42,6 +42,7 @@ import dev.patrickgold.florisboard.ime.keyboard3.LocalImeController
 import dev.patrickgold.florisboard.ime.keyboard3.touch.InputShiftState
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKey
 import dev.patrickgold.florisboard.ime.keyboard3.touch.TouchKeyboard
+import dev.patrickgold.florisboard.lib.devtools.flogDebug
 import dev.patrickgold.jetpref.datastore.model.collectAsState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -84,6 +85,7 @@ sealed interface TrackedPointer {
         override val id: PointerId,
         override val down: PointerInputChange,
         override val downKey: TouchKey,
+        val flick: Flick,
         val longPress: LongPress,
         val repeatJob: Job?,
     ) : TrackedPointer
@@ -202,7 +204,7 @@ class PointerTracker(
                     }
                     LongPress(
                         anchorBounds = anchorBounds,
-                        simpleBounds = if (showSimplePopups && downKey.isSuitableForSimplePopup) {
+                        simpleBounds = if (showSimplePopups && downKey.isSuitableForSimplePopup && downKey.flicks.isEmpty()) {
                             anchorBounds.copy(
                                 bottom = anchorBounds.bottom + anchorBounds.height * 1.2f,
                             )
@@ -217,6 +219,29 @@ class PointerTracker(
                         } else null,
                     )
                 } else LongPress.None,
+                flick = if (downKey.flicks.isNotEmpty()) {
+                    val anchorBounds = downKey.bounds.let { bounds ->
+                        // TODO this is only tested for PHONE_PORTRAIT on a pixel 6, test+fix other form factors and other devices!
+                        val w = bounds.width
+                        val h = bounds.height
+                        val x = bounds.bottomCenter.x - w / 2f
+                        val y = bounds.bottom - h * 2.3f
+                        Rect(
+                            offset = Offset(x, y),
+                            size = Size(w, h),
+                        )
+                    }
+                    Flick(
+                        anchorBounds = anchorBounds,
+                        simpleBounds = if (showSimplePopups && downKey.isSuitableForSimplePopup) {
+                            anchorBounds.copy(
+                                bottom = anchorBounds.bottom + anchorBounds.height * 1.2f,
+                            )
+                        } else Rect.Zero,
+                        simpleLabel = downKey.display,
+                        flicks = downKey.flicks,
+                    )
+                } else Flick.None,
                 repeatJob = if (downKey.isRepeatable) {
                     scope.launch {
                         delay(keyRepeatTimeout)
@@ -284,6 +309,8 @@ class PointerTracker(
         }
         trackedOutputPointer.value?.takeIf { it.id == move.id }?.let { trackedPointer ->
             val longPress = trackedPointer.longPress
+            val flick = trackedPointer.flick
+            val key = trackedPointer.downKey
             if (longPress.shouldShowExtendedPopup()) {
                 val position = move.position.normalized(size).let { position ->
                     Offset(
@@ -297,6 +324,21 @@ class PointerTracker(
                 if (newFocusedIndex != longPress.extendedFocusedIndex) {
                     trackedOutputPointer.value = trackedPointer.copy(
                         longPress = longPress.copy(extendedFocusedIndex = newFocusedIndex),
+                    )
+                }
+            } else if (flick.shouldShowPopup()) {
+                val position = move.position.normalized(size).let { position ->
+                    Offset(
+                        x = (position.x)
+                            .fastCoerceIn(key.hitbox.left, key.hitbox.right),
+                        y = (position.y)
+                            .fastCoerceIn(key.hitbox.top, key.hitbox.bottom - 0.01f),
+                    )
+                }
+                val direction = position.toFlickDirection(key.hitbox)
+                if (direction != flick.direction) {
+                    trackedOutputPointer.value = trackedPointer.copy(
+                        flick = flick.copy(direction = direction),
                     )
                 }
             }
@@ -326,14 +368,20 @@ class PointerTracker(
             trackedPointer.repeatJob?.cancel()
             imeController.updateState {
                 val output = when {
+                    trackedPointer.flick.shouldShowPopup() -> {
+                        trackedPointer.flick.flicks.find { trackedPointer.flick.direction == it.direction }
+                            ?.data?.output ?: trackedPointer.downKey.attrs.output
+                    }
                     trackedPointer.downKey == trackedMultiTapSeq.value?.touchKey -> null
                     trackedPointer.longPress.shouldShowExtendedPopup() -> {
+                        isHoldKey = true
                         trackedPointer.longPress.extendedKeys.getOrNull(trackedPointer.longPress.extendedFocusedIndex)
                             ?.data?.output
                     }
                     else -> trackedPointer.downKey.attrs.output
                 }
                 output?.let { emit(it) }
+                isHoldKey = false
             }
             trackedPeekPointer.update { it?.copy(peekMustSwitchBack = true) }
             trackedOutputPointer.value = null

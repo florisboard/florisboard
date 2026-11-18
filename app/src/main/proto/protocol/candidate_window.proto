@@ -1,0 +1,277 @@
+// Copyright 2010-2021, Google Inc.
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are
+// met:
+//
+//     * Redistributions of source code must retain the above copyright
+// notice, this list of conditions and the following disclaimer.
+//     * Redistributions in binary form must reproduce the above
+// copyright notice, this list of conditions and the following disclaimer
+// in the documentation and/or other materials provided with the
+// distribution.
+//     * Neither the name of Google Inc. nor the names of its
+// contributors may be used to endorse or promote products derived from
+// this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+// Protocol messages of candidate window to be used for mozc client/server
+// communication and client/renderer communication.
+
+syntax = "proto2";
+
+package mozc.commands;
+
+option java_outer_classname = "ProtoCandidateWindow";
+option java_package = "org.mozc.android.inputmethod.japanese.protobuf";
+
+// General non-recursive rich text representation.
+message RichText {
+  message TextStyle {
+    enum Style {
+      STYLE_UNSPECIFIED = 0;
+      STYLE_BOLD = 1;           // Typeface.BOLD
+      STYLE_ITALIC = 2;         // Typeface.ITALIC
+      STYLE_UNDERLINE = 4;      // UnderlineSpan
+      STYLE_STRIKETHROUGH = 8;  // StikethroughSpan
+    }
+
+    enum FontSize {
+      FONT_SIZE_DEFAULT = 0;
+      FONT_SIZE_SUPERSCRIPT = 1;
+      FONT_SIZE_SUBSCRIPT = 2;
+      FONT_SIZE_LARGE = 3;
+      FONT_SIZE_SMALL = 4;
+    }
+
+    enum TextColor {
+      TEXT_COLOR_DEFAULT = 0;
+      TEXT_COLOR_EMPHASIZED = 1;
+      TEXT_COLOR_DEEMPHASIZED = 2;
+    }
+
+    // Bit fields. Styles are not exclusive.
+    optional uint32 styles = 1 [default = 0];
+
+    optional FontSize font_size = 2 [default = FONT_SIZE_DEFAULT];
+
+    optional TextColor text_color = 3 [default = TEXT_COLOR_DEFAULT];
+  }
+
+  message Span {
+    optional string text = 1;
+    optional TextStyle text_style = 2;
+  }
+
+  repeated Span spans = 1;
+
+  // fallback text in plain-text format.
+  optional string fallback_text = 2;
+}
+
+// Annotation against a candidate.
+message Annotation {
+  // Annotation prepended to the value.
+  optional string prefix = 1;
+  // Annotation appended to the value.
+  optional string suffix = 2;
+  // Type of the candidate such as [HALF][KATAKANA], [GREEK],
+  // [Black square], etc...
+  optional string description = 3;
+  // Shortcut key to select this candidate.
+  optional string shortcut = 4;
+  // Set to true if this candidate can be deleted from history.
+  optional bool deletable = 5 [default = false];
+  // Description of the candidate for A11y support.
+  // One of the example usage of this field is android:contentDescription in
+  // Android.
+  optional string a11y_description = 6;
+  // Actual value to be displayed. Uses it to encode meta information
+  // in the value. e.g., puts "_" to clarify the unrecognizable white spaces.
+  optional string display_value = 7;
+}
+
+// Additional information to a candidate word.  This message is
+// used for describing a word usage for instance.
+message Information {
+  // Unique number specifying the information.
+  optional int32 id = 1;
+
+  // Title string of the information.  For usage, this value is
+  // probably equal to Candidate::value or its canonicalized value.
+  optional string title = 2;
+
+  // The content of the information.  For usage, this value actually
+  // describes how to use the word.
+  optional string description = 3;
+
+  // The IDs of candidates which connect with the information.
+  repeated int32 candidate_id = 4;
+}
+
+// Category describes the attribute of the words.
+enum Category {
+  CONVERSION = 0;
+  PREDICTION = 1;
+  SUGGESTION = 2;
+  TRANSLITERATION = 3;
+  USAGE = 4;
+}
+
+// DisplayType is a hint to UI renderers describing how the words are
+// displayed.
+enum DisplayType {
+  MAIN = 0;
+  CASCADE = 1;
+}
+
+// CandidateAttribute indicates how the candidate was generated.
+enum CandidateAttribute {
+  DEFAULT_ATTRIBUTE = 0;
+  USER_DICTIONARY = 1;
+  USER_HISTORY = 2;
+  SPELLING_CORRECTION = 3;  // "ふいんき"→"雰囲気"
+  TYPING_CORRECTION = 4;    // "やんしょん"(with 12-key)→"マンション"
+  DELETABLE = 5;
+}
+
+message InformationList {
+  optional uint32 focused_index = 1;
+  repeated Information information = 2;
+  // Category of the infolist.
+  optional Category category = 3 [default = CONVERSION];
+
+  // Information to be used for rendering.
+  optional DisplayType display_type = 4 [default = CASCADE];
+
+  // How long rendere needs to wait before the infolist is displayed.
+  // the default setting is 500 msec.
+  optional uint32 delay = 5 [default = 500];
+}
+
+// Message representing the footer part of the candidate window.
+message Footer {
+  // Message shown like a status bar.
+  optional string label = 1;
+  // Whether index (e.g. 10/120) is visible or not.
+  optional bool index_visible = 2 [default = false];
+  // Whether the logo image is visible or not.
+  optional bool logo_visible = 3 [default = false];
+  // Message modestly shown.  It is used for displaying the version on
+  // dev-channel now.
+  optional string sub_label = 4;
+}
+
+message CandidateWord {
+  // Unique number specifying the candidate. This may be a negative value.
+  optional int32 id = 1;
+  // The first index should be zero and index numbers should increase by one.
+  optional uint32 index = 2;
+  // Reading of the value.  The value is only used when the key is
+  // different from the input composition (e.g. suggestion/prediction).
+  optional string key = 3;
+  // Converted value.  (e.g. Kanji value).
+  optional string value = 4;
+  optional Annotation annotation = 5;
+  // Attributes of this candidate. Can set multiple attributes.
+  repeated CandidateAttribute attributes = 6;
+  // The number of segments for logging.
+  // If the candidate is "今日は|晴れ", the number of segments is 2.
+  optional int32 num_segments_in_candidate = 7;
+  // Debug log for this candidate word.
+  optional string log = 100;
+}
+
+message CandidateList {
+  // This value represents the focused position of the next
+  // |candidates|.  If the |candidates| is a part of the whole
+  // candidate words (as a result of paging), this value indicates the
+  // position from the beginning of that part.  (ex. where
+  // |candidates| contains 10th to 18th candidates, focused_index=0
+  // means the 10th candidate, but not 1st candidate.
+  //
+  // The existense of |focused_index| does not represents whether this
+  // candidate list is a 'suggestion' or not.  |category| represents
+  // it.
+  optional uint32 focused_index = 1;
+  repeated CandidateWord candidates = 2;
+  // Category of the candidates.
+  optional Category category = 3 [default = CONVERSION];
+}
+
+message CandidateWindow {
+  // TODO(komatsu): Use CandidateList.
+  // When has_focused_index() is true, this message contains predicted and
+  // normally converted candidates. Otherwise, when the field is not set,
+  // this message contains a 'suggestion'.
+  optional uint32 focused_index = 1;
+
+  // The size of the total candidates in this candidate list.  The
+  // value does not include the size of subcandidate lists.  Note, the
+  // next repeated-Candidate=3 may not contain all candidates.
+  // all_candidates contains the values of subcandidate lists.
+  required uint32 size = 2;
+
+  // TODO(komatsu): Use CandidateList.
+  repeated group Candidate = 3 {
+    // The first index should be zero and index numbers should increase by one.
+    required uint32 index = 4;
+    required string value = 5;
+    optional int32 id = 9;  // Unique number specifing the candidate.
+    optional Annotation annotation = 7;
+    optional int32 information_id = 10;
+  }
+  // The position on the composition in character counted by Util::CharsLen.
+  // The number represents the left edge of the candidate window.  For example,
+  // if the composition is "あいう" and the cursor is the position is between
+  // "あ" and "い" (e.g. "あ|いう"), the number should be 1.
+  // Note, Util::CharsLen does not take care of IVS or combining character
+  // so much.  Thus CharsLen's behavior on those characters might be changed.
+  required uint32 position = 6;
+
+  // Nested candidates aka cascading window.
+  optional CandidateWindow sub_candidate_window = 8;
+
+  // Usages of candidates.
+  optional InformationList usages = 10;
+
+  // TODO(komatsu): Use CandidateList.
+  // Category of the candidates
+  optional Category category = 11 [default = CONVERSION];
+
+  // Information to be used for rendering.
+  optional DisplayType display_type = 12 [default = MAIN];
+
+  // Footer of the GUI window.
+  optional Footer footer = 13;
+
+  // The direction of candidates in the window.  This is just a
+  // suggestion from the server and client does not have to follow.
+  enum Direction {
+    VERTICAL = 0;
+    HORIZONTAL = 1;
+  }
+  optional Direction direction = 14 [default = VERTICAL];
+
+  reserved 15;
+  reserved "composition_rectangle";
+  reserved 16;
+  reserved "caret_rectangle";
+  reserved 17;
+  reserved "window_location";
+
+  // The number of candidates per page.
+  optional uint32 page_size = 18 [default = 9];
+}
