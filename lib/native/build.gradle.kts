@@ -19,6 +19,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.agp.library)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -83,5 +84,5 @@ tasks.named("clean") {
 }
 
 dependencies {
-    // none
+    implementation(libs.kotlinx.serialization.json)
 }

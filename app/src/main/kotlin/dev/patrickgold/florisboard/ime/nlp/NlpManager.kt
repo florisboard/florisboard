@@ -216,7 +216,7 @@ class NlpManager(context: Context) {
                         content = content,
                         maxCandidateCount = 8,
                         allowPossiblyOffensive = !prefs.suggestion.blockPossiblyOffensive.get(),
-                        isPrivateSession = false // TODO keyboardManager.activeState.isIncognitoMode,
+                        isPrivateSession = imeController.snapshotState().flags.isIncognitoMode,
                     )
                 }
             }
@@ -246,6 +246,9 @@ class NlpManager(context: Context) {
     }
 
     fun getAutoCommitCandidate(): SuggestionCandidate? {
+        if (!prefs.smartbar.autocorrect.get()) {
+            return null
+        }
         return activeCandidates.firstOrNull { it.isEligibleForAutoCommit }
     }
 
